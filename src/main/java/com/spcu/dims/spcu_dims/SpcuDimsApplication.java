@@ -1,13 +1,14 @@
-package com.spcu.dims.SPCUDIMS;
+package com.spcu.dims.spcu_dims;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+
 public class SpcuDimsApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpcuDimsApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SpcuDimsApplication.class, args);
+    }
 
 }
