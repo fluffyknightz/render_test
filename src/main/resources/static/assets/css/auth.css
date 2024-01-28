@@ -1,5 +1,5 @@
 body {
-    background-color: #fff
+    background-color: #fff;
 }
 
 #auth {
@@ -10,7 +10,7 @@ body {
 #auth #auth-left .auth-title {
     font-size: 4rem;
     margin-bottom: 1rem;
-    color : #1e497b
+    color: #1e497b
 }
 
 #auth #auth-left {
@@ -41,6 +41,7 @@ body {
         padding: 5rem
     }
 }
+
 #auth #auth-right {
     height: 100%;
     background: url(static/assets/images/login-background.jpg), linear-gradient(90deg, #1e497b, #1e497b)
@@ -66,3 +67,20 @@ body {
     background-color: #1e497b !important;
     border-color: #1e497b !important;
 }
+
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 25px;
+    display: none;
+}
+
+.custom-card {
+
+    border-radius: 30px;
+
+}
+

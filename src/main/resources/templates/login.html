@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/assets/css/auth.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
+
 <div id="auth">
 
     <div class="row h-100">
         <div class="d-flex justify-content-center align-items-center">
-            <div class="py-4 px-3 px-md-4 px-lg-5 shadow-lg col-10 col-sm-8 col-md-8 col-lg-4 mx-auto"
-                 style="border-radius: 30px;">
+            <div class="py-4 px-3 px-md-4 px-lg-5 shadow-lg col-8 col-sm-8 col-md-6 col-lg-6 col-xl-4 mx-auto custom-card">
                 <h1 class="auth-title text-center pb-4">Log In</h1>
-
+                <div id="validated_alert" role="alert"></div>
                 <form id="login-form" th:action="@{/login}" method="post" class="needs-validation" novalidate>
                     <div class="form-floating form-group position-relative has-icon-left mb-4">
                         <input type="text" class="form-control" placeholder="Username" id="username" name="username"
@@ -28,30 +28,30 @@
                             <i class="bi bi-person"></i>
                             Username
                         </label>
-                        <div class="invalid-feedback" id="username-error">
-                            Please Add Username.
-                        </div>
                     </div>
 
-                    <div class="form-floating form-group position-relative has-icon-left mb-3">
-                        <input type="password" class="form-control" placeholder="Password" id="password" name="password"
-                               required>
+                    <div class="form-floating form-group position-relative has-icon-left mb-4">
+                        <input type="password" id="password" name="password" autocomplete="current-password"
+                               class="form-control" spellcheck="false" autocorrect="off" autocapitalize="off"
+                               placeholder="password" required>
+
                         <label for="password">
                             <i class="bi bi-shield-lock"></i>
                             Password
                         </label>
-                        <div class="invalid-feedback" id="password-error">
-                            Please Add Password.
-                        </div>
-                        <div class="invalid-feedback" id="login-error"></div>
 
+                        <i class="bi bi-eye-slash password-toggle" id="togglePassword"
+
+                        ></i>
                     </div>
 
-                    <div class="form-check form-check-lg d-flex align-items-end">
-                        <input class="form-check-input me-2 remember-me-checkbox" type="checkbox" id="remember-me"
+
+                    <div class="form-check form-check-lg d-flex align-items-end mt-2">
+                        <input class="form-check-input form-check-input-lg me-2 remember-me-checkbox" type="checkbox"
+                               id="remember-me"
                                name="remember-me">
-                        <label class="form-check-label fs-6 text-muted" for="remember-me">
-                            Remember Me
+                        <label class="form-check-label fs-6 text-muted fw-normal" for="remember-me">
+                            Stayed Sign In?
                         </label>
                     </div>
                     <div class="d-flex justify-content-center align-items-center">
@@ -61,14 +61,85 @@
                     </div>
                 </form>
                 <div class="text-center mt-3 text-lg fs-6">
-                    <p><a class="font-bold fs-6" th:href="@{/email-check-form}">Forgot password?</a></p>
+                    <p><a class="font-bold fs-6">Forgot Password?</a></p>
                 </div>
             </div>
         </div>
     </div>
 
 </div>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/js/iziToast.min.js"></script>
+<script>
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const alertDiv = document.getElementById('validated_alert');
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+        const queryParams = new URLSearchParams(window.location.search);
+        const isError = queryParams.get('error');
+        const isSuccess = queryParams.get('logout_success');
+
+        if (isError === "bad_credentials") {
+
+            alertDiv.className = 'alert alert-danger position-relative mb-4';
+            alertDiv.innerHTML = 'Username or Password is incorrect!';
+
+        } else if (isError === "disabled") {
+
+            alertDiv.className = 'alert alert-danger position-relative mb-4';
+            alertDiv.innerHTML = 'Your account is disabled!';
+
+        } else if (isSuccess) {
+
+            alertDiv.className = 'alert alert-success position-relative mb-4';
+            alertDiv.innerHTML = 'Logout Success.';
+        }
+
+// <-----------------------------------------------Password Toggle---------------------------------------------------->
+
+        const toggleButton = document.getElementById('togglePassword');
+
+
+        passwordInput.addEventListener('input', function () {
+            // Show toggle button when there is input in the password field
+            toggleButton.style.display = passwordInput.value.length > 0 ? 'block' : 'none';
+        });
+
+        toggleButton.addEventListener('click', function () {
+            // Toggle password visibility
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        });
+    });
+
+    (() => {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
+
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                if (usernameInput.value === '' || passwordInput.value === '') {
+                    alertDiv.className = 'alert alert-danger position-relative mb-4';
+                    alertDiv.innerHTML = 'Please Fill Username and Password to Sign In!';
+                }
+            }, false);
+        });
+    })();
+
+
+</script>
+
 </body>
 </html>
