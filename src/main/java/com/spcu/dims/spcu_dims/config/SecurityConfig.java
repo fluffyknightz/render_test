@@ -49,10 +49,10 @@ public class SecurityConfig {
                                         "/assets/images/**",
                                         "/assets/js/**", "/login", "/error")
                                 .permitAll()
-
-
                                 .requestMatchers("/dashboard", "/adminPage")
                                 .authenticated()
+                                .anyRequest()
+                                .permitAll()
 
                 )
                 .sessionManagement(
@@ -66,8 +66,7 @@ public class SecurityConfig {
                         login -> login
                                 .loginPage("/login")
                                 .usernameParameter("username")
-                                .failureHandler(customAuthenticationFailureHandler()) // Set the custom
-//                                .failureUrl("/login?error=true")
+                                .failureHandler(customAuthenticationFailureHandler())
                                 .defaultSuccessUrl("/dashboard?login_success=true")
                                 .permitAll())
                 .logout(

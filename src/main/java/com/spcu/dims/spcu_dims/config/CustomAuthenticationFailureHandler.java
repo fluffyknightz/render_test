@@ -1,6 +1,6 @@
 package com.spcu.dims.spcu_dims.config;
 
-import jakarta.servlet.ServletException;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.DisabledException;
@@ -15,15 +15,13 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-                                        AuthenticationException exception) throws IOException, ServletException {
+                                        AuthenticationException exception) throws IOException {
 
         if (exception instanceof DisabledException) {
-            // Log the disabled exception
-            System.out.println("DisabledException caught: " + exception.getMessage());
+
             response.sendRedirect(request.getContextPath() + "/login?error=disabled");
         } else {
-            // Log other exceptions
-            System.out.println("Other exception caught: " + exception.getMessage());
+
             response.sendRedirect(request.getContextPath() + "/login?error=bad_credentials");
         }
     }

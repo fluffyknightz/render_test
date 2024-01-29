@@ -2,7 +2,6 @@
 package com.spcu.dims.spcu_dims.controllers;
 
 import com.spcu.dims.spcu_dims.models.Role;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -11,7 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -54,10 +53,16 @@ public class PageControllers {
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
     public String handleAccessDeniedException() {
         // Redirect to the error page for unauthorized access
-        return "403";
+        return "error-403";
+    }
+
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public String pageNotFound() {
+        // Redirect to the error page for unauthorized access
+        return "error-404";
     }
 
 
