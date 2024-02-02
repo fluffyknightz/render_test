@@ -1,6 +1,6 @@
-package com.spcu.dims.spcu_dims.service;
+package com.spcu.dims.spcu_dims.services;
 
-import com.spcu.dims.spcu_dims.models.User;
+import com.spcu.dims.spcu_dims.entities.User;
 
 import java.util.Optional;
 

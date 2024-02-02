@@ -1,4 +1,4 @@
-package com.spcu.dims.spcu_dims.models;
+package com.spcu.dims.spcu_dims.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,8 +1,8 @@
 package com.spcu.dims.spcu_dims.service_implement;
 
-import com.spcu.dims.spcu_dims.models.User;
+import com.spcu.dims.spcu_dims.entities.User;
 import com.spcu.dims.spcu_dims.repositories.UserRepository;
-import com.spcu.dims.spcu_dims.service.UserServices;
+import com.spcu.dims.spcu_dims.services.UserServices;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
