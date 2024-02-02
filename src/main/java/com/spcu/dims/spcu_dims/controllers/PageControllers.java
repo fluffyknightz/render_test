@@ -1,7 +1,7 @@
 
 package com.spcu.dims.spcu_dims.controllers;
 
-import com.spcu.dims.spcu_dims.models.Role;
+import com.spcu.dims.spcu_dims.entities.Role;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;

@@ -1,6 +1,6 @@
 package com.spcu.dims.spcu_dims.config;
 
-import com.spcu.dims.spcu_dims.models.User;
+import com.spcu.dims.spcu_dims.entities.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
