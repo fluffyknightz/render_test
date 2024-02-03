@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,9 +35,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity
+//                .csrf(
+//                        csrf -> csrf.csrfTokenRepository(
+//                                CookieCsrfTokenRepository.withHttpOnlyFalse())
+//                )
+
                 .csrf(
-                        csrf -> csrf.csrfTokenRepository(
-                                CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                        AbstractHttpConfigurer::disable
+                )
                 .rememberMe(
                         rememberMeKey -> rememberMeKey
                                 .rememberMeServices(customRememberMeServices())
@@ -47,7 +53,7 @@ public class SecurityConfig {
                                 .requestMatchers("/assets/**",
                                         "/assets/css/**",
                                         "/assets/images/**",
-                                        "/assets/js/**", "/login", "/error")
+                                        "/assets/js/**", "/login", "/error", "/spcu-dims/api/v1/**")
                                 .permitAll()
                                 .requestMatchers("/dashboard", "/adminPage")
                                 .authenticated()

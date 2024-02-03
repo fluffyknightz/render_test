@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SecurityController {
 
     @PostMapping("/register")
-    public HttpStatus register(@RequestBody UserDto userDto){
+    public HttpStatus register(){
 
         return HttpStatus.valueOf(HttpStatus.CREATED.value());
     }
