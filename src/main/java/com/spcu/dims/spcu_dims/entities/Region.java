@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Entity
 @Getter
@@ -27,7 +26,4 @@ public class Region implements Serializable {
     @Column(nullable = false)
     private boolean isDelete;
 
-//    @OneToMany(mappedBy = "region",cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, targetEntity = District.class)
-//    @ToString.Exclude
-//    private List<District> districtList = new ArrayList<>();
 }

@@ -1,7 +1,6 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.entities.Region;
-import com.spcu.dims.spcu_dims.entities.Region;
 import com.spcu.dims.spcu_dims.services.RegionServices;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

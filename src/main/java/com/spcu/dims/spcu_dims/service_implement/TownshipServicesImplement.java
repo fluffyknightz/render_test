@@ -1,6 +1,5 @@
 package com.spcu.dims.spcu_dims.service_implement;
 
-import com.spcu.dims.spcu_dims.entities.Region;
 import com.spcu.dims.spcu_dims.entities.Township;
 import com.spcu.dims.spcu_dims.repositories.DistrictRepository;
 import com.spcu.dims.spcu_dims.repositories.TownshipRepository;

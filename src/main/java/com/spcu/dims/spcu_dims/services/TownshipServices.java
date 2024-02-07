@@ -1,9 +1,6 @@
 package com.spcu.dims.spcu_dims.services;
 
-import com.spcu.dims.spcu_dims.entities.Archdiocese;
-import com.spcu.dims.spcu_dims.entities.Region;
 import com.spcu.dims.spcu_dims.entities.Township;
-
 import java.util.List;
 
 

@@ -1,6 +1,5 @@
 package com.spcu.dims.spcu_dims.services;
 
-import com.spcu.dims.spcu_dims.entities.Archdiocese;
 import com.spcu.dims.spcu_dims.entities.Parish;
 
 import java.util.List;

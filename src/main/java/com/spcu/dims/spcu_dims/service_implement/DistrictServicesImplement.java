@@ -1,10 +1,8 @@
 package com.spcu.dims.spcu_dims.service_implement;
 
-import com.spcu.dims.spcu_dims.entities.Diocese;
 import com.spcu.dims.spcu_dims.entities.District;
 import com.spcu.dims.spcu_dims.repositories.DistrictRepository;
 import com.spcu.dims.spcu_dims.repositories.RegionRepository;
-import com.spcu.dims.spcu_dims.services.DioceseServices;
 import com.spcu.dims.spcu_dims.services.DistrictServices;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

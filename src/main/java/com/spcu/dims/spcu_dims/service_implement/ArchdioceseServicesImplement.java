@@ -1,7 +1,6 @@
 package com.spcu.dims.spcu_dims.service_implement;
 
 import com.spcu.dims.spcu_dims.entities.Archdiocese;
-import com.spcu.dims.spcu_dims.entities.Diocese;
 import com.spcu.dims.spcu_dims.repositories.ArchdioceseRepository;
 import com.spcu.dims.spcu_dims.repositories.DioceseRepository;
 import com.spcu.dims.spcu_dims.services.ArchdioceseServices;

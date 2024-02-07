@@ -3,7 +3,6 @@ package com.spcu.dims.spcu_dims.controllers.api;
 import com.spcu.dims.spcu_dims.entities.District;
 import com.spcu.dims.spcu_dims.services.DistrictServices;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
