@@ -21,6 +21,7 @@ public class User implements Serializable {
 
     private String password;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne(targetEntity = Role.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "role_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_role"))
     private Role role;
 }

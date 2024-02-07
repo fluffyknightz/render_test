@@ -1,25 +1,25 @@
 
 package com.spcu.dims.spcu_dims.controllers;
 
-import com.spcu.dims.spcu_dims.entities.Role;
-import org.springframework.security.access.AccessDeniedException;
+
+import com.spcu.dims.spcu_dims.repositories.RoleRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.NoHandlerFoundException;
-
-import java.util.Arrays;
 import java.util.Collection;
 
 @Controller
+@RequiredArgsConstructor
 public class PageControllers {
 
+    private final RoleRepository roleRepository;
+
     @GetMapping("/login")
-    public String login() {
+    public String showLoginForm() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated()) {
@@ -29,16 +29,15 @@ public class PageControllers {
             // Check if any of the user's authorities match any role in the UserRole Enum
             boolean hasUserRole = authorities.stream()
                     .map(GrantedAuthority::getAuthority)
-                    .anyMatch(role -> Arrays.stream(Role.values())
-                            .anyMatch(userRole -> userRole.name().equals(role)));
+                    .anyMatch(roleRepository::existsByName);
 
             if (hasUserRole) {
                 return "redirect:/dashboard";
             }
         }
 
+        // User is not authenticated or has different authorities, show the login page
         return "login";
-
     }
 
     @GetMapping("/dashboard")
@@ -52,18 +51,7 @@ public class PageControllers {
         return "admin only side";
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public String handleAccessDeniedException() {
-        // Redirect to the error page for unauthorized access
-        return "error-403";
-    }
 
-
-    @ExceptionHandler(NoHandlerFoundException.class)
-    public String pageNotFound() {
-        // Redirect to the error page for unauthorized access
-        return "error-404";
-    }
 
 
 
