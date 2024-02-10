@@ -28,4 +28,8 @@ public class StrategicDirection implements Serializable {
     @ManyToOne(targetEntity = Factor.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "factor_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_factor"))
     private Factor factor;
+
+    @ManyToOne(targetEntity = SDDetail.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "sd_details_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_sd_details"))
+    private SDDetail sdDetail;
 }

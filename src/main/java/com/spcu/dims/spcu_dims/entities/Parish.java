@@ -29,4 +29,9 @@ public class Parish implements Serializable {
     @JoinColumn(name = "archdiocese_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_archdiocese"))
     private Archdiocese archdiocese;
 
+    @ManyToOne(targetEntity = Zone.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "zone_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_zone"))
+    private Zone zone;
+
+
 }
