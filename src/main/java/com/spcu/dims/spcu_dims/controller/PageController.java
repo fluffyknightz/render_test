@@ -11,8 +11,8 @@ public class PageController {
         return "dashboard";
     }
 
-    @GetMapping("/home")
+    @GetMapping("/region")
     public String Home(){
-        return "home";
+        return "region";
     }
 }

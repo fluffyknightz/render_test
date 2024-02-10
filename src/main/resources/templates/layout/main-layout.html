@@ -11,10 +11,13 @@
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/theme/assets/images/favicon/favicon.ico}">
 
     <!-- Libs CSS -->
+    <link th:href="@{/theme/assets/libs/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/theme/assets/libs/bootstrap-icons/font/bootstrap-icons.css}" rel="stylesheet">
     <link th:href="@{/theme/assets/libs/dropzone/dist/dropzone.css}" rel="stylesheet">
     <link th:href="@{/theme/assets/libs/mdi/font/css/materialdesignicons.min.css}" rel="stylesheet" />
     <link th:href="@{/theme/assets/libs/prismjs/themes/prism-okaidia.css}" rel="stylesheet">
+    <link th:href="@{/theme/assets/libs/datatables/jquery.dataTables.min.css}" rel="stylesheet">
+    <link th:href="@{/theme/assets/libs/notiflix/dist/notiflix-3.2.7.min.css}" rel="stylesheet">
 
     <!-- Theme CSS -->
     <link rel="stylesheet" th:href="@{/theme/assets/css/theme.css}">
@@ -51,11 +54,16 @@
 <script th:src="@{/theme/assets/libs/dropzone/dist/min/dropzone.min.js}"></script>
 <script th:src="@{/theme/assets/libs/prismjs/plugins/toolbar/prism-toolbar.min.js}"></script>
 <script th:src="@{/theme/assets/libs/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js}"></script>
+<script th:src="@{/theme/assets/libs/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/theme/assets/libs/notiflix/dist/notiflix-3.2.7.min.js}"></script>
+
 
 <!-- Theme JS -->
 <script th:src="@{/theme/assets/js/main.js}"></script>
 <script th:src="@{/theme/assets/js/feather.js}"></script>
 <script th:src="@{/theme/assets/js/sidebarMenu.js}"></script>
+
+<script layout:fragment="scripts"></script>
 
 </body>
 
