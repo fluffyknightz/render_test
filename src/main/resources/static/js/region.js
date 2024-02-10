@@ -1,5 +1,7 @@
 $(document).ready( function () {
-    $('#myTable').DataTable();
+    $('#myTable').DataTable({
+        dom: 'flrtip'
+    });
 } );
 
 Notiflix.Confirm.init({

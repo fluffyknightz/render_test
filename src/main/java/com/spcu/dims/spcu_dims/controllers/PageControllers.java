@@ -58,7 +58,10 @@ public class PageControllers {
     }
 
 
-
+    @GetMapping("/region")
+    public String Home(){
+        return "region";
+    }
 
 
 
