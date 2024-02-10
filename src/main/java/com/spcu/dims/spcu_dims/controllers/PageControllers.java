@@ -52,6 +52,10 @@ public class PageControllers {
     }
 
 
+    @GetMapping("/home")
+    public String home(){
+        return "home";
+    }
 
 
 

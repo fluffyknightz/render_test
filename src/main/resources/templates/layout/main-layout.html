@@ -26,13 +26,13 @@
 <div id="db-wrapper">
 
     <!-- Side Bar -->
-    <div th:replace="/fragments/sidebar :: sidebar">...</div>
+    <div th:replace="~{/fragments/sidebar :: sidebar}">...</div>
 
     <!-- Page content -->
     <div id="page-content">
 
         <!-- Navbar -->
-        <div th:replace="/fragments/navbar :: navbar">...</div>
+        <div th:replace="~{/fragments/navbar :: navbar}">...</div>
 
         <!--Main Content-->
         <div layout:fragment="content"></div>
@@ -56,6 +56,7 @@
 <script th:src="@{/theme/assets/js/main.js}"></script>
 <script th:src="@{/theme/assets/js/feather.js}"></script>
 <script th:src="@{/theme/assets/js/sidebarMenu.js}"></script>
+
 
 </body>
 
