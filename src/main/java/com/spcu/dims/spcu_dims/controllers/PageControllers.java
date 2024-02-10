@@ -52,17 +52,10 @@ public class PageControllers {
     }
 
 
-    @GetMapping("/home")
-    public String home(){
-        return "home";
-    }
-
-
     @GetMapping("/region")
-    public String Home(){
+    public String region(){
         return "region";
     }
-
 
 
 }

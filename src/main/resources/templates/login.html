@@ -1,76 +1,152 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <title>Login</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon icon-->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/theme/assets/images/favicon/favicon.ico}">
+    <!-- Libs CSS -->
+    <link th:href="@{/theme/assets/libs/bootstrap-icons/font/bootstrap-icons.css}" rel="stylesheet">
+    <link th:href="@{/theme/assets/libs/dropzone/dist/dropzone.css}" rel="stylesheet">
+    <link th:href="@{/theme/assets/libs/mdi/font/css/materialdesignicons.min.css}" rel="stylesheet"/>
+    <link th:href="@{/theme/assets/libs/prismjs/themes/prism-okaidia.css}" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="/assets/css/auth.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/theme/assets/css/theme.css}">
+    <title>Sign In | Dash Ui - Bootstrap 5 Admin Dashboard Template</title>
+    <style>
 
+        .form-control.is-invalid,
+        .was-validated .form-control:invalid {
+            background-image: none !important;
+        }
+
+        .form-control.is-valid,
+        .was-validated .form-control:valid {
+            background-image: none !important;
+        }
+
+        .form-check-input.is-valid,
+        .was-validated .form-check-input:valid {
+            border-color: #ccc !important;
+        }
+
+        .form-check-input.is-valid:checked,
+        .was-validated .form-check-input:valid:checked {
+            background-color: #1e497b !important;
+            border-color: #1e497b !important;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 25px;
+            display: none;
+        }
+
+    </style>
 </head>
-<body>
 
-<div id="auth">
+<body class="bg-light">
+<!-- container -->
+<div class="container d-flex flex-column">
+    <div class="row align-items-center justify-content-center g-0
+        min-vh-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xxl-4 py-8 py-xl-0">
+            <!-- Card -->
+            <div class="card smooth-shadow-md">
+                <!-- Card body -->
+                <div class="card-body p-6">
+                    <div class="mb-4">
 
-    <div class="row h-100">
-        <div class="d-flex justify-content-center align-items-center">
-            <div class="py-5  py-lg-5 px-5 px-md-6 px-lg-5 shadow-lg  col-12 col-sm-8 col-md-7 col-lg-7 col-xl-5 col-xxl-5 mx-auto custom-card">
-                <h1 class="auth-title text-center pb-4">Log In</h1>
-                <div id="validated_alert" role="alert"></div>
-                <form id="login-form" th:action="@{/login}" method="post" class="needs-validation" novalidate>
-                    <div class="form-floating form-group position-relative has-icon-left mb-4">
-                        <input type="text" class="form-control" placeholder="Username" id="username" name="username"
-                               required>
-                        <label for="username">
-                            <i class="bi bi-person"></i>
-                            Username
-                        </label>
+                        <h1 class="text-center pb-2">Log In</h1>
                     </div>
-
-                    <div class="form-floating form-group position-relative has-icon-left mb-4">
-                        <input type="password" id="password" name="password" autocomplete="current-password"
-                               class="form-control" spellcheck="false" autocorrect="off" autocapitalize="off"
-                               placeholder="password" required>
-
-                        <label for="password">
-                            <i class="bi bi-shield-lock"></i>
-                            Password
-                        </label>
-
-                        <i class="bi bi-eye-slash password-toggle" id="togglePassword"
-
-                        ></i>
-                    </div>
-
-
-                    <div class="form-check form-check-lg d-flex align-items-end mt-2">
-                        <input class="form-check-input form-check-input-lg me-2 remember-me-checkbox" type="checkbox"
-                               id="remember-me"
-                               name="remember-me">
-                        <label class="form-check-label fs-6 text-muted fw-normal" for="remember-me">
-                            Stayed Sign In?
-                        </label>
-                    </div>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <div class="d-grid gap-2 col-8">
-                            <button type="submit" class="btn btn-primary rounded-pill mt-4">Log In</button>
+                    <div id="validated_alert" role="alert"></div>
+                    <!-- Form -->
+                    <form id="login-form" th:action="@{/login}" method="post" class="needs-validation" novalidate>
+                        <!-- Username -->
+                        <div class="form-floating form-group position-relative has-icon-left mb-3">
+                            <input type="text" class="form-control" placeholder="Username" id="username" name="username"
+                                   required>
+                            <label for="username">
+                                <i class="bi bi-person"></i>
+                                Username
+                            </label>
                         </div>
-                    </div>
-                </form>
-                <div class="text-center mt-3 text-lg fs-6">
-                    <p><a class="font-bold fs-6">Forgot Password?</a></p>
+
+                        <div class="form-floating form-group position-relative has-icon-left mb-3">
+                            <input type="password" id="password" name="password" autocomplete="current-password"
+                                   class="form-control" spellcheck="false" autocorrect="off" autocapitalize="off"
+                                   placeholder="password" required>
+
+                            <label for="password">
+                                <i class="bi bi-shield-lock"></i>
+                                Password
+                            </label>
+
+                            <i class="bi bi-eye-slash password-toggle" id="togglePassword"
+
+                            ></i>
+                        </div>
+                        <!-- Checkbox -->
+                        <div class="d-lg-flex justify-content-between align-items-center
+                  mb-4">
+                            <div class="form-check custom-checkbox">
+                                <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
+                                <label class="form-check-label" for="remember-me">Remember
+                                    me</label>
+                            </div>
+
+                        </div>
+                        <div>
+                            <!-- Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Sign
+                                    in
+                                </button>
+                            </div>
+
+                            <div class="d-md-flex justify-content-between mt-4">
+                                <div class="mb-2 mb-md-0">
+                                    <a href="sign-up.html" class="fs-5">Create An
+                                        Account </a>
+                                </div>
+                                <div>
+                                    <a href="forget-password.html" class="text-inherit
+                        fs-5">Forgot your password?</a>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
+<!-- Scripts -->
+<!-- Libs JS -->
+<script th:src="@{/theme/assets/libs/jquery/dist/jquery.min.js}"></script>
+<script th:src="@{/theme/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/theme/assets/libs/jquery-slimscroll/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/theme/assets/libs/feather-icons/dist/feather.min.js}"></script>
+<script th:src="@{/theme/assets/libs/prismjs/prism.js}"></script>
+<script th:src="@{/theme/assets/libs/apexcharts/dist/apexcharts.min.js}"></script>
+<script th:src="@{/theme/assets/libs/dropzone/dist/min/dropzone.min.js}"></script>
+<script th:src="@{/theme/assets/libs/prismjs/plugins/toolbar/prism-toolbar.min.js}"></script>
+<script th:src="@{/theme/assets/libs/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js}"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+<!-- Theme JS -->
+<!-- build:js @@webRoot/assets/js/theme.min.js -->
+<script th:src="@{/theme/assets/js/main.js}"></script>
+<script th:src="@{/theme/assets/js/feather.js}"></script>
+<script th:src="@{/theme/assets/js/sidebarMenu.js}"></script>
 <script src="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/js/iziToast.min.js"></script>
 <script>
     const usernameInput = document.getElementById('username');
@@ -140,6 +216,6 @@
 
 
 </script>
-
 </body>
+
 </html>
