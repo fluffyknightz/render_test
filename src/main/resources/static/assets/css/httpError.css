@@ -2,6 +2,11 @@
 
 .wrapper {
     overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 h1,
@@ -206,15 +211,6 @@ nav .menu .menu_icon:hover .icon:before {
 
 nav .menu .menu_icon:hover .icon:after {
     transform: translateY(10px);
-}
-
-.wrapper {
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow-x: hidden;
 }
 
 .wrapper .container {

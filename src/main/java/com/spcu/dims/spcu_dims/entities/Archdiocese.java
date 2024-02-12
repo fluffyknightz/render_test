@@ -22,14 +22,11 @@ public class Archdiocese implements Serializable {
     @Column(nullable = false, length = 10, unique = true)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "BIT(1) DEFAULT 0")
     private boolean isDelete;
 
     @ManyToOne(targetEntity = Diocese.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "diocese_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_diocese"))
     private Diocese diocese;
 
-//    @OneToMany(mappedBy = "archdiocese", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, targetEntity = Parish.class)
-//    @ToString.Exclude
-//    private List<Parish> parishList = new ArrayList<>();
 }

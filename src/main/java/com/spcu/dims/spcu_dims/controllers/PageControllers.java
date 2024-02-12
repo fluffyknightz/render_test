@@ -1,4 +1,3 @@
-
 package com.spcu.dims.spcu_dims.controllers;
 
 
@@ -10,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import java.util.Collection;
 
 @Controller
@@ -27,9 +27,7 @@ public class PageControllers {
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
             // Check if any of the user's authorities match any role in the UserRole Enum
-            boolean hasUserRole = authorities.stream()
-                    .map(GrantedAuthority::getAuthority)
-                    .anyMatch(roleRepository::existsByName);
+            boolean hasUserRole = authorities.stream().map(GrantedAuthority::getAuthority).anyMatch(roleRepository::existsByName);
 
             if (hasUserRole) {
                 return "redirect:/dashboard";
@@ -45,15 +43,19 @@ public class PageControllers {
         return "dashboard";
     }
 
-    @GetMapping("/adminPage")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public String adminPage() {
-        return "admin only side";
+//    @GetMapping("/adminPage")
+//    @PreAuthorize("hasAuthority('ADMIN')")
+//    public String adminPage() {
+//        return "admin only side";
+//    }
+
+    @GetMapping("/diocese")
+    public String diocese() {
+        return "diocese";
     }
 
-
     @GetMapping("/region")
-    public String region(){
+    public String region() {
         return "region";
     }
 

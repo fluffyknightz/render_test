@@ -35,14 +35,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity
-//                .csrf(
-//                        csrf -> csrf.csrfTokenRepository(
-//                                CookieCsrfTokenRepository.withHttpOnlyFalse())
-//                )
-
                 .csrf(
-                        AbstractHttpConfigurer::disable
+                        csrf -> csrf.csrfTokenRepository(
+                                CookieCsrfTokenRepository.withHttpOnlyFalse())
                 )
+
+//                .csrf(
+//                        AbstractHttpConfigurer::disable
+//                )
                 .rememberMe(
                         rememberMeKey -> rememberMeKey
                                 .rememberMeServices(customRememberMeServices())

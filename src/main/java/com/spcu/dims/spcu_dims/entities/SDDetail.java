@@ -25,7 +25,7 @@ public class SDDetail implements Serializable {
     @Column(columnDefinition = "longtext", nullable = false, unique = true)
     private String detail;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "BIT(1) DEFAULT 0")
     private boolean isDelete;
 
 }

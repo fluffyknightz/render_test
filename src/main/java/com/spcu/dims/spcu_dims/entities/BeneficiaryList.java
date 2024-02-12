@@ -22,7 +22,7 @@ public class BeneficiaryList implements Serializable {
     @Column(length = 20, nullable = false, unique = true)
     private String activity;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "BIT(1) DEFAULT 0")
     private boolean isDelete;
 
     @ManyToOne(targetEntity = Parish.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})

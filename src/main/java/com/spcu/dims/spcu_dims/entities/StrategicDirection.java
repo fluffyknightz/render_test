@@ -22,7 +22,7 @@ public class StrategicDirection implements Serializable {
     @Column(length = 20, nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "BIT(1) DEFAULT 0")
     private boolean isDelete;
 
     @ManyToOne(targetEntity = Factor.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})

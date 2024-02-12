@@ -17,9 +17,14 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false, columnDefinition = "BIT(1) DEFAULT 0")
+    private boolean isDelete;
 
     @ManyToOne(targetEntity = Role.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "role_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_role"))

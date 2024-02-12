@@ -23,7 +23,7 @@ public class Factor implements Serializable {
     @Column(nullable = false, length = 10, unique = true)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "BIT(1) DEFAULT 0")
     private boolean isDelete;
 
 }

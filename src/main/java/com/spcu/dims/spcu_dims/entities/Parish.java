@@ -12,7 +12,7 @@ import java.io.Serializable;
 @RequiredArgsConstructor
 @Builder
 @AllArgsConstructor
-@Table(name = "parishs")
+@Table(name = "parishes")
 public class Parish implements Serializable {
 
     @Id
@@ -22,8 +22,11 @@ public class Parish implements Serializable {
     @Column(length = 20, nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "BIT(1) DEFAULT 0")
     private boolean isDelete;
+
+    @Column(columnDefinition = "LONGTEXT")
+    private String note;
 
     @ManyToOne(targetEntity = Archdiocese.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "archdiocese_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_archdiocese"))

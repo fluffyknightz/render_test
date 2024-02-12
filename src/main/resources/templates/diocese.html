@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{/layout/main-layout}">
+
+
+<div layout:fragment="content">
+
+    <div class="container-fluid p-6">
+
+        <!--Start Diocese -->
+        <div class="row mt-3">
+            <div class="col-md-12 col-12">
+                <!-- card  -->
+                <div class="card">
+                    <!-- card header  -->
+                    <div class="card-header bg-white py-4">
+
+                            <span type="button" data-bs-toggle="modal" data-bs-target="#addModel">
+                                <i class="bi bi-plus-square ml-5" style="font-size: 1.4rem"></i>
+                            </span>
+
+                    </div>
+
+                    <div class="p-5">
+                        <table id="myTable" class="hover table table-striped" style="width: 100%">
+                            <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--End Diocese-->
+
+        <!--Start Diocese Add Modal -->
+        <div class="modal fade" id="addModel" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Add Diocese</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="form-floating my-3">
+                            <input type="text" class="form-control" name="diocese" id="diocese" placeholder="Diocese">
+                            <label for="diocese">Diocese</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="saveButton">Save</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--End Diocese Add Modal -->
+
+    </div>
+
+</div>
+
+<script layout:fragment="scripts" th:src="@{/js/diocese.js}"></script>
+
+</html>

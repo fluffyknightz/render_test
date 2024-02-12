@@ -4,6 +4,8 @@ import com.spcu.dims.spcu_dims.entities.Diocese;
 import com.spcu.dims.spcu_dims.repositories.DioceseRepository;
 import com.spcu.dims.spcu_dims.services.DioceseServices;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,5 +52,10 @@ public class DioceseServicesImplement implements DioceseServices {
             return dioceseRepository.save(diocese.get());
         }
         return null;
+    }
+
+    @Override
+    public DataTablesOutput<Diocese> tableDiocese(DataTablesInput input) {
+        return dioceseRepository.findAll(input);
     }
 }
