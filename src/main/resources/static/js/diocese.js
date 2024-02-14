@@ -1,10 +1,9 @@
 let table
-
-document.getElementById('saveButton').addEventListener('click', function (event) {
+document.getElementById('addButton').addEventListener('click', function (event) {
     event.preventDefault()
     const name = document.getElementById('diocese');
     fetch('/spcu-dims/api/v1/diocese/create?name=' + encodeURIComponent(name.value), {
-        method: 'POST',
+        method: 'PUT',
         headers: {
             contentType: 'application/json',
             [csrfHeader]: csrfToken
@@ -22,48 +21,57 @@ document.getElementById('saveButton').addEventListener('click', function (event)
 })
 $(document).ready(function () {
 
-        table = $('#myTable').DataTable({
-            dom: 'flrtip',
-            ajax: {
+    table = $('#myTable').DataTable({
+        dom: 'flrtip',
+        language:{
+            infoFiltered: null,
+        },
 
-                url: 'spcu-dims/api/v1/diocese/show/table',
-                method: 'POST',
-                contentType: 'application/json',
+        ajax: {
 
-                headers: {
-                    [csrfHeader]: csrfToken
-                },
+            url: 'spcu-dims/api/v1/diocese/show/table',
+            method: 'POST',
+            contentType: 'application/json',
 
-                data: function (d) {
-                    d.columns[2].search.value = false;
-                    return JSON.stringify(d);
-                },
+            headers: {
+                [csrfHeader]: csrfToken
+            },
+
+            data: function (d) {
+                d.columns[2].search.value = false;
+                return JSON.stringify(d);
+            },
+
+        },
+        processing: true,
+        serverSide: true,
+        stateSave: true,
+        columns: [
+            {
+                data: 'id',
+                render: function (data, type, row, meta) {
+                    // meta.row contains the row index
+                    return meta.row + 1;
+                }
 
             },
-            processing: true,
-            serverSide: true,
-            // stateSave: true,
-            columns: [
-                {
-                    data: 'id'
-                },
-                {
-                    data: 'name'
-                },
-                {
-                    data: 'isDelete',
-                    render: function (data, type, row) {
-                        return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' +
-                            'data-bs-target="#editModel" style="border: none">\n' +
-                            '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' +
-                            '</button>\n' +
-                            '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' +
-                            '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' +
-                            '</button>';
-                    }
-                },
-            ]
-        });
+            {
+                data: 'name'
+            },
+            {
+                data: 'isDelete',
+                render: function (data, type, row) {
+                    return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' +
+                        'data-bs-target="#editModel" style="border: none">\n' +
+                        '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' +
+                        '</button>\n' +
+                        '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' +
+                        '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' +
+                        '</button>';
+                }
+            },
+        ]
+    });
 
     }
 );
@@ -111,4 +119,14 @@ function showConfirm(id) {
             borderRadius: '8px',
         },
     );
+}
+
+
+function changeAdd(){
+    const button = document.getElementsByClassName('myButton')[0];
+    const title = document.getElementById('modelTitle')
+    button.id = 'addButton'
+    button.innerHTML='Add'
+    title.textContent = 'Add Diocese'
+
 }

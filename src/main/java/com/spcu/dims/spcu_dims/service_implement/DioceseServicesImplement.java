@@ -20,8 +20,22 @@ public class DioceseServicesImplement implements DioceseServices {
     @Override
     public Diocese dioceseCreate(String name) {
 
-        return dioceseRepository.save(Diocese.builder().name(name).isDelete(false).build());
+        if (!dioceseRepository.existsByName(name)) {
+            return dioceseRepository.save(Diocese.builder().name(name).isDelete(false).build());
+        } else {
+            Optional<Diocese> existingDioceseOptional = dioceseRepository.findByName(name);
 
+            if (existingDioceseOptional.isPresent()) {
+                Diocese existingDiocese = existingDioceseOptional.get();
+
+                if (existingDiocese.isDelete()) {
+                    existingDiocese.setDelete(false);
+                    return dioceseRepository.save(existingDiocese);
+                }
+
+            }
+        }
+        return null;
     }
 
     @Override

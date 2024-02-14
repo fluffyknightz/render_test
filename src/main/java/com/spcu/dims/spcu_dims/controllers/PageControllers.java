@@ -59,5 +59,10 @@ public class PageControllers {
         return "region";
     }
 
+    @GetMapping("/archdiocese")
+    public String archdiocese() {
+        return "archdiocese";
+    }
+
 
 }

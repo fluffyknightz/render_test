@@ -1,6 +1,8 @@
 package com.spcu.dims.spcu_dims.services;
 
 import com.spcu.dims.spcu_dims.entities.Region;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 
 import java.util.List;
 
@@ -16,4 +18,6 @@ public interface RegionServices{
     Region delete(int id);
 
     Region update(int id, String name);
+
+    DataTablesOutput<Region> tableRegion(DataTablesInput input);
 }

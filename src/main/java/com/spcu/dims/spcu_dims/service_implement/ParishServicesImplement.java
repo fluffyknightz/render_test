@@ -19,7 +19,7 @@ public class ParishServicesImplement implements ParishServices {
 
     @Override
     public Parish createParish(String name, int archdioceseId) {
-        return parishRepository.save(Parish.builder().name(name).isDelete(false).archdiocese(archdioceseRepository.findById(archdioceseId).orElse(null)).build());
+        return parishRepository.save(Parish.builder().name(name).isDelete(false).build());
     }
 
     @Override

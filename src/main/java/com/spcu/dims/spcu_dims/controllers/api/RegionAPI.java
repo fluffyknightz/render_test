@@ -2,7 +2,10 @@ package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.entities.Region;
 import com.spcu.dims.spcu_dims.services.RegionServices;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -55,5 +58,11 @@ public class RegionAPI {
             return new ResponseEntity<>(region, HttpStatus.OK);
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/show/table")
+    public DataTablesOutput<Region> dioceses(@Valid @RequestBody DataTablesInput input){
+        return regionServices.tableRegion(input);
+
     }
 }

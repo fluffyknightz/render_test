@@ -23,9 +23,15 @@ public class DioceseAPI {
 
     private static final String NOT_FOUND = "ID Not Found.";
 
-    @PostMapping("/create")
-    public ResponseEntity<Diocese> dioceseCreate(@RequestParam("name") String name) {
-        return new ResponseEntity<>(dioceseServices.dioceseCreate(name), HttpStatus.CREATED);
+    @PutMapping("/create")
+    public ResponseEntity<Object> dioceseCreate(@RequestParam("name") String name) {
+
+        Diocese diocese = dioceseServices.dioceseCreate(name);
+        if (diocese!= null) {
+            return new ResponseEntity<>(diocese, HttpStatus.CREATED);
+        }
+        String errorMessage = "Diocese with the name '" + name + "' already exists.";
+        return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 
     @GetMapping("/show/all")
@@ -64,10 +70,7 @@ public class DioceseAPI {
 
     @PostMapping("/show/table")
     public DataTablesOutput<Diocese> dioceses(@Valid @RequestBody DataTablesInput input){
-        System.out.println(input);
-        DataTablesOutput<Diocese> output = dioceseServices.tableDiocese(input);
-        System.out.println(output);
-        return output;
+        return dioceseServices.tableDiocese(input);
 
     }
 

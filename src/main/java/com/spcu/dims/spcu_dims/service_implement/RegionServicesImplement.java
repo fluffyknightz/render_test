@@ -4,6 +4,8 @@ import com.spcu.dims.spcu_dims.entities.Region;
 import com.spcu.dims.spcu_dims.repositories.RegionRepository;
 import com.spcu.dims.spcu_dims.services.RegionServices;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,5 +50,10 @@ public class RegionServicesImplement implements RegionServices {
             return regionRepository.save(region.get());
         }
         return null;
+    }
+
+    @Override
+    public DataTablesOutput<Region> tableRegion(DataTablesInput input) {
+        return regionRepository.findAll(input);
     }
 }
