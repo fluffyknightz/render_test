@@ -64,5 +64,14 @@ public class PageControllers {
         return "archdiocese";
     }
 
+    @GetMapping("/district")
+    public String district(){
+        return "district";
+    }
+
+    @GetMapping("/township")
+    public String township(){
+        return "township";
+    }
 
 }

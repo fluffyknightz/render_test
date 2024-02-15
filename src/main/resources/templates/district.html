@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{/layout/main-layout}">
+
+<div layout:fragment="content">
+
+    <div class="container-fluid p-6">
+
+        <!--Start Region -->
+        <div class="row mt-3">
+            <div class="col-md-12 col-12">
+                <!-- card  -->
+                <div class="card">
+                    <!-- card header  -->
+                    <div class="card-header bg-white  py-4">
+                        <h4 class="mb-0 text-primary">District
+                            <span type="button" data-bs-toggle="modal" data-bs-target="#addModel">
+                                <i class="bi bi-plus-square ms-2" style="font-size: 1.4rem"></i>
+                            </span>
+                        </h4>
+                    </div>
+                    <div class="p-5">
+                        <table id="myTable" class="hover table table-striped" style="width: 100%">
+                            <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Region</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>East Yangon</td>
+                                <td>Yangon</td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-warning p-0" style="border: none">
+                                        <i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>
+                                    </button>
+                                    <button type="button" onclick="showConfirm()" class="btn btn-outline-danger p-0"
+                                            style="border: none">
+                                        <i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>West Yangon</td>
+                                <td>Yangon</td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-warning p-0" style="border: none">
+                                        <i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>
+                                    </button>
+                                    <button type="button" onclick="showConfirm()" class="btn btn-outline-danger p-0"
+                                            style="border: none">
+                                        <i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>North Yangon</td>
+                                <td>Yangon</td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-warning p-0" style="border: none">
+                                        <i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>
+                                    </button>
+                                    <button type="button" onclick="showConfirm()" class="btn btn-outline-danger p-0"
+                                            style="border: none">
+                                        <i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Region-->
+
+        <!--Start District Add Modal -->
+        <div class="modal fade" id="addModel" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Add District</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-floating my-3">
+                            <input type="text" class="form-control" name="district" id="district" placeholder="district">
+                            <label for="district">District</label>
+                        </div>
+
+                        <select class="form-select my-3" aria-label="region select">
+                            <option selected>Select Region</option>
+                            <option value="1">Yangon</option>
+                            <option value="2">Mandalay</option>
+                            <option value="3">Shan</option>
+                        </select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End District Add Modal -->
+    </div>
+
+</div>
+
+<script layout:fragment="scripts" th:src="@{/js/district.js}"></script>
+
+</html>
