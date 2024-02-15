@@ -7,7 +7,6 @@ const addButton = document.getElementById('addButton');
 const editButton = document.getElementById('editButton');
 
 function performOperation(url, method, successMessage) {
-    const name = document.getElementById('diocese');
     fetch(url, {
         method: method,
         headers: {
@@ -25,9 +24,9 @@ function performOperation(url, method, successMessage) {
             }
         }
     )
-        .catch(error => {
-                Notiflix.Notify.failure("Error has occurred during process. Please Try again later.");
-            }
+        .catch(
+                Notiflix.Notify.failure("Error has occurred during process. Please Try again later.")
+
         )
     ;
 }
