@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon icon-->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/theme/assets/images/favicon/favicon.ico}">
+    <!-- Libs CSS -->
+    <link th:href="@{/theme/assets/libs/bootstrap-icons/font/bootstrap-icons.css}" rel="stylesheet">
+    <link th:href="@{/theme/assets/libs/dropzone/dist/dropzone.css}" rel="stylesheet">
+    <link th:href="@{/theme/assets/libs/mdi/font/css/materialdesignicons.min.css}" rel="stylesheet"/>
+    <link th:href="@{/theme/assets/libs/prismjs/themes/prism-okaidia.css}" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/theme/assets/css/theme.css}">
+    <title>Sign In | Dash Ui - Bootstrap 5 Admin Dashboard Template</title>
+    <style>
+
+        .form-control.is-invalid,
+        .was-validated .form-control:invalid {
+            background-image: none !important;
+        }
+
+        .form-control.is-valid,
+        .was-validated .form-control:valid {
+            background-image: none !important;
+        }
+
+        .form-check-input.is-valid,
+        .was-validated .form-check-input:valid {
+            border-color: #ccc !important;
+        }
+
+        .form-check-input.is-valid:checked,
+        .was-validated .form-check-input:valid:checked {
+            background-color: #1e497b !important;
+            border-color: #1e497b !important;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 25px;
+            display: none;
+        }
+
+    </style>
+</head>
+
+<body class="bg-light">
+<!-- container -->
+<div class="container d-flex flex-column">
+    <div class="row align-items-center justify-content-center g-0
+        min-vh-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xxl-4 py-8 py-xl-0">
+            <!-- Card -->
+            <div class="card smooth-shadow-md">
+                <!-- Card body -->
+                <div class="card-body p-6">
+                    <div class="mb-4">
+
+                        <h1 class="text-center pb-2">Log In</h1>
+                    </div>
+                    <div id="validated_alert" role="alert"></div>
+                    <!-- Form -->
+                    <form id="login-form" th:action="@{/login}" method="post" class="needs-validation" novalidate>
+                        <!-- Username -->
+                        <div class="form-floating form-group position-relative has-icon-left mb-3">
+                            <input type="text" class="form-control" placeholder="Username" id="username" name="username"
+                                   required>
+                            <label for="username">
+                                <i class="bi bi-person"></i>
+                                Username
+                            </label>
+                        </div>
+
+                        <div class="form-floating form-group position-relative has-icon-left mb-3">
+                            <input type="password" id="password" name="password" autocomplete="current-password"
+                                   class="form-control" spellcheck="false" autocorrect="off" autocapitalize="off"
+                                   placeholder="password" required>
+
+                            <label for="password">
+                                <i class="bi bi-shield-lock"></i>
+                                Password
+                            </label>
+
+                            <i class="bi bi-eye-slash password-toggle" id="togglePassword"
+
+                            ></i>
+                        </div>
+                        <!-- Checkbox -->
+                        <div class="d-lg-flex justify-content-between align-items-center
+                  mb-4">
+                            <div class="form-check custom-checkbox">
+                                <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
+                                <label class="form-check-label" for="remember-me">Remember
+                                    me</label>
+                            </div>
+
+                        </div>
+                        <div>
+                            <!-- Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Sign
+                                    in
+                                </button>
+                            </div>
+
+                            <div class="d-md-flex justify-content-between mt-4">
+                                <div class="mb-2 mb-md-0">
+                                    <a href="sign-up.html" class="fs-5">Create An
+                                        Account </a>
+                                </div>
+                                <div>
+                                    <a href="forget-password.html" class="text-inherit
+                        fs-5">Forgot your password?</a>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Scripts -->
+<!-- Libs JS -->
+<script th:src="@{/theme/assets/libs/jquery/dist/jquery.min.js}"></script>
+<script th:src="@{/theme/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/theme/assets/libs/jquery-slimscroll/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/theme/assets/libs/feather-icons/dist/feather.min.js}"></script>
+<script th:src="@{/theme/assets/libs/prismjs/prism.js}"></script>
+<script th:src="@{/theme/assets/libs/apexcharts/dist/apexcharts.min.js}"></script>
+<script th:src="@{/theme/assets/libs/dropzone/dist/min/dropzone.min.js}"></script>
+<script th:src="@{/theme/assets/libs/prismjs/plugins/toolbar/prism-toolbar.min.js}"></script>
+<script th:src="@{/theme/assets/libs/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js}"></script>
+
+<!-- Theme JS -->
+<!-- build:js @@webRoot/assets/js/theme.min.js -->
+<script th:src="@{/theme/assets/js/main.js}"></script>
+<script th:src="@{/theme/assets/js/feather.js}"></script>
+<script th:src="@{/theme/assets/js/sidebarMenu.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/js/iziToast.min.js"></script>
+<script>
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const alertDiv = document.getElementById('validated_alert');
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+        const queryParams = new URLSearchParams(window.location.search);
+        const isError = queryParams.get('error');
+        const isSuccess = queryParams.get('logout_success');
+
+        if (isError === "bad_credentials") {
+
+            alertDiv.className = 'alert alert-danger position-relative mb-4';
+            alertDiv.innerHTML = 'Username or Password is incorrect!';
+
+        } else if (isError === "disabled") {
+
+            alertDiv.className = 'alert alert-danger position-relative mb-4';
+            alertDiv.innerHTML = 'Your account is disabled!';
+
+        } else if (isSuccess) {
+
+            alertDiv.className = 'alert alert-success position-relative mb-4';
+            alertDiv.innerHTML = 'Logout Success.';
+        }
+
+// <-----------------------------------------------Password Toggle---------------------------------------------------->
+
+        const toggleButton = document.getElementById('togglePassword');
+
+
+        passwordInput.addEventListener('input', function () {
+            // Show toggle button when there is input in the password field
+            toggleButton.style.display = passwordInput.value.length > 0 ? 'block' : 'none';
+        });
+
+        toggleButton.addEventListener('click', function () {
+            // Toggle password visibility
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        });
+    });
+
+    (() => {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
+
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                if (usernameInput.value === '' || passwordInput.value === '') {
+                    alertDiv.className = 'alert alert-danger position-relative mb-4';
+                    alertDiv.innerHTML = 'Please Fill Username and Password to Sign In!';
+                }
+            }, false);
+        });
+    })();
+
+
+</script>
+</body>
+
+</html>
