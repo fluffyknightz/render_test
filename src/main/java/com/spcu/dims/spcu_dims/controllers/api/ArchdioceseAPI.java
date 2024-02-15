@@ -3,7 +3,10 @@ package com.spcu.dims.spcu_dims.controllers.api;
 import com.spcu.dims.spcu_dims.entities.Archdiocese;
 
 import com.spcu.dims.spcu_dims.services.ArchdioceseServices;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +57,12 @@ public class ArchdioceseAPI {
             return new ResponseEntity<>(archdiocese, HttpStatus.OK);
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/show/table")
+    public DataTablesOutput<Archdiocese> archdioceses(@Valid @RequestBody DataTablesInput input){
+        return archdioceseServices.tableArchdiocese(input);
+
     }
 
 }

@@ -5,6 +5,8 @@ import com.spcu.dims.spcu_dims.repositories.ArchdioceseRepository;
 import com.spcu.dims.spcu_dims.repositories.DioceseRepository;
 import com.spcu.dims.spcu_dims.services.ArchdioceseServices;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,5 +53,10 @@ public class ArchdioceseServicesImplement implements ArchdioceseServices {
             return archdioceseRepository.save(archdiocese.get());
         }
         return null;
+    }
+
+    @Override
+    public DataTablesOutput<Archdiocese> tableArchdiocese(DataTablesInput input) {
+        return archdioceseRepository.findAll(input);
     }
 }

@@ -1,77 +1,106 @@
 let table
-document.getElementById('addButton').addEventListener('click', function (event) {
-    event.preventDefault()
+let data_id
+let button = document.getElementById('myButton');
+let title = document.getElementById('modelTitle');
+let input = document.getElementById('diocese');
+const addButton = document.getElementById('addButton');
+const editButton = document.getElementById('editButton');
+
+function performOperation(url, method, successMessage) {
     const name = document.getElementById('diocese');
-    fetch('/spcu-dims/api/v1/diocese/create?name=' + encodeURIComponent(name.value), {
-        method: 'PUT',
+    fetch(url, {
+        method: method,
         headers: {
             contentType: 'application/json',
             [csrfHeader]: csrfToken
         },
         body: null
-    }).then(r => {
-        if (r.status === 201) {
-            $('#addModel').modal('hide');
-            Notiflix.Notify.success('Create successful.');
-            table.ajax.reload();
-        } else {
-            Notiflix.Notify.failure('Create Failed.');
+    }).then(async response => {
+            if (response.status === 201 || response.status === 200) {
+                $('#model').modal('hide');
+                Notiflix.Notify.success(successMessage);
+                table.ajax.reload();
+            } else {
+                Notiflix.Notify.failure(await response.text());
+            }
         }
-    })
-})
+    )
+        .catch(error => {
+                Notiflix.Notify.failure("Error has occurred during process. Please Try again later.");
+            }
+        )
+    ;
+}
+
+
+function adding() {
+    console.log("add reach")
+    const url = '/spcu-dims/api/v1/diocese/create?name=' + encodeURIComponent(document.getElementById('diocese').value);
+    performOperation(url, 'POST', 'Create successful.');
+}
+
+
+function editing() {
+    console.log("edit reach")
+
+    const url = '/spcu-dims/api/v1/diocese/update?name=' + encodeURIComponent(document.getElementById('diocese').value) + '&&id=' + encodeURIComponent(data_id);
+    performOperation(url, 'PATCH', 'Edit successful.');
+
+}
+
 $(document).ready(function () {
 
-    table = $('#myTable').DataTable({
-        dom: 'flrtip',
-        language:{
-            infoFiltered: null,
-        },
-
-        ajax: {
-
-            url: 'spcu-dims/api/v1/diocese/show/table',
-            method: 'POST',
-            contentType: 'application/json',
-
-            headers: {
-                [csrfHeader]: csrfToken
+        table = $('#myTable').DataTable({
+            dom: 'flrtip',
+            language: {
+                infoFiltered: null,
             },
 
-            data: function (d) {
-                d.columns[2].search.value = false;
-                return JSON.stringify(d);
-            },
+            ajax: {
 
-        },
-        processing: true,
-        serverSide: true,
-        stateSave: true,
-        columns: [
-            {
-                data: 'id',
-                render: function (data, type, row, meta) {
-                    // meta.row contains the row index
-                    return meta.row + 1;
-                }
+                url: 'spcu-dims/api/v1/diocese/show/table',
+                method: 'POST',
+                contentType: 'application/json',
+
+                headers: {
+                    [csrfHeader]: csrfToken
+                },
+
+                data: function (d) {
+                    d.columns[2].search.value = false;
+                    return JSON.stringify(d);
+                },
 
             },
-            {
-                data: 'name'
-            },
-            {
-                data: 'isDelete',
-                render: function (data, type, row) {
-                    return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' +
-                        'data-bs-target="#editModel" style="border: none">\n' +
-                        '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' +
-                        '</button>\n' +
-                        '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' +
-                        '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' +
-                        '</button>';
-                }
-            },
-        ]
-    });
+            processing: true,
+            serverSide: true,
+            stateSave: true,
+            columns: [
+                {
+                    data: 'id',
+                    render: function (data, type, row, meta) {
+                        // meta.row contains the row index
+                        return meta.row + 1;
+                    }
+
+                },
+                {
+                    data: 'name'
+                },
+                {
+                    data: 'isDelete',
+                    render: function (data, type, row) {
+                        return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' +
+                            'data-bs-target="#model" onclick="changeEdit(\'' + row.name + '\', ' + row.id + ')" style="border: none">\n' +
+                            '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' +
+                            '</button>\n' +
+                            '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' +
+                            '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' +
+                            '</button>';
+                    }
+                },
+            ]
+        });
 
     }
 );
@@ -93,7 +122,6 @@ function showConfirm(id) {
         'Yes',
         'No',
         function okCb() {
-            console.log(typeof id)
             fetch('/spcu-dims/api/v1/diocese/delete/' + id, {
                 method: 'PATCH',
                 headers: {
@@ -122,11 +150,20 @@ function showConfirm(id) {
 }
 
 
-function changeAdd(){
-    const button = document.getElementsByClassName('myButton')[0];
-    const title = document.getElementById('modelTitle')
-    button.id = 'addButton'
-    button.innerHTML='Add'
+function changeAdd() {
+
+    input.value = null;
+    button.innerHTML = 'Add'
     title.textContent = 'Add Diocese'
+    button.setAttribute('onclick', 'adding()');
+}
+
+function changeEdit(name, id) {
+
+    data_id = id
+    input.value = name;
+    button.innerHTML = 'Edit'
+    title.textContent = 'Edit Diocese'
+    button.setAttribute('onclick', 'editing()');
 
 }

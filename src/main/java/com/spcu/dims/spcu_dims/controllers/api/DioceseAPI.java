@@ -23,7 +23,7 @@ public class DioceseAPI {
 
     private static final String NOT_FOUND = "ID Not Found.";
 
-    @PutMapping("/create")
+    @PostMapping("/create")
     public ResponseEntity<Object> dioceseCreate(@RequestParam("name") String name) {
 
         Diocese diocese = dioceseServices.dioceseCreate(name);
@@ -59,13 +59,13 @@ public class DioceseAPI {
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
-    @PatchMapping("/update/{id}")
-    public ResponseEntity<Object> update(@PathVariable("id") int id, @RequestParam("name") String name) {
+    @PatchMapping("/update")
+    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name) {
         Diocese diocese = dioceseServices.update(id, name);
         if (diocese != null) {
             return new ResponseEntity<>(diocese, HttpStatus.OK);
         }
-        return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Diocese with the name '\" + name + \"' already exists.\"", HttpStatus.CONFLICT);
     }
 
     @PostMapping("/show/table")
