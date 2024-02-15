@@ -38,7 +38,7 @@ $(document).ready(function () {
                 },
 
                 data: function (d) {
-                    d.columns[2].search.value = false;
+                    d.columns[3].search.value = false;
                     return JSON.stringify(d);
                 },
 
