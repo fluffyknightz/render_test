@@ -64,6 +64,11 @@ public class PageControllers {
         return "archdiocese";
     }
 
+    @GetMapping("/zone")
+    public String zone(){
+        return "zone";
+    }
+
     @GetMapping("/district")
     public String district(){
         return "district";
