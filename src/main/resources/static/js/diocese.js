@@ -131,6 +131,13 @@ function showConfirm(id) {
     },);
 }
 
+document.getElementById('myForm').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+        e.preventDefault(); // Prevent default form submission
+        button.click(); // Trigger the 'Save' button click event
+    }
+});
+
 
 function changeAdd() {
 
@@ -138,6 +145,7 @@ function changeAdd() {
     button.innerHTML = 'Add'
     title.textContent = 'Add Diocese'
     button.setAttribute('onclick', 'adding()');
+    return false;
 }
 
 function changeEdit(name, id) {
@@ -147,5 +155,5 @@ function changeEdit(name, id) {
     button.innerHTML = 'Edit'
     title.textContent = 'Edit Diocese'
     button.setAttribute('onclick', 'editing()');
-
+    return false;
 }

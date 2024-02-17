@@ -21,9 +21,14 @@ public class RegionAPI {
     private static final String NOT_FOUND = "ID Not Found.";
 
     @PostMapping("/create")
-    public ResponseEntity<Region> createRegion(@RequestParam ("name") String name) {
+    public ResponseEntity<Object> createRegion(@RequestParam ("name") String name) {
 
-        return new ResponseEntity<>( regionServices.createRegion(name), HttpStatus.CREATED);
+        Region region = regionServices.createRegion(name);
+        if (region!= null) {
+            return new ResponseEntity<>(region, HttpStatus.CREATED);
+        }
+        String errorMessage = "Region with the name '" + name + "' already exists.";
+        return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 
     @GetMapping("/show/all")
@@ -51,17 +56,17 @@ public class RegionAPI {
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
-    @PatchMapping("/update/{id}")
-    public ResponseEntity<Object> update(@PathVariable("id") int id, @RequestParam("name") String name){
+    @PatchMapping("/update")
+    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name){
         Region region = regionServices.update(id, name);
         if(region!= null){
             return new ResponseEntity<>(region, HttpStatus.OK);
         }
-        return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Region with the name '" + name + "' already exists.\"", HttpStatus.CONFLICT);
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<Region> dioceses(@Valid @RequestBody DataTablesInput input){
+    public DataTablesOutput<Region> regions(@Valid @RequestBody DataTablesInput input){
         return regionServices.tableRegion(input);
 
     }

@@ -34,7 +34,7 @@ public class DioceseAPI {
         return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 
-    @GetMapping("/show/all")
+    @PostMapping("/show/all")
     public ResponseEntity<List<Diocese>> showAll() {
 
         return new ResponseEntity<>(dioceseServices.findAll(), HttpStatus.OK);
@@ -65,7 +65,7 @@ public class DioceseAPI {
         if (diocese != null) {
             return new ResponseEntity<>(diocese, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Diocese with the name '\" + name + \"' already exists.\"", HttpStatus.CONFLICT);
+        return new ResponseEntity<>("Diocese with the name '" + name + "' already exists.\"", HttpStatus.CONFLICT);
     }
 
     @PostMapping("/show/table")
