@@ -31,7 +31,7 @@ public class ArchdioceseAPI {
         return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 
-    @GetMapping("/show/all")
+    @PostMapping("/show/all")
     public ResponseEntity<List<Archdiocese>> archdioceseShowAll() {
         return new ResponseEntity<>(archdioceseServices.showAll(), HttpStatus.OK);
     }
@@ -43,7 +43,6 @@ public class ArchdioceseAPI {
             return new ResponseEntity<>(archdiocese, HttpStatus.OK);
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
-
     }
 
     @PatchMapping("/delete/{id}")

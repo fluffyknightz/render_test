@@ -144,7 +144,6 @@ dioceseFilter.addEventListener('change',function (){
     table.column(2).search(dioceseFilter.value).draw();
 })
 
-
 async function changeAdd() {
     input.value = null;
     button.innerHTML = 'Add'

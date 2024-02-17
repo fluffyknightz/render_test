@@ -1,6 +1,8 @@
 package com.spcu.dims.spcu_dims.service_implement;
 
+import com.spcu.dims.spcu_dims.entities.Archdiocese;
 import com.spcu.dims.spcu_dims.entities.Zone;
+import com.spcu.dims.spcu_dims.repositories.ArchdioceseRepository;
 import com.spcu.dims.spcu_dims.repositories.ZoneRepository;
 import com.spcu.dims.spcu_dims.services.ZoneServices;
 import lombok.AllArgsConstructor;
@@ -16,21 +18,16 @@ import java.util.Optional;
 public class ZoneServicesImplement implements ZoneServices {
 
     private final ZoneRepository zoneRepository;
+    private final ArchdioceseRepository archdioceseRepository;
+
     @Override
-    public Zone zoneCreate(String name) {
-        if (!zoneRepository.existsByName(name)) {
-            return zoneRepository.save(Zone.builder().name(name).isDelete(false).build());
-        } else {
-            Optional<Zone> existingZoneOptional = zoneRepository.findByName(name);
-
-            if (existingZoneOptional.isPresent()) {
-                Zone existingZone = existingZoneOptional.get();
-
-                if (existingZone.isDelete()) {
-                    existingZone.setDelete(false);
-                    return zoneRepository.save(existingZone);
-                }
-            }
+    public Zone createZone(String name, String archdioceses) {
+        Optional<Archdiocese> archdioceseData = archdioceseRepository.findByName(archdioceses);
+        if(archdioceseData.isPresent()) {
+            Zone zone = new Zone();
+            zone.setName(name);
+            zone.setArchdiocese(archdioceseData.get());
+            return zoneRepository.save(zone);
         }
         return null;
     }
@@ -42,7 +39,7 @@ public class ZoneServicesImplement implements ZoneServices {
 
     @Override
     public Zone findById(int id) {
-        return null;
+        return zoneRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -56,7 +53,14 @@ public class ZoneServicesImplement implements ZoneServices {
     }
 
     @Override
-    public Zone update(int id, String name) {
+    public Zone update(int id, String name, String archdiocese) {
+        Optional<Archdiocese> archdioceseData = archdioceseRepository.findByName(archdiocese);
+        Optional<Zone> zone = zoneRepository.findById(id);
+        if(zone.isPresent() && archdioceseData.isPresent()) {
+            zone.get().setName(name);
+            zone.get().setArchdiocese(archdioceseData.get());
+            return zoneRepository.save(zone.get());
+        }
         return null;
     }
 
