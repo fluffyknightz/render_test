@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ArchdioceseServices {
 
-    Archdiocese createArchdiocese(String name, int dioceseId);
+    Archdiocese createArchdiocese(String name, String diocese);
 
     List<Archdiocese> showAll();
 
@@ -16,7 +16,7 @@ public interface ArchdioceseServices {
 
     Archdiocese delete(int id);
 
-    Archdiocese update(int id, String name);
+    Archdiocese update(int id, String name, String diocese);
 
     DataTablesOutput<Archdiocese> tableArchdiocese(DataTablesInput input);
 

@@ -1,6 +1,7 @@
 package com.spcu.dims.spcu_dims.service_implement;
 
 import com.spcu.dims.spcu_dims.entities.Archdiocese;
+import com.spcu.dims.spcu_dims.entities.Diocese;
 import com.spcu.dims.spcu_dims.repositories.ArchdioceseRepository;
 import com.spcu.dims.spcu_dims.repositories.DioceseRepository;
 import com.spcu.dims.spcu_dims.services.ArchdioceseServices;
@@ -21,8 +22,16 @@ public class ArchdioceseServicesImplement implements ArchdioceseServices {
 
 
     @Override
-    public Archdiocese createArchdiocese(String name, int dioceseId) {
-        return archdioceseRepository.save(Archdiocese.builder().name(name).isDelete(false).diocese(dioceseRepository.findById(dioceseId).orElse(null)).build());
+    public Archdiocese createArchdiocese(String name, String diocese) {
+        Optional<Diocese> dioceseData = dioceseRepository.findByName(diocese);
+        if(dioceseData.isPresent()) {
+            Archdiocese archdiocese = new Archdiocese();
+            archdiocese.setName(name);
+            archdiocese.setDiocese(dioceseData.get());
+            return archdioceseRepository.save(archdiocese);
+        }
+
+        return null;
     }
 
     @Override
@@ -46,10 +55,12 @@ public class ArchdioceseServicesImplement implements ArchdioceseServices {
     }
 
     @Override
-    public Archdiocese update(int id, String name) {
+    public Archdiocese update(int id, String name, String diocese) {
+        Optional<Diocese> dioceseData = dioceseRepository.findByName(diocese);
         Optional<Archdiocese> archdiocese = archdioceseRepository.findById(id);
-        if(archdiocese.isPresent()) {
+        if(archdiocese.isPresent() && dioceseData.isPresent()) {
             archdiocese.get().setName(name);
+            archdiocese.get().setDiocese(dioceseData.get());
             return archdioceseRepository.save(archdiocese.get());
         }
         return null;

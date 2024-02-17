@@ -22,8 +22,13 @@ public class ArchdioceseAPI {
     private static final String NOT_FOUND = "ID Not Found.";
 
     @PostMapping("/create")
-    public ResponseEntity<Archdiocese> archdioceseCreate(@RequestParam("name") String name, @RequestParam ("dioceseId")int dioceseId) {
-        return new ResponseEntity<>(archdioceseServices.createArchdiocese(name, dioceseId), HttpStatus.CREATED);
+    public ResponseEntity<Object> archdioceseCreate(@RequestParam("name") String name, @RequestParam ("diocese")String diocese) {
+        Archdiocese archdiocese = archdioceseServices.createArchdiocese(name, diocese);
+        if (archdiocese!= null) {
+            return new ResponseEntity<>(archdiocese, HttpStatus.CREATED);
+        }
+        String errorMessage = "Diocese with the name '" + name + "' already exists.";
+        return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 
     @GetMapping("/show/all")
@@ -50,9 +55,9 @@ public class ArchdioceseAPI {
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
-    @PatchMapping("/update/{id}")
-    public ResponseEntity<Object> update(@PathVariable("id") int id, @RequestParam ("name") String name) {
-        Archdiocese archdiocese = archdioceseServices.update(id, name);
+    @PatchMapping("/update")
+    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam ("name") String name, @RequestParam("diocese") String diocese) {
+        Archdiocese archdiocese = archdioceseServices.update(id, name, diocese);
         if(archdiocese!= null){
             return new ResponseEntity<>(archdiocese, HttpStatus.OK);
         }
