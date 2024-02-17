@@ -34,7 +34,7 @@ public class DioceseAPI {
         return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 
-    @GetMapping("/show/all")
+    @PostMapping("/show/all")
     public ResponseEntity<List<Diocese>> showAll() {
 
         return new ResponseEntity<>(dioceseServices.findAll(), HttpStatus.OK);

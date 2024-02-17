@@ -6,7 +6,6 @@ let input = document.getElementById('archdiocese');
 let inputValue
 
 
-
 function validationInput() {
 
     inputValue = input.value.trim();
@@ -89,7 +88,7 @@ $(document).ready(function () {
 
         }, {
             data: 'name'
-        },{
+        }, {
             data: 'diocese.name'
         }, {
             data: 'isDelete', render: function (data, type, row) {
@@ -140,8 +139,8 @@ document.getElementById('myForm').addEventListener('keydown', function (e) {
 });
 
 
-function changeAdd() {
-
+async function changeAdd() {
+    await dioceseFetch()
     input.value = null;
     button.innerHTML = 'Add'
     title.textContent = 'Add Archdiocese'
@@ -149,12 +148,36 @@ function changeAdd() {
     return false;
 }
 
-function changeEdit(name, id) {
-
+async function changeEdit(name, id) {
+    await dioceseFetch()
     data_id = id
     input.value = name;
     button.innerHTML = 'Edit'
     title.textContent = 'Edit Archdiocese'
     button.setAttribute('onclick', 'editing()');
     return false;
+}
+
+async function dioceseFetch(){
+    await fetch('spcu-dims/api/v1/diocese/show/all', {
+        method: 'POST',
+        headers: {
+            contentType: 'application/json',
+            [csrfHeader]: csrfToken
+        },
+        body: null
+    })
+        .then(response => response.json())
+        .then(data =>{
+// Get the select element
+            const dioceseSelect = document.getElementById('dioceseSelect');
+
+            // Loop through the data and create options
+            data.forEach(diocese => {
+                const option = document.createElement('option');
+                option.textContent = diocese.name; // Set the text content
+                dioceseSelect.appendChild(option); // Append the option to the select element
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
 }
