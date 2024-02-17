@@ -3,6 +3,8 @@ let data_id
 let button = document.getElementById('myButton');
 let title = document.getElementById('modelTitle');
 let input = document.getElementById('archdiocese');
+let dioceseSelect = document.getElementById('dioceseSelect');
+let dioceseFilter = document.getElementById('filterDiocese');
 let inputValue
 
 
@@ -47,7 +49,7 @@ function performOperation(url, method, successMessage) {
 function adding() {
     validationInput()
     console.log("add reach")
-    const url = '/spcu-dims/api/v1/archdiocese/create?name=' + encodeURIComponent(inputValue);
+    const url = '/spcu-dims/api/v1/archdiocese/create?name=' + encodeURIComponent(inputValue) + '&&diocese=' + encodeURIComponent(dioceseSelect.value);
     performOperation(url, 'POST', 'Create successful.');
 }
 
@@ -55,13 +57,13 @@ function adding() {
 function editing() {
     console.log("edit reach")
     validationInput()
-    const url = '/spcu-dims/api/v1/archdiocese/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id);
+    const url = '/spcu-dims/api/v1/archdiocese/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id) + '&&diocese=' + encodeURIComponent(dioceseSelect.value);
     performOperation(url, 'PATCH', 'Edit successful.');
 
 }
 
-$(document).ready(function () {
-
+$(document).ready(async function () {
+    await dioceseFetch()
     table = $('#myTable').DataTable({
         dom: 'flrtip', language: {
             infoFiltered: null,
@@ -92,7 +94,7 @@ $(document).ready(function () {
             data: 'diocese.name'
         }, {
             data: 'isDelete', render: function (data, type, row) {
-                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.name + '\', ' + row.id + ')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.name + '\', ' + row.id + ', \'' + row.diocese.name + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
             }
         },]
     });
@@ -109,7 +111,7 @@ Notiflix.Notify.init({
 
 function showConfirm(id) {
     Notiflix.Confirm.show('Please Confirm', 'Are you sure!! you want to delete?', 'Yes', 'No', function okCb() {
-        fetch('/spcu-dims/api/v1/archdiocese/delete/' + id, {
+        fetch('/spcu-dims/api/v1/archdiocese/delete/' + encodeURIComponent(id), {
             method: 'PATCH', headers: {
                 [csrfHeader]: csrfToken
             }
@@ -138,9 +140,12 @@ document.getElementById('myForm').addEventListener('keydown', function (e) {
     }
 });
 
+dioceseFilter.addEventListener('change',function (){
+    table.column(2).search(dioceseFilter.value).draw();
+})
+
 
 async function changeAdd() {
-    await dioceseFetch()
     input.value = null;
     button.innerHTML = 'Add'
     title.textContent = 'Add Archdiocese'
@@ -148,8 +153,9 @@ async function changeAdd() {
     return false;
 }
 
-async function changeEdit(name, id) {
-    await dioceseFetch()
+async function changeEdit(name, id, diocese) {
+
+    dioceseSelect.value = diocese
     data_id = id
     input.value = name;
     button.innerHTML = 'Edit'
@@ -169,15 +175,21 @@ async function dioceseFetch(){
     })
         .then(response => response.json())
         .then(data =>{
-// Get the select element
-            const dioceseSelect = document.getElementById('dioceseSelect');
 
             // Loop through the data and create options
             data.forEach(diocese => {
-                const option = document.createElement('option');
-                option.textContent = diocese.name; // Set the text content
-                dioceseSelect.appendChild(option); // Append the option to the select element
+                // Create separate option elements for each select element
+                const optionSelect = document.createElement('option');
+                optionSelect.value = diocese.name;
+                optionSelect.textContent = diocese.name;
+                dioceseSelect.appendChild(optionSelect);
+
+                const optionFilter = document.createElement('option');
+                optionFilter.value = diocese.name;
+                optionFilter.textContent = diocese.name;
+                dioceseFilter.appendChild(optionFilter);
             });
+
         })
         .catch(error => console.error('Error fetching data:', error));
 }
