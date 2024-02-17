@@ -1,7 +1,6 @@
 package com.spcu.dims.spcu_dims.service_implement;
 
 import com.spcu.dims.spcu_dims.entities.Parish;
-import com.spcu.dims.spcu_dims.repositories.ArchdioceseRepository;
 import com.spcu.dims.spcu_dims.repositories.ParishRepository;
 import com.spcu.dims.spcu_dims.services.ParishServices;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ import java.util.Optional;
 public class ParishServicesImplement implements ParishServices {
 
     private final ParishRepository parishRepository;
-    private final ArchdioceseRepository archdioceseRepository;
 
     @Override
     public Parish createParish(String name, int archdioceseId) {

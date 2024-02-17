@@ -210,7 +210,7 @@ async function fetchData(apiEndpoint, filterParam = null) {
 }
 
 async function populateSelect(element, data, text) {
-    element.innerHTML = '<option selected>' + text + '</option>';
+    element.innerHTML = '<option selected disabled>' + text + '</option><option value="">None</option>';
 
     data.forEach(item => {
         const option = document.createElement('option');

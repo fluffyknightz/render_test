@@ -53,7 +53,6 @@ public class DistrictServicesImplement implements DistrictServices {
 
     @Override
     public List<District> findByRegion(String name) {
-        List<District> d = districtRepository.findByRegionName(name);
-        return d;
+        return districtRepository.findByRegionName(name);
     }
 }
