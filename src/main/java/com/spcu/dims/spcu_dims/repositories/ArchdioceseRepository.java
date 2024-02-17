@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ArchdioceseRepository extends DataTablesRepository<Archdiocese, Integer> {
+
 }

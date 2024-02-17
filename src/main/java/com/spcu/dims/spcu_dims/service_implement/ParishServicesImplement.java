@@ -5,6 +5,8 @@ import com.spcu.dims.spcu_dims.repositories.ArchdioceseRepository;
 import com.spcu.dims.spcu_dims.repositories.ParishRepository;
 import com.spcu.dims.spcu_dims.services.ParishServices;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,5 +54,10 @@ public class ParishServicesImplement implements ParishServices {
             return parishRepository.save(parish.get());
         }
         return null;
+    }
+
+    @Override
+    public DataTablesOutput<Parish> tableParish(DataTablesInput input) {
+        return parishRepository.findAll(input);
     }
 }

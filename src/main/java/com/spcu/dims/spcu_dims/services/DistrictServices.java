@@ -15,4 +15,6 @@ public interface DistrictServices {
     District delete(int id);
 
     District update(int id, String name);
+
+    List <District> findByRegion(String name);
 }

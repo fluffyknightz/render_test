@@ -79,4 +79,8 @@ public class PageControllers {
         return "township";
     }
 
+    @GetMapping("/parish")
+    public String parish(){
+        return "parish";
+    }
 }

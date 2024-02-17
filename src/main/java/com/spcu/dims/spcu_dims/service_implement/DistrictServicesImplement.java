@@ -50,4 +50,10 @@ public class DistrictServicesImplement implements DistrictServices {
         }
         return null;
     }
+
+    @Override
+    public List<District> findByRegion(String name) {
+        List<District> d = districtRepository.findByRegionName(name);
+        return d;
+    }
 }
