@@ -43,12 +43,6 @@ public class PageControllers {
         return "dashboard";
     }
 
-//    @GetMapping("/adminPage")
-//    @PreAuthorize("hasAuthority('ADMIN')")
-//    public String adminPage() {
-//        return "admin only side";
-//    }
-
     @GetMapping("/diocese")
     public String diocese() {
         return "diocese";
