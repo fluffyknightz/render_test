@@ -51,18 +51,18 @@ public class DioceseServicesImplement implements DioceseServices {
     @Override
     public Diocese delete(int id) {
         Optional<Diocese> diocese = dioceseRepository.findById(id);
-        if(diocese.isPresent()) {
+        if (diocese.isPresent()) {
             diocese.get().setDelete(true);
             return dioceseRepository.save(diocese.get());
         }
-       return null;
+        return null;
     }
 
     @Override
     public Diocese update(int id, String name) {
         Optional<Diocese> diocese = dioceseRepository.findById(id);
         boolean exist = dioceseRepository.existsByName(name);
-        if(diocese.isPresent() && !diocese.get().getName().equals(name) && !exist) {
+        if (diocese.isPresent() && !diocese.get().getName().equals(name) && !exist) {
             diocese.get().setName(name);
             return dioceseRepository.save(diocese.get());
         }

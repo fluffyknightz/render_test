@@ -65,7 +65,7 @@ public class DioceseAPI {
         if (diocese != null) {
             return new ResponseEntity<>(diocese, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Diocese with the name '\" + name + \"' already exists.\"", HttpStatus.CONFLICT);
+        return new ResponseEntity<>("Diocese with the name '" + name + "' already exists.\"", HttpStatus.CONFLICT);
     }
 
     @PostMapping("/show/table")

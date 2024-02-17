@@ -1,6 +1,8 @@
 package com.spcu.dims.spcu_dims.service_implement;
 
 import com.spcu.dims.spcu_dims.entities.Region;
+import com.spcu.dims.spcu_dims.entities.Region;
+import com.spcu.dims.spcu_dims.entities.Region;
 import com.spcu.dims.spcu_dims.repositories.RegionRepository;
 import com.spcu.dims.spcu_dims.services.RegionServices;
 import lombok.AllArgsConstructor;
@@ -19,7 +21,22 @@ public class RegionServicesImplement implements RegionServices {
     @Override
     public Region createRegion(String name) {
 
-        return regionRepository.save(Region.builder().name(name).isDelete(false).build());
+        if (!regionRepository.existsByName(name)) {
+            return regionRepository.save(Region.builder().name(name).isDelete(false).build());
+        } else {
+            Optional<Region> existingRegionOptional = regionRepository.findByName(name);
+
+            if (existingRegionOptional.isPresent()) {
+                Region existingRegion = existingRegionOptional.get();
+
+                if (existingRegion.isDelete()) {
+                    existingRegion.setDelete(false);
+                    return regionRepository.save(existingRegion);
+                }
+
+            }
+        }
+        return null;
     }
 
     @Override
@@ -45,7 +62,8 @@ public class RegionServicesImplement implements RegionServices {
     @Override
     public Region update(int id, String name) {
         Optional<Region> region = regionRepository.findById(id);
-        if(region.isPresent()) {
+        boolean exist = regionRepository.existsByName(name);
+        if (region.isPresent() && !region.get().getName().equals(name) && !exist) {
             region.get().setName(name);
             return regionRepository.save(region.get());
         }
