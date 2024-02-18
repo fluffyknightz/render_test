@@ -31,7 +31,7 @@ public class RegionAPI {
         return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 
-    @GetMapping("/show/all")
+    @PostMapping("/show/all")
     public ResponseEntity<List<Region>> showAll() {
 
         return new ResponseEntity<>(regionServices.findAll(), HttpStatus.OK);

@@ -19,7 +19,7 @@ public class Parish implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(length = 20, nullable = false, unique = true)
+    @Column(length = 50, nullable = false, unique = true)
     private String name;
 
     @Column(nullable = false, columnDefinition = "BIT(1) DEFAULT 0")
@@ -31,6 +31,11 @@ public class Parish implements Serializable {
     @ManyToOne(targetEntity = Zone.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "zone_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_zone"))
     private Zone zone;
+
+    @ManyToOne(targetEntity = Township.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "township_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_township"))
+    private Township township;
+
 
 
 }

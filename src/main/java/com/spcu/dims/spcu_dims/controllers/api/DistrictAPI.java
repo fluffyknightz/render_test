@@ -22,11 +22,22 @@ public class DistrictAPI {
         return new ResponseEntity<>(districtServices.createDistrict(name, regionId), HttpStatus.CREATED);
     }
 
-    @GetMapping("/show/all")
+    @PostMapping("/show/all")
     public ResponseEntity<List<District>> showAll() {
 
         return new ResponseEntity<>(districtServices.findAll(), HttpStatus.OK);
     }
+
+    @PostMapping("/show")
+    public ResponseEntity<Object> showWithRegion(@RequestParam("region") String name) {
+        List<District> district = districtServices.findByRegion(name);
+        if (district != null) {
+            return new ResponseEntity<>(district, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
+
+    }
+
 
     @GetMapping("/show/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") int id) {

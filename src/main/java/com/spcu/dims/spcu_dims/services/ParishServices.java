@@ -1,6 +1,8 @@
 package com.spcu.dims.spcu_dims.services;
 
 import com.spcu.dims.spcu_dims.entities.Parish;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 
 import java.util.List;
 
@@ -15,4 +17,6 @@ public interface ParishServices {
     Parish delete(int id);
 
     Parish update(int id, String name);
+
+    DataTablesOutput<Parish> tableParish(DataTablesInput input);
 }

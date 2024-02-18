@@ -4,7 +4,10 @@ import com.spcu.dims.spcu_dims.entities.Parish;
 
 import com.spcu.dims.spcu_dims.services.ParishServices;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,4 +60,10 @@ public class ParishAPI {
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
+
+    @PostMapping("/show/table")
+    public DataTablesOutput<Parish> parishes(@Valid @RequestBody DataTablesInput input){
+        return parishServices.tableParish(input);
+    }
+
 }
