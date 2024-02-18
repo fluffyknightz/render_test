@@ -1,7 +1,6 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.entities.District;
-import com.spcu.dims.spcu_dims.entities.Zone;
 import com.spcu.dims.spcu_dims.services.DistrictServices;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -27,7 +26,9 @@ public class DistrictAPI {
         if (district!= null) {
             return new ResponseEntity<>(district, HttpStatus.CREATED);
         }
+        System.out.println("reachjjjj");
         String errorMessage = "District with the name '" + name + "' already exists.";
+        System.out.println(errorMessage);
         return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 
@@ -66,5 +67,15 @@ public class DistrictAPI {
             return new ResponseEntity<>(district, HttpStatus.OK);
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/show")
+    public ResponseEntity<Object> create(@RequestParam ("region") String region) {
+        List<District> districts = districtServices.findByRegionName(region);
+        if(districts!= null){
+            return new ResponseEntity<>(districts, HttpStatus.OK);
+        }
+        String errorMessage = "District that related to Region name " + region + " dont exist.";
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 }

@@ -23,7 +23,8 @@ public class TownshipServicesImplement implements TownshipServices {
     @Override
     public Township createTownship(String name, String district) {
         Optional<District> districtData = districtRepository.findByName(district);
-        if (districtData.isPresent()) {
+        Optional<Township> townshipData = townshipRepository.findByName(name);
+        if (districtData.isPresent() && townshipData.isEmpty()) {
             Township township = new Township();
             township.setName(name);
             township.setDistrict(districtData.get());

@@ -94,7 +94,7 @@ async function regionFetch(){
 async function changeAdd() {
     input.value = null;
     button.innerHTML = 'Add'
-    title.textContent = 'Add Region'
+    title.textContent = 'Add District'
     button.setAttribute('onclick', 'adding()');
     return false;
 }
@@ -173,6 +173,7 @@ function performOperation(url, method, successMessage) {
             Notiflix.Notify.success(successMessage);
             table.ajax.reload();
         } else {
+            console.error('Reacj')
             Notiflix.Notify.failure(await response.text());
         }
     })

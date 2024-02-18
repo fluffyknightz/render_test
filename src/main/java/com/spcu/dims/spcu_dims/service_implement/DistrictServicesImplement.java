@@ -21,8 +21,9 @@ public class DistrictServicesImplement implements DistrictServices {
     private final RegionRepository regionRepository;
     @Override
     public District createDistrict(String name, String region) {
+        Optional<District> districtData = districtRepository.findByName(name);
         Optional<Region> regionData = regionRepository.findByName(region);
-        if(regionData.isPresent()) {
+        if(districtData.isEmpty() && regionData.isPresent()) {
             District district = new District();
             district.setName(name);
             district.setRegion(regionData.get());
@@ -67,4 +68,11 @@ public class DistrictServicesImplement implements DistrictServices {
     public DataTablesOutput<District> tableDistrict(DataTablesInput input) {
         return districtRepository.findAll(input);
     }
+
+    @Override
+    public List<District> findByRegionName(String region) {
+        return districtRepository.findByRegionName(region);
+    }
+
+
 }

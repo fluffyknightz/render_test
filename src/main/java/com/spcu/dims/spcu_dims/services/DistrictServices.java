@@ -20,4 +20,6 @@ public interface DistrictServices {
 
     DataTablesOutput<District> tableDistrict(DataTablesInput input);
 
+    List<District> findByRegionName(String region);
+
 }

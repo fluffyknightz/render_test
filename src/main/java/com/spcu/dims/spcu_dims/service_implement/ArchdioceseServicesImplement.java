@@ -24,7 +24,8 @@ public class ArchdioceseServicesImplement implements ArchdioceseServices {
     @Override
     public Archdiocese createArchdiocese(String name, String diocese) {
         Optional<Diocese> dioceseData = dioceseRepository.findByName(diocese);
-        if(dioceseData.isPresent()) {
+        Optional<Archdiocese> archdioceseData = archdioceseRepository.findByName(name);
+        if(dioceseData.isPresent() && archdioceseData.isEmpty()) {
             Archdiocese archdiocese = new Archdiocese();
             archdiocese.setName(name);
             archdiocese.setDiocese(dioceseData.get());

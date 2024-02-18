@@ -35,6 +35,7 @@ function performOperation(url, method, successMessage) {
             Notiflix.Notify.success(successMessage);
             table.ajax.reload();
         } else {
+
             Notiflix.Notify.failure(await response.text());
         }
     })

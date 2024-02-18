@@ -22,8 +22,9 @@ public class ZoneServicesImplement implements ZoneServices {
 
     @Override
     public Zone createZone(String name, String archdioceses) {
+        Optional<Zone> zoneData = zoneRepository.findByName(name);
         Optional<Archdiocese> archdioceseData = archdioceseRepository.findByName(archdioceses);
-        if(archdioceseData.isPresent()) {
+        if(archdioceseData.isPresent() && zoneData.isEmpty()) {
             Zone zone = new Zone();
             zone.setName(name);
             zone.setArchdiocese(archdioceseData.get());

@@ -27,7 +27,8 @@ public class ParishServicesImplement implements ParishServices {
     public Parish createParish(String name, String zone, String township) {
         Optional<Zone> zoneData = zoneRepository.findByName(zone);
         Optional<Township> townshipData = townshipRepository.findByName(township);
-        if(zoneData.isPresent() && townshipData.isPresent()){
+        Optional<Parish> parishData = parishRepository.findByName(name);
+        if(parishData.isEmpty() && zoneData.isPresent() && townshipData.isPresent()){
             Parish parish = new Parish();
             parish.setName(name);
             parish.setZone(zoneData.get());
