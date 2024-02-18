@@ -4,12 +4,11 @@
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
       layout:decorate="~{/layout/main-layout}">
 
-
 <div layout:fragment="content">
 
     <div class="container-fluid p-6">
 
-        <!--Start Parish -->
+        <!--Start Zone -->
         <div class="row mt-3">
             <div class="col-md-12 col-12">
                 <!-- card  -->
@@ -19,31 +18,27 @@
                         <div class="row">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="col-8">
-                                    <h4 class="mb-0 text-primary">Township
-                                        <span type="button" data-bs-toggle="modal" data-bs-target="#model"
-                                              onclick="changeAdd()">
-                                    <i class="bi bi-plus-square ml-5" style="font-size: 1.4rem"></i>
-                                </span>
+                                    <h4 class="mb-0 text-primary">Parish
+                                        <span type="button" data-bs-toggle="modal" data-bs-target="#model" onclick="changeAdd()">
+                                            <i class="bi bi-plus-square ml-5" style="font-size: 1.4rem"></i>
+                                        </span>
                                     </h4>
                                 </div>
                                 <div class="col-2">
-                                    <select class="form-select my-3 col-auto" aria-label="district select"
-                                            id="filterDistrict">
-                                        <option selected disabled>Filter District</option>
+                                    <select class="form-select my-3 col-auto" aria-label="zone select" id="filterZone">
+                                        <option selected disabled>Filter Zone</option>
                                         <option value="">None</option>
                                     </select>
                                 </div>
                                 <div class="col-2">
-                                    <select class="form-select my-3 col-auto" aria-label="district select"
-                                            id="filterRegion">
-                                        <option selected disabled>Filter Region</option>
+                                    <select class="form-select my-3 col-auto" aria-label="township select" id="filterTownship">
+                                        <option selected disabled>Filter Township</option>
                                         <option value="">None</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                     </div>
-
 
                     <div class="p-5">
                         <table id="myTable" class="hover table table-striped" style="width: 100%">
@@ -66,9 +61,9 @@
                 </div>
             </div>
         </div>
-        <!--End Parish-->
+        <!--End Zone-->
 
-        <!--Start Parish Add Modal -->
+        <!--Start Zone Add Modal -->
         <div class="modal fade" id="model" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -83,15 +78,14 @@
                                        placeholder="Parish">
                                 <label for="parish">Parish</label>
                             </div>
-                            <select class="form-select my-3" aria-label="region select" id="regionSelect">
-                                <option selected disabled>Select Related Region</option>
+                            <select class="form-select my-3" aria-label="zone select" id="zoneSelect">
+                                <option selected disabled>Select Related Zone</option>
                                 <option value="">None</option>
                             </select>
-                            <select class="form-select my-3" aria-label="district select" id="districtSelect">
-                                <option selected disabled>Select Related District</option>
+                            <select class="form-select my-3" aria-label="township select" id="townshipSelect">
+                                <option selected disabled>Select Related Township</option>
                                 <option value="">None</option>
                             </select>
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -103,7 +97,7 @@
                 </div>
             </div>
         </div>
-        <!--End Parish Add Modal -->
+        <!--End Zone Add Modal -->
 
     </div>
 

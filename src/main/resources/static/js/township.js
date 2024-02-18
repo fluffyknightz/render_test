@@ -55,7 +55,6 @@ function adding() {
     performOperation(url, 'POST', 'Create successful.');
 }
 
-
 function editing() {
     console.log("edit reach")
     validationInput()

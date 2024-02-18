@@ -1,7 +1,11 @@
 package com.spcu.dims.spcu_dims.service_implement;
 
 import com.spcu.dims.spcu_dims.entities.Parish;
+import com.spcu.dims.spcu_dims.entities.Township;
+import com.spcu.dims.spcu_dims.entities.Zone;
 import com.spcu.dims.spcu_dims.repositories.ParishRepository;
+import com.spcu.dims.spcu_dims.repositories.TownshipRepository;
+import com.spcu.dims.spcu_dims.repositories.ZoneRepository;
 import com.spcu.dims.spcu_dims.services.ParishServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -16,10 +20,21 @@ import java.util.Optional;
 public class ParishServicesImplement implements ParishServices {
 
     private final ParishRepository parishRepository;
+    private final ZoneRepository zoneRepository;
+    private final TownshipRepository townshipRepository;
 
     @Override
-    public Parish createParish(String name, int archdioceseId) {
-        return parishRepository.save(Parish.builder().name(name).isDelete(false).build());
+    public Parish createParish(String name, String zone, String township) {
+        Optional<Zone> zoneData = zoneRepository.findByName(zone);
+        Optional<Township> townshipData = townshipRepository.findByName(township);
+        if(zoneData.isPresent() && townshipData.isPresent()){
+            Parish parish = new Parish();
+            parish.setName(name);
+            parish.setZone(zoneData.get());
+            parish.setTownship(townshipData.get());
+            return parishRepository.save(parish);
+        }
+        return null;
     }
 
     @Override
@@ -34,9 +49,8 @@ public class ParishServicesImplement implements ParishServices {
 
     @Override
     public Parish delete(int id) {
-
         Optional<Parish> parish = parishRepository.findById(id);
-        if (parish.isPresent()) {
+        if(parish.isPresent()) {
             parish.get().setDelete(true);
             return parishRepository.save(parish.get());
         }
@@ -44,11 +58,14 @@ public class ParishServicesImplement implements ParishServices {
     }
 
     @Override
-    public Parish update(int id, String name) {
-
+    public Parish update(int id, String name, String zone, String township) {
+        Optional<Zone> zoneData = zoneRepository.findByName(zone);
+        Optional<Township> townshipData = townshipRepository.findByName(township);
         Optional<Parish> parish = parishRepository.findById(id);
-        if (parish.isPresent()) {
+        if(parish.isPresent() && townshipData.isPresent() && zoneData.isPresent()){
             parish.get().setName(name);
+            parish.get().setZone(zoneData.get());
+            parish.get().setTownship(townshipData.get());
             return parishRepository.save(parish.get());
         }
         return null;
@@ -57,5 +74,6 @@ public class ParishServicesImplement implements ParishServices {
     @Override
     public DataTablesOutput<Parish> tableParish(DataTablesInput input) {
         return parishRepository.findAll(input);
+
     }
 }

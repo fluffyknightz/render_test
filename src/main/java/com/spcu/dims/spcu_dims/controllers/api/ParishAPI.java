@@ -2,6 +2,8 @@ package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.entities.Parish;
 
+import com.spcu.dims.spcu_dims.entities.Township;
+import com.spcu.dims.spcu_dims.entities.Zone;
 import com.spcu.dims.spcu_dims.services.ParishServices;
 
 import jakarta.validation.Valid;
@@ -23,24 +25,18 @@ public class ParishAPI {
     private static final String NOT_FOUND = "ID Not Found.";
 
     @PostMapping("/create")
-    public ResponseEntity<Parish> createParish(@RequestParam("name") String name, @RequestParam("archdioceseId") int archdioceseId) {
-        return new ResponseEntity<>(parishServices.createParish(name, archdioceseId), HttpStatus.CREATED);
-    }
-
-    @GetMapping("/show/all")
-    public ResponseEntity<List<Parish>> showAll() {
-
-        return new ResponseEntity<>(parishServices.showAll(), HttpStatus.OK);
-    }
-
-    @GetMapping("/show/{id}")
-    public ResponseEntity<Object> show(@PathVariable("id") int id) {
-        Parish parish = parishServices.findById(id);
-        if (parish != null) {
-            return new ResponseEntity<>(parish, HttpStatus.OK);
+    public ResponseEntity<Object> parishCreate(@RequestParam("name") String name, @RequestParam ("zone")String diocese, @RequestParam ("township")String township) {
+        Parish parish = parishServices.createParish(name, diocese, township);
+        if (parish!= null) {
+            return new ResponseEntity<>(parish, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
+        String errorMessage = "Parish with the name '" + name + "' already exists.";
+        return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
+    }
 
+    @PostMapping("/show/table")
+    public DataTablesOutput<Parish> parish(@Valid @RequestBody DataTablesInput input){
+        return parishServices.tableParish(input);
     }
 
     @PatchMapping("/delete/{id}")
@@ -52,18 +48,26 @@ public class ParishAPI {
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
-    @PatchMapping("/update/{id}")
-    public ResponseEntity<Object> update(@PathVariable("id") int id, @RequestParam("name") String name) {
-        Parish parish = parishServices.update(id, name);
-        if (parish != null) {
+    @PatchMapping("/update")
+    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam ("name") String name, @RequestParam("zone") String zone, @RequestParam("township") String township) {
+        Parish parish = parishServices.update(id, name, zone, township);
+        if(parish!= null){
             return new ResponseEntity<>(parish, HttpStatus.OK);
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/show/table")
-    public DataTablesOutput<Parish> parishes(@Valid @RequestBody DataTablesInput input){
-        return parishServices.tableParish(input);
+    @PostMapping("/show/all")
+    public ResponseEntity<List<Parish>> parishShowAll() {
+        return new ResponseEntity<>(parishServices.showAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/show/{id}")
+    public ResponseEntity<Object> show(@PathVariable("id") int id) {
+        Parish parish = parishServices.findById(id);
+        if(parish != null){
+            return new ResponseEntity<>(parish, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
 }
