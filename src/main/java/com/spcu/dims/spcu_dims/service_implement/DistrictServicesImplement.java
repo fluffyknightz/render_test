@@ -1,10 +1,13 @@
 package com.spcu.dims.spcu_dims.service_implement;
 
 import com.spcu.dims.spcu_dims.entities.District;
+import com.spcu.dims.spcu_dims.entities.Region;
 import com.spcu.dims.spcu_dims.repositories.DistrictRepository;
 import com.spcu.dims.spcu_dims.repositories.RegionRepository;
 import com.spcu.dims.spcu_dims.services.DistrictServices;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +20,15 @@ public class DistrictServicesImplement implements DistrictServices {
     private final DistrictRepository districtRepository;
     private final RegionRepository regionRepository;
     @Override
-    public District createDistrict(String name, int regionId) {
-        return districtRepository.save(District.builder().name(name).isDelete(false).region(regionRepository.findById(regionId).orElse(null)).build());
+    public District createDistrict(String name, String region) {
+        Optional<Region> regionData = regionRepository.findByName(region);
+        if(regionData.isPresent()) {
+            District district = new District();
+            district.setName(name);
+            district.setRegion(regionData.get());
+            return districtRepository.save(district);
+        }
+        return null;
     }
 
     @Override
@@ -42,17 +52,19 @@ public class DistrictServicesImplement implements DistrictServices {
     }
 
     @Override
-    public District update(int id, String name) {
+    public District update(int id, String name, String region) {
+        Optional<Region> regionData = regionRepository.findByName(region);
         Optional<District> district = districtRepository.findById(id);
-        if(district.isPresent()) {
+        if(district.isPresent() && regionData.isPresent()) {
             district.get().setName(name);
+            district.get().setRegion(regionData.get());
             return districtRepository.save(district.get());
         }
         return null;
     }
 
     @Override
-    public List<District> findByRegion(String name) {
-        return districtRepository.findByRegionName(name);
+    public DataTablesOutput<District> tableDistrict(DataTablesInput input) {
+        return districtRepository.findAll(input);
     }
 }

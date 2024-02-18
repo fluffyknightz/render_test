@@ -1,8 +1,12 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.entities.District;
+import com.spcu.dims.spcu_dims.entities.Zone;
 import com.spcu.dims.spcu_dims.services.DistrictServices;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,35 +22,18 @@ public class DistrictAPI {
     private static final String NOT_FOUND = "ID Not Found.";
 
     @PostMapping("/create")
-    public ResponseEntity<District> createDistrict(@RequestParam("name") String name, @RequestParam("regionId") int regionId) {
-        return new ResponseEntity<>(districtServices.createDistrict(name, regionId), HttpStatus.CREATED);
-    }
-
-    @PostMapping("/show/all")
-    public ResponseEntity<List<District>> showAll() {
-
-        return new ResponseEntity<>(districtServices.findAll(), HttpStatus.OK);
-    }
-
-    @PostMapping("/show")
-    public ResponseEntity<Object> showWithRegion(@RequestParam("region") String name) {
-        List<District> district = districtServices.findByRegion(name);
-        if (district != null) {
-            return new ResponseEntity<>(district, HttpStatus.OK);
+    public ResponseEntity<Object> districtCreate(@RequestParam("name") String name, @RequestParam ("region")String region) {
+        District district = districtServices.createDistrict(name, region);
+        if (district!= null) {
+            return new ResponseEntity<>(district, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
-
+        String errorMessage = "District with the name '" + name + "' already exists.";
+        return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 
-
-    @GetMapping("/show/{id}")
-    public ResponseEntity<Object> show(@PathVariable("id") int id) {
-        District district = districtServices.findById(id);
-        if (district != null) {
-            return new ResponseEntity<>(district, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
-
+    @PostMapping("/show/table")
+    public DataTablesOutput<District> districts(@Valid @RequestBody DataTablesInput input){
+        return districtServices.tableDistrict(input);
     }
 
     @PatchMapping("/delete/{id}")
@@ -58,10 +45,24 @@ public class DistrictAPI {
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
-    @PatchMapping("/update/{id}")
-    public ResponseEntity<Object> update(@PathVariable("id") int id, @RequestParam("name") String name) {
-        District district = districtServices.update(id, name);
-        if (district != null) {
+    @PatchMapping("/update")
+    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam ("name") String name, @RequestParam("region") String region) {
+        District district = districtServices.update(id, name, region);
+        if(district!= null){
+            return new ResponseEntity<>(district, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/show/all")
+    public ResponseEntity<List<District>> zoneShowAll() {
+        return new ResponseEntity<>(districtServices.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/show/{id}")
+    public ResponseEntity<Object> show(@PathVariable("id") int id) {
+        District district = districtServices.findById(id);
+        if(district != null){
             return new ResponseEntity<>(district, HttpStatus.OK);
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
