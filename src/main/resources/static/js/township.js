@@ -222,7 +222,7 @@ async function populateSelect(element, data, text) {
 async function districtSpecificFetch(region) {
     try {
         const data = await fetchData('spcu-dims/api/v1/district/show', `region=${encodeURIComponent(region)}`);
-        await populateSelect(districtSelect, data, "Select Related Region");
+        await populateSelect(districtSelect, data, "Select Related District");
     } catch (error) {
         Notiflix.Notify.failure('Data Fetching Error!');
     }
