@@ -1,21 +1,13 @@
 let table
 let data_id
-let inputValue
 let button = document.getElementById('myButton');
 let title = document.getElementById('modelTitle');
 let input = document.getElementById('parish');
 let zoneSelect = document.getElementById('zoneSelect');
-let filterZone = document.getElementById('filterZone');
+let zoneFilter = document.getElementById('filterZone');
 let townshipSelect = document.getElementById('townshipSelect');
-let filterTownship = document.getElementById('filterTownship');
+let townshipFilter = document.getElementById('filterTownship');
 
-Notiflix.Confirm.init({
-    titleColor: '#4d56ec', okButtonColor: '#f8f8f8', okButtonBackground: '#f32222',
-});
-
-Notiflix.Notify.init({
-    position: 'center-top',
-});
 
 $(document).ready(async function () {
 
@@ -53,9 +45,9 @@ $(document).ready(async function () {
             }, {
                 data: 'name'
             }, {
-                data: 'zone.archdiocese.diocese.name'
+                data: 'zone.diocese.archdiocese.name'
             }, {
-                data: 'zone.archdiocese.name'
+                data: 'zone.diocese.name'
             }, {
                 data: 'zone.name'
             }, {
@@ -76,75 +68,35 @@ $(document).ready(async function () {
     });
 });
 
-filterZone.addEventListener('change', function () {
-    table.column(4).search(filterZone.value).draw();
+zoneFilter.addEventListener('change', function () {
+    table.column(4).search(zoneFilter.value).draw();
 })
 
-filterTownship.addEventListener('change', function () {
-    table.column(7).search(filterTownship.value).draw();
+townshipFilter.addEventListener('change', function () {
+    table.column(7).search(townshipFilter.value).draw();
 })
 
 async function zoneFetch() {
-    await fetch('spcu-dims/api/v1/zone/show/all', {
-        method: 'POST',
-        headers: {
-            contentType: 'application/json',
-            [csrfHeader]: csrfToken
-        },
-        body: null
-    })
-        .then(response => response.json())
-        .then(data => {
-
-            // Loop through the data and create options
-            data.forEach(zone => {
-                // Create separate option elements for each select element
-                const optionSelect = document.createElement('option');
-                optionSelect.value = zone.name;
-                optionSelect.textContent = zone.name;
-                zoneSelect.appendChild(optionSelect);
-
-                const optionFilter = document.createElement('option');
-                optionFilter.value = zone.name;
-                optionFilter.textContent = zone.name;
-                filterZone.appendChild(optionFilter);
-            });
-
-        })
-        .catch(error => console.error('Error fetching data:', error));
+    try {
+        const data = await fetchData('spcu-dims/api/v1/zone/show/all');
+        await populateSelect(zoneSelect, data, "Select Related Zone", false);
+        await populateSelect(zoneFilter, data, "Filter Zone", true);
+    } catch (error) {
+        Notiflix.Notify.failure('Data Fetching Error!');
+    }
 }
 
 async function townshipFetch() {
-    await fetch('spcu-dims/api/v1/township/show/all', {
-        method: 'POST',
-        headers: {
-            contentType: 'application/json',
-            [csrfHeader]: csrfToken
-        },
-        body: null
-    })
-        .then(response => response.json())
-        .then(data => {
-
-            // Loop through the data and create options
-            data.forEach(township => {
-                // Create separate option elements for each select element
-                const optionSelect = document.createElement('option');
-                optionSelect.value = township.name;
-                optionSelect.textContent = township.name;
-                townshipSelect.appendChild(optionSelect);
-
-                const optionFilter = document.createElement('option');
-                optionFilter.value = township.name;
-                optionFilter.textContent = township.name;
-                filterTownship.appendChild(optionFilter);
-            });
-
-        })
-        .catch(error => console.error('Error fetching data:', error));
+    try {
+        const data = await fetchData('spcu-dims/api/v1/township/show/all');
+        await populateSelect(townshipSelect, data, "Select Related Township", false);
+        await populateSelect(townshipFilter, data, "Filter Township", true);
+    } catch (error) {
+        Notiflix.Notify.failure('Data Fetching Error!');
+    }
 }
 
-async function changeAdd() {
+function changeAdd() {
     input.value = null;
     button.innerHTML = 'Add'
     title.textContent = 'Add Parish'
@@ -152,7 +104,7 @@ async function changeAdd() {
     return false;
 }
 
-async function changeEdit(id, township, zone, name) {
+function changeEdit(id, township, zone, name) {
     zoneSelect.value = zone;
     townshipSelect.value = township;
     data_id = id;
@@ -164,72 +116,27 @@ async function changeEdit(id, township, zone, name) {
 }
 
 function showConfirm(id) {
-    Notiflix.Confirm.show('Please Confirm', 'Are you sure!! you want to delete?', 'Yes', 'No', function okCb() {
-        fetch('/spcu-dims/api/v1/parish/delete/' + encodeURIComponent(id), {
-            method: 'PATCH', headers: {
-                [csrfHeader]: csrfToken
-            }
-        })
-            .then(r => {
-                if (r.ok) {
-
-                    Notiflix.Notify.success('Delete successful.');
-                    table.ajax.reload();
-
-                } else {
-                    Notiflix.Notify.failure('Delete Failed!');
-                }
-            })
-
-    }, {
-        width: '320px', borderRadius: '8px',
-    },);
+    deleteConfirm(id, '/spcu-dims/api/v1/parish/delete/')
 }
 
 function editing() {
     validationInput()
-    const url = '/spcu-dims/api/v1/parish/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id) + '&&zone=' + encodeURIComponent(zoneSelect.value)+ '&&township=' + encodeURIComponent(townshipSelect.value);
-    performOperation(url, 'PATCH', 'Edit successful.');
+    if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || zoneSelect.value.trim() === "" || townshipSelect.value.trim() === "") {
+        Notiflix.Notify.failure("Please enter All Data!");
+    } else {
+        const url = '/spcu-dims/api/v1/parish/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id) + '&&zone=' + encodeURIComponent(zoneSelect.value) + '&&township=' + encodeURIComponent(townshipSelect.value);
+        performOperation(url, 'PATCH', 'Edit successful.');
+    }
 }
 
 function adding() {
     validationInput()
-    const url = '/spcu-dims/api/v1/parish/create?name=' + encodeURIComponent(inputValue) + '&&zone=' + encodeURIComponent(zoneSelect.value)+ '&&township=' + encodeURIComponent(townshipSelect.value);
-    performOperation(url, 'POST', 'Create successful.');
+    if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || zoneSelect.value.trim() === "" || townshipSelect.value.trim() === "") {
+        Notiflix.Notify.failure("Please enter All Data!");
+    } else {
+        const url = '/spcu-dims/api/v1/parish/create?name=' + encodeURIComponent(inputValue) + '&&zone=' + encodeURIComponent(zoneSelect.value) + '&&township=' + encodeURIComponent(townshipSelect.value);
+        performOperation(url, 'POST', 'Create successful.');
+    }
 }
 
-function validationInput() {
 
-    inputValue = input.value.trim();
-
-    // Remove leading and trailing spaces
-    inputValue = inputValue.replace(/^\s+|\s+$/g, '');
-
-    // Replace consecutive spaces with a single space
-    inputValue = inputValue.replace(/\s+/g, ' ');
-
-    // Capitalize the first letter
-    inputValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
-
-}
-
-function performOperation(url, method, successMessage) {
-
-    fetch(url, {
-        method: method, headers: {
-            contentType: 'application/json', [csrfHeader]: csrfToken
-        }, body: null
-    }).then(async response => {
-        if (response.status === 201 || response.status === 200) {
-            $('#model').modal('hide');
-            Notiflix.Notify.success(successMessage);
-            table.ajax.reload();
-        } else {
-            Notiflix.Notify.failure(await response.text());
-        }
-    })
-        .catch(error => {
-            Notiflix.Notify.failure("Error has occurred during process. Please Try again later.");
-            console.error(error); // Optionally log the error to the console for debugging
-        });
-}

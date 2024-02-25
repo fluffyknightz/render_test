@@ -82,8 +82,7 @@
 
                             </select>
                             <select class="form-select my-3" aria-label="district select" id="districtSelect">
-                                <option selected disabled>Select Related District</option>
-                                <option value="">None</option>
+                                <option selected value="" disabled>Select Related District</option>
                             </select>
 
                         </div>
@@ -102,7 +101,8 @@
     </div>
 
 </div>
-
+<script layout:fragment="scripts2" th:src="@{/js/table.js}"></script>
 <script layout:fragment="scripts" th:src="@{/js/township.js}"></script>
+
 
 </html>

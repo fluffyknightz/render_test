@@ -1,11 +1,9 @@
 package com.spcu.dims.spcu_dims.service_implement;
 
 import com.spcu.dims.spcu_dims.entities.Archdiocese;
-import com.spcu.dims.spcu_dims.entities.Diocese;
 import com.spcu.dims.spcu_dims.repositories.ArchdioceseRepository;
-import com.spcu.dims.spcu_dims.repositories.DioceseRepository;
 import com.spcu.dims.spcu_dims.services.ArchdioceseServices;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.stereotype.Service;
@@ -14,30 +12,37 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ArchdioceseServicesImplement implements ArchdioceseServices {
 
     private final ArchdioceseRepository archdioceseRepository;
-    private final DioceseRepository dioceseRepository;
 
+     String existsMessage = "Archdiocese with the name '%s' already exists.";
+     String doesNotExistMessage = "Archdiocese with the name '%s' does not exist.";
 
     @Override
-    public Archdiocese createArchdiocese(String name, String diocese) {
-        Optional<Diocese> dioceseData = dioceseRepository.findByName(diocese);
-        Optional<Archdiocese> archdioceseData = archdioceseRepository.findByName(name);
-        if(dioceseData.isPresent() && archdioceseData.isEmpty()) {
-            Archdiocese archdiocese = new Archdiocese();
-            archdiocese.setName(name);
-            archdiocese.setDiocese(dioceseData.get());
-            return archdioceseRepository.save(archdiocese);
+    public Object createArchdiocese(String name) {
+
+        Optional<Archdiocese> optionalArchdiocese = archdioceseRepository.findByName(name);
+
+        if (optionalArchdiocese.isPresent()) {
+
+            if (optionalArchdiocese.get().isDelete()) {
+                optionalArchdiocese.get().setDelete(false);
+                return archdioceseRepository.save(optionalArchdiocese.get());
+            }
+            return String.format(existsMessage, name);
+
         }
 
-        return null;
+        Archdiocese newDiocese = Archdiocese.builder().name(name).isDelete(false).build();
+
+        return archdioceseRepository.save(newDiocese);
     }
 
     @Override
-    public List<Archdiocese> showAll() {
-        return archdioceseRepository.findAll();
+    public List<String> showAll() {
+        return archdioceseRepository.findAllNotDeleted();
     }
 
     @Override
@@ -48,7 +53,7 @@ public class ArchdioceseServicesImplement implements ArchdioceseServices {
     @Override
     public Archdiocese delete(int id) {
         Optional<Archdiocese> archdiocese = archdioceseRepository.findById(id);
-        if(archdiocese.isPresent()) {
+        if (archdiocese.isPresent()) {
             archdiocese.get().setDelete(true);
             return archdioceseRepository.save(archdiocese.get());
         }
@@ -56,15 +61,22 @@ public class ArchdioceseServicesImplement implements ArchdioceseServices {
     }
 
     @Override
-    public Archdiocese update(int id, String name, String diocese) {
-        Optional<Diocese> dioceseData = dioceseRepository.findByName(diocese);
+    public Object update(int id, String name) {
         Optional<Archdiocese> archdiocese = archdioceseRepository.findById(id);
-        if(archdiocese.isPresent() && dioceseData.isPresent()) {
-            archdiocese.get().setName(name);
-            archdiocese.get().setDiocese(dioceseData.get());
-            return archdioceseRepository.save(archdiocese.get());
+        Optional<Archdiocese> existArchdiocese = archdioceseRepository.findByNameAndIdNot(name, id);
+        if (existArchdiocese.isEmpty()) {
+            if (archdiocese.isPresent()) {
+
+                if (archdiocese.get().getName().equals(name)) {
+                    return archdiocese;
+                }
+
+                archdiocese.get().setName(name);
+                return archdioceseRepository.save(archdiocese.get());
+            }
+            return String.format(doesNotExistMessage, name);
         }
-        return null;
+        return String.format(existsMessage, name);
     }
 
     @Override

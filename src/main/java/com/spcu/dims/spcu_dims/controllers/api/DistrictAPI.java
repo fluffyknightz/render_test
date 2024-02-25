@@ -22,14 +22,18 @@ public class DistrictAPI {
 
     @PostMapping("/create")
     public ResponseEntity<Object> districtCreate(@RequestParam("name") String name, @RequestParam ("region")String region) {
-        District district = districtServices.createDistrict(name, region);
-        if (district!= null) {
+        Object district = districtServices.createDistrict(name, region);
+        if (district instanceof String) {
+
+            return new ResponseEntity<>(district, HttpStatus.CONFLICT);
+        } else if (district != null) {
+            // Continue with the original logic when archdiocese is not a String
             return new ResponseEntity<>(district, HttpStatus.CREATED);
+        } else {
+            // Handle the case where archdiocese is null
+            String errorMessage = "Failed to create District with the name '" + name + "'.";
+            return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        System.out.println("reachjjjj");
-        String errorMessage = "District with the name '" + name + "' already exists.";
-        System.out.println(errorMessage);
-        return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 
     @PostMapping("/show/table")
@@ -48,15 +52,22 @@ public class DistrictAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam ("name") String name, @RequestParam("region") String region) {
-        District district = districtServices.update(id, name, region);
-        if(district!= null){
-            return new ResponseEntity<>(district, HttpStatus.OK);
+        Object district = districtServices.update(id, name, region);
+        if (district instanceof String) {
+
+            return new ResponseEntity<>(district, HttpStatus.CONFLICT);
+        } else if (district != null) {
+            // Continue with the original logic when archdiocese is not a String
+            return new ResponseEntity<>(district, HttpStatus.CREATED);
+        } else {
+            // Handle the case where archdiocese is null
+            String errorMessage = "Failed to Update District with the name '" + name + "'.";
+            return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/show/all")
-    public ResponseEntity<List<District>> zoneShowAll() {
+    public ResponseEntity<List<String>> zoneShowAll() {
         return new ResponseEntity<>(districtServices.findAll(), HttpStatus.OK);
     }
 
@@ -71,7 +82,7 @@ public class DistrictAPI {
 
     @PostMapping("/show")
     public ResponseEntity<Object> create(@RequestParam ("region") String region) {
-        List<District> districts = districtServices.findByRegionName(region);
+        List<String> districts = districtServices.findByRegionName(region);
         if(districts!= null){
             return new ResponseEntity<>(districts, HttpStatus.OK);
         }

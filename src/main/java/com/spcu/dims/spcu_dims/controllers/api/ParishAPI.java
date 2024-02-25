@@ -1,11 +1,7 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.entities.Parish;
-
-import com.spcu.dims.spcu_dims.entities.Township;
-import com.spcu.dims.spcu_dims.entities.Zone;
 import com.spcu.dims.spcu_dims.services.ParishServices;
-
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -26,12 +22,18 @@ public class ParishAPI {
 
     @PostMapping("/create")
     public ResponseEntity<Object> parishCreate(@RequestParam("name") String name, @RequestParam ("zone")String diocese, @RequestParam ("township")String township) {
-        Parish parish = parishServices.createParish(name, diocese, township);
-        if (parish!= null) {
+        Object parish = parishServices.createParish(name, diocese, township);
+        if (parish instanceof String) {
+
+            return new ResponseEntity<>(parish, HttpStatus.CONFLICT);
+        } else if (parish != null) {
+            // Continue with the original logic when archdiocese is not a String
             return new ResponseEntity<>(parish, HttpStatus.CREATED);
+        } else {
+            // Handle the case where archdiocese is null
+            String errorMessage = "Failed to create Parish with the name '" + name + "'.";
+            return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        String errorMessage = "Parish with the name '" + name + "' already exists.";
-        return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 
     @PostMapping("/show/table")
@@ -58,7 +60,7 @@ public class ParishAPI {
     }
 
     @PostMapping("/show/all")
-    public ResponseEntity<List<Parish>> parishShowAll() {
+    public ResponseEntity<List<String>> parishShowAll() {
         return new ResponseEntity<>(parishServices.showAll(), HttpStatus.OK);
     }
 

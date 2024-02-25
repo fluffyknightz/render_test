@@ -7,15 +7,15 @@ import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import java.util.List;
 
 public interface DioceseServices {
-    Diocese dioceseCreate(String name);
+    Object dioceseCreate(String name, String archdiocese);
 
-    List<Diocese> findAll();
+    List<String> findAll();
 
     Diocese findById(int id);
 
     Diocese delete(int id);
 
-    Diocese update(int id, String name);
+    Object update(int id, String name, String archdiocese);
 
     DataTablesOutput<Diocese> tableDiocese(DataTablesInput input);
 }

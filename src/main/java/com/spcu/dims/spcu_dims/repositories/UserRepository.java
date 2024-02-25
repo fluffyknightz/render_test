@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    @Query(value = "SELECT * FROM Users u WHERE BINARY u.username = :username", nativeQuery = true)
+    @Query(value = "SELECT * FROM users u WHERE BINARY u.username = :username", nativeQuery = true)
     Optional<User> findByUsernameCaseSensitive(@Param("username") String username);
 
 }

@@ -24,7 +24,7 @@ public class ParishServicesImplement implements ParishServices {
     private final TownshipRepository townshipRepository;
 
     @Override
-    public Parish createParish(String name, String zone, String township) {
+    public Object createParish(String name, String zone, String township) {
         Optional<Zone> zoneData = zoneRepository.findByName(zone);
         Optional<Township> townshipData = townshipRepository.findByName(township);
         Optional<Parish> parishData = parishRepository.findByName(name);
@@ -39,8 +39,8 @@ public class ParishServicesImplement implements ParishServices {
     }
 
     @Override
-    public List<Parish> showAll() {
-        return parishRepository.findAll();
+    public List<String> showAll() {
+        return parishRepository.findAllNotDeleted();
     }
 
     @Override

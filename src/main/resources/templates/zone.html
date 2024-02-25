@@ -25,8 +25,8 @@
                   </h4>
                 </div>
                 <div class="col-3">
-                  <select class="form-select my-3 col-auto" aria-label="archdiocese select" id="filterArchdiocese">
-                    <option selected disabled>Filter Archdiocese</option>
+                  <select class="form-select my-3 col-auto" aria-label="diocese select" id="filterDiocese">
+                    <option selected disabled>Filter Diocese</option>
                     <option value="">None</option>
                   </select>
                 </div>
@@ -40,7 +40,7 @@
               <tr>
                 <th>No</th>
                 <th>Name</th>
-                <th>Archdiocese</th>
+                <th>Diocese</th>
                 <th>Action</th>
               </tr>
               </thead>
@@ -67,9 +67,8 @@
                        placeholder="Zone">
                 <label for="zone">Zone</label>
               </div>
-              <select class="form-select my-3" aria-label="archdiocese select" id="archdioceseSelect">
-                <option selected disabled>Select Related Archdiocese</option>
-                <option value="">None</option>
+              <select class="form-select my-3" aria-label="diocese select" id="dioceseSelect">
+                <option selected value="" disabled>Select Related Diocese</option>
               </select>
             </div>
             <div class="modal-footer">
@@ -87,7 +86,7 @@
   </div>
 
 </div>
-
+<script layout:fragment="scripts2" th:src="@{/js/table.js}"></script>
 <script layout:fragment="scripts" th:src="@{/js/zone.js}"></script>
 
 </html>

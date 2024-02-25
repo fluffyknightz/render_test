@@ -24,16 +24,22 @@ public class TownshipAPI {
 
     @PostMapping("/create")
     public ResponseEntity<Object> townshipCreate(@RequestParam("name") String name, @RequestParam ("district") String district) {
-        Township township = townshipServices.createTownship(name, district);
-        if (township!= null) {
+        Object township = townshipServices.createTownship(name, district);
+        if (township instanceof String) {
+
+            return new ResponseEntity<>(township, HttpStatus.CONFLICT);
+        } else if (township != null) {
+            // Continue with the original logic when archdiocese is not a String
             return new ResponseEntity<>(township, HttpStatus.CREATED);
+        } else {
+            // Handle the case where archdiocese is null
+            String errorMessage = "Failed to Create Township with the name '" + name + "'.";
+            return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        String errorMessage = "District with the name '" + name + "' already exists.";
-        return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 
     @PostMapping("/show/all")
-    public ResponseEntity<List<Township>> townshipShowAll() {
+    public ResponseEntity<List<String>> townshipShowAll() {
         return new ResponseEntity<>(townshipServices.showAll(), HttpStatus.OK);
     }
 
@@ -58,11 +64,18 @@ public class TownshipAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam ("name") String name, @RequestParam("district") String district) {
-        Township township = townshipServices.update(id, name, district);
-        if(township!= null){
-            return new ResponseEntity<>(township, HttpStatus.OK);
+        Object township = townshipServices.update(id, name, district);
+        if (township instanceof String) {
+
+            return new ResponseEntity<>(township, HttpStatus.CONFLICT);
+        } else if (township != null) {
+            // Continue with the original logic when archdiocese is not a String
+            return new ResponseEntity<>(township, HttpStatus.CREATED);
+        } else {
+            // Handle the case where archdiocese is null
+            String errorMessage = "Failed to Update Township with the name '" + name + "'.";
+            return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/show/table")

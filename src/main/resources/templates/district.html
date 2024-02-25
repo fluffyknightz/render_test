@@ -66,8 +66,7 @@
                                 <label for="district">District</label>
                             </div>
                             <select class="form-select my-3" aria-label="region select" id="regionSelect">
-                                <option selected disabled>Select Related Region</option>
-                                <option value="">None</option>
+                                <option selected value="" disabled>Select Related Region</option>
                             </select>
                         </div>
                         <div class="modal-footer">
@@ -85,7 +84,7 @@
     </div>
 
 </div>
-
+<script layout:fragment="scripts2" th:src="@{/js/table.js}"></script>
 <script layout:fragment="scripts" th:src="@{/js/district.js}"></script>
 
 </html>

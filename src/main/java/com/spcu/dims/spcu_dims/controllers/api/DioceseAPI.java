@@ -1,6 +1,7 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.entities.Diocese;
+
 import com.spcu.dims.spcu_dims.services.DioceseServices;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -12,30 +13,32 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/spcu-dims/api/v1/diocese")
 @AllArgsConstructor
-
 public class DioceseAPI {
 
     private final DioceseServices dioceseServices;
-
     private static final String NOT_FOUND = "ID Not Found.";
 
     @PostMapping("/create")
-    public ResponseEntity<Object> dioceseCreate(@RequestParam("name") String name) {
+    public ResponseEntity<Object> archdioceseCreate(@RequestParam("name") String name, @RequestParam ("archdiocese")String archdiocese) {
+        Object diocese = dioceseServices.dioceseCreate(name,archdiocese);
+        if (diocese instanceof String) {
 
-        Diocese diocese = dioceseServices.dioceseCreate(name);
-        if (diocese!= null) {
+            return new ResponseEntity<>(diocese, HttpStatus.CONFLICT);
+        } else if (diocese != null) {
+            // Continue with the original logic when archdiocese is not a String
             return new ResponseEntity<>(diocese, HttpStatus.CREATED);
+        } else {
+            // Handle the case where archdiocese is null
+            String errorMessage = "Failed to create Diocese with the name '" + name + "'.";
+            return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        String errorMessage = "Diocese with the name '" + name + "' already exists.";
-        return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 
     @PostMapping("/show/all")
-    public ResponseEntity<List<Diocese>> showAll() {
+    public ResponseEntity<List<String>> archdioceseShowAll() {
 
         return new ResponseEntity<>(dioceseServices.findAll(), HttpStatus.OK);
     }
@@ -43,33 +46,38 @@ public class DioceseAPI {
     @GetMapping("/show/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") int id) {
         Diocese diocese = dioceseServices.findById(id);
-        if (diocese != null) {
+        if(diocese != null){
             return new ResponseEntity<>(diocese, HttpStatus.OK);
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
-
     }
 
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") int id) {
         Diocese diocese = dioceseServices.delete(id);
-        if (diocese != null) {
+        if(diocese!= null){
             return new ResponseEntity<>(diocese, HttpStatus.OK);
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name) {
-        Diocese diocese = dioceseServices.update(id, name);
-        if (diocese != null) {
-            return new ResponseEntity<>(diocese, HttpStatus.OK);
+    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam ("name") String name, @RequestParam("archdiocese") String archdiocese) {
+        Object diocese = dioceseServices.update(id, name, archdiocese);
+        if (diocese instanceof String) {
+            return new ResponseEntity<>(diocese, HttpStatus.CONFLICT);
+        } else if (diocese != null) {
+            // Continue with the original logic when archdiocese is not a String
+            return new ResponseEntity<>(diocese, HttpStatus.CREATED);
+        } else {
+            // Handle the case where archdiocese is null
+            String errorMessage = "Failed to Update Diocese with the name '" + name + "'.";
+            return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>("Diocese with the name '" + name + "' already exists.\"", HttpStatus.CONFLICT);
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<Diocese> dioceses(@Valid @RequestBody DataTablesInput input){
+    public DataTablesOutput<Diocese> archdioceses(@Valid @RequestBody DataTablesInput input){
         return dioceseServices.tableDiocese(input);
 
     }

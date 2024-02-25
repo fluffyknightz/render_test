@@ -19,11 +19,15 @@ public class Diocese implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false, length = 30, unique = true)
+    @Column(nullable = false, length = 10, unique = true)
     private String name;
 
     @Column(nullable = false, columnDefinition = "BIT(1) DEFAULT 0")
     private boolean isDelete;
+
+    @ManyToOne(targetEntity = Archdiocese.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "archdiocese_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_archdiocese"))
+    private Archdiocese archdiocese;
 
 
 }

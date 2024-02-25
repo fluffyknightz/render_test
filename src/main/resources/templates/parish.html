@@ -79,12 +79,12 @@
                                 <label for="parish">Parish</label>
                             </div>
                             <select class="form-select my-3" aria-label="zone select" id="zoneSelect">
-                                <option selected disabled>Select Related Zone</option>
-                                <option value="">None</option>
+                                <option selected value="" disabled>Select Related Zone</option>
+
                             </select>
                             <select class="form-select my-3" aria-label="township select" id="townshipSelect">
-                                <option selected disabled>Select Related Township</option>
-                                <option value="">None</option>
+                                <option selected value="" disabled>Select Related Township</option>
+
                             </select>
                         </div>
                         <div class="modal-footer">
@@ -102,7 +102,7 @@
     </div>
 
 </div>
-
+<script layout:fragment="scripts2" th:src="@{/js/table.js}"></script>
 <script layout:fragment="scripts" th:src="@{/js/parish.js}"></script>
 
 </html>

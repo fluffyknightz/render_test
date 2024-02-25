@@ -23,16 +23,22 @@ public class RegionAPI {
     @PostMapping("/create")
     public ResponseEntity<Object> createRegion(@RequestParam ("name") String name) {
 
-        Region region = regionServices.createRegion(name);
-        if (region!= null) {
+        Object region = regionServices.createRegion(name);
+        if (region instanceof String) {
+
+            return new ResponseEntity<>(region, HttpStatus.CONFLICT);
+        } else if (region != null) {
+            // Continue with the original logic when archdiocese is not a String
             return new ResponseEntity<>(region, HttpStatus.CREATED);
+        } else {
+            // Handle the case where archdiocese is null
+            String errorMessage = "Failed to Create Region with the name '" + name + "'.";
+            return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        String errorMessage = "Region with the name '" + name + "' already exists.";
-        return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 
     @PostMapping("/show/all")
-    public ResponseEntity<List<Region>> showAll() {
+    public ResponseEntity<List<String>> showAll() {
 
         return new ResponseEntity<>(regionServices.findAll(), HttpStatus.OK);
     }
@@ -58,11 +64,18 @@ public class RegionAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name){
-        Region region = regionServices.update(id, name);
-        if(region!= null){
-            return new ResponseEntity<>(region, HttpStatus.OK);
+        Object region = regionServices.update(id, name);
+
+        if (region instanceof String) {
+            return new ResponseEntity<>(region, HttpStatus.CONFLICT);
+        } else if (region != null) {
+            // Continue with the original logic when archdiocese is not a String
+            return new ResponseEntity<>(region, HttpStatus.CREATED);
+        } else {
+            // Handle the case where archdiocese is null
+            String errorMessage = "Failed to Update Region with the name '" + name + "'.";
+            return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>("Region with the name '" + name + "' already exists.\"", HttpStatus.CONFLICT);
     }
 
     @PostMapping("/show/table")

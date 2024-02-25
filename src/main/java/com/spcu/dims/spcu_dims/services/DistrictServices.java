@@ -8,18 +8,18 @@ import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import java.util.List;
 
 public interface DistrictServices {
-    District createDistrict(String name, String region);
+    Object createDistrict(String name, String region);
 
-    List<District> findAll();
+    List<String> findAll();
 
     District findById(int id);
 
     District delete(int id);
 
-    District update(int id, String name, String region);
+    Object update(int id, String name, String region);
 
     DataTablesOutput<District> tableDistrict(DataTablesInput input);
 
-    List<District> findByRegionName(String region);
+    List<String> findByRegionName(String region);
 
 }

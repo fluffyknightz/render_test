@@ -3,7 +3,6 @@ package com.spcu.dims.spcu_dims.controllers;
 
 import com.spcu.dims.spcu_dims.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

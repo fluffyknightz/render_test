@@ -21,7 +21,7 @@ public class TownshipServicesImplement implements TownshipServices {
     private final DistrictRepository districtRepository;
 
     @Override
-    public Township createTownship(String name, String district) {
+    public Object createTownship(String name, String district) {
         Optional<District> districtData = districtRepository.findByName(district);
         Optional<Township> townshipData = townshipRepository.findByName(name);
         if (districtData.isPresent() && townshipData.isEmpty()) {
@@ -36,8 +36,8 @@ public class TownshipServicesImplement implements TownshipServices {
 
 
     @Override
-    public List<Township> showAll() {
-        return townshipRepository.findAll();
+    public List<String> showAll() {
+        return townshipRepository.findAllNotDeleted();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class TownshipServicesImplement implements TownshipServices {
     }
 
     @Override
-    public Township update(int id, String name, String district) {
+    public Object update(int id, String name, String district) {
         Optional<District> districtData = districtRepository.findByName(district);
         Optional<Township> township = townshipRepository.findById(id);
         if (township.isPresent() && districtData.isPresent()) {

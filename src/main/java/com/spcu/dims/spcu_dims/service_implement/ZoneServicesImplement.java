@@ -1,8 +1,8 @@
 package com.spcu.dims.spcu_dims.service_implement;
 
-import com.spcu.dims.spcu_dims.entities.Archdiocese;
+import com.spcu.dims.spcu_dims.entities.Diocese;
 import com.spcu.dims.spcu_dims.entities.Zone;
-import com.spcu.dims.spcu_dims.repositories.ArchdioceseRepository;
+import com.spcu.dims.spcu_dims.repositories.DioceseRepository;
 import com.spcu.dims.spcu_dims.repositories.ZoneRepository;
 import com.spcu.dims.spcu_dims.services.ZoneServices;
 import lombok.AllArgsConstructor;
@@ -18,24 +18,24 @@ import java.util.Optional;
 public class ZoneServicesImplement implements ZoneServices {
 
     private final ZoneRepository zoneRepository;
-    private final ArchdioceseRepository archdioceseRepository;
+    private final DioceseRepository dioceseRepository;
 
     @Override
-    public Zone createZone(String name, String archdioceses) {
+    public Object createZone(String name, String dioceses) {
         Optional<Zone> zoneData = zoneRepository.findByName(name);
-        Optional<Archdiocese> archdioceseData = archdioceseRepository.findByName(archdioceses);
-        if(archdioceseData.isPresent() && zoneData.isEmpty()) {
+        Optional<Diocese> dioceseData = dioceseRepository.findByName(dioceses);
+        if(dioceseData.isPresent() && zoneData.isEmpty()) {
             Zone zone = new Zone();
             zone.setName(name);
-            zone.setArchdiocese(archdioceseData.get());
+            zone.setDiocese(dioceseData.get());
             return zoneRepository.save(zone);
         }
         return null;
     }
 
     @Override
-    public List<Zone> findAll() {
-        return zoneRepository.findAll();
+    public List<String> findAll() {
+        return zoneRepository.findAllNotDeleted();
     }
 
     @Override
@@ -54,12 +54,12 @@ public class ZoneServicesImplement implements ZoneServices {
     }
 
     @Override
-    public Zone update(int id, String name, String archdiocese) {
-        Optional<Archdiocese> archdioceseData = archdioceseRepository.findByName(archdiocese);
+    public Object update(int id, String name, String diocese) {
+        Optional<Diocese> dioceseData = dioceseRepository.findByName(diocese);
         Optional<Zone> zone = zoneRepository.findById(id);
-        if(zone.isPresent() && archdioceseData.isPresent()) {
+        if(zone.isPresent() && dioceseData.isPresent()) {
             zone.get().setName(name);
-            zone.get().setArchdiocese(archdioceseData.get());
+            zone.get().setDiocese(dioceseData.get());
             return zoneRepository.save(zone.get());
         }
         return null;

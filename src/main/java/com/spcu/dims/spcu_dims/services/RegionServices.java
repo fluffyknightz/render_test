@@ -9,15 +9,15 @@ import java.util.List;
 
 public interface RegionServices{
 
-    Region createRegion(String name);
+    Object createRegion(String name);
 
-    List<Region> findAll();
+    List<String> findAll();
 
     Region findById(int id);
 
     Region delete(int id);
 
-    Region update(int id, String name);
+    Object update(int id, String name);
 
     DataTablesOutput<Region> tableRegion(DataTablesInput input);
 }

@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface ParishServices {
 
-    Parish createParish(String name, String zone, String township);
+    Object createParish(String name, String zone, String township);
 
-    List<Parish> showAll();
+    List<String> showAll();
 
     Parish findById(int id);
 

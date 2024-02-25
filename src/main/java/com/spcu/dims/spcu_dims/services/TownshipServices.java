@@ -9,15 +9,15 @@ import java.util.List;
 
 public interface TownshipServices {
 
-    Township createTownship(String name, String district);
+    Object createTownship(String name, String district);
 
-    List<Township> showAll();
+    List<String> showAll();
 
     Township findById(int id);
 
     Township delete(int id);
 
-    Township update(int id, String name, String district);
+    Object update(int id, String name, String district);
 
     DataTablesOutput<Township> tableTownship(DataTablesInput input);
 }
