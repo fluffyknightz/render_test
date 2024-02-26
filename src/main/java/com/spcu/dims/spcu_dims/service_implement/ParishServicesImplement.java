@@ -1,8 +1,6 @@
 package com.spcu.dims.spcu_dims.service_implement;
 
-import com.spcu.dims.spcu_dims.entities.Parish;
-import com.spcu.dims.spcu_dims.entities.Township;
-import com.spcu.dims.spcu_dims.entities.Zone;
+import com.spcu.dims.spcu_dims.entities.*;
 import com.spcu.dims.spcu_dims.repositories.ParishRepository;
 import com.spcu.dims.spcu_dims.repositories.TownshipRepository;
 import com.spcu.dims.spcu_dims.repositories.ZoneRepository;
@@ -23,19 +21,42 @@ public class ParishServicesImplement implements ParishServices {
     private final ZoneRepository zoneRepository;
     private final TownshipRepository townshipRepository;
 
+    String existsMessage = "Parish with the name '%s' already exists.";
+    String doesNotExistMessage = "Parish with the name '%s' does not exist.";
+    String zoneDoesNotExistMessage = "Zone with the name '%s' does not exist.";
+    String townshipDoesNotExistMessage = "Township with the name '%s' does not exist.";
+
+    String bothDoesNotExistMessage = "Zone with the name '%s' and Township with the name '%s' do not exist.";
+
     @Override
     public Object createParish(String name, String zone, String township) {
-        Optional<Zone> zoneData = zoneRepository.findByName(zone);
-        Optional<Township> townshipData = townshipRepository.findByName(township);
-        Optional<Parish> parishData = parishRepository.findByName(name);
-        if(parishData.isEmpty() && zoneData.isPresent() && townshipData.isPresent()){
-            Parish parish = new Parish();
-            parish.setName(name);
-            parish.setZone(zoneData.get());
-            parish.setTownship(townshipData.get());
-            return parishRepository.save(parish);
+        Optional<Zone> optionalZone = zoneRepository.findByName(zone);
+        Optional<Township> optionalTownship = townshipRepository.findByName(township);
+        if (optionalZone.isEmpty() && optionalTownship.isEmpty()) {
+            return String.format(bothDoesNotExistMessage, zone, township);
+        } else if (optionalZone.isEmpty()) {
+            return String.format(zoneDoesNotExistMessage, zone);
+        } else if (optionalTownship.isEmpty()) {
+            return String.format(townshipDoesNotExistMessage, township);
         }
-        return null;
+
+        Optional<Parish> existingParishOptional = parishRepository.findByName(name);
+        if (existingParishOptional.isPresent()) {
+            if (existingParishOptional.get().isDelete()) {
+                existingParishOptional.get().setDelete(false);
+                existingParishOptional.get().setZone(optionalZone.get());
+                existingParishOptional.get().setTownship(optionalTownship.get());
+                return parishRepository.save(existingParishOptional.get());
+            } else {
+                return String.format(existsMessage, name);
+            }
+        }
+        Parish newParish = Parish.builder()
+                .name(name)
+                .zone(optionalZone.get())
+                .township(optionalTownship.get())
+                .build();
+        return parishRepository.save(newParish);
     }
 
     @Override
@@ -51,7 +72,7 @@ public class ParishServicesImplement implements ParishServices {
     @Override
     public Parish delete(int id) {
         Optional<Parish> parish = parishRepository.findById(id);
-        if(parish.isPresent()) {
+        if (parish.isPresent()) {
             parish.get().setDelete(true);
             return parishRepository.save(parish.get());
         }
@@ -59,17 +80,34 @@ public class ParishServicesImplement implements ParishServices {
     }
 
     @Override
-    public Parish update(int id, String name, String zone, String township) {
-        Optional<Zone> zoneData = zoneRepository.findByName(zone);
-        Optional<Township> townshipData = townshipRepository.findByName(township);
-        Optional<Parish> parish = parishRepository.findById(id);
-        if(parish.isPresent() && townshipData.isPresent() && zoneData.isPresent()){
-            parish.get().setName(name);
-            parish.get().setZone(zoneData.get());
-            parish.get().setTownship(townshipData.get());
-            return parishRepository.save(parish.get());
+    public Object update(int id, String name, String zone, String township) {
+        Optional<Parish> parishOptional = parishRepository.findById(id);
+        Optional<Township> townshipExist = townshipRepository.findByName(township);
+        Optional<Zone> zoneExist = zoneRepository.findByName(zone);
+
+        if (zoneExist.isEmpty() && townshipExist.isEmpty()) {
+            return String.format(bothDoesNotExistMessage, zone, township);
+        } else if (zoneExist.isEmpty()) {
+            return String.format(zoneDoesNotExistMessage, zone);
+        } else if (townshipExist.isEmpty()) {
+            return String.format(townshipDoesNotExistMessage, township);
         }
-        return null;
+        if (parishOptional.isPresent()) {
+
+            if (parishOptional.get().getName().equals(name) && parishOptional.get().getZone().getName().equals(zone) && parishOptional.get().getTownship().getName().equals(township)) {
+                return parishOptional;
+            }
+            // Check if the new name is already exists
+            else if (parishRepository.findByNameAndIdNot(name, id).isPresent()) {
+                return String.format(existsMessage, name);
+            }
+
+            parishOptional.get().setName(name);
+            parishOptional.get().setZone(zoneExist.get());
+            parishOptional.get().setTownship(townshipExist.get());
+            return parishRepository.save(parishOptional.get());
+        }
+        return String.format(doesNotExistMessage, name);
     }
 
     @Override

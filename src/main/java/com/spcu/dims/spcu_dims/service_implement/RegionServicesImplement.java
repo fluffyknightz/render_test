@@ -3,7 +3,7 @@ package com.spcu.dims.spcu_dims.service_implement;
 import com.spcu.dims.spcu_dims.entities.Region;
 import com.spcu.dims.spcu_dims.repositories.RegionRepository;
 import com.spcu.dims.spcu_dims.services.RegionServices;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.stereotype.Service;
@@ -12,29 +12,31 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class RegionServicesImplement implements RegionServices {
 
     private final RegionRepository regionRepository;
+    String existsMessage = "Region with the name '%s' already exists.";
+    String doesNotExistMessage = "Region with the name '%s' does not exist.";
+
     @Override
     public Object createRegion(String name) {
 
-        if (!regionRepository.existsByName(name)) {
-            return regionRepository.save(Region.builder().name(name).isDelete(false).build());
-        } else {
-            Optional<Region> existingRegionOptional = regionRepository.findByName(name);
+        Optional<Region> optionalRegion = regionRepository.findByName(name);
 
-            if (existingRegionOptional.isPresent()) {
-                Region existingRegion = existingRegionOptional.get();
+        if (optionalRegion.isPresent()) {
 
-                if (existingRegion.isDelete()) {
-                    existingRegion.setDelete(false);
-                    return regionRepository.save(existingRegion);
-                }
-
+            if (optionalRegion.get().isDelete()) {
+                optionalRegion.get().setDelete(false);
+                return regionRepository.save(optionalRegion.get());
             }
+            return String.format(existsMessage, name);
+
         }
-        return null;
+
+        Region newRegion = Region.builder().name(name).build();
+
+        return regionRepository.save(newRegion);
     }
 
     @Override
@@ -60,12 +62,23 @@ public class RegionServicesImplement implements RegionServices {
     @Override
     public Object update(int id, String name) {
         Optional<Region> region = regionRepository.findById(id);
-        boolean exist = regionRepository.existsByName(name);
-        if (region.isPresent() && !region.get().getName().equals(name) && !exist) {
-            region.get().setName(name);
-            return regionRepository.save(region.get());
+        Optional<Region> existRegion = regionRepository.findByNameAndIdNot(name, id);
+
+        if (existRegion.isEmpty()) {
+            if (region.isPresent()) {
+
+                if (region.get().getName().equals(name)) {
+                    return region;
+                }
+
+                region.get().setName(name);
+                return regionRepository.save(region.get());
+            }
+        } else {
+            return String.format(existsMessage, name);
+
         }
-        return null;
+        return String.format(doesNotExistMessage, name);
     }
 
     @Override

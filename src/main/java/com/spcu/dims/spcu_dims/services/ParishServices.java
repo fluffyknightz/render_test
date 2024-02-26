@@ -16,7 +16,7 @@ public interface ParishServices {
 
     Parish delete(int id);
 
-    Parish update(int id, String name, String zone, String township);
+    Object update(int id, String name, String zone, String township);
 
     DataTablesOutput<Parish> tableParish(DataTablesInput input);
 }

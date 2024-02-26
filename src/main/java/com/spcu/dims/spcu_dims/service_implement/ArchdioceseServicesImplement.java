@@ -17,8 +17,8 @@ public class ArchdioceseServicesImplement implements ArchdioceseServices {
 
     private final ArchdioceseRepository archdioceseRepository;
 
-     String existsMessage = "Archdiocese with the name '%s' already exists.";
-     String doesNotExistMessage = "Archdiocese with the name '%s' does not exist.";
+    String existsMessage = "Archdiocese with the name '%s' already exists.";
+    String doesNotExistMessage = "Archdiocese with the name '%s' does not exist.";
 
     @Override
     public Object createArchdiocese(String name) {
@@ -35,9 +35,9 @@ public class ArchdioceseServicesImplement implements ArchdioceseServices {
 
         }
 
-        Archdiocese newDiocese = Archdiocese.builder().name(name).isDelete(false).build();
+        Archdiocese newArchdiocese = Archdiocese.builder().name(name).build();
 
-        return archdioceseRepository.save(newDiocese);
+        return archdioceseRepository.save(newArchdiocese);
     }
 
     @Override
@@ -64,19 +64,18 @@ public class ArchdioceseServicesImplement implements ArchdioceseServices {
     public Object update(int id, String name) {
         Optional<Archdiocese> archdiocese = archdioceseRepository.findById(id);
         Optional<Archdiocese> existArchdiocese = archdioceseRepository.findByNameAndIdNot(name, id);
-        if (existArchdiocese.isEmpty()) {
-            if (archdiocese.isPresent()) {
+        if (existArchdiocese.isPresent()) {
+            return String.format(existsMessage, name);
+        } else if (archdiocese.isPresent()) {
 
-                if (archdiocese.get().getName().equals(name)) {
-                    return archdiocese;
-                }
-
-                archdiocese.get().setName(name);
-                return archdioceseRepository.save(archdiocese.get());
+            if (archdiocese.get().getName().equals(name)) {
+                return archdiocese;
             }
-            return String.format(doesNotExistMessage, name);
+
+            archdiocese.get().setName(name);
+            return archdioceseRepository.save(archdiocese.get());
         }
-        return String.format(existsMessage, name);
+        return String.format(doesNotExistMessage, name);
     }
 
     @Override

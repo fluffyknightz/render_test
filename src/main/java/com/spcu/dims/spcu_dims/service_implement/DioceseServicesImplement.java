@@ -47,7 +47,6 @@ public class DioceseServicesImplement implements DioceseServices {
         Diocese newDiocese = Diocese.builder()
                 .name(name)
                 .archdiocese(optionalArchdiocese.get())
-                .isDelete(false)
                 .build();
         return dioceseRepository.save(newDiocese);
     }
@@ -90,14 +89,14 @@ public class DioceseServicesImplement implements DioceseServices {
             }
             // Check if the new name is already exists
             else if (dioceseRepository.findByNameAndIdNot(name, id).isPresent()) {
-                return String.format(existsMessage, archdiocese);
+                return String.format(existsMessage, name);
             }
 
             dioceseOptional.get().setName(name);
             dioceseOptional.get().setArchdiocese(archdioceseExist.get());
             return dioceseRepository.save(dioceseOptional.get());
         }
-        return String.format(doesNotExistMessage, archdiocese);
+        return String.format(doesNotExistMessage, name);
 
     }
 
