@@ -76,4 +76,9 @@ public class PageControllers {
     public String parish(){
         return "parish";
     }
+
+    @GetMapping("/activity")
+    public String activity(){
+        return "activity";
+    }
 }

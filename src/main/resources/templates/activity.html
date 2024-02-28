@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{/layout/main-layout}">
+
+
+<div layout:fragment="content">
+
+    <div class="container-fluid p-6">
+
+        <!--Start Activity -->
+        <div class="row mt-3">
+            <div class="col-md-12 col-12">
+                <!-- card  -->
+                <div class="card">
+                    <!-- card header  -->
+                    <div class="card-header bg-white py-4">
+                        <h4 class="mb-0 text-primary">Activity
+                            <span type="button" data-bs-toggle="modal" data-bs-target="#model" onclick="changeAdd()">
+                                <i class="bi bi-plus-square ml-5" style="font-size: 1.4rem"></i>
+                            </span>
+                        </h4>
+                    </div>
+
+                    <div class="p-5">
+                        <table id="myTable" class="hover table table-striped" style="width: 100%">
+                            <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--End Activity-->
+
+        <!--Start Activity Add Modal -->
+        <div class="modal fade" id="model" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 id="modelTitle" class="modal-title fs-5">Add Activity</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="myForm">
+                        <div class="modal-body">
+                            <div class="form-floating my-3">
+                                <input type="text" class="form-control" name="activity" id="activity" placeholder="Activity">
+                                <label for="activity">Activity</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                            <button type="button" class="btn btn-primary" id="myButton" onclick="adding()">Save</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <!--End Activity Add Modal -->
+
+    </div>
+
+</div>
+<script layout:fragment="scripts2" th:src="@{/js/table.js}"></script>
+<script layout:fragment="scripts" th:src="@{/js/activity.js}"></script>
+
+
+</html>

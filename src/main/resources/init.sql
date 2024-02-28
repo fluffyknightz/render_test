@@ -368,7 +368,21 @@ INSERT IGNORE INTO `spcu-dims`.`parishes` (`name`, `township_id`, `zone_id`) VAL
 INSERT IGNORE INTO `spcu-dims`.`parishes` (`name`, `township_id`, `zone_id`) VALUES ('Infant Jesus of Prague Church', '12', '1');
 INSERT IGNORE INTO `spcu-dims`.`parishes` (`name`, `township_id`, `zone_id`) VALUES ('Holy Innocrnt\'s Church', '8', '1');
 INSERT IGNORE INTO `spcu-dims`.`parishes` (`name`, `township_id`, `zone_id`) VALUES ('St.Michale, The Archangel\'s church', '15', '1');
-INSERT IGNORE INTO `spcu-dims`.`parishes` (`name`, `township_id`, `zone_id`) VALUES ('Sacret Heart Church', '16', '1');
+INSERT IGNORE INTO `spcu-dims`.`parishes` (`name`, `township_id`, `zone_id`) VALUES ('Sacred Heart Church', '16', '1');
 INSERT IGNORE INTO `spcu-dims`.`parishes` (`name`, `township_id`, `zone_id`) VALUES ('St.Sebastian\'s Church', '21', '1');
 INSERT IGNORE INTO `spcu-dims`.`parishes` (`name`, `township_id`, `zone_id`) VALUES ('St.Peter and St.Paul\'s Church', '10', '1');
+
+INSERT IGNORE INTO `spcu-dims`.`factors` (`name`) VALUES ('EXTERNAL');
+INSERT IGNORE INTO `spcu-dims`.`factors` (`name`) VALUES ('INTERNAL');
+
+INSERT IGNORE INTO `spcu-dims`.`strategic_directions` (`name`, `factor_id`) VALUES ('Education', '1');
+INSERT IGNORE INTO `spcu-dims`.`strategic_directions` (`name`, `factor_id`) VALUES ('Health', '1');
+INSERT IGNORE INTO `spcu-dims`.`strategic_directions` (`name`, `factor_id`) VALUES ('Migration', '1');
+INSERT IGNORE INTO `spcu-dims`.`strategic_directions` (`name`, `factor_id`) VALUES ('Humanitarian', '1');
+INSERT IGNORE INTO `spcu-dims`.`strategic_directions` (`name`, `factor_id`) VALUES ('Safeguarding', '1');
+INSERT IGNORE INTO `spcu-dims`.`strategic_directions` (`name`, `factor_id`) VALUES ('Faith Formation', '1');
+INSERT IGNORE INTO `spcu-dims`.`strategic_directions` (`name`, `factor_id`) VALUES ('Enhancing Capacities & Competencies', '2');
+INSERT IGNORE INTO `spcu-dims`.`strategic_directions` (`name`, `factor_id`) VALUES ('Social-Pastoral Coordination', '2');
+INSERT IGNORE INTO `spcu-dims`.`strategic_directions` (`name`, `factor_id`) VALUES ('Inter-Religious Engagement and Ecumenical Engagement', '2');
+INSERT IGNORE INTO `spcu-dims`.`strategic_directions` (`name`, `factor_id`) VALUES ('Environmental Justice', '2');
 

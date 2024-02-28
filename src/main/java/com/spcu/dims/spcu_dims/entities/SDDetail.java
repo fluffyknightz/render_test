@@ -28,4 +28,8 @@ public class SDDetail implements Serializable {
     @Column(nullable = false, columnDefinition = "BIT(1) DEFAULT 0")
     private boolean isDelete;
 
+    @ManyToOne(targetEntity = StrategicDirection.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "strategic_direction_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_strategic_direction"))
+    private StrategicDirection strategicDirection;
+
 }

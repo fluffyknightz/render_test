@@ -19,8 +19,7 @@ public class BeneficiaryList implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(length = 20, nullable = false, unique = true)
-    private String activity;
+
 
     @Column(nullable = false, columnDefinition = "BIT(1) DEFAULT 0")
     private boolean isDelete;
@@ -40,4 +39,8 @@ public class BeneficiaryList implements Serializable {
     @OneToOne(targetEntity = Vulnerability.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "vulnerability_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_vulnerability"), unique = true)
     private Vulnerability vulnerability;
+
+    @OneToOne(targetEntity = Activity.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "activity_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_activity"), unique = true)
+    private Activity activity;
 }

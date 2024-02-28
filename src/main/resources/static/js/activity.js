@@ -1,0 +1,98 @@
+let table
+let data_id
+let button = document.getElementById('myButton');
+let title = document.getElementById('modelTitle');
+let input = document.getElementById('activity');
+
+
+function adding() {
+    validationInput()
+
+    if (inputValue === undefined || inputValue === null || inputValue.trim() === "") {
+        Notiflix.Notify.failure("Please enter All Data!");
+    } else {
+        const url = '/spcu-dims/api/v1/activity/create?name=' + encodeURIComponent(inputValue);
+        performOperation(url, 'POST', 'Create successful.');
+    }
+
+}
+
+
+function editing() {
+
+    validationInput()
+    if (inputValue === undefined || inputValue === null || inputValue.trim() === "") {
+        Notiflix.Notify.failure("Please enter All Data!");
+    } else {
+        const url = '/spcu-dims/api/v1/activity/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id);
+        performOperation(url, 'PATCH', 'Edit successful.');
+    }
+}
+
+$(document).ready(function () {
+
+    table = $('#myTable').DataTable({
+        dom: 'flrtip', language: {
+            infoFiltered: null,
+        },
+
+        ajax: {
+
+            url: 'spcu-dims/api/v1/activity/show/table',
+            method: 'POST',
+            contentType: 'application/json',
+
+            headers: {
+                [csrfHeader]: csrfToken
+            },
+
+            data: function (d) {
+                d.columns[2].search.value = false;
+                return JSON.stringify(d);
+            },
+
+        },
+        processing: true,
+        serverSide: true,
+        stateSave: true,
+        columns: [
+            {
+                data: 'id', render: function (type, data, row, meta) {
+                    // meta.row contains the row index
+                    return meta.row + 1;
+                }
+            }, {
+                data: 'name'
+            }, {
+                data: 'isDelete', render: function (data, type, row) {
+                    return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.name + '\', ' + row.id + ')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+                }
+            },]
+    });
+
+});
+
+
+function showConfirm(id) {
+    deleteConfirm(id, '/spcu-dims/api/v1/activity/delete/')
+}
+
+
+function changeAdd() {
+
+    input.value = null;
+    button.innerHTML = 'Add'
+    title.textContent = 'Add Activity'
+    button.setAttribute('onclick', 'adding()');
+    return false;
+}
+
+function changeEdit(name, id) {
+
+    data_id = id
+    input.value = name;
+    button.innerHTML = 'Edit'
+    title.textContent = 'Edit Activity'
+    button.setAttribute('onclick', 'editing()');
+    return false;
+}

@@ -19,7 +19,7 @@ public class StrategicDirection implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(length = 20, nullable = false, unique = true)
+    @Column(length = 50, nullable = false, unique = true)
     private String name;
 
     @Column(nullable = false, columnDefinition = "BIT(1) DEFAULT 0")
@@ -29,7 +29,5 @@ public class StrategicDirection implements Serializable {
     @JoinColumn(name = "factor_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_factor"))
     private Factor factor;
 
-    @ManyToOne(targetEntity = SDDetail.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "sd_details_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_sd_details"))
-    private SDDetail sdDetail;
+
 }

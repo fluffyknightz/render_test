@@ -16,7 +16,7 @@ public interface ArchdioceseRepository extends DataTablesRepository<Archdiocese,
 
     Optional<Archdiocese> findByName(String name);
 
-    @Query("SELECT e.name FROM Archdiocese e WHERE e.isDelete = false")
+    @Query("SELECT e.name FROM Archdiocese e WHERE e.isDelete = false ORDER BY e.name ASC")
     List<String> findAllNotDeleted();
 
     Optional<Archdiocese> findByNameAndIdNot(String name, int id);

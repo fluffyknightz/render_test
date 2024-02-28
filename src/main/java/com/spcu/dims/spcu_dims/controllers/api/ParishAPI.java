@@ -52,7 +52,7 @@ public class ParishAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam ("name") String name, @RequestParam("zone") String zone, @RequestParam("township") String township) {
-        Parish parish = parishServices.update(id, name, zone, township);
+        Object parish = parishServices.update(id, name, zone, township);
         if(parish!= null){
             return new ResponseEntity<>(parish, HttpStatus.OK);
         }
