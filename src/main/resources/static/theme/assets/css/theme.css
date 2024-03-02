@@ -12,6 +12,13 @@
   vertical-align: baseline !important;
 }
 
+.custom-cell-border tbody td:nth-child(3),
+.custom-cell-border tbody td:nth-child(6),
+.custom-cell-border tbody td:nth-child(8),
+.custom-cell-border tbody td:nth-child(12){
+  border-right: 2px solid #D3D3D3;
+}
+
 .align-top {
   vertical-align: top !important;
 }

@@ -81,4 +81,10 @@ public class PageControllers {
     public String activity(){
         return "activity";
     }
+
+    @GetMapping("/beneficiaries")
+    public String beneficiaries(){
+        return "beneficiaries";
+    }
+
 }

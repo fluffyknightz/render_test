@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{/layout/main-layout}">
+
+<div layout:fragment="content">
+    <div class="container-fluid p-6">
+
+        <!--Start Beneficiaries List -->
+        <div class="row mt-3">
+            <div class="col-md-12 col-12">
+                <!-- card  -->
+                <div class="card">
+                    <!-- card header  -->
+                    <div class="card-header bg-white py-4">
+                        <div class="row">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="col-8">
+                                    <h4 class="mb-0 text-primary">Beneficiaries
+                                        <span type="button" data-bs-toggle="modal" data-bs-target="#model" onclick="changeAdd()">
+                                            <i class="bi bi-plus-square ml-5" style="font-size: 1.4rem"></i>
+                                        </span>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--table-->
+                    <div class="p-5">
+                        <table id="myTable" class="hover table-striped nowrap custom-cell-border" style="width: 100%">
+                            <thead>
+                            <tr>
+                                <th rowspan="2">No</th>
+                                <th rowspan="2">Activities</th>
+                                <th rowspan="2">Parish</th>
+                                <th colspan="3" class="text-center">Beneficiaries</th>
+                                <th colspan="2" class="text-center">Disabilities</th>
+                                <th colspan="4" class="text-center">Vulnerabilities</th>
+                                <th rowspan="2">Action</th>
+                            </tr>
+                            <tr>
+                                <th>Household</th>
+                                <th>Male</th>
+                                <th>Female</th>
+                                <th>Male</th>
+                                <th>Female</th>
+                                <th>Under 18 Male</th>
+                                <th>Under 18 Female</th>
+                                <th>Over 60 Male</th>
+                                <th>Over 60 Female</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--End Beneficiaries List -->
+
+        <!--Start Zone Add Modal -->
+        <div class="modal fade" id="model" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 id="modelTitle" class="modal-title fs-5">Add Beneficiaries</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="myForm">
+                        <div class="modal-body">
+
+                            <select class="form-select my-3" aria-label="activity select" id="activitySelect">
+                                <option selected value="" disabled>Select Related Activity</option>
+                            </select>
+
+                            <select class="form-select my-3" aria-label="diocese select" id="dioceseSelect">
+                                <option selected value="" disabled>Select Related Diocese</option>
+                            </select>
+
+                            <select class="form-select my-3" aria-label="zone select" id="zoneSelect">
+                                <option selected value="" disabled>Select Related Zone</option>
+                            </select>
+
+                            <select class="form-select my-3" aria-label="parish select" id="parishSelect">
+                                <option selected value="" disabled>Select Related Parish</option>
+                            </select>
+
+                            <!--Beneficiaries-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Beneficiaries</label>
+
+                            <div class="row">
+                                <div class="col">
+                                    <label>
+                                        <input type="number" class="form-control" placeholder="Household">
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <label>
+                                        <input type="number" class="form-control" placeholder="Male">
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <label>
+                                        <input type="number" class="form-control" placeholder="Female">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!--Disabilities-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Disabilities</label>
+                            <div class="row">
+                                <div class="col-4">
+                                    <label>
+                                        <input type="number" class="form-control" placeholder="Male">
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <label>
+                                        <input type="number" class="form-control" placeholder="Female">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!--Vulnerabilities-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Vulnerabilities</label>
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>
+                                        <input type="number" class="form-control" placeholder="Under 18 Male">
+                                    </label>
+                                </div>
+                                <div class="col-5">
+                                    <label>
+                                        <input type="number" class="form-control" placeholder="Under 18 Female">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-5">
+                                    <label>
+                                        <input type="number" class="form-control" placeholder="Over 60 Male">
+                                    </label>
+                                </div>
+                                <div class="col-5">
+                                    <label>
+                                        <input type="number" class="form-control" placeholder="Over 60 Female">
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                            <button type="button" class="btn btn-primary" id="myButton" onclick="adding()">Save</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <!--End Zone Add Modal -->
+
+    </div>
+</div>
+
+<script layout:fragment="scripts2" th:src="@{/js/table.js}"></script>
+<script layout:fragment="scripts" th:src="@{/js/beneficiaries-list.js}"></script>
+</html>
