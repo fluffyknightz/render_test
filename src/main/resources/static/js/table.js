@@ -17,7 +17,6 @@ function validationInput() {
 
 function performOperation(url, method, successMessage) {
 
-
     fetch(url, {
         method: method, headers: {
             contentType: 'application/json', [csrfHeader]: csrfToken
@@ -30,11 +29,10 @@ function performOperation(url, method, successMessage) {
         } else {
             Notiflix.Notify.failure(await response.text());
         }
-    })
-        .catch(error => {
+    }).catch(error => {
             Notiflix.Notify.failure("Error has occurred during process. Please Try again later.");
             console.error(error); // Optionally log the error to the console for debugging
-        });
+    });
 }
 
 Notiflix.Confirm.init({

@@ -23,6 +23,18 @@
                                         </span>
                                     </h4>
                                 </div>
+                                <div class="col-2">
+                                    <select class="form-select my-3 col-auto" aria-label="activity select" id="filterActivity">
+                                        <option selected disabled>Filter Activity</option>
+                                        <option value="">None</option>
+                                    </select>
+                                </div>
+                                <div class="col-2">
+                                    <select class="form-select my-3 col-auto" aria-label="parish select" id="filterParish">
+                                        <option selected disabled>Filter Parish</option>
+                                        <option value="">None</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -94,17 +106,17 @@
                             <div class="row">
                                 <div class="col">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Household">
+                                        <input type="number" class="form-control" placeholder="Household" id="beneficiaries-household">
                                     </label>
                                 </div>
                                 <div class="col">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Male">
+                                        <input type="number" class="form-control" placeholder="Male" id="beneficiaries-male">
                                     </label>
                                 </div>
                                 <div class="col">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Female">
+                                        <input type="number" class="form-control" placeholder="Female" id="beneficiaries-female">
                                     </label>
                                 </div>
                             </div>
@@ -115,12 +127,12 @@
                             <div class="row">
                                 <div class="col-4">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Male">
+                                        <input type="number" class="form-control" placeholder="Male" id="disabilities-male">
                                     </label>
                                 </div>
                                 <div class="col-4">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Female">
+                                        <input type="number" class="form-control" placeholder="Female" id="disabilities-female">
                                     </label>
                                 </div>
                             </div>
@@ -131,24 +143,24 @@
                             <div class="row">
                                 <div class="col-5">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Under 18 Male">
+                                        <input type="number" class="form-control" placeholder="Under 18 Male" id="vulnerabilities-under18-male">
                                     </label>
                                 </div>
                                 <div class="col-5">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Under 18 Female">
+                                        <input type="number" class="form-control" placeholder="Under 18 Female" id="vulnerabilities-under18-female">
                                     </label>
                                 </div>
                             </div>
                             <div class="row mt-2">
                                 <div class="col-5">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Over 60 Male">
+                                        <input type="number" class="form-control" placeholder="Over 60 Male" id="vulnerabilities-over60-male">
                                     </label>
                                 </div>
                                 <div class="col-5">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Over 60 Female">
+                                        <input type="number" class="form-control" placeholder="Over 60 Female" id="vulnerabilities-over60-female">
                                     </label>
                                 </div>
                             </div>
