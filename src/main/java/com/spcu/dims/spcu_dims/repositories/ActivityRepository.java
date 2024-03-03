@@ -15,7 +15,7 @@ public interface ActivityRepository extends DataTablesRepository<Activity, Integ
 
     Optional<Activity> findByName(String name);
 
-    @Query("SELECT e.name FROM Activity e WHERE e.isDelete = false")
+    @Query("SELECT e.name FROM Activity e WHERE e.isDelete = false ORDER BY e.name ASC")
     List<String> findAllNotDeleted();
 
     Optional<Activity> findByNameAndIdNot(String name, int id);

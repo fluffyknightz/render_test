@@ -15,7 +15,7 @@ public interface ZoneRepository extends DataTablesRepository<Zone, Integer> {
 
     Optional<Zone> findByName(String name);
 
-    @Query("SELECT e.name FROM Zone e WHERE e.isDelete = false")
+    @Query("SELECT e.name FROM Zone e WHERE e.isDelete = false ORDER BY e.name ASC")
     List<String> findAllNotDeleted();
     Optional<Zone> findByNameAndIdNot(String name, int id);
 

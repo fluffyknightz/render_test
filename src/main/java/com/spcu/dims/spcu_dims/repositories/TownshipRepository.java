@@ -13,7 +13,7 @@ public interface TownshipRepository extends DataTablesRepository<Township, Integ
     boolean existsByName(String name);
 
     Optional<Township> findByName(String name);
-    @Query("SELECT e.name FROM Township e WHERE e.isDelete = false")
+    @Query("SELECT e.name FROM Township e WHERE e.isDelete = false ORDER BY e.name ASC")
     List<String> findAllNotDeleted();
     Optional<Township> findByNameAndIdNot(String name, int id);
 

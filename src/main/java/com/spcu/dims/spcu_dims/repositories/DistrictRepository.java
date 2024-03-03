@@ -16,7 +16,7 @@ public interface DistrictRepository extends DataTablesRepository<District, Integ
     @Query("SELECT d.name FROM District d WHERE d.region.name = :region")
     List<String> findByRegionName(@Param("region") String region);
 
-    @Query("SELECT e.name FROM District e WHERE e.isDelete = false")
+    @Query("SELECT e.name FROM District e WHERE e.isDelete = false ORDER BY e.name ASC")
     List<String> findAllNotDeleted();
     Optional<District> findByNameAndIdNot(String name, int id);
 

@@ -15,6 +15,6 @@ public interface ParishRepository extends DataTablesRepository<Parish, Integer> 
 
     Optional<Parish> findByNameAndIdNot(String name, int id);
 
-    @Query("SELECT e.name FROM Parish e WHERE e.isDelete = false")
+    @Query("SELECT e.name FROM Parish e WHERE e.isDelete = false ORDER BY e.name ASC")
     List<String> findAllNotDeleted();
 }

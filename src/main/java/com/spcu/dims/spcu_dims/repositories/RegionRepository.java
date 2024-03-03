@@ -16,7 +16,7 @@ public interface RegionRepository extends DataTablesRepository<Region, Integer> 
 
     Optional<Region> findById(int id);
 
-    @Query("SELECT e.name FROM Region e WHERE e.isDelete = false")
+    @Query("SELECT e.name FROM Region e WHERE e.isDelete = false ORDER BY e.name ASC")
     List<String> findAllNotDeleted();
 
     Optional<Region> findByNameAndIdNot(String name, int id);

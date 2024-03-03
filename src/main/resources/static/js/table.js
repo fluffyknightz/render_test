@@ -1,5 +1,8 @@
 let inputValue
 
+
+
+
 function validationInput() {
 
     inputValue = input.value.trim();
@@ -51,7 +54,7 @@ document.getElementById('myForm').addEventListener('keydown', function (e) {
     }
 });
 
-function deleteConfirm(id,url){
+function deleteConfirm(id, url) {
     Notiflix.Confirm.show('Please Confirm', 'Are you sure!! you want to delete?', 'Yes', 'No', function okCb() {
         fetch(url + encodeURIComponent(id), {
             method: 'PATCH', headers: {
