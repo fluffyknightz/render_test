@@ -42,7 +42,7 @@ $(document).ready(async function () {
                 [csrfHeader]: csrfToken
             },
             data: function (d) {
-                d.columns[12].search.value = false;
+                d.columns[14].search.value = false;
                 return JSON.stringify(d);
             },
         },
@@ -59,6 +59,10 @@ $(document).ready(async function () {
                 }
             }, {
                 data: 'activity.name'
+            }, {
+                data: 'parish.zone.name'
+            }, {
+                data: 'parish.zone.diocese.name'
             }, {
                 data: 'parish.name'
             }, {
@@ -161,7 +165,7 @@ function changeEdit(id) {
             'Content-Type': 'application/json',
             [csrfHeader]: csrfToken
         },
-        body: null
+        body: t
     })
         .then(response => {
             if (!response.ok) {

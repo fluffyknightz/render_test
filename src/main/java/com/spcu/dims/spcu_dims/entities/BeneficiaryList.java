@@ -23,8 +23,12 @@ public class BeneficiaryList implements Serializable {
     private boolean isDelete;
 
     @ManyToOne(targetEntity = Parish.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "parish_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_parish"))
+    @JoinColumn(name = "parish_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_parish"))
     private Parish parish;
+
+    @ManyToOne(targetEntity = Activity.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "activity_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_activity"))
+    private Activity activity;
 
     @OneToOne(targetEntity = Beneficiary.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "beneficiary_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_beneficiary"), unique = true)
@@ -38,7 +42,5 @@ public class BeneficiaryList implements Serializable {
     @JoinColumn(name = "vulnerability_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_vulnerability"), unique = true)
     private Vulnerability vulnerability;
 
-    @OneToOne(targetEntity = Activity.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "activity_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_activity"), unique = true)
-    private Activity activity;
+
 }
