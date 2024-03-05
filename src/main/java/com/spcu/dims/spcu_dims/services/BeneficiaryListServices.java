@@ -11,7 +11,7 @@ public interface BeneficiaryListServices {
 
     Object createBeneficiaryList(BeneficiaryListDto reqData);
 
-    List<String> showAll();
+    List<BeneficiaryList> showAll();
 
     BeneficiaryList findById(int id);
 
