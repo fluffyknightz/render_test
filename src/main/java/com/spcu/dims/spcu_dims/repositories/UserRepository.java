@@ -14,4 +14,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "SELECT * FROM users u WHERE BINARY u.username = :username", nativeQuery = true)
     Optional<User> findByUsernameCaseSensitive(@Param("username") String username);
 
+
+    Optional<User> findByUsername(String username);
 }

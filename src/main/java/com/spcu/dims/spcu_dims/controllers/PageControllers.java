@@ -87,4 +87,9 @@ public class PageControllers {
         return "beneficiaries";
     }
 
+    @GetMapping("/profile")
+    public String profile(){
+        return "profile";
+    }
+
 }

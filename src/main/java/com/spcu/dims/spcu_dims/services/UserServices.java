@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface UserServices {
 
     Optional<User> findByUsernameCaseSensitive(String username);
+
+    Object createUser(String username, String role);
 }
