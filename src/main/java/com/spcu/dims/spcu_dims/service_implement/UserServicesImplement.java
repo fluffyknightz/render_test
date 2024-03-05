@@ -5,9 +5,7 @@ import com.spcu.dims.spcu_dims.entities.User;
 import com.spcu.dims.spcu_dims.repositories.RoleRepository;
 import com.spcu.dims.spcu_dims.repositories.UserRepository;
 import com.spcu.dims.spcu_dims.services.UserServices;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,10 +25,6 @@ public class UserServicesImplement implements UserServices {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public Optional<User> findByUsernameCaseSensitive(String username) {
-        return userRepository.findByUsernameCaseSensitive(username);
-        }
 
     @Override
     public Object createUser(String username, String role) {
