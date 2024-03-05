@@ -17,7 +17,7 @@
                         <div class="row">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="col-8">
-                                    <h4 class="mb-0 text-primary">Beneficiaries
+                                    <h4 class="mb-0 text-primary">Beneficiary List
                                         <span type="button" data-bs-toggle="modal" data-bs-target="#model" onclick="changeAdd()">
                                             <i class="bi bi-plus-square ml-5" style="font-size: 1.4rem"></i>
                                         </span>
@@ -79,7 +79,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 id="modelTitle" class="modal-title fs-5">Add Beneficiaries</h1>
+                        <h1 id="modelTitle" class="modal-title fs-5">Add Beneficiary List</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form id="myForm">
@@ -108,17 +108,17 @@
                             <div class="row">
                                 <div class="col">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Household" id="beneficiaries-household">
+                                        <input type="number" class="form-control" placeholder="Household" id="beneficiaries-household" min="0">
                                     </label>
                                 </div>
                                 <div class="col">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Male" id="beneficiaries-male">
+                                        <input type="number" class="form-control" placeholder="Male" id="beneficiaries-male" min="0">
                                     </label>
                                 </div>
                                 <div class="col">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Female" id="beneficiaries-female">
+                                        <input type="number" class="form-control" placeholder="Female" id="beneficiaries-female" min="0">
                                     </label>
                                 </div>
                             </div>
@@ -129,12 +129,12 @@
                             <div class="row">
                                 <div class="col-4">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Male" id="disabilities-male">
+                                        <input type="number" class="form-control" placeholder="Male" id="disabilities-male" min="0">
                                     </label>
                                 </div>
                                 <div class="col-4">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Female" id="disabilities-female">
+                                        <input type="number" class="form-control" placeholder="Female" id="disabilities-female" min="0">
                                     </label>
                                 </div>
                             </div>
@@ -145,24 +145,24 @@
                             <div class="row">
                                 <div class="col-5">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Under 18 Male" id="vulnerabilities-under18-male">
+                                        <input type="number" class="form-control" placeholder="Under 18 Male" id="vulnerabilities-under18-male" min="0">
                                     </label>
                                 </div>
                                 <div class="col-5">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Under 18 Female" id="vulnerabilities-under18-female">
+                                        <input type="number" class="form-control" placeholder="Under 18 Female" id="vulnerabilities-under18-female" min="0">
                                     </label>
                                 </div>
                             </div>
                             <div class="row mt-2">
                                 <div class="col-5">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Over 60 Male" id="vulnerabilities-over60-male">
+                                        <input type="number" class="form-control" placeholder="Over 60 Male" id="vulnerabilities-over60-male" min="0">
                                     </label>
                                 </div>
                                 <div class="col-5">
                                     <label>
-                                        <input type="number" class="form-control" placeholder="Over 60 Female" id="vulnerabilities-over60-female">
+                                        <input type="number" class="form-control" placeholder="Over 60 Female" id="vulnerabilities-over60-female" min="0">
                                     </label>
                                 </div>
                             </div>
@@ -184,5 +184,5 @@
 </div>
 
 <script layout:fragment="scripts2" th:src="@{/js/table.js}"></script>
-<script layout:fragment="scripts" th:src="@{/js/beneficiaries-list.js}"></script>
+<script layout:fragment="scripts" th:src="@{/js/beneficiary-list.js}"></script>
 </html>

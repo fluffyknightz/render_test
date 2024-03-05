@@ -18,12 +18,24 @@ function validationInput() {
 
 }
 
-function performOperation(url, method, successMessage) {
+function deleteConfirm(url) {
+    Notiflix.Confirm.show('Please Confirm', 'Are you sure!! you want to delete?', 'Yes', 'No', function okCb() {
+        performOperation(url, 'PATCH', 'Delete Successful!')
+
+    }, {
+        width: '320px', borderRadius: '8px',
+    },);
+}
+
+function performOperation(url, method, successMessage, jsonBody) {
 
     fetch(url, {
-        method: method, headers: {
-            contentType: 'application/json', [csrfHeader]: csrfToken
-        }, body: null
+        method: method,
+        headers: {
+            'Content-Type': 'application/json',
+            [csrfHeader]: csrfToken
+        },
+        body: jsonBody ? JSON.stringify(jsonBody) : null
     }).then(async response => {
         if (response.status === 201 || response.status === 200) {
             $('#model').modal('hide');
@@ -54,38 +66,16 @@ document.getElementById('myForm').addEventListener('keydown', function (e) {
     }
 });
 
-function deleteConfirm(id, url) {
-    Notiflix.Confirm.show('Please Confirm', 'Are you sure!! you want to delete?', 'Yes', 'No', function okCb() {
-        fetch(url + encodeURIComponent(id), {
-            method: 'PATCH', headers: {
-                [csrfHeader]: csrfToken
-            }
-        })
-            .then(r => {
-                if (r.ok) {
-
-                    Notiflix.Notify.success('Delete successful.');
-                    table.ajax.reload();
 
 
-                } else {
-                    Notiflix.Notify.failure('Delete Failed!');
-                }
-            })
-
-    }, {
-        width: '320px', borderRadius: '8px',
-    },);
-}
-
-async function fetchData(apiEndpoint, filterParam = null) {
+async function fetchData(apiEndpoint, filterParam = null, jsonBody = null) {
     const url = filterParam ? `${apiEndpoint}?${filterParam}` : apiEndpoint;
 
     try {
         const response = await fetch(url, {
             method: 'POST', headers: {
                 'Content-Type': 'application/json', [csrfHeader]: csrfToken
-            }, body: null
+            }, body: jsonBody ? JSON.stringify(jsonBody) : null
         });
 
         return await response.json();

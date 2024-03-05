@@ -59,7 +59,7 @@ public class RegionAPI {
         if(region!= null){
             return new ResponseEntity<>(region, HttpStatus.OK);
         }
-        return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Delete Failed!", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PatchMapping("/update")

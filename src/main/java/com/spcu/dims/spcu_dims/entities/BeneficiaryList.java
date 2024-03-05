@@ -12,7 +12,7 @@ import java.io.Serializable;
 @RequiredArgsConstructor
 @Builder
 @AllArgsConstructor
-@Table(name = "beneficiaries_list")
+@Table(name = "beneficiary_lists")
 public class BeneficiaryList implements Serializable {
 
     @Id

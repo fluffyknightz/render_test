@@ -61,9 +61,9 @@ public class ArchdioceseAPI {
     public ResponseEntity<Object> delete(@PathVariable("id") int id) {
         Archdiocese archdiocese = archdioceseServices.delete(id);
         if (archdiocese != null) {
-            return new ResponseEntity<>(archdiocese, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Delete Failed!", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PatchMapping("/update")

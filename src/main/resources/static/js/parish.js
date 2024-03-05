@@ -116,7 +116,7 @@ function changeEdit(id, township, zone, name) {
 }
 
 function showConfirm(id) {
-    deleteConfirm(id, '/spcu-dims/api/v1/parish/delete/')
+    deleteConfirm('/spcu-dims/api/v1/parish/delete/' + encodeURIComponent(id))
 }
 
 function editing() {

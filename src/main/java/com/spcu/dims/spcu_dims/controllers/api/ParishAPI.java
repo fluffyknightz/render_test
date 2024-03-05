@@ -47,7 +47,7 @@ public class ParishAPI {
         if (parish != null) {
             return new ResponseEntity<>(parish, HttpStatus.OK);
         }
-        return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Delete Failed!", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PatchMapping("/update")

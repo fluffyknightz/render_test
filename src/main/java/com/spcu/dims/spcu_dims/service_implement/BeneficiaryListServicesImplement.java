@@ -29,56 +29,36 @@ public class BeneficiaryListServicesImplement implements BeneficiaryListServices
     String bothDoesNotExistMessage = "Activity with the name '%s' and Parish with the name '%s' do not exist.";
 
 
-
     @Override
     public Object createBeneficiaryList(BeneficiaryListDto reqData) {
 
         Optional<Activity> activityExist = activityRepository.findByName(reqData.getActivityName());
         Optional<Parish> parishExist = parishRepository.findByName(reqData.getParishName());
 
-        if (activityExist.isEmpty() && parishExist.isEmpty()){
+        if (activityExist.isEmpty() && parishExist.isEmpty()) {
             return String.format(bothDoesNotExistMessage, reqData.getActivityName(), reqData.getParishName());
-        }
-        else if(activityExist.isEmpty()){
+        } else if (activityExist.isEmpty()) {
             return String.format(activityDoesNotExistMessage, reqData.getActivityName());
-        }else if (parishExist.isEmpty()){
+        } else if (parishExist.isEmpty()) {
             return String.format(parishDoesNotExistMessage, reqData.getParishName());
         }
 
-        Beneficiary beneficiary = Beneficiary.builder()
-                .houseHold(reqData.getBeneficiaryHousehold())
-                .male(reqData.getBeneficiaryMale())
-                .female(reqData.getBeneficiaryFemale())
-                .build();
+        Beneficiary beneficiary = Beneficiary.builder().houseHold(reqData.getBeneficiaryHousehold()).male(reqData.getBeneficiaryMale()).female(reqData.getBeneficiaryFemale()).build();
         beneficiaryRepository.save(beneficiary);
 
-        Disability disability = Disability.builder()
-                .male(reqData.getDisabilityMale())
-                .female(reqData.getBeneficiaryFemale())
-                .build();
+        Disability disability = Disability.builder().male(reqData.getDisabilityMale()).female(reqData.getBeneficiaryFemale()).build();
         disabilityRepository.save(disability);
 
-        Vulnerability vulnerability = Vulnerability.builder()
-                .under18Female(reqData.getVulnerabilityUnder18Female())
-                .under18Male(reqData.getVulnerabilityUnder18Male())
-                .over60Female(reqData.getVulnerabilityOver60Female())
-                .over60Male(reqData.getVulnerabilityOver60Male())
-                .build();
+        Vulnerability vulnerability = Vulnerability.builder().under18Female(reqData.getVulnerabilityUnder18Female()).under18Male(reqData.getVulnerabilityUnder18Male()).over60Female(reqData.getVulnerabilityOver60Female()).over60Male(reqData.getVulnerabilityOver60Male()).build();
         vulnerabilityRepository.save(vulnerability);
 
-        BeneficiaryList beneficiaryList = BeneficiaryList.builder()
-                .activity(activityExist.get())
-                .parish(parishExist.get())
-                .beneficiary(beneficiary)
-                .disability(disability)
-                .vulnerability(vulnerability)
-                .build();
+        BeneficiaryList beneficiaryList = BeneficiaryList.builder().activity(activityExist.get()).parish(parishExist.get()).beneficiary(beneficiary).disability(disability).vulnerability(vulnerability).build();
         return beneficiaryListRepository.save(beneficiaryList);
     }
 
     @Override
-    public List<String> showAll() {
-        return null;
+    public List<BeneficiaryList> showAll() {
+        return beneficiaryListRepository.findAll();
     }
 
     @Override
@@ -88,6 +68,11 @@ public class BeneficiaryListServicesImplement implements BeneficiaryListServices
 
     @Override
     public BeneficiaryList delete(int id) {
+        Optional<BeneficiaryList> beneficiaryList = beneficiaryListRepository.findById(id);
+        if (beneficiaryList.isPresent()) {
+            beneficiaryList.get().setDelete(true);
+            return beneficiaryListRepository.save(beneficiaryList.get());
+        }
         return null;
     }
 
@@ -95,41 +80,25 @@ public class BeneficiaryListServicesImplement implements BeneficiaryListServices
     public Object update(BeneficiaryListDto reqData) {
 
         Optional<BeneficiaryList> beneficiaryListOptional = beneficiaryListRepository.findById(reqData.getId());
+
         Optional<Activity> activityExist = activityRepository.findByName(reqData.getActivityName());
         Optional<Parish> parishExist = parishRepository.findByName(reqData.getParishName());
 
-        if (activityExist.isEmpty() && parishExist.isEmpty()){
+        if (activityExist.isEmpty() && parishExist.isEmpty()) {
             return String.format(bothDoesNotExistMessage, reqData.getActivityName(), reqData.getParishName());
-        }
-        else if(activityExist.isEmpty()){
+        } else if (activityExist.isEmpty()) {
             return String.format(activityDoesNotExistMessage, reqData.getActivityName());
-        }else if (parishExist.isEmpty()){
+        } else if (parishExist.isEmpty()) {
             return String.format(parishDoesNotExistMessage, reqData.getParishName());
         }
 
-        if (beneficiaryListOptional.isPresent()){
+        if (beneficiaryListOptional.isPresent()) {
 
             Optional<Beneficiary> beneficiaryExist = beneficiaryRepository.findById(beneficiaryListOptional.get().getBeneficiary().getId());
             Optional<Disability> disabilityExist = disabilityRepository.findById(beneficiaryListOptional.get().getDisability().getId());
             Optional<Vulnerability> vulnerabilityExist = vulnerabilityRepository.findById(beneficiaryListOptional.get().getVulnerability().getId());
 
-            if (beneficiaryExist.isPresent() && disabilityExist.isPresent() && vulnerabilityExist.isPresent()){
-
-                /*Optional<BeneficiaryList> checkAlreadyExist = beneficiaryListRepository.findByActivityAndParish(reqData.getId(), activityExist.get().getId(), parishExist.get().getId());
-                if (checkAlreadyExist.isPresent()){
-                    if (
-                        beneficiaryExist.get().getHouseHold() == reqData.getBeneficiaryHousehold() &&
-                        beneficiaryExist.get().getFemale() == reqData.getBeneficiaryFemale() &&
-                        beneficiaryExist.get().getMale() == reqData.getBeneficiaryMale() &&
-                        disabilityExist.get().getMale() == reqData.getDisabilityMale() && disabilityExist.get().getFemale() == reqData.getDisabilityFemale() &&
-                        vulnerabilityExist.get().getUnder18Male() == reqData.getVulnerabilityUnder18Male() &&
-                        vulnerabilityExist.get().getUnder18Female() == reqData.getVulnerabilityUnder18Female() &&
-                        vulnerabilityExist.get().getOver60Male() == reqData.getVulnerabilityOver60Male() &&
-                        vulnerabilityExist.get().getOver60Female() == reqData.getVulnerabilityOver60Female()
-                    ){
-                        return String.format(existsMessage);
-                    }
-                }*/
+            if (beneficiaryExist.isPresent() && disabilityExist.isPresent() && vulnerabilityExist.isPresent()) {
 
                 beneficiaryExist.get().setHouseHold(reqData.getBeneficiaryHousehold());
                 beneficiaryExist.get().setMale(reqData.getBeneficiaryMale());

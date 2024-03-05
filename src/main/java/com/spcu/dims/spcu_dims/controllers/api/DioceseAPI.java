@@ -58,7 +58,7 @@ public class DioceseAPI {
         if(diocese!= null){
             return new ResponseEntity<>(diocese, HttpStatus.OK);
         }
-        return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Delete Failed!", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PatchMapping("/update")

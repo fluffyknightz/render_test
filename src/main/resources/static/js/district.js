@@ -81,7 +81,7 @@ async function changeEdit(name, id, region) {
 }
 
 function showConfirm(id) {
-    deleteConfirm(id, '/spcu-dims/api/v1/district/delete/')
+    deleteConfirm('/spcu-dims/api/v1/district/delete/' + encodeURIComponent(id))
 }
 
 

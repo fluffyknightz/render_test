@@ -11,17 +11,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-
 @RestController
-@RequestMapping("/spcu-dims/api/v1/beneficiaries-list")
+@RequestMapping("/spcu-dims/api/v1/beneficiary-lists")
 @AllArgsConstructor
 public class BeneficiaryListAPI {
 
     private final BeneficiaryListServices beneficiaryListServices;
+    private static final String NOT_FOUND = "ID Not Found.";
+
+
+
 
     @PostMapping("/create")
-    public ResponseEntity<Object> beneficiariesListCreate(@RequestBody BeneficiaryListDto reqData){
+    public ResponseEntity<Object> beneficiaryListCreate(@RequestBody BeneficiaryListDto reqData){
         Object beneficiaryList = beneficiaryListServices.createBeneficiaryList(reqData);
         if (beneficiaryList instanceof String) {
             return new ResponseEntity<>(beneficiaryList, HttpStatus.CONFLICT);
@@ -34,7 +36,7 @@ public class BeneficiaryListAPI {
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<BeneficiaryList> beneficiariesList(@Valid @RequestBody DataTablesInput input){
+    public DataTablesOutput<BeneficiaryList> beneficiaryList(@Valid @RequestBody DataTablesInput input){
         return beneficiaryListServices.tableBeneficiaryList(input);
     }
 
@@ -44,10 +46,19 @@ public class BeneficiaryListAPI {
         if(beneficiaryList != null){
             return new ResponseEntity<>(beneficiaryList, HttpStatus.OK);
         }
-        return new ResponseEntity<>(NOT_FOUND, NOT_FOUND);
+        return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/update")
+    @PatchMapping("/delete/{id}")
+    public ResponseEntity<Object> delete(@PathVariable("id") int id) {
+        BeneficiaryList beneficiaryList = beneficiaryListServices.delete(id);
+        if (beneficiaryList != null) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Delete Failed!", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestBody BeneficiaryListDto reqData) {
         Object beneficiaryList = beneficiaryListServices.update(reqData);
         if(beneficiaryList!= null){

@@ -79,7 +79,7 @@ $(document).ready(async function () {
 
 
 function showConfirm(id) {
-    deleteConfirm(id, '/spcu-dims/api/v1/diocese/delete/')
+    deleteConfirm('/spcu-dims/api/v1/diocese/delete/' + encodeURIComponent(id))
 }
 
 

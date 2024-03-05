@@ -82,9 +82,9 @@ public class PageControllers {
         return "activity";
     }
 
-    @GetMapping("/beneficiaries")
+    @GetMapping("/beneficiary-list")
     public String beneficiaries(){
-        return "beneficiaries";
+        return "beneficiary-list";
     }
 
     @GetMapping("/profile")

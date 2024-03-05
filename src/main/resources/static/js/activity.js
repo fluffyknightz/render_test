@@ -74,7 +74,7 @@ $(document).ready(function () {
 
 
 function showConfirm(id) {
-    deleteConfirm(id, '/spcu-dims/api/v1/activity/delete/')
+    deleteConfirm('/spcu-dims/api/v1/activity/delete/' + encodeURIComponent(id))
 }
 
 
