@@ -6,6 +6,8 @@ import com.spcu.dims.spcu_dims.repositories.RoleRepository;
 import com.spcu.dims.spcu_dims.repositories.UserRepository;
 import com.spcu.dims.spcu_dims.services.UserServices;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,6 @@ public class UserServicesImplement implements UserServices {
 
 
     String doesNotExistMessage = "Role with the name '%s' does not exist.";
-
     String userExistsMessage = "Username with the name '%s' already exists.";
     String userDoesNotExistMessage = "Username with the name '%s' does not exist.";
 
@@ -33,17 +34,31 @@ public class UserServicesImplement implements UserServices {
 
         if (existRole.isEmpty()) {
             return String.format(doesNotExistMessage, role);
-        }
-
-        if(existUser.isPresent()) {
+        } else if (existUser.isPresent()) {
             return String.format(userExistsMessage, username);
         }
-        User user = User.builder()
-                        .username(username)
-                .role(existRole.get())
-                .password(passwordEncoder.encode("1122121"))
-                .build();
+        User user = User.builder().username(username).role(existRole.get()).password(passwordEncoder.encode("1122121")).build();
         return userRepository.save(user);
+    }
+
+    @Override
+    public DataTablesOutput<User> tableUser(DataTablesInput input) {
+        return userRepository.findAll(input);
+    }
+
+    @Override
+    public User deleteUser(int id) {
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent()){
+            user.get().setDelete(true);
+            return userRepository.save(user.get());
+        }
+        return null;
+    }
+
+    @Override
+    public Object update(int id, String username, String role) {
+        return null;
     }
 }
 
