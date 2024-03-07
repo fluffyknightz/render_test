@@ -74,7 +74,8 @@ async function fetchData(apiEndpoint, filterParam = null, jsonBody = null) {
     try {
         const response = await fetch(url, {
             method: 'POST', headers: {
-                'Content-Type': 'application/json', [csrfHeader]: csrfToken
+                'Content-Type': 'application/json',
+                [csrfHeader]: csrfToken
             }, body: jsonBody ? JSON.stringify(jsonBody) : null
         });
 

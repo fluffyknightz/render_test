@@ -19,27 +19,49 @@ public class UserAPI {
     private final UserServices userServices;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> userCreate(@RequestParam("name") String name, @RequestParam("role")String role) {
+    public ResponseEntity<Object> userCreate(@RequestParam("username") String username, @RequestParam("role") String role) {
 
-        Object user = userServices.createUser(name, role);
+        Object user = userServices.createUser(username, role);
 
         if (user instanceof String) {
-            // Handle the case where activity is a String
             return new ResponseEntity<>(user, HttpStatus.CONFLICT);
         } else if (user != null) {
-            // Continue with the original logic when activity is not a String
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         } else {
-            // Handle the case where activity is null
-            String errorMessage = "Failed to create User with the name '" + name + "'.";
+            String errorMessage = "Failed to create User with the name '" + username + "'.";
             return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<User> users(@Valid @RequestBody DataTablesInput input){
+    public DataTablesOutput<User> users(@Valid @RequestBody DataTablesInput input) {
         return userServices.tableUser(input);
 
     }
 
+    @PatchMapping("/delete/{id}")
+    public ResponseEntity<Object> delete(@PathVariable("id") int id) {
+        User user = userServices.deleteUser(id);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PatchMapping("/update")
+    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("username") String username, @RequestParam("role") String role){
+
+    Object user = userServices.update(id, username, role);
+        if (user instanceof String) {
+
+            return new ResponseEntity<>(user, HttpStatus.CONFLICT);
+        } else if (user != null) {
+
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        } else {
+
+            String errorMessage = "Failed to Update Activity with the name '" + username + "'.";
+            return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+}
 }

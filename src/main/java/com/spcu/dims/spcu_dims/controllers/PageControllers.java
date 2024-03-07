@@ -92,4 +92,9 @@ public class PageControllers {
         return "profile";
     }
 
+    @GetMapping("/user")
+    public String user(){
+        return "user";
+    }
+
 }

@@ -58,7 +58,24 @@ public class UserServicesImplement implements UserServices {
 
     @Override
     public Object update(int id, String username, String role) {
-        return null;
+
+        Optional<User> userExist = userRepository.findByUsernameAndIdNot(username, id);
+        if(userExist.isPresent()){
+            return String.format(userExistsMessage, username);
+        }
+        Optional<Role> roleExist = roleRepository.findByName(role);
+        if(roleExist.isEmpty()) {
+            return String.format(doesNotExistMessage, role);
+        }
+        Optional<User> user = userRepository.findById(id);
+        if(user.isEmpty()){
+            return String.format(userDoesNotExistMessage, username);
+        }
+
+        user.get().setUsername(username);
+        user.get().setRole(roleExist.get());
+        userRepository.save(user.get());
+        return user;
     }
 }
 
