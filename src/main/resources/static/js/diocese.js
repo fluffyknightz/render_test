@@ -35,9 +35,6 @@ function editing() {
 
 $(document).ready(async function () {
 
-    var selectpicker = new bootstrap.Select(document.getElementById('searchDropdown'), {
-        liveSearch: true
-    });
     await archdioceseFetch()
     table = $('#myTable').DataTable({
         dom: 'flrtip', language: {
