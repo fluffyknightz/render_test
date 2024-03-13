@@ -33,7 +33,7 @@ $(document).ready(function () {
 
     table = $('#myTable').DataTable({
         dom: 'flrtip', language: {
-            infoFiltered: null,
+            infoFiltered: "",
         },
 
         ajax: {

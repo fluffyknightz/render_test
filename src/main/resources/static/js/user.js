@@ -35,7 +35,7 @@ $(document).ready(async function () {
     await roleFetch()
     table = $('#myTable').DataTable({
         dom: 'flrtip', language: {
-            infoFiltered: null,
+            infoFiltered: "",
         },
 
         ajax: {

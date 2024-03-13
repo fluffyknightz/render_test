@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface TownshipServices {
 
-    Object createTownship(String name, String district);
+    Object createTownship(String name, String district, String zone);
 
     List<String> showAll();
 
@@ -17,7 +17,7 @@ public interface TownshipServices {
 
     Township delete(int id);
 
-    Object update(int id, String name, String district);
+    Object update(int id, String name, String district, String zone);
 
     DataTablesOutput<Township> tableTownship(DataTablesInput input);
 }

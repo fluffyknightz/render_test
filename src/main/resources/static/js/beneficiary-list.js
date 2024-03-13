@@ -31,7 +31,7 @@ $(document).ready(async function () {
 
     table = $('#myTable').DataTable({
         dom: 'flrtip', language: {
-            infoFiltered: null,
+            infoFiltered: "",
         }, ajax: {
             url: 'spcu-dims/api/v1/beneficiary-lists/show/table',
             method: 'POST',
@@ -49,38 +49,38 @@ $(document).ready(async function () {
                 return meta.row + 1;
             }
         }, {
-            data: 'activity.name'
+            data: 'activityName'
         }, {
-            data: 'parish.zone.name'
+            data: 'zoneName'
         }, {
-            data: 'parish.zone.diocese.name'
+            data: 'dioceseName'
         }, {
-            data: 'parish.name'
+            data: 'parishName'
         }, {
-            data: 'beneficiary.houseHold'
+            data: 'beneficiaryHousehold'
         }, {
-            data: 'beneficiary.male'
+            data: 'beneficiaryMale'
         }, {
-            data: 'beneficiary.female'
+            data: 'beneficiaryFemale'
         }, {
-            data: 'disability.male'
+            data: 'disabilityMale'
         }, {
-            data: 'disability.female'
+            data: 'disabilityFemale'
         }, {
-            data: 'vulnerability.under18Male'
+            data: 'under18Male'
         }, {
-            data: 'vulnerability.under18Female'
+            data: 'under18Female'
         }, {
-            data: 'vulnerability.over60Male'
+            data: 'over60Male'
         }, {
-            data: 'vulnerability.over60Female'
+            data: 'over60Female'
         }, {
             data: 'isDelete', render: function (data, type, row) {
                 return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" ' +
-                    'onclick="changeEdit(' + row.id + ', \'' + row.activity.name.replace(/'/g, "\\'") + '\', \'' + row.parish.name.replace(/'/g, "\\'") +
-                    '\', ' + row.beneficiary.houseHold + ', ' + row.beneficiary.male + ', ' + row.beneficiary.female + ', ' + row.disability.male + ', ' + row.disability.female +
-                    ', ' + row.vulnerability.under18Male + ', ' + row.vulnerability.under18Female + ', ' + row.vulnerability.over60Male +
-                    ', ' + row.vulnerability.over60Female + ')" style="border: none">\n' +
+                    'onclick="changeEdit(' + row.id + ', \'' + row.activityName.replace(/'/g, "\\'") + '\', \'' + row.parishName.replace(/'/g, "\\'") +
+                    '\', ' + row.beneficiaryHousehold + ', ' + row.beneficiaryMale + ', ' + row.beneficiaryFemale + ', ' + row.disabilityMale +
+                    ', ' + row.disabilityFemale + ', ' + row.under18Male + ', ' + row.under18Female + ', ' + row.over60Male +
+                    ', ' + row.over60Female + ')" style="border: none">\n' +
                     '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' +
                     '</button>\n' +
                     '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' +
@@ -137,6 +137,10 @@ async function parishFetch() {
 }
 
 function changeAdd() {
+
+    activitySelect.selectedIndex = 0;
+    parishSelect.selectedIndex = 0;
+
     inputBeneficiariesHousehold.value = null;
     inputBeneficiariesMale.value = null;
     inputBeneficiariesFemale.value = null;

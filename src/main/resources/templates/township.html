@@ -18,12 +18,17 @@
                     <div class="card-header bg-white py-4">
                         <div class="row">
                             <div class="d-flex justify-content-between align-items-center">
-                                <div class="col-8">
+                                <div class="col-6">
                                     <h4 class="mb-0 text-primary">Township
                                         <span type="button" data-bs-toggle="modal" data-bs-target="#model" onclick="changeAdd()">
                                     <i class="bi bi-plus-square ml-5" style="font-size: 1.4rem"></i>
                                 </span>
                                     </h4>
+                                </div>
+                                <div class="col-2">
+                                    <select class="form-select my-3 col-auto" aria-label="district select" id="filterZone">
+
+                                    </select>
                                 </div>
                                 <div class="col-2">
                                     <select class="form-select my-3 col-auto" aria-label="district select" id="filterRegion">
@@ -50,6 +55,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Name</th>
+                                <th>Zone</th>
                                 <th>Region</th>
                                 <th>District</th>
                                 <th>Action</th>
@@ -78,6 +84,9 @@
                                        placeholder="Township">
                                 <label for="township">Township</label>
                             </div>
+                            <select class="form-select my-3" aria-label="region select" id="zoneSelect">
+
+                            </select>
                             <select class="form-select my-3" aria-label="region select" id="regionSelect">
 
                             </select>

@@ -28,10 +28,6 @@ public class Parish implements Serializable {
     @Column(columnDefinition = "LONGTEXT")
     private String note;
 
-    @ManyToOne(targetEntity = Zone.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "zone_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_zone"))
-    private Zone zone;
-
     @ManyToOne(targetEntity = Township.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "township_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_township"))
     private Township township;

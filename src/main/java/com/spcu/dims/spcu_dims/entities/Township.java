@@ -28,4 +28,8 @@ public class Township implements Serializable {
     @ManyToOne(targetEntity = District.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "district_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_district"))
     private District district;
+
+    @ManyToOne(targetEntity = Zone.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "zone_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_zone"))
+    private Zone zone;
 }

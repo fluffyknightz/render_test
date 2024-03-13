@@ -23,8 +23,8 @@ public class TownshipAPI {
     private static final String NOT_FOUND = "ID Not Found.";
 
     @PostMapping("/create")
-    public ResponseEntity<Object> townshipCreate(@RequestParam("name") String name, @RequestParam ("district") String district) {
-        Object township = townshipServices.createTownship(name, district);
+    public ResponseEntity<Object> townshipCreate(@RequestParam("name") String name, @RequestParam ("district") String district, @RequestParam ("zone") String zone) {
+        Object township = townshipServices.createTownship(name, district, zone);
         if (township instanceof String) {
 
             return new ResponseEntity<>(township, HttpStatus.CONFLICT);
@@ -63,8 +63,8 @@ public class TownshipAPI {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam ("name") String name, @RequestParam("district") String district) {
-        Object township = townshipServices.update(id, name, district);
+    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam ("name") String name, @RequestParam("district") String district, @RequestParam ("zone") String zone) {
+        Object township = townshipServices.update(id, name, district,zone);
         if (township instanceof String) {
 
             return new ResponseEntity<>(township, HttpStatus.CONFLICT);

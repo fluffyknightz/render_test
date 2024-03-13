@@ -2,6 +2,7 @@ package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.dto.BeneficiaryListDto;
 import com.spcu.dims.spcu_dims.entities.BeneficiaryList;
+import com.spcu.dims.spcu_dims.entities.BeneficiaryListView;
 import com.spcu.dims.spcu_dims.services.BeneficiaryListServices;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -36,7 +37,7 @@ public class BeneficiaryListAPI {
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<BeneficiaryList> beneficiaryList(@Valid @RequestBody DataTablesInput input){
+    public DataTablesOutput<BeneficiaryListView> beneficiaryList(@Valid @RequestBody DataTablesInput input){
         return beneficiaryListServices.tableBeneficiaryList(input);
     }
 

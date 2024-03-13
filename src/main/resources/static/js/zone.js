@@ -11,7 +11,7 @@ $(document).ready(async function () {
     table = $('#myTable').DataTable({
         dom: 'flrtip',
         language: {
-            infoFiltered: null,
+            infoFiltered: "",
         },
         ajax: {
             url: 'spcu-dims/api/v1/zone/show/table',
@@ -21,7 +21,7 @@ $(document).ready(async function () {
                 [csrfHeader]: csrfToken
             },
             data: function (d) {
-                d.columns[3].search.value = false;
+                d.columns[4].search.value = false;
                 return JSON.stringify(d);
             },
         },
@@ -37,6 +37,8 @@ $(document).ready(async function () {
         }, {
             data: 'name'
         },{
+            data: 'diocese.archdiocese.name'
+        },{
             data: 'diocese.name'
         }, {
             data: 'isDelete',
@@ -49,14 +51,14 @@ $(document).ready(async function () {
 });
 
 dioceseFilter.addEventListener('change',function (){
-    table.column(2).search(dioceseFilter.value).draw();
+    table.column(3).search(dioceseFilter.value).draw();
 })
 
 async function dioceseFetch(){
     try {
         const data = await fetchData('spcu-dims/api/v1/diocese/show/all');
-        await populateSelect(dioceseSelect, data, "Select Related Archdiocese", false);
-        await populateSelect(dioceseFilter, data, "Filter Archdiocese", true);
+        await populateSelect(dioceseSelect, data, "Select Related Diocese", false);
+        await populateSelect(dioceseFilter, data, "Filter Diocese", true);
     } catch (error) {
         Notiflix.Notify.failure('Data Fetching Error!');
     }

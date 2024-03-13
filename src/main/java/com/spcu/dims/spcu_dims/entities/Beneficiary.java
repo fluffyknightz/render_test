@@ -19,7 +19,7 @@ public class Beneficiary implements Serializable {
     private int id;
 
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0 NOT NULL" )
-    private int houseHold;
+    private int household;
 
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0 NOT NULL")
     private int male;

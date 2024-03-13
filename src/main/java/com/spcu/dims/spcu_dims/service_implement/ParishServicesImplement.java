@@ -18,25 +18,19 @@ import java.util.Optional;
 public class ParishServicesImplement implements ParishServices {
 
     private final ParishRepository parishRepository;
-    private final ZoneRepository zoneRepository;
     private final TownshipRepository townshipRepository;
 
     String existsMessage = "Parish with the name '%s' already exists.";
     String doesNotExistMessage = "Parish with the name '%s' does not exist.";
-    String zoneDoesNotExistMessage = "Zone with the name '%s' does not exist.";
     String townshipDoesNotExistMessage = "Township with the name '%s' does not exist.";
 
-    String bothDoesNotExistMessage = "Zone with the name '%s' and Township with the name '%s' do not exist.";
 
     @Override
-    public Object createParish(String name, String zone, String township) {
-        Optional<Zone> optionalZone = zoneRepository.findByName(zone);
+    public Object createParish(String name, String township) {
+
         Optional<Township> optionalTownship = townshipRepository.findByName(township);
-        if (optionalZone.isEmpty() && optionalTownship.isEmpty()) {
-            return String.format(bothDoesNotExistMessage, zone, township);
-        } else if (optionalZone.isEmpty()) {
-            return String.format(zoneDoesNotExistMessage, zone);
-        } else if (optionalTownship.isEmpty()) {
+
+        if (optionalTownship.isEmpty()) {
             return String.format(townshipDoesNotExistMessage, township);
         }
 
@@ -44,7 +38,6 @@ public class ParishServicesImplement implements ParishServices {
         if (existingParishOptional.isPresent()) {
             if (existingParishOptional.get().isDelete()) {
                 existingParishOptional.get().setDelete(false);
-                existingParishOptional.get().setZone(optionalZone.get());
                 existingParishOptional.get().setTownship(optionalTownship.get());
                 return parishRepository.save(existingParishOptional.get());
             } else {
@@ -53,7 +46,6 @@ public class ParishServicesImplement implements ParishServices {
         }
         Parish newParish = Parish.builder()
                 .name(name)
-                .zone(optionalZone.get())
                 .township(optionalTownship.get())
                 .build();
         return parishRepository.save(newParish);
@@ -80,21 +72,16 @@ public class ParishServicesImplement implements ParishServices {
     }
 
     @Override
-    public Object update(int id, String name, String zone, String township) {
+    public Object update(int id, String name, String township) {
         Optional<Parish> parishOptional = parishRepository.findById(id);
         Optional<Township> townshipExist = townshipRepository.findByName(township);
-        Optional<Zone> zoneExist = zoneRepository.findByName(zone);
 
-        if (zoneExist.isEmpty() && townshipExist.isEmpty()) {
-            return String.format(bothDoesNotExistMessage, zone, township);
-        } else if (zoneExist.isEmpty()) {
-            return String.format(zoneDoesNotExistMessage, zone);
-        } else if (townshipExist.isEmpty()) {
+        if (townshipExist.isEmpty()) {
             return String.format(townshipDoesNotExistMessage, township);
         }
         if (parishOptional.isPresent()) {
 
-            if (parishOptional.get().getName().equals(name) && parishOptional.get().getZone().getName().equals(zone) && parishOptional.get().getTownship().getName().equals(township)) {
+            if (parishOptional.get().getName().equals(name) &&  parishOptional.get().getTownship().getName().equals(township)) {
                 return parishOptional;
             }
             // Check if the new name is already exists
@@ -103,7 +90,6 @@ public class ParishServicesImplement implements ParishServices {
             }
 
             parishOptional.get().setName(name);
-            parishOptional.get().setZone(zoneExist.get());
             parishOptional.get().setTownship(townshipExist.get());
             return parishRepository.save(parishOptional.get());
         }

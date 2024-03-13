@@ -13,11 +13,4 @@ import java.util.Optional;
 @Repository
 public interface BeneficiaryListRepository extends DataTablesRepository<BeneficiaryList, Integer> {
 
-    @Query("SELECT bl FROM BeneficiaryList bl WHERE bl.id = :id AND bl.activity.id = :activityId AND bl.parish.id = :parishId")
-    Optional<BeneficiaryList> findByBeneficiaryListIdActivityIdAndParishId(int id, int activityId, int parishId);
-
-    @Query("SELECT bl FROM BeneficiaryList bl WHERE bl.activity.id = :activityId AND bl.parish.id = :parishId")
-    Optional<BeneficiaryList> findByActivityIdAndParishId(int activityId, int parishId);
-
-
 }

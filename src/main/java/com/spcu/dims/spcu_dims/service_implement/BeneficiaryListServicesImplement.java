@@ -16,6 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BeneficiaryListServicesImplement implements BeneficiaryListServices {
 
+    private final BeneficiaryListViewRepository beneficiaryListViewRepository;
     private final BeneficiaryListRepository beneficiaryListRepository;
     private final ActivityRepository activityRepository;
     private final ParishRepository parishRepository;
@@ -43,7 +44,7 @@ public class BeneficiaryListServicesImplement implements BeneficiaryListServices
             return String.format(parishDoesNotExistMessage, reqData.getParishName());
         }
 
-        Beneficiary beneficiary = Beneficiary.builder().houseHold(reqData.getBeneficiaryHousehold()).male(reqData.getBeneficiaryMale()).female(reqData.getBeneficiaryFemale()).build();
+        Beneficiary beneficiary = Beneficiary.builder().household(reqData.getBeneficiaryHousehold()).male(reqData.getBeneficiaryMale()).female(reqData.getBeneficiaryFemale()).build();
         beneficiaryRepository.save(beneficiary);
 
         Disability disability = Disability.builder().male(reqData.getDisabilityMale()).female(reqData.getBeneficiaryFemale()).build();
@@ -100,7 +101,7 @@ public class BeneficiaryListServicesImplement implements BeneficiaryListServices
 
             if (beneficiaryExist.isPresent() && disabilityExist.isPresent() && vulnerabilityExist.isPresent()) {
 
-                beneficiaryExist.get().setHouseHold(reqData.getBeneficiaryHousehold());
+                beneficiaryExist.get().setHousehold(reqData.getBeneficiaryHousehold());
                 beneficiaryExist.get().setMale(reqData.getBeneficiaryMale());
                 beneficiaryExist.get().setFemale(reqData.getBeneficiaryFemale());
 
@@ -125,8 +126,8 @@ public class BeneficiaryListServicesImplement implements BeneficiaryListServices
     }
 
     @Override
-    public DataTablesOutput<BeneficiaryList> tableBeneficiaryList(DataTablesInput input) {
-        return beneficiaryListRepository.findAll(input);
+    public DataTablesOutput<BeneficiaryListView> tableBeneficiaryList(DataTablesInput input) {
+        return beneficiaryListViewRepository.findAll(input);
     }
 
 }

@@ -38,7 +38,7 @@ $(document).ready(async function () {
     await archdioceseFetch()
     table = $('#myTable').DataTable({
         dom: 'flrtip', language: {
-            infoFiltered: null,
+            infoFiltered: "",
         },
 
         ajax: {
@@ -86,6 +86,7 @@ archdioceseFilter.addEventListener('change',function (){
 })
 
 function changeAdd() {
+    archdioceseSelect.selectedIndex = 0;
     input.value = null;
     button.innerHTML = 'Add'
     title.textContent = 'Add Diocese'

@@ -11,7 +11,7 @@ $(document).ready(async function () {
     await regionFetch()
     table = $('#myTable').DataTable({
         dom: 'flrtip', language: {
-            infoFiltered: null,
+            infoFiltered: "",
         }, ajax: {
             url: 'spcu-dims/api/v1/district/show/table', method: 'POST', contentType: 'application/json', headers: {
                 [csrfHeader]: csrfToken
@@ -50,14 +50,6 @@ async function regionFetch() {
     }
 }
 
-function changeAdd() {
-    input.value = null;
-    button.innerHTML = 'Add'
-    title.textContent = 'Add District'
-    button.setAttribute('onclick', 'adding()');
-    return false;
-}
-
 function editing() {
     console.log("edit reach")
     validationInput()
@@ -67,6 +59,15 @@ function editing() {
         const url = '/spcu-dims/api/v1/district/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id) + '&&region=' + encodeURIComponent(regionSelect.value);
         performOperation(url, 'PATCH', 'Edit successful.');
     }
+}
+
+function changeAdd() {
+    regionSelect.selectedIndex = 0;
+    input.value = null;
+    button.innerHTML = 'Add'
+    title.textContent = 'Add District'
+    button.setAttribute('onclick', 'adding()');
+    return false;
 }
 
 async function changeEdit(name, id, region) {

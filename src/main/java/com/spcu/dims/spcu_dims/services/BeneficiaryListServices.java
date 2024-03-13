@@ -2,6 +2,7 @@ package com.spcu.dims.spcu_dims.services;
 
 import com.spcu.dims.spcu_dims.dto.BeneficiaryListDto;
 import com.spcu.dims.spcu_dims.entities.BeneficiaryList;
+import com.spcu.dims.spcu_dims.entities.BeneficiaryListView;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 
@@ -19,6 +20,6 @@ public interface BeneficiaryListServices {
 
     Object update(BeneficiaryListDto reqData);
 
-    DataTablesOutput<BeneficiaryList> tableBeneficiaryList(DataTablesInput input);
+    DataTablesOutput<BeneficiaryListView> tableBeneficiaryList(DataTablesInput input);
 
 }

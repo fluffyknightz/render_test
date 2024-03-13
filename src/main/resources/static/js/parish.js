@@ -3,10 +3,9 @@ let data_id
 let button = document.getElementById('myButton');
 let title = document.getElementById('modelTitle');
 let input = document.getElementById('parish');
-let zoneSelect = document.getElementById('zoneSelect');
 let zoneFilter = document.getElementById('filterZone');
-let townshipSelect = document.getElementById('townshipSelect');
 let townshipFilter = document.getElementById('filterTownship');
+let townshipSelect = document.getElementById('townshipSelect');
 
 
 $(document).ready(async function () {
@@ -15,56 +14,41 @@ $(document).ready(async function () {
     await townshipFetch();
 
     table = $('#myTable').DataTable({
-        dom: 'flrtip',
-        language: {
-            infoFiltered: null,
-        },
-        ajax: {
-            url: 'spcu-dims/api/v1/parish/show/table',
-            method: 'POST',
-            contentType: 'application/json',
-            headers: {
+        dom: 'flrtip', language: {
+            infoFiltered: "",
+        }, ajax: {
+            url: 'spcu-dims/api/v1/parish/show/table', method: 'POST', contentType: 'application/json', headers: {
                 [csrfHeader]: csrfToken
-            },
-            data: function (d) {
+            }, data: function (d) {
                 d.columns[8].search.value = false;
                 return JSON.stringify(d);
             },
-        },
-        processing: true,
-        serverSide: true,
-        stateSave: true,
-        columns: [
-            {
-                data: 'id',
-                render: function (data, type, row, meta) {
-                    // meta.row contains the row index
-                    return meta.row + 1;
-                }
-
-            }, {
-                data: 'name'
-            }, {
-                data: 'zone.diocese.archdiocese.name'
-            }, {
-                data: 'zone.diocese.name'
-            }, {
-                data: 'zone.name'
-            }, {
-                data: 'township.district.region.name'
-            }, {
-                data: 'township.district.name'
-            }, {
-                data: 'township.name'
-            }, {
-                data: 'isDelete',
-                render: function (data, type, row) {
-                    let escapedName = row.name.replace("'", "\\'");
-                    return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal"' + ' data-bs-target="#model" onclick="changeEdit(' + row.id + ', \'' + row.township.name + '\', \'' + row.zone.name + '\', \'' + escapedName + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' +
-                        '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
-                }
+        }, processing: true, serverSide: true, stateSave: true, columns: [{
+            data: 'id', render: function (data, type, row, meta) {
+                // meta.row contains the row index
+                return meta.row + 1;
             }
-        ]
+
+        }, {
+            data: 'name'
+        }, {
+            data: 'township.zone.diocese.archdiocese.name'
+        }, {
+            data: 'township.zone.diocese.name'
+        }, {
+            data: 'township.zone.name'
+        }, {
+            data: 'township.district.region.name'
+        }, {
+            data: 'township.district.name'
+        }, {
+            data: 'township.name'
+        }, {
+            data: 'isDelete', render: function (data, type, row) {
+                let escapedName = row.name.replace("'", "\\'");
+                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal"' + ' data-bs-target="#model" onclick="changeEdit(' + row.id + ', \'' + row.township.name + '\', \'' + escapedName + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+            }
+        }]
     });
 });
 
@@ -79,7 +63,6 @@ townshipFilter.addEventListener('change', function () {
 async function zoneFetch() {
     try {
         const data = await fetchData('spcu-dims/api/v1/zone/show/all');
-        await populateSelect(zoneSelect, data, "Select Related Zone", false);
         await populateSelect(zoneFilter, data, "Filter Zone", true);
     } catch (error) {
         Notiflix.Notify.failure('Data Fetching Error!');
@@ -97,6 +80,7 @@ async function townshipFetch() {
 }
 
 function changeAdd() {
+    townshipSelect.selectedIndex = 0;
     input.value = null;
     button.innerHTML = 'Add'
     title.textContent = 'Add Parish'
@@ -104,8 +88,7 @@ function changeAdd() {
     return false;
 }
 
-function changeEdit(id, township, zone, name) {
-    zoneSelect.value = zone;
+function changeEdit(id, township, name) {
     townshipSelect.value = township;
     data_id = id;
     input.value = name;
@@ -121,20 +104,20 @@ function showConfirm(id) {
 
 function editing() {
     validationInput()
-    if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || zoneSelect.value.trim() === "" || townshipSelect.value.trim() === "") {
+    if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || townshipSelect.value.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
-        const url = '/spcu-dims/api/v1/parish/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id) + '&&zone=' + encodeURIComponent(zoneSelect.value) + '&&township=' + encodeURIComponent(townshipSelect.value);
+        const url = '/spcu-dims/api/v1/parish/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id) + '&&township=' + encodeURIComponent(townshipSelect.value);
         performOperation(url, 'PATCH', 'Edit successful.');
     }
 }
 
 function adding() {
     validationInput()
-    if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || zoneSelect.value.trim() === "" || townshipSelect.value.trim() === "") {
+    if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || townshipSelect.value.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
-        const url = '/spcu-dims/api/v1/parish/create?name=' + encodeURIComponent(inputValue) + '&&zone=' + encodeURIComponent(zoneSelect.value) + '&&township=' + encodeURIComponent(townshipSelect.value);
+        const url = '/spcu-dims/api/v1/parish/create?name=' + encodeURIComponent(inputValue) + '&&township=' + encodeURIComponent(townshipSelect.value);
         performOperation(url, 'POST', 'Create successful.');
     }
 }

@@ -1,21 +1,26 @@
 let table
 let data_id
+
 let button = document.getElementById('myButton');
 let title = document.getElementById('modelTitle');
 let input = document.getElementById('township');
+
 let districtSelect = document.getElementById('districtSelect');
 let regionSelect = document.getElementById('regionSelect');
+let zoneSelect = document.getElementById('zoneSelect');
+
 let districtFilter = document.getElementById('filterDistrict');
 let regionFilter = document.getElementById('filterRegion');
+let zoneFilter = document.getElementById('filterZone');
 
 
 function adding() {
     validationInput()
     console.log("add reach")
-    if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || districtSelect.value.trim() === "") {
+    if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || districtSelect.value.trim() === "" || zoneSelect.value.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
-        const url = '/spcu-dims/api/v1/township/create?name=' + encodeURIComponent(inputValue) + '&&district=' + encodeURIComponent(districtSelect.value);
+        const url = '/spcu-dims/api/v1/township/create?name=' + encodeURIComponent(inputValue) + '&&district=' + encodeURIComponent(districtSelect.value) + '&&zone=' + encodeURIComponent(zoneSelect.value);
         performOperation(url, 'POST', 'Create successful.');
     }
 }
@@ -26,7 +31,7 @@ function editing() {
     if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || districtSelect.value.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
-        const url = '/spcu-dims/api/v1/township/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id) + '&&district=' + encodeURIComponent(districtSelect.value);
+        const url = '/spcu-dims/api/v1/township/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id) + '&&district=' + encodeURIComponent(districtSelect.value) + '&&zone=' + encodeURIComponent(zoneSelect.value);
         performOperation(url, 'PATCH', 'Edit successful.');
     }
 
@@ -35,9 +40,10 @@ function editing() {
 $(document).ready(async function () {
     await districtFetch()
     await regionFetch()
+    await zoneFetch()
     table = $('#myTable').DataTable({
         dom: 'flrtip', language: {
-            infoFiltered: null,
+            infoFiltered: "",
         },
 
         ajax: {
@@ -49,7 +55,7 @@ $(document).ready(async function () {
             },
 
             data: function (d) {
-                d.columns[4].search.value = false;
+                d.columns[5].search.value = false;
                 return JSON.stringify(d);
             },
 
@@ -62,12 +68,14 @@ $(document).ready(async function () {
         }, {
             data: 'name'
         }, {
+            data: 'zone.name'
+        }, {
             data: 'district.region.name'
         }, {
             data: 'district.name'
         }, {
             data: 'isDelete', render: function (data, type, row) {
-                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" onclick="changeEdit(\'' + row.name + '\', ' + row.id + ', \'' + row.district.name + '\', \'' + row.district.region.name + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" onclick="changeEdit(\'' + row.name + '\', ' + row.id + ', \'' + row.district.name + '\', \'' + row.district.region.name + '\',\'' + row.zone.name +'\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
             }
 
         },]
@@ -80,20 +88,27 @@ function showConfirm(id) {
     deleteConfirm('/spcu-dims/api/v1/township/delete/' + encodeURIComponent(id))
 }
 
-
-districtFilter.addEventListener('change', function () {
-    table.column(3).search(districtFilter.value).draw();
+zoneFilter.addEventListener('change', function () {
+    table.column(2).search(zoneFilter.value).draw();
 })
 
 regionFilter.addEventListener('change', function () {
-    table.column(2).search(regionFilter.value).draw();
+    table.column(3).search(regionFilter.value).draw();
 })
+
+districtFilter.addEventListener('change', function () {
+    table.column(4).search(districtFilter.value).draw();
+})
+
 
 regionSelect.addEventListener('change', async function () {
     await districtSpecificFetch(regionSelect.value)
 })
 
 async function changeAdd() {
+    regionSelect.selectedIndex = 0;
+    districtSelect.selectedIndex = 0;
+    zoneSelect.selectedIndex = 0;
     input.value = null;
     button.innerHTML = 'Add'
     title.textContent = 'Add Township'
@@ -101,10 +116,11 @@ async function changeAdd() {
     return false;
 }
 
-async function changeEdit(name, id, district, region) {
+async function changeEdit(name, id, district, region, zone) {
     await districtSpecificFetch(region)
     regionSelect.value = region
     districtSelect.value = district
+    zoneSelect = zone
     data_id = id
     input.value = name;
     button.innerHTML = 'Edit'
@@ -112,7 +128,6 @@ async function changeEdit(name, id, district, region) {
     button.setAttribute('onclick', 'editing()');
     return false;
 }
-
 
 
 async function districtSpecificFetch(region) {
@@ -127,7 +142,7 @@ async function districtSpecificFetch(region) {
 async function districtFetch() {
     try {
         const data = await fetchData('spcu-dims/api/v1/district/show/all');
-        await populateSelect(districtFilter, data, "Filter District",true);
+        await populateSelect(districtFilter, data, "Filter District", true);
     } catch (error) {
         Notiflix.Notify.failure('Data Fetching Error!');
     }
@@ -137,7 +152,17 @@ async function regionFetch() {
     try {
         const data = await fetchData('spcu-dims/api/v1/region/show/all');
         await populateSelect(regionFilter, data, "Filter Region", true);
-        await populateSelect(regionSelect, data, "Select Related Region",false);
+        await populateSelect(regionSelect, data, "Select Related Region", false);
+    } catch (error) {
+        Notiflix.Notify.failure('Data Fetching Error!');
+    }
+}
+
+async function zoneFetch() {
+    try {
+        const data = await fetchData('spcu-dims/api/v1/zone/show/all');
+        await populateSelect(zoneFilter, data, "Filter Zone", true);
+        await populateSelect(zoneSelect, data, "Select Related Zone", false);
     } catch (error) {
         Notiflix.Notify.failure('Data Fetching Error!');
     }
