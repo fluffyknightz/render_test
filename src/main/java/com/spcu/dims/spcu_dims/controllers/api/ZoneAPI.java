@@ -82,8 +82,8 @@ public class ZoneAPI {
     }
 
     @PostMapping("/show")
-    public ResponseEntity<String> create(@RequestParam ("diocese") String diocese) {
-        String zoneName = zoneServices.findByDioceseName(diocese);
+    public ResponseEntity<Object> create(@RequestParam ("diocese") String diocese) {
+        List<String> zoneName = zoneServices.findByDioceseName(diocese);
         if(zoneName!= null){
             return new ResponseEntity<>(zoneName, HttpStatus.OK);
         }
