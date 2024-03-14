@@ -32,7 +32,11 @@ function editing() {
 $(document).ready(function () {
 
     table = $('#myTable').DataTable({
-        dom: 'flrtip', language: {
+
+        lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+        dom: 'flrtip',
+
+        language: {
             infoFiltered: "",
         },
 
@@ -49,7 +53,8 @@ $(document).ready(function () {
                 return JSON.stringify(d);
             },
 
-        }, processing: true, serverSide: true, stateSave: true, columns: [{
+        }, processing: true, serverSide: true, stateSave: true,
+        columns: [{
             data: 'id', render: function (data, type, row, meta) {
                 // meta.row contains the row index
                 return meta.row + 1;
@@ -59,7 +64,7 @@ $(document).ready(function () {
             data: 'name'
         }, {
             data: 'isDelete', render: function (data, type, row) {
-                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.name + '\', ' + row.id + ')" style="border: none">\n' +
+                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.name.replace(/'/g, "\\'") + '\', ' + row.id + ')" style="border: none">\n' +
                     '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
             }
         },]

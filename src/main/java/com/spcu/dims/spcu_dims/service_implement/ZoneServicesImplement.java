@@ -100,4 +100,10 @@ public class ZoneServicesImplement implements ZoneServices {
     public DataTablesOutput<Zone> tableZone(DataTablesInput input) {
         return zoneRepository.findAll(input);
     }
+
+    @Override
+    public List<String> findByDioceseName(String name) {
+        return zoneRepository.findByDioceseName(name);
+
+    }
 }

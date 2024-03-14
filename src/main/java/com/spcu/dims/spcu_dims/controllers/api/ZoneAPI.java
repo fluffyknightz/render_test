@@ -80,4 +80,14 @@ public class ZoneAPI {
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
+
+    @PostMapping("/show")
+    public ResponseEntity<String> create(@RequestParam ("diocese") String diocese) {
+        String zoneName = zoneServices.findByDioceseName(diocese);
+        if(zoneName!= null){
+            return new ResponseEntity<>(zoneName, HttpStatus.OK);
+        }
+        String errorMessage = "Zone that related to Diocese name " + diocese + " does not exist.";
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
 }

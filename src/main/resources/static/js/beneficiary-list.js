@@ -8,6 +8,7 @@ let activityFilter = document.getElementById('filterActivity');
 let parishFilter = document.getElementById('filterParish');
 
 let activitySelect = document.getElementById('activitySelect');
+let archdioceseSelect = document.getElementById('archdioceseSelect');
 let dioceseSelect = document.getElementById('dioceseSelect');
 let zoneSelect = document.getElementById('zoneSelect');
 let parishSelect = document.getElementById('parishSelect');
@@ -25,8 +26,8 @@ let inputVulnerabilitiesOver60Female = document.getElementById('vulnerabilities-
 $(document).ready(async function () {
 
     await activityFetch();
-    await dioceseFetch();
-    await zoneFetch();
+    await archdioceseFetch();
+
     await parishFetch();
 
     table = $('#myTable').DataTable({
@@ -80,12 +81,15 @@ $(document).ready(async function () {
                     'onclick="changeEdit(' + row.id + ', \'' + row.activityName.replace(/'/g, "\\'") + '\', \'' + row.parishName.replace(/'/g, "\\'") +
                     '\', ' + row.beneficiaryHousehold + ', ' + row.beneficiaryMale + ', ' + row.beneficiaryFemale + ', ' + row.disabilityMale +
                     ', ' + row.disabilityFemale + ', ' + row.under18Male + ', ' + row.under18Female + ', ' + row.over60Male +
-                    ', ' + row.over60Female + ')" style="border: none">\n' +
+                    ', ' + row.over60Female + ', ' + row.archdioceseName.replace(/'/g, "\\'") + ', ' + row.dioceseName.replace(/'/g, "\\'") + ', ' + row.zoneName.replace(/'/g, "\\'") + ')" style="border: none">\n' +
                     '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' +
                     '</button>\n' +
                     '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' +
                     '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' +
                     '</button>';}
+        }, {
+            data: 'archdioceseName',
+            visible: false
         }],
     });
 });
@@ -108,19 +112,37 @@ async function activityFetch() {
     }
 }
 
-async function dioceseFetch() {
+async function archdioceseFetch() {
     try {
-        const data = await fetchData('spcu-dims/api/v1/diocese/show/all');
+        const data = await fetchData('spcu-dims/api/v1/archdiocese/show/all');
+        await populateSelect(archdioceseSelect, data, "Select Related Archdiocese", false);
+    } catch (error) {
+        Notiflix.Notify.failure('Data Fetching Error!');
+    }
+}
+
+async function dioceseSpecificFetch(archdiocese) {
+    try {
+        const data = await fetchData('spcu-dims/api/v1/diocese/show', `archdiocese=${encodeURIComponent(archdiocese)}`);
         await populateSelect(dioceseSelect, data, "Select Related Diocese", false);
     } catch (error) {
         Notiflix.Notify.failure('Data Fetching Error!');
     }
 }
 
-async function zoneFetch() {
+async function zoneSpecificFetch(diocese) {
     try {
-        const data = await fetchData('spcu-dims/api/v1/zone/show/all');
+        const data = await fetchData('spcu-dims/api/v1/zone/show', `diocese=${encodeURIComponent(diocese)}`);
         await populateSelect(zoneSelect, data, "Select Related Zone", false);
+    } catch (error) {
+        Notiflix.Notify.failure('Data Fetching Error!');
+    }
+}
+
+async function parishSpecificFetch(zone) {
+    try {
+        const data = await fetchData('spcu-dims/api/v1/zone/show', `zone=${encodeURIComponent(zone)}`);
+        await populateSelect(parishSelect, data, "Select Related Parish", false);
     } catch (error) {
         Notiflix.Notify.failure('Data Fetching Error!');
     }
@@ -129,7 +151,6 @@ async function zoneFetch() {
 async function parishFetch() {
     try {
         const data = await fetchData('spcu-dims/api/v1/parish/show/all');
-        await populateSelect(parishSelect, data, "Select Related Parish", false);
         await populateSelect(parishFilter, data, "Filter Parish", true);
     } catch (error) {
         Notiflix.Notify.failure('Data Fetching Error!');
@@ -156,14 +177,21 @@ function changeAdd() {
     return false;
 }
 
-function changeEdit(id, activity, parish, houseHold, male, female, disabilityMale, disabilityFemale, under18Male, under18Female, over60Male, over60Female) {
-    console.log(parish);
+async function changeEdit(id, activity, parish, houseHold, male, female, disabilityMale, disabilityFemale, under18Male, under18Female, over60Male, over60Female, archdiocese, diocese, zone) {
+    await dioceseSpecificFetch(archdiocese)
+    await zoneSpecificFetch(diocese)
+    await parishSpecificFetch(zone)
+
+
     button.innerHTML = 'Edit';
     title.textContent = 'Edit Beneficiary List';
     button.setAttribute('onclick', 'editing()');
 
     data_id = id;
     activitySelect.value = activity;
+    archdioceseSelect.value = archdiocese;
+    dioceseSelect.value = diocese;
+    zoneSelect.value = zone;
     parishSelect.value = parish;
 
     inputBeneficiariesHousehold.value = houseHold;

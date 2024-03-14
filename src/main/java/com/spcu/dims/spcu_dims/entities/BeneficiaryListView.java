@@ -22,6 +22,7 @@ public class BeneficiaryListView {
     private int id;
     private String activityName;
     private String dioceseName;
+    private String archdioceseName;
     private String zoneName;
     private String parishName;
     private int beneficiaryHousehold;

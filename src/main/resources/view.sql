@@ -2,6 +2,7 @@ CREATE or replace VIEW `beneficiary_lists_view` AS
 SELECT
     bl.id,
     a.name AS activity_name,
+    ardio.name AS archdiocese_name,
     dio.name AS diocese_name,
     z.name AS zone_name,
     p.name AS parish_name,
@@ -22,6 +23,7 @@ FROM
         INNER JOIN townships t ON t.id = p.township_id
         INNER JOIN zones z ON z.id = t.zone_id
         INNER JOIN dioceses dio ON dio.id = z.diocese_id
+        inner join archdioceses ardio ON ardio.id = dio.archdiocese_id
         INNER JOIN beneficiaries b ON b.id = bl.beneficiary_id
         INNER JOIN disabilities d ON d.id = bl.disability_id
         INNER JOIN vulnerabilities v ON v.id = bl.vulnerability_id;

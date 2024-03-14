@@ -19,4 +19,6 @@ public interface ZoneServices {
     Object update(int id, String name, String diocese);
 
     DataTablesOutput<Zone> tableZone(DataTablesInput input);
+
+    List<String> findByDioceseName(String name);
 }

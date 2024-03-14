@@ -3,6 +3,7 @@ package com.spcu.dims.spcu_dims.repositories;
 import com.spcu.dims.spcu_dims.entities.Diocese;
 import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,4 +20,7 @@ public interface DioceseRepository extends DataTablesRepository<Diocese, Integer
     List<String> findAllNotDeleted();
 
     Optional<Diocese> findByNameAndIdNot(String name, int id);
+    @Query("SELECT d.name FROM Diocese d WHERE d.archdiocese.name = :archdiocese")
+    List<String> findByArchdioceseName(@Param("archdiocese") String archdiocese);
+
 }

@@ -86,7 +86,7 @@ public class DistrictAPI {
         if(districts!= null){
             return new ResponseEntity<>(districts, HttpStatus.OK);
         }
-        String errorMessage = "District that related to Region name " + region + " dont exist.";
+        String errorMessage = "District that related to Region name " + region + " does not exist.";
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 }
