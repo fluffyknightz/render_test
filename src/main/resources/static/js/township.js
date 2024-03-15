@@ -41,7 +41,7 @@ $(document).ready(async function () {
     await districtFetch()
     await regionFetch()
     await zoneFetch()
-    table = $('#myTable').DataTable({
+    table = new DataTable('#myTable', {
         dom: 'flrtip', language: {
             infoFiltered: "",
         },

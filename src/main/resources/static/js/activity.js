@@ -31,7 +31,7 @@ function editing() {
 
 $(document).ready(function () {
 
-    table = $('#myTable').DataTable({
+    table = new DataTable('#myTable', {
         dom: 'flrtip', language: {
             infoFiltered: "",
         },

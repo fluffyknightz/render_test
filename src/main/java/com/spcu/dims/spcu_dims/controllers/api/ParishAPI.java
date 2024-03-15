@@ -72,4 +72,14 @@ public class ParishAPI {
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
+
+    @PostMapping("/show")
+    public ResponseEntity<Object> create(@RequestParam ("zone") String zone) {
+        List<String> parishName = parishServices.findByZoneName(zone);
+        if(parishName!= null){
+            return new ResponseEntity<>(parishName, HttpStatus.OK);
+        }
+        String errorMessage = "Parish that related to Zone name " + zone + " does not exist.";
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
 }

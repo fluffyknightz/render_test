@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Title</title>
+
+
+    <link th:href="@{/libs/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/3.0.1/css/buttons.dataTables.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
+</head>
+<body>
+<table id="example" class="table table-striped" style="width:100%">
+    <thead>
+    <tr>
+        <th>No</th>
+        <th>Name</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+
+</table>
+
+<script th:src="@{/js/token.js}"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script th:src="@{/libs/datatables/jquery.spring-friendly.js}"></script>
+
+<script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+<script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+<script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
+<script th:src="@{/libs/datatables/datatables.buttons.js}"></script>
+<script th:src="@{/libs/datatables/buttons.datatables.js}"></script>
+<script th:src="@{/libs/datatables/jszip.min.js}"></script>
+<script th:src="@{/libs/datatables/pdfmaker.min.js}"></script>
+<script th:src="@{/libs/datatables/vfs_font.js}"></script>
+<script th:src="@{/libs/datatables/buttons.html5.min.js}"></script>
+<script th:src="@{/libs/datatables/buttons.print.min.js}"></script>
+<script>
+
+    $(document).ready(function() {
+        $('#example').DataTable({
+            layout: {
+                top2Start: 'pageLength',
+                top2End: 'search',
+                topStart: {
+                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                },
+                topEnd: null
+            },
+            language: {
+                infoFiltered: "",
+            },
+            ajax: {
+
+                url: 'spcu-dims/api/v1/archdiocese/show/table', method: 'POST',
+                contentType: 'application/json',
+
+                headers: {
+                    [csrfHeader]: csrfToken
+                },
+
+            },
+            processing: true,
+            serverSide: true,
+            stateSave: true,
+            columns: [
+                {
+                    data: 'id', render: function (data, type, row, meta) {
+                        // meta.row contains the row index
+                        return meta.row + 1;
+                    }
+
+                }, {
+                    data: 'name'
+                }
+            ]
+        });
+    })
+</script>
+</body>
+</html>

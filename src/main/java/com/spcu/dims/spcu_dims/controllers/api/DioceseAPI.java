@@ -82,4 +82,14 @@ public class DioceseAPI {
 
     }
 
+    @PostMapping("/show")
+    public ResponseEntity<Object> create(@RequestParam ("archdiocese") String archdiocese) {
+        List<String> dioceseName = dioceseServices.findByArchdioceseName(archdiocese);
+        if(dioceseName!= null){
+            return new ResponseEntity<>(dioceseName, HttpStatus.OK);
+        }
+        String errorMessage = "Diocese that related to Archdiocese name " + archdiocese + " does not exist.";
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
 }

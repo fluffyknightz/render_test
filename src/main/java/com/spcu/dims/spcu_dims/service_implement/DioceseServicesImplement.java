@@ -105,4 +105,11 @@ public class DioceseServicesImplement implements DioceseServices {
     public DataTablesOutput<Diocese> tableDiocese(DataTablesInput input) {
         return dioceseRepository.findAll(input);
     }
+
+    @Override
+    public List<String> findByArchdioceseName(String archdiocese) {
+        return dioceseRepository.findByArchdioceseName(archdiocese);
+    }
+
+
 }

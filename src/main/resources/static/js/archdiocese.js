@@ -31,8 +31,8 @@ function editing() {
 
 $(document).ready(function () {
 
-    table = $('#myTable').DataTable({
-
+    table = new DataTable('#myTable', {
+        buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
         lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
         dom: 'flrtip',
 
@@ -42,7 +42,8 @@ $(document).ready(function () {
 
         ajax: {
 
-            url: 'spcu-dims/api/v1/archdiocese/show/table', method: 'POST', contentType: 'application/json',
+            url: 'spcu-dims/api/v1/archdiocese/show/table', method: 'POST',
+            contentType: 'application/json',
 
             headers: {
                 [csrfHeader]: csrfToken
@@ -54,7 +55,8 @@ $(document).ready(function () {
             },
 
         }, processing: true, serverSide: true, stateSave: true,
-        columns: [{
+        columns: [
+        {
             data: 'id', render: function (data, type, row, meta) {
                 // meta.row contains the row index
                 return meta.row + 1;

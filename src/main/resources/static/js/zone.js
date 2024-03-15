@@ -8,7 +8,7 @@ let dioceseFilter = document.getElementById('filterDiocese');
 
 $(document).ready(async function () {
     await dioceseFetch()
-    table = $('#myTable').DataTable({
+    table = new DataTable('#myTable', {
         dom: 'flrtip',
         language: {
             infoFiltered: "",

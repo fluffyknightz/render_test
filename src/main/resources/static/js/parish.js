@@ -13,7 +13,7 @@ $(document).ready(async function () {
     await zoneFetch();
     await townshipFetch();
 
-    table = $('#myTable').DataTable({
+    table = new DataTable('#myTable', {
         dom: 'flrtip', language: {
             infoFiltered: "",
         }, ajax: {

@@ -19,4 +19,6 @@ public interface ParishServices {
     Object update(int id, String name, String township);
 
     DataTablesOutput<Parish> tableParish(DataTablesInput input);
+
+    List<String> findByZoneName(String zone);
 }

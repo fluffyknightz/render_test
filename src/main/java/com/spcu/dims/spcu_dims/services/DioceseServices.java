@@ -18,4 +18,6 @@ public interface DioceseServices {
     Object update(int id, String name, String archdiocese);
 
     DataTablesOutput<Diocese> tableDiocese(DataTablesInput input);
+
+    List<String> findByArchdioceseName(String archdiocese);
 }

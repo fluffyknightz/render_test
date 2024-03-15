@@ -9,7 +9,7 @@ let regionFilter = document.getElementById('filterRegion');
 
 $(document).ready(async function () {
     await regionFetch()
-    table = $('#myTable').DataTable({
+    table = new DataTable('#myTable', {
         dom: 'flrtip', language: {
             infoFiltered: "",
         }, ajax: {

@@ -33,7 +33,7 @@ function editing() {
 
 $(document).ready(async function () {
     await roleFetch()
-    table = $('#myTable').DataTable({
+    table = new DataTable('#myTable', {
         dom: 'flrtip', language: {
             infoFiltered: "",
         },

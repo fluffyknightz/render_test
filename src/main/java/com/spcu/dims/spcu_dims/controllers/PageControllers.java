@@ -97,4 +97,8 @@ public class PageControllers {
         return "user";
     }
 
+    @GetMapping("/test")
+    public String test(){
+        return "test";
+    }
 }

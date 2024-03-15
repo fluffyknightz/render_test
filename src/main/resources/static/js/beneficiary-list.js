@@ -30,8 +30,11 @@ $(document).ready(async function () {
 
     await parishFetch();
 
-    table = $('#myTable').DataTable({
-        dom: 'flrtip', language: {
+    table = new DataTable('#myTable', {
+        dom: 'flrtip',
+        buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+        lengthMenu: [25, 50, 75, 100, 250, {label: 'All', value: -1}],
+        language: {
             infoFiltered: "",
         }, ajax: {
             url: 'spcu-dims/api/v1/beneficiary-lists/show/table',
@@ -81,17 +84,19 @@ $(document).ready(async function () {
                     'onclick="changeEdit(' + row.id + ', \'' + row.activityName.replace(/'/g, "\\'") + '\', \'' + row.parishName.replace(/'/g, "\\'") +
                     '\', ' + row.beneficiaryHousehold + ', ' + row.beneficiaryMale + ', ' + row.beneficiaryFemale + ', ' + row.disabilityMale +
                     ', ' + row.disabilityFemale + ', ' + row.under18Male + ', ' + row.under18Female + ', ' + row.over60Male +
-                    ', ' + row.over60Female + ', ' + row.archdioceseName.replace(/'/g, "\\'") + ', ' + row.dioceseName.replace(/'/g, "\\'") + ', ' + row.zoneName.replace(/'/g, "\\'") + ')" style="border: none">\n' +
+                    ', ' + row.over60Female + ', \'' + row.archdioceseName.replace(/'/g, "\\'") + '\', \'' + row.dioceseName.replace(/'/g, "\\'") + '\', \'' + row.zoneName.replace(/'/g, "\\'") + '\')" style="border: none">\n' +
                     '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' +
                     '</button>\n' +
                     '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' +
                     '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' +
-                    '</button>';}
+                    '</button>';
+            }
         }, {
             data: 'archdioceseName',
             visible: false
         }],
     });
+
 });
 
 activityFilter.addEventListener('change', function () {
@@ -100,6 +105,18 @@ activityFilter.addEventListener('change', function () {
 
 parishFilter.addEventListener('change', function () {
     table.column(4).search(parishFilter.value).draw();
+})
+
+archdioceseSelect.addEventListener('change', async function () {
+    await dioceseSpecificFetch(archdioceseSelect.value)
+})
+
+dioceseSelect.addEventListener('change', async function () {
+    await zoneSpecificFetch(dioceseSelect.value)
+})
+
+zoneSelect.addEventListener('change', async function () {
+    await parishSpecificFetch(zoneSelect.value)
 })
 
 async function activityFetch() {
@@ -125,6 +142,11 @@ async function dioceseSpecificFetch(archdiocese) {
     try {
         const data = await fetchData('spcu-dims/api/v1/diocese/show', `archdiocese=${encodeURIComponent(archdiocese)}`);
         await populateSelect(dioceseSelect, data, "Select Related Diocese", false);
+        zoneSelect.options.length = 1
+        zoneSelect.selectedIndex = 0;
+        parishSelect.options.length = 1
+        parishSelect.selectedIndex = 0;
+
     } catch (error) {
         Notiflix.Notify.failure('Data Fetching Error!');
     }
@@ -134,6 +156,9 @@ async function zoneSpecificFetch(diocese) {
     try {
         const data = await fetchData('spcu-dims/api/v1/zone/show', `diocese=${encodeURIComponent(diocese)}`);
         await populateSelect(zoneSelect, data, "Select Related Zone", false);
+        parishSelect.options.length = 1;
+        parishSelect.selectedIndex = 0;
+
     } catch (error) {
         Notiflix.Notify.failure('Data Fetching Error!');
     }
@@ -141,7 +166,7 @@ async function zoneSpecificFetch(diocese) {
 
 async function parishSpecificFetch(zone) {
     try {
-        const data = await fetchData('spcu-dims/api/v1/zone/show', `zone=${encodeURIComponent(zone)}`);
+        const data = await fetchData('spcu-dims/api/v1/parish/show', `zone=${encodeURIComponent(zone)}`);
         await populateSelect(parishSelect, data, "Select Related Parish", false);
     } catch (error) {
         Notiflix.Notify.failure('Data Fetching Error!');
@@ -178,6 +203,7 @@ function changeAdd() {
 }
 
 async function changeEdit(id, activity, parish, houseHold, male, female, disabilityMale, disabilityFemale, under18Male, under18Female, over60Male, over60Female, archdiocese, diocese, zone) {
+    console.log('reached')
     await dioceseSpecificFetch(archdiocese)
     await zoneSpecificFetch(diocese)
     await parishSpecificFetch(zone)

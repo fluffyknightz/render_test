@@ -36,7 +36,7 @@ function editing() {
 $(document).ready(async function () {
 
     await archdioceseFetch()
-    table = $('#myTable').DataTable({
+    table = new DataTable('#myTable', {
         dom: 'flrtip', language: {
             infoFiltered: "",
         },
