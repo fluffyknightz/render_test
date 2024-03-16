@@ -34,7 +34,7 @@ function editing() {
 $(document).ready(async function () {
     await roleFetch()
     table = new DataTable('#myTable', {
-        dom: 'flrtip', language: {
+        language: {
             infoFiltered: "",
         },
 
@@ -49,17 +49,13 @@ $(document).ready(async function () {
             },
 
             data: function (d) {
-                d.columns[3].search.value = false;
+                d.columns[2].search.value = false;
                 return JSON.stringify(d);
             },
 
-        }, processing: true, serverSide: true, stateSave: true, columns: [{
-            data: 'id', render: function (data, type, row, meta) {
-                // meta.row contains the row index
-                return meta.row + 1;
-            }
+        }, processing: true, serverSide: true, stateSave: true, columns: [
+            {
 
-        }, {
             data: 'username'
         },{
             data: 'role.name'

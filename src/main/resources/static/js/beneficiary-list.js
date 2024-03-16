@@ -31,8 +31,15 @@ $(document).ready(async function () {
     await parishFetch();
 
     table = new DataTable('#myTable', {
-        dom: 'flrtip',
-        buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+
+        layout: {
+            top2Start: 'pageLength',
+            top2End: 'search',
+            topStart: {
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+            },
+            topEnd: null
+        },
         lengthMenu: [25, 50, 75, 100, 250, {label: 'All', value: -1}],
         language: {
             infoFiltered: "",
@@ -44,16 +51,13 @@ $(document).ready(async function () {
                 [csrfHeader]: csrfToken
             },
             data: function (d) {
-                d.columns[14].search.value = false;
+                d.columns[13].search.value = false;
                 return JSON.stringify(d);
             },
-        }, processing: true, serverSide: true, stateSave: true, scrollX: true, columns: [{
-            data: 'id', render: function (data, type, row, meta) {
-                // meta.row contains the row index
-                return meta.row + 1;
-            }
-        }, {
-            data: 'activityName'
+        }, processing: true, serverSide: true, stateSave: true, scrollX: true,
+        columns: [
+        {
+            data: 'activityName',
         }, {
             data: 'zoneName'
         }, {
@@ -100,11 +104,11 @@ $(document).ready(async function () {
 });
 
 activityFilter.addEventListener('change', function () {
-    table.column(1).search(activityFilter.value).draw();
+    table.column(0).search(activityFilter.value).draw();
 })
 
 parishFilter.addEventListener('change', function () {
-    table.column(4).search(parishFilter.value).draw();
+    table.column(3).search(parishFilter.value).draw();
 })
 
 archdioceseSelect.addEventListener('change', async function () {

@@ -14,22 +14,16 @@ $(document).ready(async function () {
     await townshipFetch();
 
     table = new DataTable('#myTable', {
-        dom: 'flrtip', language: {
+        language: {
             infoFiltered: "",
         }, ajax: {
             url: 'spcu-dims/api/v1/parish/show/table', method: 'POST', contentType: 'application/json', headers: {
                 [csrfHeader]: csrfToken
             }, data: function (d) {
-                d.columns[8].search.value = false;
+                d.columns[7].search.value = false;
                 return JSON.stringify(d);
             },
         }, processing: true, serverSide: true, stateSave: true, columns: [{
-            data: 'id', render: function (data, type, row, meta) {
-                // meta.row contains the row index
-                return meta.row + 1;
-            }
-
-        }, {
             data: 'name'
         }, {
             data: 'township.zone.diocese.archdiocese.name'
@@ -53,11 +47,11 @@ $(document).ready(async function () {
 });
 
 zoneFilter.addEventListener('change', function () {
-    table.column(4).search(zoneFilter.value).draw();
+    table.column(3).search(zoneFilter.value).draw();
 })
 
 townshipFilter.addEventListener('change', function () {
-    table.column(7).search(townshipFilter.value).draw();
+    table.column(6).search(townshipFilter.value).draw();
 })
 
 async function zoneFetch() {

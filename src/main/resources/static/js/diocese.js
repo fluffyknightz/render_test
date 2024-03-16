@@ -37,7 +37,7 @@ $(document).ready(async function () {
 
     await archdioceseFetch()
     table = new DataTable('#myTable', {
-        dom: 'flrtip', language: {
+        language: {
             infoFiltered: "",
         },
 
@@ -50,25 +50,22 @@ $(document).ready(async function () {
             },
 
             data: function (d) {
-                d.columns[3].search.value = false;
+                d.columns[2].search.value = false;
                 return JSON.stringify(d);
             },
 
-        }, processing: true, serverSide: true, stateSave: true, columns: [{
-            data: 'id', render: function (data, type, row, meta) {
-                // meta.row contains the row index
-                return meta.row + 1;
+        }, processing: true, serverSide: true, stateSave: true,
+        columns: [
+            {
+                data: 'name'
+            }, {
+                data: 'archdiocese.name'
+            }, {
+                data: 'isDelete', render: function (data, type, row) {
+                    return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.name.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.archdiocese.name.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+                }
             }
-
-        }, {
-            data: 'name'
-        }, {
-            data: 'archdiocese.name'
-        }, {
-            data: 'isDelete', render: function (data, type, row) {
-                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.name.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.archdiocese.name.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
-            }
-        },]
+            ]
     });
 
 });
@@ -82,7 +79,7 @@ function showConfirm(id) {
 
 
 archdioceseFilter.addEventListener('change',function (){
-    table.column(2).search(archdioceseFilter.value).draw();
+    table.column(1).search(archdioceseFilter.value).draw();
 })
 
 function changeAdd() {

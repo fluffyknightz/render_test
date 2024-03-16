@@ -33,7 +33,7 @@ function editing() {
 $(document).ready(function () {
 
     table = new DataTable('#myTable', {
-        dom: 'flrtip', language: {
+        language: {
             infoFiltered: "",
         },
 
@@ -46,17 +46,12 @@ $(document).ready(function () {
             },
 
             data: function (d) {
-                d.columns[2].search.value = false;
+                d.columns[1].search.value = false;
                 return JSON.stringify(d);
             },
 
-        }, processing: true, serverSide: true, stateSave: true, columns: [{
-            data: 'id', render: function (data, type, row, meta) {
-                // meta.row contains the row index
-                return meta.row + 1;
-            }
-
-        }, {
+        }, processing: true, serverSide: true, stateSave: true, columns: [
+            {
             data: 'name'
         }, {
             data: 'isDelete', render: function (data, type, row) {

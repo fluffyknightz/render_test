@@ -42,7 +42,7 @@ $(document).ready(async function () {
     await regionFetch()
     await zoneFetch()
     table = new DataTable('#myTable', {
-        dom: 'flrtip', language: {
+        language: {
             infoFiltered: "",
         },
 
@@ -55,17 +55,12 @@ $(document).ready(async function () {
             },
 
             data: function (d) {
-                d.columns[5].search.value = false;
+                d.columns[4].search.value = false;
                 return JSON.stringify(d);
             },
 
-        }, processing: true, serverSide: true, stateSave: true, columns: [{
-            data: 'id', render: function (data, type, row, meta) {
-                // meta.row contains the row index
-                return meta.row + 1;
-            }
-
-        }, {
+        }, processing: true, serverSide: true, stateSave: true, columns: [
+            {
             data: 'name'
         }, {
             data: 'zone.name'
@@ -89,15 +84,15 @@ function showConfirm(id) {
 }
 
 zoneFilter.addEventListener('change', function () {
-    table.column(2).search(zoneFilter.value).draw();
+    table.column(1).search(zoneFilter.value).draw();
 })
 
 regionFilter.addEventListener('change', function () {
-    table.column(3).search(regionFilter.value).draw();
+    table.column(2).search(regionFilter.value).draw();
 })
 
 districtFilter.addEventListener('change', function () {
-    table.column(4).search(districtFilter.value).draw();
+    table.column(3).search(districtFilter.value).draw();
 })
 
 

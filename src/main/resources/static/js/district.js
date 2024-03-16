@@ -10,21 +10,17 @@ let regionFilter = document.getElementById('filterRegion');
 $(document).ready(async function () {
     await regionFetch()
     table = new DataTable('#myTable', {
-        dom: 'flrtip', language: {
+        language: {
             infoFiltered: "",
         }, ajax: {
             url: 'spcu-dims/api/v1/district/show/table', method: 'POST', contentType: 'application/json', headers: {
                 [csrfHeader]: csrfToken
             }, data: function (d) {
-                d.columns[3].search.value = false;
+                d.columns[2].search.value = false;
                 return JSON.stringify(d);
             },
-        }, processing: true, serverSide: true, stateSave: true, columns: [{
-            data: 'id', render: function (data, type, row, meta) {
-                // meta.row contains the row index
-                return meta.row + 1;
-            }
-        }, {
+        }, processing: true, serverSide: true, stateSave: true, columns: [
+            {
             data: 'name'
         }, {
             data: 'region.name'
@@ -37,7 +33,7 @@ $(document).ready(async function () {
 });
 
 regionFilter.addEventListener('change', function () {
-    table.column(2).search(regionFilter.value).draw();
+    table.column(1).search(regionFilter.value).draw();
 })
 
 async function regionFetch() {

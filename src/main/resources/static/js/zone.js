@@ -9,7 +9,6 @@ let dioceseFilter = document.getElementById('filterDiocese');
 $(document).ready(async function () {
     await dioceseFetch()
     table = new DataTable('#myTable', {
-        dom: 'flrtip',
         language: {
             infoFiltered: "",
         },
@@ -21,20 +20,14 @@ $(document).ready(async function () {
                 [csrfHeader]: csrfToken
             },
             data: function (d) {
-                d.columns[4].search.value = false;
+                d.columns[3].search.value = false;
                 return JSON.stringify(d);
             },
         },
         processing: true,
         serverSide: true,
         stateSave: true,
-        columns: [{
-            data: 'id',
-            render: function (data, type, row, meta) {
-                // meta.row contains the row index
-                return meta.row + 1;
-            }
-        }, {
+        columns: [ {
             data: 'name'
         },{
             data: 'diocese.archdiocese.name'
@@ -51,7 +44,7 @@ $(document).ready(async function () {
 });
 
 dioceseFilter.addEventListener('change',function (){
-    table.column(3).search(dioceseFilter.value).draw();
+    table.column(2).search(dioceseFilter.value).draw();
 })
 
 async function dioceseFetch(){
