@@ -7,6 +7,8 @@ import lombok.*;
 import org.hibernate.annotations.Subselect;
 import org.springframework.data.annotation.Immutable;
 
+import java.io.Serializable;
+
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
@@ -16,7 +18,7 @@ import org.springframework.data.annotation.Immutable;
 @Entity
 @Table(name = "beneficiary_lists_view")
 @Subselect("select * from beneficiary_lists_view")
-public class BeneficiaryListView {
+public class BeneficiaryListView implements Serializable {
 
     @Id
     private int id;
