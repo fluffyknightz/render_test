@@ -59,7 +59,7 @@ $(document).ready(async function () {
                 return JSON.stringify(d);
             },
 
-        }, processing: true, serverSide: true, stateSave: true, columns: [
+        }, processing: true, serverSide: true,  columns: [
             {
             data: 'name'
         }, {
@@ -69,7 +69,9 @@ $(document).ready(async function () {
         }, {
             data: 'district.name'
         }, {
-            data: 'isDelete', render: function (data, type, row) {
+            data: 'isDelete',
+                ordering: false,
+                render: function (data, type, row) {
                 return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" onclick="changeEdit(\'' + row.name.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.district.name.replace(/'/g, "\\'") + '\', \'' + row.district.region.name.replace(/'/g, "\\'") + '\',\'' + row.zone.name.replace(/'/g, "\\'") +'\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
             }
 

@@ -36,9 +36,47 @@ $(document).ready(async function () {
             top2Start: 'pageLength',
             top2End: 'search',
             topStart: {
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                buttons: [
+
+                    {
+                        extend: 'excel',
+                        filename: 'beneficiary-list',
+                        title: 'Beneficiary Lists',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        filename: 'beneficiary-list',
+                        title: 'Beneficiary Lists',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                        },
+                        customize: function (doc) {
+                            doc.content[1].margin = [100, 20, 0, 0] //left, top, right, bottom
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        filename: 'beneficiary-list',
+                        title: 'Beneficiary Lists',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                        }
+                    }
+                ]
             },
-            topEnd: null
+            topEnd: {
+                buttons: [
+                    {
+                        extend: 'colvis',
+                        postfixButtons: ['colvisRestore']
+                    }
+                ]
+            }
         },
         lengthMenu: [25, 50, 75, 100, 250, {label: 'All', value: -1}],
         language: {
@@ -54,51 +92,54 @@ $(document).ready(async function () {
                 d.columns[13].search.value = false;
                 return JSON.stringify(d);
             },
-        }, processing: true, serverSide: true, stateSave: true, scrollX: true,
+        }, processing: true, serverSide: true, scrollX: true,
         columns: [
-        {
-            data: 'activityName',
-        }, {
-            data: 'zoneName'
-        }, {
-            data: 'dioceseName'
-        }, {
-            data: 'parishName'
-        }, {
-            data: 'beneficiaryHousehold'
-        }, {
-            data: 'beneficiaryMale'
-        }, {
-            data: 'beneficiaryFemale'
-        }, {
-            data: 'disabilityMale'
-        }, {
-            data: 'disabilityFemale'
-        }, {
-            data: 'under18Male'
-        }, {
-            data: 'under18Female'
-        }, {
-            data: 'over60Male'
-        }, {
-            data: 'over60Female'
-        }, {
-            data: 'isDelete', render: function (data, type, row) {
-                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" ' +
-                    'onclick="changeEdit(' + row.id + ', \'' + row.activityName.replace(/'/g, "\\'") + '\', \'' + row.parishName.replace(/'/g, "\\'") +
-                    '\', ' + row.beneficiaryHousehold + ', ' + row.beneficiaryMale + ', ' + row.beneficiaryFemale + ', ' + row.disabilityMale +
-                    ', ' + row.disabilityFemale + ', ' + row.under18Male + ', ' + row.under18Female + ', ' + row.over60Male +
-                    ', ' + row.over60Female + ', \'' + row.archdioceseName.replace(/'/g, "\\'") + '\', \'' + row.dioceseName.replace(/'/g, "\\'") + '\', \'' + row.zoneName.replace(/'/g, "\\'") + '\')" style="border: none">\n' +
-                    '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' +
-                    '</button>\n' +
-                    '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' +
-                    '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' +
-                    '</button>';
-            }
-        }, {
-            data: 'archdioceseName',
-            visible: false
-        }],
+            {
+                data: 'activityName',
+            }, {
+                data: 'zoneName'
+            }, {
+                data: 'dioceseName'
+            }, {
+                data: 'parishName'
+            }, {
+                data: 'beneficiaryHousehold'
+            }, {
+                data: 'beneficiaryMale'
+            }, {
+                data: 'beneficiaryFemale'
+            }, {
+                data: 'disabilityMale'
+            }, {
+                data: 'disabilityFemale'
+            }, {
+                data: 'under18Male'
+            }, {
+                data: 'under18Female'
+            }, {
+                data: 'over60Male'
+            }, {
+                data: 'over60Female'
+            }, {
+                data: 'isDelete',
+                ordering: false,
+                render: function (data, type, row) {
+                    return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" ' +
+                        'onclick="changeEdit(' + row.id + ', \'' + row.activityName.replace(/'/g, "\\'") + '\', \'' + row.parishName.replace(/'/g, "\\'") +
+                        '\', ' + row.beneficiaryHousehold + ', ' + row.beneficiaryMale + ', ' + row.beneficiaryFemale + ', ' + row.disabilityMale +
+                        ', ' + row.disabilityFemale + ', ' + row.under18Male + ', ' + row.under18Female + ', ' + row.over60Male +
+                        ', ' + row.over60Female + ', \'' + row.archdioceseName.replace(/'/g, "\\'") + '\', \'' + row.dioceseName.replace(/'/g, "\\'") + '\', \'' + row.zoneName.replace(/'/g, "\\'") + '\')" style="border: none">\n' +
+                        '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' +
+                        '</button>\n' +
+                        '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' +
+                        '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' +
+                        '</button>';
+                }
+            }, {
+                data: 'archdioceseName',
+                visible: false,
+                ordering: false,
+            }],
     });
 
 });
