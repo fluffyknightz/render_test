@@ -35,7 +35,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item" href="#">
-                                <i class="me-2 icon-xxs dropdown-item-icon" data-feather="settings"></i>Account Settings
+                                <i class="me-2 icon-xxs dropdown-item-icon" data-feather="settings"></i>Password Change
                             </a>
                         </li>
                         <li>
@@ -50,4 +50,36 @@
             </li>
         </ul>
     </nav>
+
+    <!--Start User Add Modal -->
+    <div class="modal fade" id="model" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 id="modelTitle" class="modal-title fs-5">Password Change</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="myForm">
+                    <div class="modal-body">
+
+
+                        <div class="form-floating my-3">
+                            <input type="password" class="form-control" name="navPassword" id="navPassword" placeholder="Password">
+                            <label for="navPassword" id="passwordLabel">Password</label>
+                        </div>
+                        <div class="form-floating my-3">
+                            <input type="password" class="form-control" name="navConfirmPassword" id="navConfirmPassword" placeholder="Confirm Password">
+                            <label for="navConfirmPassword">Confirm Password</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                        <button type="button" class="btn btn-primary" id="myButton" onclick="navPasswordChange()">Save</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
 </div>

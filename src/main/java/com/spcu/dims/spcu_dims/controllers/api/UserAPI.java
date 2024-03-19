@@ -2,6 +2,7 @@ package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.entities.User;
 import com.spcu.dims.spcu_dims.services.UserServices;
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -19,9 +20,9 @@ public class UserAPI {
     private final UserServices userServices;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> userCreate(@RequestParam("username") String username, @RequestParam("role") String role) {
+    public ResponseEntity<Object> userCreate(@RequestParam("username") String username, @RequestParam("role") String role, @RequestParam("password") String password) {
 
-        Object user = userServices.createUser(username, role);
+        Object user = userServices.createUser(username, role, password);
 
         if (user instanceof String) {
             return new ResponseEntity<>(user, HttpStatus.CONFLICT);
@@ -49,9 +50,9 @@ public class UserAPI {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("username") String username, @RequestParam("role") String role){
+    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("username") String username, @RequestParam("role") String role,@RequestParam (value = "password", required = false) String password){
 
-    Object user = userServices.update(id, username, role);
+    Object user = userServices.update(id, username, role, password);
         if (user instanceof String) {
 
             return new ResponseEntity<>(user, HttpStatus.CONFLICT);
@@ -64,4 +65,12 @@ public class UserAPI {
             return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 }
+
+    @PatchMapping("/password")
+    public ResponseEntity<Object> password(@RequestParam ("password") String password) {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
+
+

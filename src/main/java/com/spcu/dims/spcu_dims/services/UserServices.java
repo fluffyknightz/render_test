@@ -8,11 +8,11 @@ import java.util.Optional;
 
 public interface UserServices {
 
-    Object createUser(String username, String role);
+    Object createUser(String username, String role, String password);
 
     DataTablesOutput<User> tableUser(DataTablesInput input);
 
     User deleteUser(int id);
 
-    Object update(int id, String username, String role);
+    Object update(int id, String username, String role, String password);
 }

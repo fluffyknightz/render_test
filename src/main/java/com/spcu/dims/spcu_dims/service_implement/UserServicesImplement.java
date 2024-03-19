@@ -28,7 +28,7 @@ public class UserServicesImplement implements UserServices {
 
 
     @Override
-    public Object createUser(String username, String role) {
+    public Object createUser(String username, String role, String password) {
         Optional<Role> existRole = roleRepository.findByName(role);
         Optional<User> existUser = userRepository.findByUsername(username);
 
@@ -37,7 +37,7 @@ public class UserServicesImplement implements UserServices {
         } else if (existUser.isPresent()) {
             return String.format(userExistsMessage, username);
         }
-        User user = User.builder().username(username).role(existRole.get()).password(passwordEncoder.encode("1122121")).build();
+        User user = User.builder().username(username).role(existRole.get()).password(passwordEncoder.encode(password)).build();
         return userRepository.save(user);
     }
 
@@ -49,7 +49,7 @@ public class UserServicesImplement implements UserServices {
     @Override
     public User deleteUser(int id) {
         Optional<User> user = userRepository.findById(id);
-        if(user.isPresent()){
+        if (user.isPresent()) {
             user.get().setDelete(true);
             return userRepository.save(user.get());
         }
@@ -57,21 +57,23 @@ public class UserServicesImplement implements UserServices {
     }
 
     @Override
-    public Object update(int id, String username, String role) {
+    public Object update(int id, String username, String role, String password) {
 
         Optional<User> userExist = userRepository.findByUsernameAndIdNot(username, id);
-        if(userExist.isPresent()){
+        if (userExist.isPresent()) {
             return String.format(userExistsMessage, username);
         }
         Optional<Role> roleExist = roleRepository.findByName(role);
-        if(roleExist.isEmpty()) {
+        if (roleExist.isEmpty()) {
             return String.format(doesNotExistMessage, role);
         }
         Optional<User> user = userRepository.findById(id);
-        if(user.isEmpty()){
+        if (user.isEmpty()) {
             return String.format(userDoesNotExistMessage, username);
         }
-
+        if (password != null) {
+            user.get().setPassword(passwordEncoder.encode(password));
+        }
         user.get().setUsername(username);
         user.get().setRole(roleExist.get());
         userRepository.save(user.get());

@@ -50,15 +50,6 @@ function performOperation(url, method, successMessage, jsonBody) {
     });
 }
 
-Notiflix.Confirm.init({
-    titleColor: '#4d56ec', okButtonColor: '#f8f8f8', okButtonBackground: '#f32222'
-});
-
-Notiflix.Notify.init({
-    position: 'center-top'
-
-});
-
 document.getElementById('myForm').addEventListener('keydown', function (e) {
     if (e.key === 'Enter') {
         e.preventDefault(); // Prevent default form submission
