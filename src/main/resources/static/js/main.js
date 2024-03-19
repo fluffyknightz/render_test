@@ -12,6 +12,21 @@
 // Main js
 //
 
+Notiflix.Confirm.init({
+    titleColor: '#4d56ec', okButtonColor: '#f8f8f8', okButtonBackground: '#f32222'
+});
+
+Notiflix.Notify.init({
+    position: 'center-top'
+
+});
+document.getElementById('myForm').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+        e.preventDefault(); // Prevent default form submission
+        button.click(); // Trigger the 'Save' button click event
+    }
+});
+
 
 'use strict';
 (function () {
@@ -87,56 +102,9 @@
     }
 
 
-// Perfomance Chart
-
-    if ($("#perfomanceChart").length) {
-        const options = {
-            series: [100, 78, 89],
-            chart: {
-                height: 320,
-                type: 'radialBar',
-            },
-            colors: ['#28a745', '#ffc107', '#dc3545'],
-            stroke: {
-                lineCap: "round",
-            },
-            plotOptions: {
-
-                radialBar: {
-                    startAngle: -168,
-                    endAngle: -450,
-                    hollow: {
-
-                        size: '55%',
-                    },
-                    track: {
 
 
-                        background: 'transaprent',
-                    },
-                    dataLabels: {
-                        show: false,
 
-                    }
-                }
-            },
-
-        };
-
-        const chart = new ApexCharts(document.querySelector("#perfomanceChart"), options);
-        chart.render();
-
-    }
-
-
-// offcanvas
-    if ($(".offcanvas").length) {
-        const offcanvasElementList = [].slice.call(document.querySelectorAll('.offcanvas'))
-        offcanvasElementList.map(function (offcanvasEl) {
-            return new bootstrap.Offcanvas(offcanvasEl)
-        });
-
-    }
 
 
 })();

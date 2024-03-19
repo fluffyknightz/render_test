@@ -4,8 +4,6 @@ import com.spcu.dims.spcu_dims.entities.User;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 
-import java.util.Optional;
-
 public interface UserServices {
 
     Object createUser(String username, String role, String password);
@@ -15,4 +13,6 @@ public interface UserServices {
     User deleteUser(int id);
 
     Object update(int id, String username, String role, String password);
+
+    User passwordChange(String password, String username);
 }

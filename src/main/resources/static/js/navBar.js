@@ -2,14 +2,7 @@ let navPassword = document.getElementById('navPassword');
 let navConfirmPassword = document.getElementById('navConfirmPassword');
 
 
-Notiflix.Confirm.init({
-    titleColor: '#4d56ec', okButtonColor: '#f8f8f8', okButtonBackground: '#f32222'
-});
 
-Notiflix.Notify.init({
-    position: 'center-top'
-
-});
 
 function navPasswordChange() {
     if (password.value === undefined || password.value === null || password.value.trim() === "" ||

@@ -50,12 +50,7 @@ function performOperation(url, method, successMessage, jsonBody) {
     });
 }
 
-document.getElementById('myForm').addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') {
-        e.preventDefault(); // Prevent default form submission
-        button.click(); // Trigger the 'Save' button click event
-    }
-});
+
 
 
 

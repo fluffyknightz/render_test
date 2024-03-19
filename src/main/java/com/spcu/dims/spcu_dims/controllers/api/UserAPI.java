@@ -1,14 +1,17 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
+import com.spcu.dims.spcu_dims.config.MyUserDetails;
 import com.spcu.dims.spcu_dims.entities.User;
 import com.spcu.dims.spcu_dims.services.UserServices;
-import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -67,8 +70,19 @@ public class UserAPI {
 }
 
     @PatchMapping("/password")
-    public ResponseEntity<Object> password(@RequestParam ("password") String password) {
-        return new ResponseEntity<>(HttpStatus.OK);
+    public HttpStatus password(@RequestParam ("password") String password) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
+
+        User user = userServices.passwordChange(password, myUserDetails.getUsername());
+        if(user != null) {
+            Authentication newAuthentication = new UsernamePasswordAuthenticationToken(user, authentication.getCredentials(), authentication.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+            return HttpStatus.OK;
+        }
+        return HttpStatus.INTERNAL_SERVER_ERROR;
     }
 
 }
