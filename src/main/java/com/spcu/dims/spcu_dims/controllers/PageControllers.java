@@ -3,6 +3,8 @@ package com.spcu.dims.spcu_dims.controllers;
 
 import com.spcu.dims.spcu_dims.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +21,7 @@ public class PageControllers {
 
     @GetMapping("/login")
     public String showLoginForm() {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated()) {
@@ -36,6 +39,7 @@ public class PageControllers {
         // User is not authenticated or has different authorities, show the login page
         return "login";
     }
+
 
     @GetMapping("/dashboard")
     public String dashboard() {
@@ -58,47 +62,53 @@ public class PageControllers {
     }
 
     @GetMapping("/zone")
-    public String zone(){
+    public String zone() {
         return "zone";
     }
 
     @GetMapping("/district")
-    public String district(){
+    public String district() {
         return "district";
     }
 
     @GetMapping("/township")
-    public String township(){
+    public String township() {
         return "township";
     }
 
     @GetMapping("/parish")
-    public String parish(){
+    public String parish() {
         return "parish";
     }
 
     @GetMapping("/activity")
-    public String activity(){
+    public String activity() {
         return "activity";
     }
 
     @GetMapping("/beneficiary-list")
-    public String beneficiaries(){
+    public String beneficiaries() {
         return "beneficiary-list";
     }
 
     @GetMapping("/profile")
-    public String profile(){
+    public String profile() {
         return "profile";
     }
 
     @GetMapping("/user")
-    public String user(){
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String user() {
         return "user";
     }
 
     @GetMapping("/test")
-    public String test(){
+    public String test() {
         return "test";
+    }
+
+    @GetMapping("/password-change")
+    public String passwordChange() {
+        return "password";
     }
 }

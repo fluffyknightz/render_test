@@ -14,5 +14,5 @@ public interface UserServices {
 
     Object update(int id, String username, String role, String password);
 
-    User passwordChange(String password, String username);
+    User passwordChange(String newPassword, String username);
 }

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -50,14 +51,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorization -> authorization
                                 .requestMatchers("/assets/**",
-                                        "/assets/css/**",
+                                        "/css/**",
                                         "/assets/images/**",
-                                        "/assets/js/**", "/login", "/error", "/spcu-dims/api/v1/**")
+                                        "/js/**", "/theme/**", "/libs/**", "/landing-page/**", "/login", "/error", "/")
                                 .permitAll()
-                                .requestMatchers("/dashboard", "/adminPage")
-                                .authenticated()
                                 .anyRequest()
-                                .permitAll()
+                                .authenticated()
 
                 )
                 .sessionManagement(

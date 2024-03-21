@@ -9,9 +9,7 @@
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/theme/assets/images/favicon/favicon.ico}">
     <!-- Libs CSS -->
     <link th:href="@{/libs/bootstrap-icons/font/bootstrap-icons.css}" rel="stylesheet">
-    <link th:href="@{/libs/dropzone/dist/dropzone.css}" rel="stylesheet">
-    <link th:href="@{/libs/mdi/font/css/materialdesignicons.min.css}" rel="stylesheet"/>
-    <link th:href="@{/libs/prismjs/themes/prism-okaidia.css}" rel="stylesheet">
+
 
     <link rel="stylesheet" th:href="@{/css/theme.css}">
     <title>Sign In | Dash Ui - Bootstrap 5 Admin Dashboard Template</title>
@@ -123,19 +121,8 @@
 <!-- Libs JS -->
 <script th:src="@{/libs/jquery/dist/jquery.min.js}"></script>
 <script th:src="@{/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
-<script th:src="@{/libs/jquery-slimscroll/jquery.slimscroll.min.js}"></script>
-<script th:src="@{/libs/feather-icons/dist/feather.min.js}"></script>
-<script th:src="@{/libs/prismjs/prism.js}"></script>
-<script th:src="@{/libs/dropzone/dist/min/dropzone.min.js}"></script>
-<script th:src="@{/libs/prismjs/plugins/toolbar/prism-toolbar.min.js}"></script>
-<script th:src="@{/libs/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js}"></script>
 
-<!-- Theme JS -->
-<!-- build:js @@webRoot/assets/js/theme.min.js -->
-<script th:src="@{/js/chosen-select.js}"></script>
-<script th:src="@{/js/feather.js}"></script>
-<script th:src="@{/js/sidebarMenu.js}"></script>
-<script src="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/js/iziToast.min.js"></script>
+
 <script>
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
@@ -194,7 +181,7 @@
                     event.stopPropagation();
                 }
 
-                if (usernameInput.value === '' || passwordInput.value === '') {
+                if (usernameInput.value === undefined || usernameInput.value === null || usernameInput.value.trim() === '' || passwordInput.value === undefined || passwordInput.value === null || passwordInput.value.trim() === '') {
                     alertDiv.className = 'alert alert-danger position-relative mb-4';
                     alertDiv.innerHTML = 'Please Fill Username and Password to Sign In!';
                 }
