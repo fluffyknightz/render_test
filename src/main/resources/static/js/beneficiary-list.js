@@ -30,12 +30,9 @@ $(document).ready(async function () {
     await archdioceseFetch();
     await parishFetch();
     function calculateTotalCombinedHousehold() {
-            totalCombinedHousehold = table
-                .column('beneficiaryHousehold')
-                .data()
-                .reduce((acc, curr) => acc + curr, 0);
-
-
+        totalCombinedHousehold = table
+            .data()
+            .reduce((acc, curr) => acc + curr.beneficiaryHousehold, 0);
     }
 
 
