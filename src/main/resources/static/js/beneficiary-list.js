@@ -22,13 +22,22 @@ let inputVulnerabilitiesUnder18Male = document.getElementById('vulnerabilities-u
 let inputVulnerabilitiesUnder18Female = document.getElementById('vulnerabilities-under18-female');
 let inputVulnerabilitiesOver60Male = document.getElementById('vulnerabilities-over60-male');
 let inputVulnerabilitiesOver60Female = document.getElementById('vulnerabilities-over60-female');
-
+let householdtotal = document.getElementById('household-count')
+let totalCombinedHousehold;
 $(document).ready(async function () {
 
     await activityFetch();
     await archdioceseFetch();
-
     await parishFetch();
+    function calculateTotalCombinedHousehold() {
+            totalCombinedHousehold = table
+                .column('beneficiaryHousehold')
+                .data()
+                .reduce((acc, curr) => acc + curr, 0);
+
+
+    }
+
 
     table = new DataTable('#myTable', {
 
@@ -81,7 +90,8 @@ $(document).ready(async function () {
         lengthMenu: [25, 50, 75, 100, 250, {label: 'All', value: -1}],
         language: {
             infoFiltered: "",
-        }, ajax: {
+        },
+        ajax: {
             url: 'spcu-dims/api/v1/beneficiary-lists/show/table',
             method: 'POST',
             contentType: 'application/json',
@@ -92,7 +102,10 @@ $(document).ready(async function () {
                 d.columns[13].search.value = false;
                 return JSON.stringify(d);
             },
-        }, processing: true, serverSide: true, scrollX: true,
+        },
+        processing: true,
+        serverSide: true,
+        scrollX: true,
         columns: [
             {
                 data: 'activityName',
@@ -140,6 +153,13 @@ $(document).ready(async function () {
                 visible: false,
                 ordering: false,
             }],
+
+        drawCallback: function (settings) {
+            // Recalculate total combined household count
+            calculateTotalCombinedHousehold();
+            // Display total combined household count in HTML
+            householdtotal.innerText = totalCombinedHousehold
+        },
     });
 
 });
