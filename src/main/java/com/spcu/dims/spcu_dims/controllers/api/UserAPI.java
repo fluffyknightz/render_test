@@ -1,6 +1,7 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.config.MyUserDetails;
+import com.spcu.dims.spcu_dims.config.MyUserDetailsServices;
 import com.spcu.dims.spcu_dims.entities.User;
 import com.spcu.dims.spcu_dims.services.UserServices;
 import jakarta.validation.Valid;
@@ -24,6 +25,7 @@ public class UserAPI {
 
     private final UserServices userServices;
     private final PasswordEncoder passwordEncoder;
+    private final MyUserDetailsServices myUserDetailsServices;
 
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -67,17 +69,18 @@ public class UserAPI {
 
             return new ResponseEntity<>(user, HttpStatus.CONFLICT);
         } else if (user != null) {
+            User newUser = (User) user;
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
             if (myUserDetails.getUserId() == id) {
-
-                Authentication newAuthentication = new UsernamePasswordAuthenticationToken(user, authentication.getCredentials(), authentication.getAuthorities());
+                MyUserDetails updatedUserDetails = myUserDetailsServices.loadUserByUsername(newUser.getUsername());
+                Authentication newAuthentication = new UsernamePasswordAuthenticationToken(updatedUserDetails, authentication.getCredentials(), updatedUserDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(newAuthentication);
             }
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         }
 
-        String errorMessage = "Failed to Update Activity with the name '" + username + "'.";
+        String errorMessage = "Failed to Update User!";
         return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
@@ -91,7 +94,8 @@ public class UserAPI {
         if(passwordEncoder.matches(oldPassword, myUserDetails.getPassword())) {
             User user = userServices.passwordChange(newPassword, myUserDetails.getUsername());
             if (user != null) {
-                Authentication newAuthentication = new UsernamePasswordAuthenticationToken(user, authentication.getCredentials(), authentication.getAuthorities());
+                MyUserDetails updatedUserDetails = myUserDetailsServices.loadUserByUsername(user.getUsername());
+                Authentication newAuthentication = new UsernamePasswordAuthenticationToken(updatedUserDetails, authentication.getCredentials(), updatedUserDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(newAuthentication);
                 return HttpStatus.OK;
             }

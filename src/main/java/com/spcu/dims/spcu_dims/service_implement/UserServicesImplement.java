@@ -76,17 +76,17 @@ public class UserServicesImplement implements UserServices {
         }
         user.get().setUsername(username);
         user.get().setRole(roleExist.get());
-        userRepository.save(user.get());
-        return user;
+
+        return userRepository.save(user.get());
     }
 
     @Override
     public User passwordChange(String newPassword, String username) {
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isPresent()) {
-                user.get().setPassword(passwordEncoder.encode(newPassword));
-                userRepository.save(user.get());
-                return user.get();
+            user.get().setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user.get());
+            return user.get();
 
         }
 

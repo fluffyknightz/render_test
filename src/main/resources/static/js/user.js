@@ -10,11 +10,18 @@ let passwordLabel = document.getElementById('passwordLabel');
 
 
 function adding() {
-    validationInput()
+
+    inputValue = input.value.trim();
+    // Remove leading and trailing spaces
+    inputValue = inputValue.replace(/^\s+|\s+$/g, '');
+    // Replace consecutive spaces with a single space
+    inputValue = inputValue.replace(/\s+/g, ' ');
 
     if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || roleSelect.value === undefined || roleSelect.value === null || roleSelect.value.trim() === "" || password.value === undefined || password.value === null || password.value.trim() === "" || confirmPassword.value === undefined || confirmPassword.value === null || confirmPassword.value.trim() === "" || password.value !== confirmPassword.value) {
 
         Notiflix.Notify.failure("Please enter All Data!");
+    } else if (password.value.length < 8 || password.value.length > 12) {
+        Notiflix.Notify.failure("Password should be between 8 and 12 characters.");
     } else {
         const url = '/spcu-dims/api/v1/user/create?username=' + encodeURIComponent(inputValue) + '&&role=' + encodeURIComponent(roleSelect.value) + '&&password=' + encodeURIComponent(password.value);
         performOperation(url, 'POST', 'Create successful.');
@@ -25,9 +32,18 @@ function adding() {
 
 function editing() {
 
-    validationInput()
+    inputValue = input.value.trim();
+    // Remove leading and trailing spaces
+    inputValue = inputValue.replace(/^\s+|\s+$/g, '');
+    // Replace consecutive spaces with a single space
+    inputValue = inputValue.replace(/\s+/g, ' ');
+
     if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || password.value !== confirmPassword.value) {
         Notiflix.Notify.failure("Please enter All Data!");
+    } else if (password.value !== undefined && password.value !== null && password.value.trim() !== "" && confirmPassword.value !== undefined && confirmPassword.value !== null && confirmPassword.value.trim() !== "") {
+        if (password.value.length < 8 || confirmPassword.value.length < 8 || password.value.length > 12 || confirmPassword.value.length > 12) {
+            Notiflix.Notify.failure("Password should be between 8 and 12 characters.");
+        }
     } else {
         let url = '/spcu-dims/api/v1/user/update?id=' + encodeURIComponent(data_id) + '&&username=' + encodeURIComponent(inputValue) + '&&role=' + encodeURIComponent(roleSelect.value);
         url = password.value !== '' && password.value !== null ? url + '&&password=' + encodeURIComponent(password.value) : url;

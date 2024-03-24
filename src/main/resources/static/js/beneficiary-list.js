@@ -22,17 +22,56 @@ let inputVulnerabilitiesUnder18Male = document.getElementById('vulnerabilities-u
 let inputVulnerabilitiesUnder18Female = document.getElementById('vulnerabilities-under18-female');
 let inputVulnerabilitiesOver60Male = document.getElementById('vulnerabilities-over60-male');
 let inputVulnerabilitiesOver60Female = document.getElementById('vulnerabilities-over60-female');
-let householdtotal = document.getElementById('household-count')
-let totalCombinedHousehold;
+let bHousehold;
+let bMale;
+let bFemale;
+let dMale;
+let dFemale;
+let vU18Male;
+let vU18Female;
+let vO60Male;
+let vO60Female;
 $(document).ready(async function () {
 
     await activityFetch();
     await archdioceseFetch();
     await parishFetch();
     function calculateTotalCombinedHousehold() {
-        totalCombinedHousehold = table
+        bHousehold = table
             .data()
             .reduce((acc, curr) => acc + curr.beneficiaryHousehold, 0);
+
+        bMale = table
+            .data()
+            .reduce((acc, curr) => acc + curr.beneficiaryMale, 0);
+
+        bFemale = table
+            .data()
+            .reduce((acc, curr) => acc + curr.beneficiaryFemale, 0);
+
+        dMale = table
+            .data()
+            .reduce((acc, curr) => acc + curr.disabilityMale, 0);
+
+        dFemale = table
+            .data()
+            .reduce((acc, curr) => acc + curr.disabilityFemale, 0);
+
+        vU18Male = table
+            .data()
+            .reduce((acc, curr) => acc + curr.under18Male, 0);
+
+        vU18Female = table
+            .data()
+            .reduce((acc, curr) => acc + curr.under18Female, 0);
+
+        vO60Male = table
+            .data()
+            .reduce((acc, curr) => acc + curr.over60Male, 0);
+
+        vO60Female = table
+            .data()
+            .reduce((acc, curr) => acc + curr.over60Female, 0);
     }
 
 
@@ -155,7 +194,15 @@ $(document).ready(async function () {
             // Recalculate total combined household count
             calculateTotalCombinedHousehold();
             // Display total combined household count in HTML
-            householdtotal.innerText = totalCombinedHousehold
+            document.getElementById('bHousehold').innerText = bHousehold
+            document.getElementById('bMale').innerText = bMale
+            document.getElementById('bFemale').innerText = bFemale
+            document.getElementById('dMale').innerText = dMale
+            document.getElementById('dFemale').innerText = dFemale
+            document.getElementById('vU18Male').innerText = vU18Male
+            document.getElementById('vU18Female').innerText = vU18Female
+            document.getElementById('vO60Male').innerText = vO60Male
+            document.getElementById('vO60Female').innerText = vO60Female
         },
     });
 
