@@ -10,6 +10,8 @@ function navPasswordChange() {
         Notiflix.Notify.failure("Please enter All Data!");
     } else if (navPassword.value !== navConfirmPassword.value) {
         Notiflix.Notify.failure('Passwords do not match!');
+    } else if (navPassword.value.length < 8 || navPassword.value.length > 12 || navConfirmPassword.value.length < 8 || navConfirmPassword.value.length > 12) {
+        Notiflix.Notify.failure("Passwords should be between 8 and 12 characters.");
     }
     fetch('/spcu-dims/api/v1/user/password?password=' + encodeURIComponent(password.value), {
         method: 'PATCH',
