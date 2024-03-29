@@ -77,7 +77,7 @@ public class DioceseAPI {
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<Diocese> archdioceses(@Valid @RequestBody DataTablesInput input){
+    public DataTablesOutput<Diocese> diocese(@Valid @RequestBody DataTablesInput input){
         return dioceseServices.tableDiocese(input);
 
     }

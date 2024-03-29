@@ -77,7 +77,35 @@ $(document).ready(async function () {
 
     table = new DataTable('#myTable', {
 
+        ajax: {
+            url: '/spcu-dims/api/v1/beneficiary-lists/show/table',
+            method: 'POST',
+            contentType: 'application/x-www-form-urlencoded',
+            headers: {
+                [csrfHeader]: csrfToken
+            },
+            data: function (d) {
+                d.columns[13].search.value = false;
+                return d;
+            },
+        },
+        processing: true,
+        serverSide: true,
+        scrollX: true,
         layout: {
+            top3: {
+                searchPanes: {
+                    threshold: 1,
+                    cascadePanes: true,
+                    viewTotal: true,
+                    dtOpts: {
+                        select:{
+                            style: 'multi'
+                        },
+                        scrollY: '100px'
+                    }
+                },
+            },
             top2Start: 'pageLength',
             top2End: 'search',
             topStart: {
@@ -118,7 +146,13 @@ $(document).ready(async function () {
                 buttons: [
                     {
                         extend: 'colvis',
-                        postfixButtons: ['colvisRestore']
+                        collectionLayout: 'fixed columns',
+                        popoverTitle: 'Column Show/Hide Control',
+                        columns: ':not(.noVis)',
+                        postfixButtons: ['colvisRestore'],
+                        columnText: function (dt, idx, title) {
+                            return idx + 1 + ': ' + title.replace(/\(Total : \)/g, '');
+                        }
                     }
                 ]
             }
@@ -127,21 +161,7 @@ $(document).ready(async function () {
         language: {
             infoFiltered: "",
         },
-        ajax: {
-            url: 'spcu-dims/api/v1/beneficiary-lists/show/table',
-            method: 'POST',
-            contentType: 'application/json',
-            headers: {
-                [csrfHeader]: csrfToken
-            },
-            data: function (d) {
-                d.columns[13].search.value = false;
-                return JSON.stringify(d);
-            },
-        },
-        processing: true,
-        serverSide: true,
-        scrollX: true,
+
         columns: [
             {
                 data: 'activityName',
@@ -188,6 +208,7 @@ $(document).ready(async function () {
                 data: 'archdioceseName',
                 visible: false,
                 ordering: false,
+                className: 'noVis'
             }],
 
         drawCallback: function (settings) {

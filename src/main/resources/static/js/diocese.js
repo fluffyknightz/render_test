@@ -36,15 +36,12 @@ function editing() {
 $(document).ready(async function () {
 
     await archdioceseFetch()
-    table = new DataTable('#myTable', {
-        language: {
-            infoFiltered: "",
-        },
-
+    table = $('#myTable').DataTable({
         ajax: {
 
-            url: 'spcu-dims/api/v1/diocese/show/table', method: 'POST', contentType: 'application/json',
-
+            url: 'spcu-dims/api/v1/diocese/show/table',
+            method: 'POST',
+            contentType: 'application/json',
             headers: {
                 [csrfHeader]: csrfToken
             },
@@ -54,7 +51,15 @@ $(document).ready(async function () {
                 return JSON.stringify(d);
             },
 
-        }, processing: true, serverSide: true,
+        },
+        processing: true,
+        serverSide: true,
+        language: {
+            infoFiltered: "",
+        },
+
+
+
         columns: [
             {
                 data: 'name'

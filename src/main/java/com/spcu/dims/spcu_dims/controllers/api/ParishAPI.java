@@ -21,8 +21,8 @@ public class ParishAPI {
     private static final String NOT_FOUND = "ID Not Found.";
 
     @PostMapping("/create")
-    public ResponseEntity<Object> parishCreate(@RequestParam("name") String name, @RequestParam ("township")String township) {
-        Object parish = parishServices.createParish(name, township);
+    public ResponseEntity<Object> parishCreate(@RequestParam("name") String name, @RequestParam ("township")String township, @RequestParam(value = "note", required = false)String note) {
+        Object parish = parishServices.createParish(name, township, note);
         if (parish instanceof String) {
 
             return new ResponseEntity<>(parish, HttpStatus.CONFLICT);
@@ -51,8 +51,8 @@ public class ParishAPI {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam ("name") String name, @RequestParam("township") String township) {
-        Object parish = parishServices.update(id, name, township);
+    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam ("name") String name, @RequestParam("township") String township, @RequestParam(value = "note", required = false)String note) {
+        Object parish = parishServices.update(id, name, township, note);
         if(parish!= null){
             return new ResponseEntity<>(parish, HttpStatus.OK);
         }

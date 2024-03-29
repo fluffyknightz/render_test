@@ -86,7 +86,7 @@ public class UserAPI {
     }
 
     @PatchMapping("/password")
-    public HttpStatus password(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) {
+    public ResponseEntity<String> password(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -97,12 +97,10 @@ public class UserAPI {
                 MyUserDetails updatedUserDetails = myUserDetailsServices.loadUserByUsername(user.getUsername());
                 Authentication newAuthentication = new UsernamePasswordAuthenticationToken(updatedUserDetails, authentication.getCredentials(), updatedUserDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-                return HttpStatus.OK;
+                return new ResponseEntity<>("Password Changing Success.", HttpStatus.OK);
             }
         }
-
-
-        return HttpStatus.NOT_MODIFIED;
+        return new ResponseEntity<>("Old Password does not match.", HttpStatus.NOT_MODIFIED);
     }
 
 }

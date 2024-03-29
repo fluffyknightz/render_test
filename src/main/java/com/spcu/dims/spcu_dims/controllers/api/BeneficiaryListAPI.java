@@ -3,6 +3,8 @@ package com.spcu.dims.spcu_dims.controllers.api;
 import com.spcu.dims.spcu_dims.dto.BeneficiaryListDto;
 import com.spcu.dims.spcu_dims.entities.BeneficiaryList;
 import com.spcu.dims.spcu_dims.entities.BeneficiaryListView;
+import com.spcu.dims.spcu_dims.entities.Test;
+import com.spcu.dims.spcu_dims.repositories.TestRepository;
 import com.spcu.dims.spcu_dims.services.BeneficiaryListServices;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -12,12 +14,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/spcu-dims/api/v1/beneficiary-lists")
 @AllArgsConstructor
 public class BeneficiaryListAPI {
 
     private final BeneficiaryListServices beneficiaryListServices;
+    private final TestRepository testRepository;
     private static final String NOT_FOUND = "ID Not Found.";
 
 
@@ -37,8 +43,19 @@ public class BeneficiaryListAPI {
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<BeneficiaryListView> beneficiaryList(@Valid @RequestBody DataTablesInput input){
+    public DataTablesOutput<BeneficiaryListView> beneficiaryList(@Valid DataTablesInput input, @RequestParam Map<String, String> queryParameters){
+        System.out.println(input);
+        input.parseSearchPanesFromQueryParams(queryParameters, Arrays.asList("activityName", "parishName"));
+        System.out.println(input);
         return beneficiaryListServices.tableBeneficiaryList(input);
+    }
+
+    @PostMapping("/show/test")
+    public DataTablesOutput<Test> test(@Valid DataTablesInput input, @RequestParam Map<String, String> queryParameters){
+
+        input.parseSearchPanesFromQueryParams(queryParameters, Arrays.asList("city", "age"));
+
+        return testRepository.findAll(input);
     }
 
     @GetMapping("/show/{id}")

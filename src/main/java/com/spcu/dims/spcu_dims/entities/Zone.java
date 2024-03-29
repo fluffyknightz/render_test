@@ -25,7 +25,7 @@ public class Zone implements Serializable {
     @Column(nullable = false, columnDefinition = "BIT(1) DEFAULT 0")
     private boolean isDelete;
 
-    @ManyToOne(targetEntity = Diocese.class, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(targetEntity = Diocese.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "diocese_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_diocese"))
     private Diocese diocese;
 }

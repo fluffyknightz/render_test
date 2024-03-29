@@ -3,7 +3,6 @@ package com.spcu.dims.spcu_dims.service_implement;
 import com.spcu.dims.spcu_dims.entities.*;
 import com.spcu.dims.spcu_dims.repositories.ParishRepository;
 import com.spcu.dims.spcu_dims.repositories.TownshipRepository;
-import com.spcu.dims.spcu_dims.repositories.ZoneRepository;
 import com.spcu.dims.spcu_dims.services.ParishServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -26,7 +25,7 @@ public class ParishServicesImplement implements ParishServices {
 
 
     @Override
-    public Object createParish(String name, String township) {
+    public Object createParish(String name, String township, String note) {
 
         Optional<Township> optionalTownship = townshipRepository.findByName(township);
 
@@ -39,6 +38,7 @@ public class ParishServicesImplement implements ParishServices {
             if (existingParishOptional.get().isDelete()) {
                 existingParishOptional.get().setDelete(false);
                 existingParishOptional.get().setTownship(optionalTownship.get());
+                existingParishOptional.get().setNote(note);
                 return parishRepository.save(existingParishOptional.get());
             } else {
                 return String.format(existsMessage, name);
@@ -47,6 +47,7 @@ public class ParishServicesImplement implements ParishServices {
         Parish newParish = Parish.builder()
                 .name(name)
                 .township(optionalTownship.get())
+                .note(note)
                 .build();
         return parishRepository.save(newParish);
     }
@@ -72,7 +73,7 @@ public class ParishServicesImplement implements ParishServices {
     }
 
     @Override
-    public Object update(int id, String name, String township) {
+    public Object update(int id, String name, String township, String note) {
         Optional<Parish> parishOptional = parishRepository.findById(id);
         Optional<Township> townshipExist = townshipRepository.findByName(township);
 
@@ -81,7 +82,7 @@ public class ParishServicesImplement implements ParishServices {
         }
         if (parishOptional.isPresent()) {
 
-            if (parishOptional.get().getName().equals(name) &&  parishOptional.get().getTownship().getName().equals(township)) {
+            if (parishOptional.get().getName().equals(name) &&  parishOptional.get().getTownship().getName().equals(township) && parishOptional.get().getNote().equals(note)) {
                 return parishOptional;
             }
             // Check if the new name is already exists
@@ -91,6 +92,7 @@ public class ParishServicesImplement implements ParishServices {
 
             parishOptional.get().setName(name);
             parishOptional.get().setTownship(townshipExist.get());
+            parishOptional.get().setNote(note);
             return parishRepository.save(parishOptional.get());
         }
         return String.format(doesNotExistMessage, name);

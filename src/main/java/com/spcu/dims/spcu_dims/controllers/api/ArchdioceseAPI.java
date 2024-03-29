@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 
 
@@ -84,7 +85,8 @@ public class ArchdioceseAPI {
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<Archdiocese> dioceses(@Valid @RequestBody DataTablesInput input) {
+    public DataTablesOutput<Archdiocese> archdioceseDataTablesOutput(@Valid @RequestBody DataTablesInput input) {
+
         return archdioceseServices.tableArchdiocese(input);
 
     }

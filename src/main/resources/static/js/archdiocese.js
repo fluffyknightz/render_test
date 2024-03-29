@@ -31,9 +31,10 @@ function editing() {
 
 $(document).ready(function () {
 
-    table = $('#myTable').DataTable( {
+    table = new DataTable('#myTable', {
+
         layout: {
-            top2Start: 'pageLength',
+
             top2End: 'search',
             topStart: {
                 buttons: [
@@ -53,6 +54,7 @@ $(document).ready(function () {
             },
             topEnd: null
         },
+
         lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
         language: {
             infoFiltered: "",
