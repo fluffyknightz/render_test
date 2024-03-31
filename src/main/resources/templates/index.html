@@ -28,6 +28,7 @@
 
     <!-- Template Main CSS File -->
     <link th:href="@{/landing-page/assets/css/style.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
 
 </head>
 
@@ -149,20 +150,27 @@
             <h3 class="text-center mt-5">What is Strategic Direction?</h3>
 
 
-
             <div class="container mt-5">
 
-                <blockquote>
+                <blockquote style="margin-left: 40px;">
                     <p>
-                        On August 17, 290016, the Holy Father Pope Francis established the Dicastery for Promoting Integral
-                        Human Development. The apostolic letter stated that “the Church is called to promote the integral
-                        development of the human person in the light of the Gospel”, and the Catholic Bishops’ Conference of
+                        <span style="margin-left: 40px;">
+                        On August 17, 290016, the Holy Father Pope Francis established the Dicastery for Promoting
+                        Integral
+                        Human Development. The apostolic letter stated that “the Church is called to promote the
+                        integral
+                        development of the human person in the light of the Gospel”, and the Catholic Bishops’
+                        Conference of
                         Myanmar (CBCM) incorporated this papal guidance into its “Socio-Pastoral Strategic Plan a
-                        contribution to Nation Building (2018-2022). Rooted in articulating the Vatican II document Gaudium
-                        et Spes and encyclical Caritas in Veritate, the integral care of the human being is a vocation of
-                        every human person. CBCM consistently embraced this mission to the “Myanmar Catholic Church Synodal
+                        contribution to Nation Building (2018-2022). Rooted in articulating the Vatican II document
+                        Gaudium
+                        et Spes and encyclical Caritas in Veritate, the integral care of the human being is a vocation
+                        of
+                        every human person. CBCM consistently embraced this mission to the “Myanmar Catholic Church
+                        Synodal
                         Journey, Socio-Pastoral Strategic Plan (2024-2026)” document holistically and synergistically
                         addressing the Myanmar people suffering through the 6 external strategic directions.
+                        </span>
                     </p>
                 </blockquote>
 
@@ -174,7 +182,7 @@
 
                 <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-5" data-aos="zoom-in"
                      data-aos-delay="200">
-                    <a onclick="card()">
+                    <a onclick="openModal('Education')">
                         <div class="icon-box">
                             <h4 class="title">Lorem Ipsum</h4>
                             <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias
@@ -441,6 +449,23 @@
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
 
+<!-- Scrollable modal -->
+<div class="modal fade wider-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel" >Education</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Vendor JS Files -->
 <script th:src="@{/landing-page/assets/vendor/purecounter/purecounter_vanilla.js}"></script>
 <script th:src="@{/landing-page/assets/vendor/aos/aos.js}"></script>
@@ -453,9 +478,59 @@
 <!-- Template Main JS File -->
 <script th:src="@{/landing-page/assets/js/main.js}"></script>
 <script>
-    function card() {
-        console.log('card')
+
+    // Function to add the HTML content to the modal body
+    function addContentToModal(parameter) {
+        console.log(parameter)
+        // Define the HTML content
+        let htmlContent = `
+        <h2>&#8226; Goal</h2>
+        <p class="mt-4 mb-4">
+            <span style="margin-left: 40px;">
+                To ensure that safe and high-quality education remains accessible during the ongoing crisis in Myanmar and to support children not currently attending school to enter or return to quality learning opportunities.
+            </span>
+        </p>
+        <hr>
+        <h4>&#8226; Objective 1</h4>
+        <p class="mt-4 mb-4">
+            <span style="margin-left: 40px;">
+               Improve access to essential educational assistance for vulnerable children in Myanmar.
+            </span>
+        </p>
+        <hr>
+        <h4>&#8226; Objective 2</h4>
+        <p class="mt-4 mb-4">
+            <span style="margin-left: 40px;">
+                To advocate strongly, cooperate actively, and collaborate effectively with all education partners, including internal church members and external organizations, to establish a highly productive and mutually beneficial relationship.
+            </span>
+        </p>
+        <hr>
+        <h4>&#8226; Objective 3</h4>
+        <p class="mt-4 mb-4">
+            <span style="margin-left: 40px;">
+                To effectively improve the skills of teachers to deliver quality education programs.
+            </span>
+        </p>
+    `;
+
+        // Get the modal body element
+        let modalBody = document.querySelector('.modal-body');
+
+        // Add the HTML content to the modal body
+        modalBody.innerHTML = htmlContent;
     }
+
+    // Function to open the modal and set content based on parameter
+    function openModal(parameter) {
+        // Add content to modal based on parameter
+        addContentToModal(parameter);
+
+        // Show the modal
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+        myModal.show();
+    }
+
+
 
 </script>
 </body>
