@@ -4,9 +4,6 @@ let data_id
 let button = document.getElementById('myButton');
 let title = document.getElementById('modelTitle');
 
-let activityFilter = document.getElementById('filterActivity');
-let parishFilter = document.getElementById('filterParish');
-
 let activitySelect = document.getElementById('activitySelect');
 let archdioceseSelect = document.getElementById('archdioceseSelect');
 let dioceseSelect = document.getElementById('dioceseSelect');
@@ -35,7 +32,8 @@ $(document).ready(async function () {
 
     await activityFetch();
     await archdioceseFetch();
-    await parishFetch();
+
+
     function calculateTotalCombinedHousehold() {
         bHousehold = table
             .data()
@@ -88,38 +86,23 @@ $(document).ready(async function () {
                 d.columns[13].search.value = false;
                 return d;
             },
-        },
-        processing: true,
-        serverSide: true,
-        scrollX: true,
-        layout: {
+        }, processing: true, serverSide: true, scrollX: true, layout: {
             top3: {
                 searchPanes: {
-                    threshold: 1,
-                    cascadePanes: true,
-                    viewTotal: true,
-                    dtOpts: {
-                        select:{
+                    threshold: 1, layout: 'columns-1', cascadePanes: true, viewTotal: true, dtOpts: {
+                        select: {
                             style: 'multi'
-                        },
-                        scrollY: '100px'
+                        }, scrollY: '100px'
                     }
                 },
-            },
-            top2Start: 'pageLength',
-            top2End: 'search',
-            topStart: {
+            }, top2Start: 'pageLength', top2End: 'search', topStart: {
                 buttons: [
 
                     {
-                        extend: 'excel',
-                        filename: 'beneficiary-list',
-                        title: 'Beneficiary Lists',
-                        exportOptions: {
+                        extend: 'excel', filename: 'beneficiary-list', title: 'Beneficiary Lists', exportOptions: {
                             columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                         }
-                    },
-                    {
+                    }, {
                         extend: 'pdf',
                         filename: 'beneficiary-list',
                         title: 'Beneficiary Lists',
@@ -131,85 +114,60 @@ $(document).ready(async function () {
                         customize: function (doc) {
                             doc.content[1].margin = [100, 20, 0, 0] //left, top, right, bottom
                         }
-                    },
-                    {
-                        extend: 'print',
-                        filename: 'beneficiary-list',
-                        title: 'Beneficiary Lists',
-                        exportOptions: {
+                    }, {
+                        extend: 'print', filename: 'beneficiary-list', title: 'Beneficiary Lists', exportOptions: {
                             columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                         }
+                    }]
+            }, topEnd: {
+                buttons: [{
+                    extend: 'colvis',
+                    collectionLayout: 'fixed columns',
+                    popoverTitle: 'Column Show/Hide Control',
+                    columns: ':not(.noVis)',
+                    postfixButtons: ['colvisRestore'],
+                    columnText: function (dt, idx, title) {
+                        return idx + 1 + ': ' + title.replace(/\(Total : \)/g, '');
                     }
-                ]
-            },
-            topEnd: {
-                buttons: [
-                    {
-                        extend: 'colvis',
-                        collectionLayout: 'fixed columns',
-                        popoverTitle: 'Column Show/Hide Control',
-                        columns: ':not(.noVis)',
-                        postfixButtons: ['colvisRestore'],
-                        columnText: function (dt, idx, title) {
-                            return idx + 1 + ': ' + title.replace(/\(Total : \)/g, '');
-                        }
-                    }
-                ]
+                }]
             }
-        },
-        lengthMenu: [25, 50, 75, 100, 250, {label: 'All', value: -1}],
-        language: {
+        }, lengthMenu: [25, 50, 75, 100, 250, {label: 'All', value: -1}], language: {
             infoFiltered: "",
         },
 
-        columns: [
-            {
-                data: 'activityName',
-            }, {
-                data: 'zoneName'
-            }, {
-                data: 'dioceseName'
-            }, {
-                data: 'parishName'
-            }, {
-                data: 'beneficiaryHousehold'
-            }, {
-                data: 'beneficiaryMale'
-            }, {
-                data: 'beneficiaryFemale'
-            }, {
-                data: 'disabilityMale'
-            }, {
-                data: 'disabilityFemale'
-            }, {
-                data: 'under18Male'
-            }, {
-                data: 'under18Female'
-            }, {
-                data: 'over60Male'
-            }, {
-                data: 'over60Female'
-            }, {
-                data: 'isDelete',
-                ordering: false,
-                render: function (data, type, row) {
-                    return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" ' +
-                        'onclick="changeEdit(' + row.id + ', \'' + row.activityName.replace(/'/g, "\\'") + '\', \'' + row.parishName.replace(/'/g, "\\'") +
-                        '\', ' + row.beneficiaryHousehold + ', ' + row.beneficiaryMale + ', ' + row.beneficiaryFemale + ', ' + row.disabilityMale +
-                        ', ' + row.disabilityFemale + ', ' + row.under18Male + ', ' + row.under18Female + ', ' + row.over60Male +
-                        ', ' + row.over60Female + ', \'' + row.archdioceseName.replace(/'/g, "\\'") + '\', \'' + row.dioceseName.replace(/'/g, "\\'") + '\', \'' + row.zoneName.replace(/'/g, "\\'") + '\')" style="border: none">\n' +
-                        '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' +
-                        '</button>\n' +
-                        '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' +
-                        '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' +
-                        '</button>';
-                }
-            }, {
-                data: 'archdioceseName',
-                visible: false,
-                ordering: false,
-                className: 'noVis'
-            }],
+        columns: [{
+            data: 'activityName',
+        }, {
+            data: 'zoneName'
+        }, {
+            data: 'dioceseName'
+        }, {
+            data: 'parishName'
+        }, {
+            data: 'beneficiaryHousehold'
+        }, {
+            data: 'beneficiaryMale'
+        }, {
+            data: 'beneficiaryFemale'
+        }, {
+            data: 'disabilityMale'
+        }, {
+            data: 'disabilityFemale'
+        }, {
+            data: 'under18Male'
+        }, {
+            data: 'under18Female'
+        }, {
+            data: 'over60Male'
+        }, {
+            data: 'over60Female'
+        }, {
+            data: 'isDelete', ordering: false, render: function (data, type, row) {
+                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" ' + 'onclick="changeEdit(' + row.id + ', \'' + row.activityName.replace(/'/g, "\\'") + '\', \'' + row.parishName.replace(/'/g, "\\'") + '\', ' + row.beneficiaryHousehold + ', ' + row.beneficiaryMale + ', ' + row.beneficiaryFemale + ', ' + row.disabilityMale + ', ' + row.disabilityFemale + ', ' + row.under18Male + ', ' + row.under18Female + ', ' + row.over60Male + ', ' + row.over60Female + ', \'' + row.archdioceseName.replace(/'/g, "\\'") + '\', \'' + row.dioceseName.replace(/'/g, "\\'") + '\', \'' + row.zoneName.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+            }
+        }, {
+            data: 'archdioceseName', visible: false, ordering: false, className: 'noVis'
+        }],
 
         drawCallback: function (settings) {
             // Recalculate total combined household count
@@ -226,16 +184,11 @@ $(document).ready(async function () {
             document.getElementById('vO60Female').innerText = vO60Female
         },
     });
-
+    document
+        .querySelector('div.dtsp-verticalPanes')
+        .appendChild(table.searchPanes.container().get(0));
 });
 
-activityFilter.addEventListener('change', function () {
-    table.column(0).search(activityFilter.value).draw();
-})
-
-parishFilter.addEventListener('change', function () {
-    table.column(3).search(parishFilter.value).draw();
-})
 
 archdioceseSelect.addEventListener('change', async function () {
     await dioceseSpecificFetch(archdioceseSelect.value)
@@ -253,7 +206,6 @@ async function activityFetch() {
     try {
         const data = await fetchData('spcu-dims/api/v1/activity/show/all');
         await populateSelect(activitySelect, data, "Select Related Activity", false);
-        await populateSelect(activityFilter, data, "Filter Activity", true);
     } catch (error) {
         Notiflix.Notify.failure('Data Fetching Error!');
     }
@@ -303,14 +255,7 @@ async function parishSpecificFetch(zone) {
     }
 }
 
-async function parishFetch() {
-    try {
-        const data = await fetchData('spcu-dims/api/v1/parish/show/all');
-        await populateSelect(parishFilter, data, "Filter Parish", true);
-    } catch (error) {
-        Notiflix.Notify.failure('Data Fetching Error!');
-    }
-}
+
 
 function changeAdd() {
 
@@ -420,15 +365,5 @@ function adding() {
 }
 
 function checkRequired() {
-    return activitySelect.value === undefined || activitySelect.value === null || activitySelect.value.trim() === ""
-        || parishSelect.value === undefined || parishSelect.value === null || parishSelect.value.trim() === ""
-        || inputBeneficiariesHousehold.value === undefined || inputBeneficiariesHousehold.value === null || inputBeneficiariesHousehold.value.trim() === ""
-        || inputBeneficiariesMale.value === undefined || inputBeneficiariesMale.value === null || inputBeneficiariesMale.value.trim() === ""
-        || inputBeneficiariesFemale.value === undefined || inputBeneficiariesFemale.value === null || inputBeneficiariesFemale.value.trim() === ""
-        || inputDisabilitiesMale.value === undefined || inputDisabilitiesMale.value === null || inputDisabilitiesMale.value.trim() === ""
-        || inputDisabilitiesFemale.value === undefined || inputDisabilitiesFemale.value === null || inputDisabilitiesFemale.value.trim() === ""
-        || inputVulnerabilitiesUnder18Male.value === undefined || inputVulnerabilitiesUnder18Male.value === null || inputVulnerabilitiesUnder18Male.value.trim() === ""
-        || inputVulnerabilitiesUnder18Female.value === undefined || inputVulnerabilitiesUnder18Female.value === null || inputVulnerabilitiesUnder18Female.value.trim() === ""
-        || inputVulnerabilitiesOver60Male.value === undefined || inputVulnerabilitiesOver60Male.value === null || inputVulnerabilitiesOver60Male.value.trim() === ""
-        || inputVulnerabilitiesOver60Female.value === undefined || inputVulnerabilitiesOver60Female.value === null || inputVulnerabilitiesOver60Female.value.trim() === "";
+    return activitySelect.value === undefined || activitySelect.value === null || activitySelect.value.trim() === "" || parishSelect.value === undefined || parishSelect.value === null || parishSelect.value.trim() === "" || inputBeneficiariesHousehold.value === undefined || inputBeneficiariesHousehold.value === null || inputBeneficiariesHousehold.value.trim() === "" || inputBeneficiariesMale.value === undefined || inputBeneficiariesMale.value === null || inputBeneficiariesMale.value.trim() === "" || inputBeneficiariesFemale.value === undefined || inputBeneficiariesFemale.value === null || inputBeneficiariesFemale.value.trim() === "" || inputDisabilitiesMale.value === undefined || inputDisabilitiesMale.value === null || inputDisabilitiesMale.value.trim() === "" || inputDisabilitiesFemale.value === undefined || inputDisabilitiesFemale.value === null || inputDisabilitiesFemale.value.trim() === "" || inputVulnerabilitiesUnder18Male.value === undefined || inputVulnerabilitiesUnder18Male.value === null || inputVulnerabilitiesUnder18Male.value.trim() === "" || inputVulnerabilitiesUnder18Female.value === undefined || inputVulnerabilitiesUnder18Female.value === null || inputVulnerabilitiesUnder18Female.value.trim() === "" || inputVulnerabilitiesOver60Male.value === undefined || inputVulnerabilitiesOver60Male.value === null || inputVulnerabilitiesOver60Male.value.trim() === "" || inputVulnerabilitiesOver60Female.value === undefined || inputVulnerabilitiesOver60Female.value === null || inputVulnerabilitiesOver60Female.value.trim() === "";
 }

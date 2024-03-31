@@ -18,6 +18,18 @@ body {
   max-width: 80%; /* Adjust this value according to your needs */
 }
 
+.description {
+  display: -webkit-box; /* For webkit-based browsers */
+  display: -moz-box; /* For Mozilla-based browsers */
+  -webkit-box-orient: vertical; /* For webkit-based browsers */
+  -moz-box-orient: vertical; /* For Mozilla-based browsers */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 4; /* Limit to 2 lines */
+
+}
+
+
 
 hr {
   margin: 1rem 0;
@@ -471,7 +483,7 @@ h6 {
 }
 
 .icon-box {
-  padding: 50px 30px;
+  padding: 30px 30px;
   position: relative;
   overflow: hidden;
   background: #fff;
