@@ -33,29 +33,6 @@ $(document).ready(function () {
 
     table = new DataTable('#myTable', {
 
-        layout: {
-
-            top2End: 'search',
-            topStart: {
-                buttons: [
-                    'copyHtml5',
-                    'csvHtml5',
-                    'excelHtml5',
-                        {
-                            extend:'pdfHtml5',
-                            title:'This is PDF.',
-                            pageSize: 'A4',
-                            customize: function(doc) {
-                                doc.content[1].margin = [ 200, 0, 100, 0 ] //left, top, right, bottom
-                            }
-                        }
-                    , 'print'
-                ]
-            },
-            topEnd: null
-        },
-
-        lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
         language: {
             infoFiltered: "",
         },

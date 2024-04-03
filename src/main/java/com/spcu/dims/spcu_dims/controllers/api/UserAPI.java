@@ -28,7 +28,7 @@ public class UserAPI {
     private final MyUserDetailsServices myUserDetailsServices;
 
     @PostMapping("/create")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('Admin', 'SuperAdmin')")
     public ResponseEntity<Object> userCreate(@RequestParam("username") String username, @RequestParam("role") String role, @RequestParam("password") String password) {
 
         Object user = userServices.createUser(username, role, password);
@@ -44,14 +44,14 @@ public class UserAPI {
     }
 
     @PostMapping("/show/table")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('Admin', 'SuperAdmin')")
     public DataTablesOutput<User> users(@Valid @RequestBody DataTablesInput input) {
         return userServices.tableUser(input);
 
     }
 
     @PatchMapping("/delete/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('Admin', 'SuperAdmin')")
     public ResponseEntity<Object> delete(@PathVariable("id") int id) {
         User user = userServices.deleteUser(id);
         if (user != null) {
@@ -61,7 +61,7 @@ public class UserAPI {
     }
 
     @PatchMapping("/update")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('Admin', 'SuperAdmin')")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("username") String username, @RequestParam("role") String role, @RequestParam(value = "password", required = false) String password) {
 
         Object user = userServices.update(id, username, role, password);

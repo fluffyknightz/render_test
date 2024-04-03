@@ -1,54 +1,71 @@
 package com.spcu.dims.spcu_dims.config;
 
-import com.spcu.dims.spcu_dims.entities.Archdiocese;
-import com.spcu.dims.spcu_dims.services.ArchdioceseServices;
+import com.spcu.dims.spcu_dims.entities.Role;
+import com.spcu.dims.spcu_dims.entities.User;
+import com.spcu.dims.spcu_dims.repositories.RoleRepository;
+import com.spcu.dims.spcu_dims.repositories.UserRepository;
+import com.spcu.dims.spcu_dims.services.RoleServices;
+import com.spcu.dims.spcu_dims.services.UserServices;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 @AllArgsConstructor
 public class SqlFileRunner implements CommandLineRunner {
 
     private final JdbcTemplate jdbcTemplate;
-    private final ArchdioceseServices archdioceseServices;
+    private final UserServices userServices;
+    private final RoleServices roleServices;
+    private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
+
 
     @Override
     public void run(String... args) throws Exception {
 
+        executeSqlFile("view.sql");
+        executeSqlFile("init.sql");
 
-            Resource resource1 = new ClassPathResource("view.sql");
-            InputStreamReader reader1 = new InputStreamReader(resource1.getInputStream(), StandardCharsets.UTF_8);
-            String sqlContent1 = FileCopyUtils.copyToString(reader1);
 
-            // Split SQL statements and execute them
-            String[] sqlStatements1 = sqlContent1.split(";");
-            for (String sql : sqlStatements1) {
-                if (!sql.trim().isEmpty()) {
-                    jdbcTemplate.execute(sql.trim());
-                }
+
+        Optional<Role> role = roleServices.findByName("SUPER_ADMIN");
+        if(role.isPresent()) {
+            List<User> users = userServices.findByRole(role.get());
+            if (users == null || users.isEmpty()) {
+
+                User user = (User) userServices.createUser("SuperAdmin", "SuperAdmin", "1122121");
+                userRepository.delete(user);
             }
+        }
 
 
 
-        // Load SQL file from resources
-        Resource resource2 = new ClassPathResource("init.sql");
-        InputStreamReader reader2 = new InputStreamReader(resource2.getInputStream(), StandardCharsets.UTF_8);
-        String sqlContent2 = FileCopyUtils.copyToString(reader2);
+
+
+    }
+    private void executeSqlFile(String fileName) throws IOException {
+        Resource resource = new ClassPathResource(fileName);
+        InputStreamReader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+        String sqlContent = FileCopyUtils.copyToString(reader);
 
         // Split SQL statements and execute them
-        String[] sqlStatements2 = sqlContent2.split(";");
-        for (String sql : sqlStatements2) {
+        String[] sqlStatements = sqlContent.split(";");
+        for (String sql : sqlStatements) {
             if (!sql.trim().isEmpty()) {
                 jdbcTemplate.execute(sql.trim());
             }
         }
+
     }
 }

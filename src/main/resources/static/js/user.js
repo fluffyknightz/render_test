@@ -64,7 +64,9 @@ $(document).ready(async function () {
 
         ajax: {
 
-            url: 'spcu-dims/api/v1/user/show/table', method: 'POST', contentType: 'application/json',
+            url: 'spcu-dims/api/v1/user/show/table',
+            method: 'POST',
+            contentType: 'application/json',
 
             headers: {
                 [csrfHeader]: csrfToken
@@ -75,24 +77,23 @@ $(document).ready(async function () {
                 return JSON.stringify(d);
             },
 
-        }, processing: true, serverSide: true, columns: [{
-
-            data: 'username'
-        }, {
-            data: 'role.name', render: function (data, type, row) {
-                if (row.role.name === 'ADMIN') {
-                    return 'Admin';
-                } else if (row.role.name === 'USER') {
-                    return 'User';
-                } else {
-                    return data; // Return original data if not 'ADMIN' or 'USER'
+        },
+        processing: true,
+        serverSide: true,
+        columns: [
+            {
+                data: 'username'
+            }, {
+                data: 'role.name'
+            }, {
+                data: 'isDelete', ordering: false, render: function (data, type, row) {
+                    if (row.role.name === 'SuperAdmin') {
+                        return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.username.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.role.name.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+                    }
+                    return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.username.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.role.name.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
                 }
             }
-        }, {
-            data: 'isDelete', ordering: false, render: function (data, type, row) {
-                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.username.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.role.name.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
-            }
-        },]
+        ]
     });
 
 });
@@ -111,7 +112,9 @@ function changeAdd() {
     password.value = null;
     confirmPassword.value = null;
     button.innerHTML = 'Add'
+    roleSelect.options[1].style.display = "none";
     roleSelect.selectedIndex = 0;
+    roleSelect.disabled = false;
     title.textContent = 'Add User'
     button.setAttribute('onclick', 'adding()');
     return false;
@@ -123,7 +126,15 @@ function changeEdit(name, id, role) {
     passwordLabel.innerText = 'Password(Optional)'
     data_id = id
     input.value = name;
-    roleSelect.value = role;
+    roleSelect.options[1].style.display = "none";
+    if (role === 'SuperAdmin') {
+
+        roleSelect.value = role;
+        roleSelect.disabled = true;
+    } else {
+        roleSelect.value = role;
+    }
+
     button.innerHTML = 'Edit'
     title.textContent = 'Edit User'
     button.setAttribute('onclick', 'editing()');

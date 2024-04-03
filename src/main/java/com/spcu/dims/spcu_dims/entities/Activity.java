@@ -19,7 +19,7 @@ public class Activity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false, length = 30, unique = true)
+    @Column(nullable = false, length = 50, unique = true)
     private String name;
 
     @Column(nullable = false, columnDefinition = "BIT(1) DEFAULT 0")

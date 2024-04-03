@@ -15,6 +15,6 @@ public interface RoleRepository extends JpaRepository<Role, Integer> {
 
   Optional<Role> findByName(String role);
 
-  @Query("SELECT e.name FROM Role e WHERE e.isDelete = false ORDER BY e.name ASC")
+  @Query("SELECT e.name FROM Role e WHERE e.isDelete = false")
   List<String> findAllNotDeleted();
 }

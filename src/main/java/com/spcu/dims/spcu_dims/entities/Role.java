@@ -19,7 +19,7 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(length = 10, nullable = false, unique = true)
+    @Column(length = 15, nullable = false, unique = true)
     private String name;
 
     @Column(nullable = false, columnDefinition = "BIT(1) DEFAULT 0")

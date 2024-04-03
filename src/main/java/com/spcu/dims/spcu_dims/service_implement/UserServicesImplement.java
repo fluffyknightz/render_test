@@ -11,6 +11,7 @@ import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -91,6 +92,11 @@ public class UserServicesImplement implements UserServices {
         }
 
         return null;
+    }
+
+    @Override
+    public List<User> findByRole(Role role) {
+        return userRepository.findByRole(role);
     }
 
 
