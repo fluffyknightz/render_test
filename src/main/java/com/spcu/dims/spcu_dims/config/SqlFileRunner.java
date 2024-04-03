@@ -27,8 +27,6 @@ public class SqlFileRunner implements CommandLineRunner {
     private final JdbcTemplate jdbcTemplate;
     private final UserServices userServices;
     private final RoleServices roleServices;
-    private final RoleRepository roleRepository;
-    private final UserRepository userRepository;
 
 
     @Override
@@ -44,8 +42,7 @@ public class SqlFileRunner implements CommandLineRunner {
             List<User> users = userServices.findByRole(role.get());
             if (users == null || users.isEmpty()) {
 
-                User user = (User) userServices.createUser("SuperAdmin", "SuperAdmin", "1122121");
-                userRepository.delete(user);
+                userServices.createUser("SuperAdmin", "SuperAdmin", "1122121");
             }
         }
 
