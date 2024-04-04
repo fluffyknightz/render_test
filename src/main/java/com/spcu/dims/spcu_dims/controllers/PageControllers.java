@@ -96,7 +96,7 @@ public class PageControllers {
     }
 
     @GetMapping("/user")
-    @PreAuthorize("hasAnyAuthority('Admin','SuperAdmin')")
+    @PreAuthorize("hasAnyAuthority('Admin','DefaultAdmin')")
     public String user() {
         return "user";
     }

@@ -89,7 +89,12 @@ $(document).ready(async function () {
         }, processing: true, serverSide: true, scrollX: true, layout: {
             top3: {
                 searchPanes: {
-                    threshold: 1, layout: 'columns-1', cascadePanes: true, viewTotal: true, dtOpts: {
+                    threshold: 1,
+                    layout: 'columns-1',
+                    cascadePanes: true,
+                    viewTotal: true,
+                    columns: [0,3],
+                    dtOpts: {
                         select: {
                             style: 'multi'
                         }, scrollY: '100px'

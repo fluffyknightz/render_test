@@ -37,12 +37,12 @@ public class SqlFileRunner implements CommandLineRunner {
 
 
 
-        Optional<Role> role = roleServices.findByName("SUPER_ADMIN");
+        Optional<Role> role = roleServices.findByName("DefaultAdmin");
         if(role.isPresent()) {
             List<User> users = userServices.findByRole(role.get());
             if (users == null || users.isEmpty()) {
 
-                userServices.createUser("SuperAdmin", "SuperAdmin", "1122121");
+                userServices.createUser("DefaultAdmin", "DefaultAdmin", "1122121");
             }
         }
 

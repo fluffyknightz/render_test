@@ -22,4 +22,6 @@ public interface UserServices {
     User passwordChange(String newPassword, String username);
 
     List<User> findByRole(Role role);
+
+
 }
