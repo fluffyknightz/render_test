@@ -37733,6 +37733,14 @@ body {
   color: #637381;
 }
 
+.table tfoot th {
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  text-transform: capitalize;
+  font-size: 0.875rem;
+  color: #637381;
+}
+
 @media (max-width: 768px) {
   .docs-content {
     padding: 3.75rem 1.25rem 8.75rem 1.25rem;

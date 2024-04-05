@@ -103,13 +103,6 @@ public class UserAPI {
         return new ResponseEntity<>("Old Password does not match.", HttpStatus.NOT_MODIFIED);
     }
 
-    @PostMapping("/login-user")
-    public ResponseEntity<String> loginUser() {
-        MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return new ResponseEntity<>(myUserDetails.getUsername(), HttpStatus.OK);
-    }
-
-
 }
 
 

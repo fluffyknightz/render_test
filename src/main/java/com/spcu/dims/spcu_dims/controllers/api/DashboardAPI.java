@@ -19,6 +19,7 @@ public class DashboardAPI {
 
     @PostMapping("/count")
     public ResponseEntity<CountView> count() {
+
         return new ResponseEntity<>(dashboardServices.count(), HttpStatus.OK);
     }
 }

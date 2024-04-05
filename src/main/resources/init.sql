@@ -2,8 +2,6 @@ INSERT IGNORE INTO `spcu-dims`.`roles` (`name`) VALUES ('DefaultAdmin');
 INSERT IGNORE INTO `spcu-dims`.`roles` (`name`) VALUES ('Admin');
 INSERT IGNORE INTO `spcu-dims`.`roles` (`name`) VALUES ('User');
 
-INSERT IGNORE INTO `spcu-dims`.`users` (`password`, `username`, `role_id`) VALUES ('$2a$12$mbuUOX31lI3f7/PY/.baiO2BT0Q4AbEkrvq3dh5avEXwAAF7.hvva', 'Admin', '1');
-
 INSERT IGNORE INTO `spcu-dims`.`archdioceses` (`name`) VALUES ('Yangon');
 INSERT IGNORE INTO `spcu-dims`.`archdioceses` (`name`) VALUES ('Mandalay');
 INSERT IGNORE INTO `spcu-dims`.`archdioceses` (`name`) VALUES ('Taunggyi');

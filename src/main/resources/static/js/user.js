@@ -32,7 +32,7 @@ function adding() {
 
 }
 
-async function editing() {
+function editing(id) {
     console.log(password.value)
     console.log(confirmPassword.value)
     inputValue = input.value.trim();
@@ -52,13 +52,12 @@ async function editing() {
         let url = '/spcu-dims/api/v1/user/update?id=' + encodeURIComponent(data_id) + '&&username=' + encodeURIComponent(inputValue) + '&&role=' + encodeURIComponent(roleSelect.value);
         url = password.value !== '' && password.value !== null ? url + '&&password=' + encodeURIComponent(password.value) : url;
 
-        await performOperation(url, 'PATCH', 'Edit successful.');
+        performOperation(url, 'PATCH', 'Edit successful.')
 
-        login_user()
-            .then(async r => {
-                document.getElementById('login_user').innerText = await r.text();
 
-            })
+    }
+    if(id === document.getElementById('login-id').value){
+        window.location.reload();
     }
 }
 
@@ -150,7 +149,7 @@ function changeEdit(name, id, role) {
 
     button.innerHTML = 'Edit'
     title.textContent = 'Edit User'
-    button.setAttribute('onclick', 'editing()');
+    button.setAttribute('onclick', 'editing(' + id + ')');
 
     if (document.getElementById('login_user').innerText === name) {
         // Loop through each element and hide it

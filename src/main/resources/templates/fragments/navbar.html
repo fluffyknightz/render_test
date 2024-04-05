@@ -15,8 +15,8 @@
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
                     <div class="px-4 pb-0 pt-2">
                         <div class="lh-1 ">
-                            <h5 class="mb-1" id="login_user"></h5>
-
+                            <h5 class="mb-1" id="login-id" sec:authentication="principal.userId" hidden></h5>
+                            <h5 class="mb-1" sec:authentication="principal.username"></h5>
                         </div>
                         <div class=" dropdown-divider mt-3 mb-2"></div>
                     </div>

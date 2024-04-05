@@ -2,10 +2,9 @@ package com.spcu.dims.spcu_dims.config;
 
 import com.spcu.dims.spcu_dims.entities.Role;
 import com.spcu.dims.spcu_dims.entities.User;
-import com.spcu.dims.spcu_dims.repositories.RoleRepository;
-import com.spcu.dims.spcu_dims.repositories.UserRepository;
 import com.spcu.dims.spcu_dims.services.RoleServices;
 import com.spcu.dims.spcu_dims.services.UserServices;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.ClassPathResource;
@@ -22,6 +21,7 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor
+@Transactional
 public class SqlFileRunner implements CommandLineRunner {
 
     private final JdbcTemplate jdbcTemplate;
@@ -40,9 +40,9 @@ public class SqlFileRunner implements CommandLineRunner {
         Optional<Role> role = roleServices.findByName("DefaultAdmin");
         if(role.isPresent()) {
             List<User> users = userServices.findByRole(role.get());
-            if (users == null || users.isEmpty()) {
+            if (users.isEmpty()) {
 
-                userServices.createUser("DefaultAdmin", "DefaultAdmin", "1122121");
+                userServices.createUser("Admin", "DefaultAdmin", "spcudims");
             }
         }
 

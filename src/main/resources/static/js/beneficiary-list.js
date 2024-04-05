@@ -89,12 +89,7 @@ $(document).ready(async function () {
         }, processing: true, serverSide: true, scrollX: true, layout: {
             top3: {
                 searchPanes: {
-                    threshold: 1,
-                    layout: 'columns-1',
-                    cascadePanes: true,
-                    viewTotal: true,
-                    columns: [0,3],
-                    dtOpts: {
+                    threshold: 1, layout: 'columns-1', cascadePanes: true, viewTotal: true, columns: [0, 3], dtOpts: {
                         select: {
                             style: 'multi'
                         }, scrollY: '100px'
@@ -178,15 +173,43 @@ $(document).ready(async function () {
             // Recalculate total combined household count
             calculateTotalCombinedHousehold();
             // Display total combined household count in HTML
-            document.getElementById('bHousehold').innerText = bHousehold
-            document.getElementById('bMale').innerText = bMale
-            document.getElementById('bFemale').innerText = bFemale
-            document.getElementById('dMale').innerText = dMale
-            document.getElementById('dFemale').innerText = dFemale
-            document.getElementById('vU18Male').innerText = vU18Male
-            document.getElementById('vU18Female').innerText = vU18Female
-            document.getElementById('vO60Male').innerText = vO60Male
-            document.getElementById('vO60Female').innerText = vO60Female
+            document.querySelectorAll('.bHousehold').forEach(element => {
+                element.innerText = bHousehold;
+            });
+
+            document.querySelectorAll('.bMale').forEach(element => {
+                element.innerText = bMale;
+            });
+
+            document.querySelectorAll('.bFemale').forEach(element => {
+                element.innerText = bFemale;
+            });
+
+            document.querySelectorAll('.dMale').forEach(element => {
+                element.innerText = dMale;
+            });
+
+            document.querySelectorAll('.dFemale').forEach(element => {
+                element.innerText = dFemale;
+            });
+
+            document.querySelectorAll('.vU18Male').forEach(element => {
+                element.innerText = vU18Male;
+            });
+
+            document.querySelectorAll('.vU18Female').forEach(element => {
+                element.innerText = vU18Female;
+            });
+
+            document.querySelectorAll('.vO60Male').forEach(element => {
+                element.innerText = vO60Male;
+            });
+
+            document.querySelectorAll('.vO60Female').forEach(element => {
+                element.innerText = vO60Female;
+            });
+
+
         },
     });
     document
@@ -259,7 +282,6 @@ async function parishSpecificFetch(zone) {
         Notiflix.Notify.failure('Data Fetching Error!');
     }
 }
-
 
 
 function changeAdd() {
