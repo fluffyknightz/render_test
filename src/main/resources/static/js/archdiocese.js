@@ -5,27 +5,27 @@ let title = document.getElementById('modelTitle');
 let input = document.getElementById('archdiocese');
 
 
-function adding() {
+async function adding() {
     validationInput()
 
     if (inputValue === undefined || inputValue === null || inputValue.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
         const url = '/spcu-dims/api/v1/archdiocese/create?name=' + encodeURIComponent(inputValue);
-        performOperation(url, 'POST', 'Create successful.');
+        await performOperation(url, 'POST', 'Create successful.');
     }
 
 }
 
 
-function editing() {
+async function editing() {
 
     validationInput()
     if (inputValue === undefined || inputValue === null || inputValue.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
         const url = '/spcu-dims/api/v1/archdiocese/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id);
-        performOperation(url, 'PATCH', 'Edit successful.');
+        await performOperation(url, 'PATCH', 'Edit successful.');
     }
 }
 

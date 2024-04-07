@@ -20,7 +20,9 @@ public interface DioceseRepository extends DataTablesRepository<Diocese, Integer
     List<String> findAllNotDeleted();
 
     Optional<Diocese> findByNameAndIdNot(String name, int id);
-    @Query("SELECT d.name FROM Diocese d WHERE d.archdiocese.name = :archdiocese")
+
+    @Query("SELECT d.name FROM Diocese d WHERE d.archdiocese.name = :archdiocese ORDER BY d.name ASC")
     List<String> findByArchdioceseName(@Param("archdiocese") String archdiocese);
+
 
 }

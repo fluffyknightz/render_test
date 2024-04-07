@@ -8,9 +8,10 @@ let password = document.getElementById('password');
 let confirmPassword = document.getElementById('confirmPassword');
 let passwordLabel = document.getElementById('passwordLabel');
 let password_form = document.getElementsByClassName('password-form');
+let user_role = document.getElementById('login-role')
+let user_id = document.getElementById('login-id')
 
-
-function adding() {
+async function adding() {
 
     inputValue = input.value.trim();
     // Remove leading and trailing spaces
@@ -27,14 +28,13 @@ function adding() {
         Notiflix.Notify.failure("Password should be between 8 and 12 characters.");
     } else {
         const url = '/spcu-dims/api/v1/user/create?username=' + encodeURIComponent(inputValue) + '&&role=' + encodeURIComponent(roleSelect.value) + '&&password=' + encodeURIComponent(password.value);
-        performOperation(url, 'POST', 'Create successful.');
+        await performOperation(url, 'POST', 'Create successful.');
     }
 
 }
 
-function editing(id) {
-    console.log(password.value)
-    console.log(confirmPassword.value)
+async function editing(id) {
+
     inputValue = input.value.trim();
     // Remove leading and trailing spaces
     inputValue = inputValue.replace(/^\s+|\s+$/g, '');
@@ -52,17 +52,15 @@ function editing(id) {
         let url = '/spcu-dims/api/v1/user/update?id=' + encodeURIComponent(data_id) + '&&username=' + encodeURIComponent(inputValue) + '&&role=' + encodeURIComponent(roleSelect.value);
         url = password.value !== '' && password.value !== null ? url + '&&password=' + encodeURIComponent(password.value) : url;
 
-        performOperation(url, 'PATCH', 'Edit successful.')
-
+        await performOperation(url, 'PATCH', 'Edit successful.')
 
     }
-    if(id === document.getElementById('login-id').value){
-        window.location.reload();
-    }
+
 }
 
 
 $(document).ready(async function () {
+
     await roleFetch()
     roleSelect.options[1].style.display = 'none';
     table = new DataTable('#myTable', {
@@ -95,10 +93,22 @@ $(document).ready(async function () {
                 data: 'role.name'
             }, {
                 data: 'isDelete', ordering: false, render: function (data, type, row) {
-                    if (row.role.name === 'DefaultAdmin') {
-                        return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.username.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.role.name.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+                    if(user_role.innerText === 'DefaultAdmin'){
+                        if (row.role.name === 'DefaultAdmin') {
+                            return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.username.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.role.name.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+                        } else {
+                            return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.username.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.role.name.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+                        }
+                    } else if (user_role.innerText === 'Admin') {
+                        if (row.id === parseInt(user_id.innerText) || row.role.name ===  'User'){
+                            return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.username.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.role.name.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+                        } else {
+                            return  null;
+                        }
                     }
-                    return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.username.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.role.name.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+
+
+                    // return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.username.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.role.name.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
                 }
             }
         ]
@@ -139,7 +149,7 @@ function changeEdit(name, id, role) {
     data_id = id
     input.value = name;
 
-    if (role === 'DefaultAdmin') {
+    if (role === user_role.innerText || role === 'DefaultAdmin') {
         roleSelect.value = role;
         roleSelect.disabled = true;
     } else {
@@ -151,7 +161,7 @@ function changeEdit(name, id, role) {
     title.textContent = 'Edit User'
     button.setAttribute('onclick', 'editing(' + id + ')');
 
-    if (document.getElementById('login_user').innerText === name) {
+    if (user_role.innerText === role) {
         // Loop through each element and hide it
         for (let i = 0; i < password_form.length; i++) {
             password_form[i].style.display = 'none';

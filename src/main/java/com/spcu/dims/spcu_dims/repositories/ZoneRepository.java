@@ -20,7 +20,7 @@ public interface ZoneRepository extends DataTablesRepository<Zone, Integer> {
     List<String> findAllNotDeleted();
     Optional<Zone> findByNameAndIdNot(String name, int id);
 
-    @Query("SELECT z.name FROM Zone z WHERE z.diocese.name = :diocese")
+    @Query("SELECT z.name FROM Zone z WHERE z.diocese.name = :diocese ORDER BY z.name ASC")
     List<String> findByDioceseName(@Param("diocese") String diocese);
 
 }

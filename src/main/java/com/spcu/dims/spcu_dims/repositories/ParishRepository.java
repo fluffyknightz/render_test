@@ -19,7 +19,7 @@ public interface ParishRepository extends DataTablesRepository<Parish, Integer> 
     @Query("SELECT e.name FROM Parish e WHERE e.isDelete = false ORDER BY e.name ASC")
     List<String> findAllNotDeleted();
 
-    @Query(value = "SELECT p.name FROM Parish p WHERE p.township.zone.name = :zone")
+    @Query(value = "SELECT p.name FROM Parish p WHERE p.township.zone.name = :zone ORDER BY p.name ASC")
     List<String> findByZoneName(@Param("zone") String zone);
 
 }

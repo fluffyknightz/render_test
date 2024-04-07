@@ -147,25 +147,25 @@ function showConfirm(id) {
     deleteConfirm('/spcu-dims/api/v1/parish/delete/' + encodeURIComponent(id))
 }
 
-function editing() {
+async function editing() {
     validationInput()
     if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || townshipSelect.value.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
         const url = noteInput.value !== null && noteInput.value !== '' ? '/spcu-dims/api/v1/parish/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id) + '&&township=' + encodeURIComponent(townshipSelect.value) + '&&note=' + encodeURIComponent(noteInput.value) :
             '/spcu-dims/api/v1/parish/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id) + '&&township=' + encodeURIComponent(townshipSelect.value);
-        performOperation(url, 'PATCH', 'Edit successful.');
+        await performOperation(url, 'PATCH', 'Edit successful.');
     }
 }
 
-function adding() {
+async function adding() {
     validationInput()
     if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || townshipSelect.value.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
         const url = noteInput.value !== null && noteInput.value !== '' ? '/spcu-dims/api/v1/parish/create?name=' + encodeURIComponent(inputValue) + '&&township=' + encodeURIComponent(townshipSelect.value) + '&&note=' + encodeURIComponent(noteInput.value) :
             '/spcu-dims/api/v1/parish/create?name=' + encodeURIComponent(inputValue) + '&&township=' + encodeURIComponent(townshipSelect.value);
-        performOperation(url, 'POST', 'Create successful.');
+        await performOperation(url, 'POST', 'Create successful.');
     }
 }
 

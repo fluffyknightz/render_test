@@ -51,7 +51,7 @@ public class UserAPI {
     }
 
     @PatchMapping("/delete/{id}")
-    @PreAuthorize("hasAnyAuthority('Admin', 'DefaultAdmin')")
+    @PreAuthorize("hasAuthority('DefaultAdmin')")
     public ResponseEntity<Object> delete(@PathVariable("id") int id) {
         User user = userServices.deleteUser(id);
         if (user != null) {

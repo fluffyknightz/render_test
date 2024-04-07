@@ -1,8 +1,6 @@
 let inputValue
 
 
-
-
 function validationInput() {
 
     inputValue = input.value.trim();
@@ -18,18 +16,20 @@ function validationInput() {
 
 }
 
-function deleteConfirm(url) {
-    Notiflix.Confirm.show('Please Confirm', 'Are you sure!! you want to delete?', 'Yes', 'No', function okCb() {
-        performOperation(url, 'PATCH', 'Delete Successful!')
-
+function deleteConfirm(url, callback) {
+    Notiflix.Confirm.show('Please Confirm', 'Are you sure you want to delete?', 'Yes', 'No', async function okCb() {
+        await performOperation(url, 'PATCH', 'Delete Successful!');
+        if (callback) {
+            callback(); // Call the callback function
+        }
     }, {
         width: '320px', borderRadius: '8px',
-    },);
+    });
 }
 
-function performOperation(url, method, successMessage, jsonBody) {
+async function performOperation(url, method, successMessage, jsonBody) {
 
-    fetch(url, {
+    await fetch(url, {
         method: method,
         headers: {
             'Content-Type': 'application/json',
@@ -37,21 +37,19 @@ function performOperation(url, method, successMessage, jsonBody) {
         },
         body: jsonBody ? JSON.stringify(jsonBody) : null
     }).then(async response => {
-        if (response.status === 201 || response.status === 200) {
+        if (response.ok) {
             $('#model').modal('hide');
             Notiflix.Notify.success(successMessage);
             table.ajax.reload();
+
         } else {
             Notiflix.Notify.failure(await response.text());
         }
     }).catch(error => {
-            Notiflix.Notify.failure("Error has occurred during process. Please Try again later.");
-            console.error(error); // Optionally log the error to the console for debugging
+        Notiflix.Notify.failure("Error has occurred during process. Please Try again later.");
+        console.error(error); // Optionally log the error to the console for debugging
     });
 }
-
-
-
 
 
 async function fetchData(apiEndpoint, filterParam = null, jsonBody = null) {
@@ -77,7 +75,7 @@ async function populateSelect(element, data, text, option) {
         ? '<option selected value="" disabled>' + text + '</option><option value="">None</option>'
         : '<option selected value="" disabled>' + text + '</option>';
 
-    data.forEach(item => {
+    await data.forEach(item => {
         const option = document.createElement('option');
         option.value = item;
         option.textContent = item;

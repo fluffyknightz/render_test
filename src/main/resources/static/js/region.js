@@ -6,26 +6,26 @@ let input = document.getElementById('region');
 
 
 
-function adding() {
+async function adding() {
     validationInput()
     console.log("add reach")
     if (inputValue === undefined || inputValue === null || inputValue.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
         const url = '/spcu-dims/api/v1/region/create?name=' + encodeURIComponent(inputValue);
-        performOperation(url, 'POST', 'Create successful.');
+        await performOperation(url, 'POST', 'Create successful.');
     }
 }
 
 
-function editing() {
+async function editing() {
     console.log("edit reach")
     validationInput()
     if (inputValue === undefined || inputValue === null || inputValue.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
         const url = '/spcu-dims/api/v1/region/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id);
-        performOperation(url, 'PATCH', 'Edit successful.');
+        await performOperation(url, 'PATCH', 'Edit successful.');
     }
 
 }

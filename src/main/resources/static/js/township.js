@@ -14,14 +14,14 @@ let regionFilter = document.getElementById('filterRegion');
 let zoneFilter = document.getElementById('filterZone');
 
 
-function adding() {
+async function adding() {
     validationInput()
     console.log("add reach")
     if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || districtSelect.value.trim() === "" || zoneSelect.value.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
         const url = '/spcu-dims/api/v1/township/create?name=' + encodeURIComponent(inputValue) + '&&district=' + encodeURIComponent(districtSelect.value) + '&&zone=' + encodeURIComponent(zoneSelect.value);
-        performOperation(url, 'POST', 'Create successful.');
+        await performOperation(url, 'POST', 'Create successful.');
     }
 }
 

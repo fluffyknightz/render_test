@@ -65,14 +65,14 @@ function changeAdd() {
     return false;
 }
 
-function editing() {
+async function editing() {
     console.log("edit reach")
     validationInput()
     if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || dioceseSelect.value.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
         const url = '/spcu-dims/api/v1/zone/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id) + '&&diocese=' + encodeURIComponent(dioceseSelect.value);
-        performOperation(url, 'PATCH', 'Edit successful.');
+        await performOperation(url, 'PATCH', 'Edit successful.');
     }
 }
 
@@ -112,13 +112,13 @@ function showConfirm(id) {
 
 
 
-function adding() {
+async function adding() {
     validationInput()
     if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || dioceseSelect.value.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
         const url = '/spcu-dims/api/v1/zone/create?name=' + encodeURIComponent(inputValue) + '&&diocese=' + encodeURIComponent(dioceseSelect.value);
-        performOperation(url, 'POST', 'Create successful.');
+        await performOperation(url, 'POST', 'Create successful.');
     }
 }
 

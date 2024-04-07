@@ -7,7 +7,7 @@ let archdioceseSelect = document.getElementById('archdioceseSelect');
 let archdioceseFilter = document.getElementById('filterArchdiocese');
 
 
-function adding() {
+async function adding() {
     // Assuming validationInput sets inputValue
     validationInput();
     console.log(archdioceseSelect.value)
@@ -15,20 +15,20 @@ function adding() {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
         const url = `/spcu-dims/api/v1/diocese/create?name=${encodeURIComponent(inputValue)}&&archdiocese=${encodeURIComponent(archdioceseSelect.value)}`;
-        performOperation(url, 'POST', 'Create successful.');
+        await performOperation(url, 'POST', 'Create successful.');
     }
 }
 
 
 
-function editing() {
+async function editing() {
 
     validationInput()
     if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || archdioceseSelect.value.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
         const url = '/spcu-dims/api/v1/diocese/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id) + '&&archdiocese=' + encodeURIComponent(archdioceseSelect.value);
-        performOperation(url, 'PATCH', 'Edit successful.');
+        await performOperation(url, 'PATCH', 'Edit successful.');
     }
 
 }
