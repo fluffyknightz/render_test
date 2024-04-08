@@ -62,28 +62,48 @@ public class UserAPI {
 
     @PatchMapping("/update")
     @PreAuthorize("hasAnyAuthority('Admin', 'DefaultAdmin')")
-    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("username") String username, @RequestParam("role") String role, @RequestParam(value = "password", required = false) String password) {
+    public ResponseEntity<Object> update(@RequestParam("id") int id,
+                                         @RequestParam("username") String username,
+                                         @RequestParam("role") String role,
+                                         @RequestParam(value = "password", required = false) String password) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
 
+        // Check if the current user is authorized to perform the update
+        if (!isAuthorizedToUpdate(myUserDetails, id)) {
+            String errorMessage = "You are not allowed to update this user";
+            return new ResponseEntity<>(errorMessage, HttpStatus.FORBIDDEN);
+        }
+
+        // Perform the update
         Object user = userServices.update(id, username, role, password);
         if (user instanceof String) {
-
+            // Conflict occurred, return a conflict response
             return new ResponseEntity<>(user, HttpStatus.CONFLICT);
         } else if (user != null) {
+            // Successful update
             User newUser = (User) user;
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
             if (myUserDetails.getUserId() == id) {
+                // Update authentication details if the user updating is the current user
                 MyUserDetails updatedUserDetails = myUserDetailsServices.loadUserByUsername(newUser.getUsername());
                 Authentication newAuthentication = new UsernamePasswordAuthenticationToken(updatedUserDetails, authentication.getCredentials(), updatedUserDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(newAuthentication);
             }
             return new ResponseEntity<>(user, HttpStatus.CREATED);
+        } else {
+            // Update failed
+            String errorMessage = "Failed to Update User!";
+            return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        String errorMessage = "Failed to Update User!";
-        return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
-
     }
+
+    private boolean isAuthorizedToUpdate(MyUserDetails userDetails, int userId) {
+        // Check if the user is either DefaultAdmin or Admin updating their own profile
+        return userDetails.getRole() != null &&
+                (userDetails.getRole().equals("DefaultAdmin") ||
+                        (userDetails.getRole().equals("Admin") && userDetails.getUserId() == userId));
+    }
+
 
     @PatchMapping("/password")
     public ResponseEntity<String> password(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) {
@@ -91,7 +111,7 @@ public class UserAPI {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
-        if(passwordEncoder.matches(oldPassword, myUserDetails.getPassword())) {
+        if (passwordEncoder.matches(oldPassword, myUserDetails.getPassword())) {
             User user = userServices.passwordChange(newPassword, myUserDetails.getUsername());
             if (user != null) {
                 MyUserDetails updatedUserDetails = myUserDetailsServices.loadUserByUsername(user.getUsername());

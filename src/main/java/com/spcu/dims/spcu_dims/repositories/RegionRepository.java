@@ -11,7 +11,6 @@ import java.util.Optional;
 @Repository
 public interface RegionRepository extends DataTablesRepository<Region, Integer> {
 
-    boolean existsByName(String name);
     Optional<Region> findByName(String name);
 
     Optional<Region> findById(int id);

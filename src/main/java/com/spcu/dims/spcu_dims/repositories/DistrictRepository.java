@@ -13,11 +13,13 @@ import java.util.Optional;
 public interface DistrictRepository extends DataTablesRepository<District, Integer> {
 
     Optional<District> findByName(String name);
-    @Query("SELECT d.name FROM District d WHERE d.region.name = :region")
+
+    @Query("SELECT d.name FROM District d WHERE d.isDelete = false and d.region.name = :region")
     List<String> findByRegionName(@Param("region") String region);
 
     @Query("SELECT e.name FROM District e WHERE e.isDelete = false ORDER BY e.name ASC")
     List<String> findAllNotDeleted();
+
     Optional<District> findByNameAndIdNot(String name, int id);
 
 }

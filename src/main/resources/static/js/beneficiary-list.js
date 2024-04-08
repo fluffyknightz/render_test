@@ -150,8 +150,11 @@ $(document).ready(async function () {
                 buttons: [
 
                     {
-                        extend: 'excel', filename: 'beneficiary-list', title: 'Beneficiary Lists', exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                        extend: 'excel',
+                        filename: 'beneficiary-list',
+                        title: 'Beneficiary Lists',
+                        exportOptions: {
+                            columns: ':not(.noExport):visible'
                         }
                     }, {
                         extend: 'pdf',
@@ -160,14 +163,18 @@ $(document).ready(async function () {
                         orientation: 'landscape',
                         pageSize: 'LEGAL',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                            columns: ':not(.noExport):visible'
                         },
                         customize: function (doc) {
-                            doc.content[1].margin = [100, 20, 0, 0] //left, top, right, bottom
+                            // Center content in the PDF
+                            doc.defaultStyle.alignment = 'center';
                         }
                     }, {
-                        extend: 'print', filename: 'beneficiary-list', title: 'Beneficiary Lists', exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                        extend: 'print',
+                        filename: 'beneficiary-list',
+                        title: 'Beneficiary Lists',
+                        exportOptions: {
+                            columns: ':not(.noExport):visible'
                         }
                     }]
             }, topEnd: {
@@ -214,11 +221,11 @@ $(document).ready(async function () {
             }, {
                 data: 'over60Female'
             }, {
-                data: 'isDelete', ordering: false, render: function (data, type, row) {
+                data: 'isDelete', className: 'noExport', ordering: false, render: function (data, type, row) {
                     return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" ' + 'onclick="changeEdit(' + row.id + ', \'' + row.activityName.replace(/'/g, "\\'") + '\', \'' + row.parishName.replace(/'/g, "\\'") + '\', ' + row.beneficiaryHousehold + ', ' + row.beneficiaryMale + ', ' + row.beneficiaryFemale + ', ' + row.disabilityMale + ', ' + row.disabilityFemale + ', ' + row.under18Male + ', ' + row.under18Female + ', ' + row.over60Male + ', ' + row.over60Female + ', \'' + row.archdioceseName.replace(/'/g, "\\'") + '\', \'' + row.dioceseName.replace(/'/g, "\\'") + '\', \'' + row.zoneName.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
                 }
             }, {
-                data: 'archdioceseName', visible: false, ordering: false, className: 'noVis'
+                data: 'archdioceseName', visible: false, ordering: false, className: 'noVis noExport'
             }
         ],
 
@@ -445,8 +452,8 @@ async function editing() {
 
 
         if (activitySelect.value === 'Other') {
-
             await performOperation('/spcu-dims/api/v1/activity/create?name=' + encodeURIComponent(activity.value), 'POST', 'Activity Create successful.');
+            await activityFetch();
         }
         await performOperation(url, 'PATCH', 'Edit successful.', requestData);
         reload()
@@ -457,7 +464,6 @@ async function editing() {
 
 async function adding() {
     if (checkRequired()) {
-        console.log('1st')
         Notiflix.Notify.failure("Please enter All Data!");
     } else if (activitySelect.value === 'Other' && (activity.value === undefined || activity.value === null || activity.value.trim() === "")) {
         console.log(activitySelect.value)
@@ -481,9 +487,10 @@ async function adding() {
         const url = '/spcu-dims/api/v1/beneficiary-lists/create';
 
         if (activitySelect.value === 'Other') {
-            await performOperation('/spcu-dims/api/v1/activity/create?name=' + encodeURIComponent(activity.value), 'POST', 'Activity Create successful.');
+            await performOperation('/spcu-dims/api/v1/activity/create?name=' + encodeURIComponent(activity.value), 'POST', 'Activity create successful.');
+            await activityFetch();
         }
-        await performOperation(url, 'POST', 'create successful.', requestData);
+        await performOperation(url, 'POST', 'Create successful.', requestData);
         reload()
     }
 }

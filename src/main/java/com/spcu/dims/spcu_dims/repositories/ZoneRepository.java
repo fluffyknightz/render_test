@@ -12,15 +12,14 @@ import java.util.Optional;
 @Repository
 public interface ZoneRepository extends DataTablesRepository<Zone, Integer> {
 
-    boolean existsByName(String name);
-
     Optional<Zone> findByName(String name);
 
     @Query("SELECT e.name FROM Zone e WHERE e.isDelete = false ORDER BY e.name ASC")
     List<String> findAllNotDeleted();
+
     Optional<Zone> findByNameAndIdNot(String name, int id);
 
-    @Query("SELECT z.name FROM Zone z WHERE z.diocese.name = :diocese ORDER BY z.name ASC")
+    @Query("SELECT z.name FROM Zone z WHERE z.isDelete = false and z.diocese.name = :diocese ORDER BY z.name ASC")
     List<String> findByDioceseName(@Param("diocese") String diocese);
 
 }

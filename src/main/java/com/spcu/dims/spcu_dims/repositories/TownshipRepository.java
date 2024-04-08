@@ -10,11 +10,12 @@ import java.util.Optional;
 
 @Repository
 public interface TownshipRepository extends DataTablesRepository<Township, Integer> {
-    boolean existsByName(String name);
 
     Optional<Township> findByName(String name);
+
     @Query("SELECT e.name FROM Township e WHERE e.isDelete = false ORDER BY e.name ASC")
     List<String> findAllNotDeleted();
+
     Optional<Township> findByNameAndIdNot(String name, int id);
 
 

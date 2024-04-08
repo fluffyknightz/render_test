@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface ParishRepository extends DataTablesRepository<Parish, Integer> {
-    boolean existsByName(String name);
 
     Optional<Parish> findByName(String name);
 
@@ -19,7 +18,7 @@ public interface ParishRepository extends DataTablesRepository<Parish, Integer> 
     @Query("SELECT e.name FROM Parish e WHERE e.isDelete = false ORDER BY e.name ASC")
     List<String> findAllNotDeleted();
 
-    @Query(value = "SELECT p.name FROM Parish p WHERE p.township.zone.name = :zone ORDER BY p.name ASC")
+    @Query(value = "SELECT p.name FROM Parish p WHERE p.isDelete = false and p.township.zone.name = :zone ORDER BY p.name ASC")
     List<String> findByZoneName(@Param("zone") String zone);
 
 }
