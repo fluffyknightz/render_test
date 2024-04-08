@@ -12,8 +12,6 @@ import java.util.Optional;
 @Repository
 public interface DioceseRepository extends DataTablesRepository<Diocese, Integer> {
 
-    boolean existsByName(String name);
-
     Optional<Diocese> findByName(String name);
 
     @Query("SELECT e.name FROM Diocese e WHERE e.isDelete = false ORDER BY e.name ASC")
