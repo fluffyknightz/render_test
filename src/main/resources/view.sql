@@ -1,6 +1,8 @@
 CREATE or replace VIEW `beneficiary_lists_view` AS
 SELECT
     bl.id,
+    bl.created_date,
+    u.username as created_user,
     a.name AS activity_name,
     ardio.name AS archdiocese_name,
     dio.name AS diocese_name,
@@ -18,6 +20,7 @@ SELECT
     bl.is_delete
 FROM
     beneficiary_lists bl
+        INNER JOIN users u On bl.user_id = u.id
         INNER JOIN activities a ON a.id = bl.activity_id
         INNER JOIN parishes p ON p.id = bl.parish_id
         INNER JOIN townships t ON t.id = p.township_id

@@ -18,13 +18,13 @@ public class Beneficiary implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false, columnDefinition = "INT DEFAULT 0 NOT NULL" )
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int household;
 
-    @Column(nullable = false, columnDefinition = "INT DEFAULT 0 NOT NULL")
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int male;
 
-    @Column(nullable = false, columnDefinition = "INT DEFAULT 0 NOT NULL")
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int female;
 
 }

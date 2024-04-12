@@ -23,15 +23,17 @@ public class BeneficiaryListServicesImplement implements BeneficiaryListServices
     private final BeneficiaryRepository beneficiaryRepository;
     private final DisabilityRepository disabilityRepository;
     private final VulnerabilityRepository vulnerabilityRepository;
+    private final UserRepository userRepository;
 
     String doesNotExistMessage = "BeneficiaryList does not exist.";
     String activityDoesNotExistMessage = "Activity with the name '%s' does not exist.";
+    String userDoesNotExistMessage = "User does not exist.";
     String parishDoesNotExistMessage = "Parish with the name '%s' does not exist.";
     String bothDoesNotExistMessage = "Activity with the name '%s' and Parish with the name '%s' do not exist.";
 
 
     @Override
-    public Object createBeneficiaryList(BeneficiaryListDto reqData) {
+    public Object createBeneficiaryList(BeneficiaryListDto reqData, int userId) {
 
         Optional<Activity> activityExist = activityRepository.findByName(reqData.getActivityName());
         Optional<Parish> parishExist = parishRepository.findByName(reqData.getParishName());
@@ -44,6 +46,11 @@ public class BeneficiaryListServicesImplement implements BeneficiaryListServices
             return String.format(parishDoesNotExistMessage, reqData.getParishName());
         }
 
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            return String.format(doesNotExistMessage);
+        }
+
         Beneficiary beneficiary = Beneficiary.builder().household(reqData.getBeneficiaryHousehold()).male(reqData.getBeneficiaryMale()).female(reqData.getBeneficiaryFemale()).build();
         beneficiaryRepository.save(beneficiary);
 
@@ -53,7 +60,7 @@ public class BeneficiaryListServicesImplement implements BeneficiaryListServices
         Vulnerability vulnerability = Vulnerability.builder().under18Female(reqData.getVulnerabilityUnder18Female()).under18Male(reqData.getVulnerabilityUnder18Male()).over60Female(reqData.getVulnerabilityOver60Female()).over60Male(reqData.getVulnerabilityOver60Male()).build();
         vulnerabilityRepository.save(vulnerability);
 
-        BeneficiaryList beneficiaryList = BeneficiaryList.builder().activity(activityExist.get()).parish(parishExist.get()).beneficiary(beneficiary).disability(disability).vulnerability(vulnerability).build();
+        BeneficiaryList beneficiaryList = BeneficiaryList.builder().user(user.get()).createdDate(reqData.getCreatedDate()).activity(activityExist.get()).parish(parishExist.get()).beneficiary(beneficiary).disability(disability).vulnerability(vulnerability).build();
         return beneficiaryListRepository.save(beneficiaryList);
     }
 

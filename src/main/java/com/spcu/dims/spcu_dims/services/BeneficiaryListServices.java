@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface BeneficiaryListServices {
 
-    Object createBeneficiaryList(BeneficiaryListDto reqData);
+    Object createBeneficiaryList(BeneficiaryListDto reqData, int userId);
 
     List<BeneficiaryList> showAll();
 

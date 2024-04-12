@@ -1,10 +1,9 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
+import com.spcu.dims.spcu_dims.config.MyUserDetails;
 import com.spcu.dims.spcu_dims.dto.BeneficiaryListDto;
 import com.spcu.dims.spcu_dims.entities.BeneficiaryList;
 import com.spcu.dims.spcu_dims.entities.BeneficiaryListView;
-import com.spcu.dims.spcu_dims.entities.Test;
-import com.spcu.dims.spcu_dims.repositories.TestRepository;
 import com.spcu.dims.spcu_dims.services.BeneficiaryListServices;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -12,6 +11,7 @@ import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -23,15 +23,13 @@ import java.util.Map;
 public class BeneficiaryListAPI {
 
     private final BeneficiaryListServices beneficiaryListServices;
-    private final TestRepository testRepository;
     private static final String NOT_FOUND = "ID Not Found.";
-
-
 
 
     @PostMapping("/create")
     public ResponseEntity<Object> beneficiaryListCreate(@RequestBody BeneficiaryListDto reqData){
-        Object beneficiaryList = beneficiaryListServices.createBeneficiaryList(reqData);
+        MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object beneficiaryList = beneficiaryListServices.createBeneficiaryList(reqData, myUserDetails.getUserId());
         if (beneficiaryList instanceof String) {
             return new ResponseEntity<>(beneficiaryList, HttpStatus.CONFLICT);
         } else if (beneficiaryList != null) {
@@ -44,19 +42,10 @@ public class BeneficiaryListAPI {
 
     @PostMapping("/show/table")
     public DataTablesOutput<BeneficiaryListView> beneficiaryList(@Valid DataTablesInput input, @RequestParam Map<String, String> queryParameters){
-        System.out.println(input);
         input.parseSearchPanesFromQueryParams(queryParameters, Arrays.asList("activityName", "parishName"));
-        System.out.println(input);
         return beneficiaryListServices.tableBeneficiaryList(input);
     }
 
-    @PostMapping("/show/test")
-    public DataTablesOutput<Test> test(@Valid DataTablesInput input, @RequestParam Map<String, String> queryParameters){
-
-        input.parseSearchPanesFromQueryParams(queryParameters, Arrays.asList("city", "age"));
-
-        return testRepository.findAll(input);
-    }
 
     @GetMapping("/show/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") int id) {

@@ -2,6 +2,8 @@ package com.spcu.dims.spcu_dims.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
@@ -11,6 +13,7 @@ public class BeneficiaryListDto {
     private int id;
     private String activityName;
     private String parishName;
+    private LocalDate createdDate;
     private int beneficiaryHousehold;
     private int beneficiaryMale;
     private int beneficiaryFemale;

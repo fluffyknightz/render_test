@@ -5,9 +5,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.Subselect;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.annotation.Immutable;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -22,6 +24,8 @@ public class BeneficiaryListView implements Serializable {
 
     @Id
     private int id;
+    private LocalDate createdDate;
+    private String createdUser;
     private String activityName;
     private String dioceseName;
     private String archdioceseName;

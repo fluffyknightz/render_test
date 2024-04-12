@@ -8,6 +8,7 @@ let activity = document.getElementById('activity');
 let button = document.getElementById('myButton');
 let title = document.getElementById('modelTitle');
 
+
 let activitySelect = document.getElementById('activitySelect');
 let archdioceseSelect = document.getElementById('archdioceseSelect');
 let dioceseSelect = document.getElementById('dioceseSelect');
@@ -23,6 +24,8 @@ let inputVulnerabilitiesUnder18Male = document.getElementById('vulnerabilities-u
 let inputVulnerabilitiesUnder18Female = document.getElementById('vulnerabilities-under18-female');
 let inputVulnerabilitiesOver60Male = document.getElementById('vulnerabilities-over60-male');
 let inputVulnerabilitiesOver60Female = document.getElementById('vulnerabilities-over60-female');
+let created_date = document.getElementById('createdDate');
+
 let bHousehold;
 let bMale;
 let bFemale;
@@ -43,6 +46,9 @@ function reload() {
     setTimeout(rebuild, 150); // 1000 milliseconds = 1 second
 }
 
+created_date.addEventListener('input', function(event){
+    console.log(typeof event.target.value)
+})
 
 function rebuild() {
     table.searchPanes.rebuildPane();
@@ -122,7 +128,7 @@ $(document).ready(async function () {
                 [csrfHeader]: csrfToken
             },
             data: function (d) {
-                d.columns[13].search.value = false;
+                d.columns[15].search.value = false;
                 return d;
             },
         },
@@ -221,11 +227,14 @@ $(document).ready(async function () {
             }, {
                 data: 'over60Female'
             }, {
-                data: 'isDelete', className: 'noExport', ordering: false, render: function (data, type, row) {
-                    return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" ' + 'onclick="changeEdit(' + row.id + ', \'' + row.activityName.replace(/'/g, "\\'") + '\', \'' + row.parishName.replace(/'/g, "\\'") + '\', ' + row.beneficiaryHousehold + ', ' + row.beneficiaryMale + ', ' + row.beneficiaryFemale + ', ' + row.disabilityMale + ', ' + row.disabilityFemale + ', ' + row.under18Male + ', ' + row.under18Female + ', ' + row.over60Male + ', ' + row.over60Female + ', \'' + row.archdioceseName.replace(/'/g, "\\'") + '\', \'' + row.dioceseName.replace(/'/g, "\\'") + '\', \'' + row.zoneName.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
-                }
+                data: 'createdDate'
             }, {
-                data: 'archdioceseName', visible: false, ordering: false, className: 'noVis noExport'
+                data: 'createdUser'
+            }, {
+                data: 'isDelete', className: 'noExport', ordering: false, render: function (data, type, row) {
+                    return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" ' + 'onclick="changeEdit(' + row.id + ', \'' + row.activityName.replace(/'/g, "\\'") + '\', \'' + row.parishName.replace(/'/g, "\\'") + '\', ' + row.beneficiaryHousehold + ', ' + row.beneficiaryMale + ', ' + row.beneficiaryFemale + ', ' + row.disabilityMale + ', ' + row.disabilityFemale + ', ' + row.under18Male + ', ' + row.under18Female + ', ' + row.over60Male + ', ' + row.over60Female + ', \'' + row.archdioceseName.replace(/'/g, "\\'") + '\', \'' + row.dioceseName.replace(/'/g, "\\'") + '\', \'' + row.zoneName.replace(/'/g, "\\'") + '\', \'' + row.createdDate + '\' )" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+                }
+
             }
         ],
 
@@ -371,6 +380,7 @@ function changeAdd() {
     dioceseSelect.selectedIndex = 0;
     zoneSelect.selectedIndex = 0;
     parishSelect.selectedIndex = 0;
+    created_date.value = null;
     inputBeneficiariesHousehold.value = null;
     inputBeneficiariesMale.value = null;
     inputBeneficiariesFemale.value = null;
@@ -386,7 +396,7 @@ function changeAdd() {
     return false;
 }
 
-async function changeEdit(id, activity, parish, houseHold, male, female, disabilityMale, disabilityFemale, under18Male, under18Female, over60Male, over60Female, archdiocese, diocese, zone) {
+async function changeEdit(id, activity, parish, houseHold, male, female, disabilityMale, disabilityFemale, under18Male, under18Female, over60Male, over60Female, archdiocese, diocese, zone, createdDate) {
     activityForm.style.display = 'none';
     await dioceseSpecificFetch(archdiocese)
     await zoneSpecificFetch(diocese)
@@ -404,6 +414,7 @@ async function changeEdit(id, activity, parish, houseHold, male, female, disabil
     zoneSelect.value = zone;
     parishSelect.value = parish;
 
+    created_date.value = createdDate;
     inputBeneficiariesHousehold.value = houseHold;
     inputBeneficiariesMale.value = male;
     inputBeneficiariesFemale.value = female;
@@ -474,6 +485,7 @@ async function adding() {
         let requestData = {
             activityName: activitySelect.value === 'Other' ? activity.value : activitySelect.value,
             parishName: parishSelect.value,
+            createdDate: created_date.value,
             beneficiaryHousehold: inputBeneficiariesHousehold.value,
             beneficiaryMale: inputBeneficiariesMale.value,
             beneficiaryFemale: inputBeneficiariesFemale.value,
@@ -499,6 +511,7 @@ function checkRequired() {
     return activitySelect.value === undefined || activitySelect.value === null ||
         activitySelect.value.trim() === "" || parishSelect.value === undefined ||
         parishSelect.value === null || parishSelect.value.trim() === "" ||
+        created_date.value === null || created_date.value.trim() === "" ||
         inputBeneficiariesHousehold.value === undefined || inputBeneficiariesHousehold.value === null ||
         inputBeneficiariesHousehold.value.trim() === "" || inputBeneficiariesMale.value === undefined ||
         inputBeneficiariesMale.value === null || inputBeneficiariesMale.value.trim() === "" ||

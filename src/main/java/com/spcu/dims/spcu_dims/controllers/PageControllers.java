@@ -101,11 +101,6 @@ public class PageControllers {
         return "user";
     }
 
-    @GetMapping("/test")
-    public String test() {
-        return "test";
-    }
-
     @GetMapping("/password-change")
     public String passwordChange() {
         return "password";

@@ -50,8 +50,10 @@
                                         <th colspan="3" class="text-center">Beneficiaries</th>
                                         <th colspan="2" class="text-center">Disabilities</th>
                                         <th colspan="4" class="text-center">Vulnerabilities</th>
+                                        <th rowspan="2" class="text-center">Created Date</th>
+                                        <th rowspan="2" class="text-center">Created User</th>
                                         <th rowspan="2">Action</th>
-                                        <th></th>
+
                                     </tr>
                                     <tr>
                                         <th>Household(Total : <span class="bHousehold"></span>)</th>
@@ -63,12 +65,11 @@
                                         <th>Under 18 Female(Total : <span class="vU18Female"></span>)</th>
                                         <th>Over 60 Male(Total : <span class="vO60Male"></span>)</th>
                                         <th>Over 60 Female(Total : <span class="vO60Female"></span>)</th>
-                                        <th></th>
+<!--                                        <th></th>-->
                                     </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
-
                                         <th>Activities</th>
                                         <th>Diocese</th>
                                         <th>Zone</th>
@@ -82,8 +83,10 @@
                                         <th>Under 18 Female(Total : <span class="vU18Female"></span>)</th>
                                         <th>Over 60 Male(Total : <span class="vO60Male"></span>)</th>
                                         <th>Over 60 Female(Total : <span class="vO60Female"></span>)</th>
+                                        <th>Created Date</th>
+                                        <th>Created User</th>
                                         <th>Action</th>
-                                        <th></th>
+
                                     </tr>
 
                                     </tfoot>
@@ -115,6 +118,11 @@
                                 <input type="text" class="form-control" name="activity" id="activity"
                                        placeholder="Activity">
                                 <label for="activity">Other Activity</label>
+                            </div>
+                            <hr>
+                            <div class="form-floating my-3">
+                                <input type="date" class="form-control" name="createdDate" id="createdDate">
+                                <label for="createdDate">Created Date</label>
                             </div>
                             <hr>
                             <select class="form-select my-3" aria-label="diocese select" id="archdioceseSelect">

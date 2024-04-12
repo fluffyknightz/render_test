@@ -1,11 +1,11 @@
-/*! DataTables styling wrapper for Buttons
+/*! Bootstrap 5 integration for DataTables' SearchPanes
  * © SpryMedia Ltd - datatables.net/license
  */
 
 (function( factory ){
     if ( typeof define === 'function' && define.amd ) {
         // AMD
-        define( ['jquery', 'datatables.net-dt', 'datatables.net-buttons'], function ( $ ) {
+        define( ['jquery', 'datatables.net-bs5', 'datatables.net-searchpanes'], function ( $ ) {
             return factory( $, window, document );
         } );
     }
@@ -14,11 +14,11 @@
         var jq = require('jquery');
         var cjsRequires = function (root, $) {
             if ( ! $.fn.dataTable ) {
-                require('datatables.net-dt')(root, $);
+                require('datatables.net-bs5')(root, $);
             }
 
-            if ( ! $.fn.dataTable.Buttons ) {
-                require('datatables.net-buttons')(root, $);
+            if ( ! $.fn.dataTable.SearchPanes ) {
+                require('datatables.net-searchpanes')(root, $);
             }
         };
 
@@ -52,6 +52,30 @@
     var DataTable = $.fn.dataTable;
 
 
+    $.extend(true, DataTable.SearchPane.classes, {
+        buttonGroup: 'btn-group',
+        disabledButton: 'disabled',
+        narrow: 'col',
+        pane: {
+            container: 'table'
+        },
+        paneButton: 'btn btn-subtle',
+        pill: 'badge rounded-pill bg-secondary',
+        search: 'form-control search',
+        table: 'table table-sm table-borderless',
+        topRow: 'dtsp-topRow'
+    });
+    $.extend(true, DataTable.SearchPanes.classes, {
+        clearAll: 'dtsp-clearAll btn btn-subtle',
+        collapseAll: 'dtsp-collapseAll btn btn-subtle',
+        container: 'dtsp-searchPanes',
+        disabledButton: 'disabled',
+        panes: 'dtsp-panes dtsp-panesContainer',
+        search: DataTable.SearchPane.classes.search,
+        showAll: 'dtsp-showAll btn btn-subtle',
+        title: 'dtsp-title',
+        titleRow: 'dtsp-titleRow'
+    });
 
 
     return DataTable;
