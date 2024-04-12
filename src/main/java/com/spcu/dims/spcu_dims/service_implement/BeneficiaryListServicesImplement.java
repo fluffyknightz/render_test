@@ -48,7 +48,7 @@ public class BeneficiaryListServicesImplement implements BeneficiaryListServices
 
         Optional<User> user = userRepository.findById(userId);
         if (user.isEmpty()) {
-            return String.format(doesNotExistMessage);
+            return String.format(userDoesNotExistMessage);
         }
 
         Beneficiary beneficiary = Beneficiary.builder().household(reqData.getBeneficiaryHousehold()).male(reqData.getBeneficiaryMale()).female(reqData.getBeneficiaryFemale()).build();
