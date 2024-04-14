@@ -10,7 +10,7 @@ import org.springframework.data.annotation.Immutable;
 import java.io.Serializable;
 
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Builder
 @Getter
 @Setter

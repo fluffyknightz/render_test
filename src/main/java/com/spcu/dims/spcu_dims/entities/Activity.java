@@ -8,8 +8,7 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Builder
 @AllArgsConstructor
 @Table(name = "activities")
@@ -24,5 +23,4 @@ public class Activity implements Serializable {
 
     @Column(nullable = false, columnDefinition = "BIT(1) DEFAULT 0")
     private boolean isDelete;
-
 }

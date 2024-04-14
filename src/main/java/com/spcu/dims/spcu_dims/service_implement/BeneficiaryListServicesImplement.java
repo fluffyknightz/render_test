@@ -1,5 +1,6 @@
 package com.spcu.dims.spcu_dims.service_implement;
 
+import com.spcu.dims.spcu_dims.controllers.CreatedDateSpecification;
 import com.spcu.dims.spcu_dims.dto.BeneficiaryListDto;
 import com.spcu.dims.spcu_dims.entities.*;
 import com.spcu.dims.spcu_dims.repositories.*;
@@ -105,7 +106,7 @@ public class BeneficiaryListServicesImplement implements BeneficiaryListServices
             Optional<Beneficiary> beneficiaryExist = beneficiaryRepository.findById(beneficiaryListOptional.get().getBeneficiary().getId());
             Optional<Disability> disabilityExist = disabilityRepository.findById(beneficiaryListOptional.get().getDisability().getId());
             Optional<Vulnerability> vulnerabilityExist = vulnerabilityRepository.findById(beneficiaryListOptional.get().getVulnerability().getId());
-
+            beneficiaryListOptional.get().setCreatedDate(reqData.getCreatedDate());
             if (beneficiaryExist.isPresent() && disabilityExist.isPresent() && vulnerabilityExist.isPresent()) {
 
                 beneficiaryExist.get().setHousehold(reqData.getBeneficiaryHousehold());
@@ -133,8 +134,8 @@ public class BeneficiaryListServicesImplement implements BeneficiaryListServices
     }
 
     @Override
-    public DataTablesOutput<BeneficiaryListView> tableBeneficiaryList(DataTablesInput input) {
-        return beneficiaryListViewRepository.findAll(input);
+    public DataTablesOutput<BeneficiaryListView> tableBeneficiaryList(DataTablesInput input, CreatedDateSpecification createdDateSpecification) {
+        return beneficiaryListViewRepository.findAll(input, createdDateSpecification);
     }
 
 }

@@ -26,6 +26,10 @@ let inputVulnerabilitiesOver60Male = document.getElementById('vulnerabilities-ov
 let inputVulnerabilitiesOver60Female = document.getElementById('vulnerabilities-over60-female');
 let created_date = document.getElementById('createdDate');
 
+let dateRange = document.getElementById('reportrange');
+let start = null;
+let end = null;
+
 let bHousehold;
 let bMale;
 let bFemale;
@@ -37,22 +41,22 @@ let vO60Male;
 let vO60Female;
 
 function reload() {
-    // Select the button element
-    var button = document.querySelector('.dtsp-clearAll');
-
-// Simulate a click event on the button
+    const button = document.querySelector('.dtsp-clearAll');
     button.click();
-
     setTimeout(rebuild, 150); // 1000 milliseconds = 1 second
 }
 
-created_date.addEventListener('input', function(event){
+function rebuild() {
+    table.searchPanes.rebuildPane();
+    start = null;
+    end = null;
+    cb(start, end)
+}
+
+created_date.addEventListener('input', function (event) {
     console.log(typeof event.target.value)
 })
 
-function rebuild() {
-    table.searchPanes.rebuildPane();
-}
 
 function numberLock() {
     const quantityInputs = document.querySelectorAll('.number-type');
@@ -60,24 +64,52 @@ function numberLock() {
     quantityInputs.forEach(function (input) {
         // Listen for input event on each input field
         input.addEventListener('input', function (event) {
-            // Get the input value
             let inputValue = event.target.value;
-
-            // Remove non-numeric characters
             inputValue = inputValue.replace(/\D/g, '');
-
-            // Update the input value
             event.target.value = inputValue;
         });
     });
+}
+
+function cb(start, end) {
+
+    if (!start || !end || start.format('YYYY-MM-DD') === 'Invalid date' || end.format('YYYY-MM-DD') === 'Invalid date') {
+        dateRange.querySelector('span').innerHTML = 'None';
+        table.column(13).search(null + ';' + null).draw();
+    } else {
+        dateRange.querySelector('span').innerHTML = start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY');
+        table.column(13).search(start.format('YYYY-MM-DD') + ';' + end.format('YYYY-MM-DD')).draw();
+    }
+}
+
+
+function dateFilter() {
+    // Initialize date range picker
+    $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+            'None': [null, null],
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(30, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+            'Last 3 Month': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    }, cb);
+
+    cb(start, end);
+
 }
 
 $(document).ready(async function () {
 
     await activityFetch();
     await archdioceseFetch();
-
     numberLock();
+
 
     function calculateTotalCombinedHousehold() {
         bHousehold = table
@@ -284,6 +316,7 @@ $(document).ready(async function () {
 
     });
 
+    dateFilter();
 
     document
         .querySelector('div.dtsp-verticalPanes')
@@ -380,7 +413,7 @@ function changeAdd() {
     dioceseSelect.selectedIndex = 0;
     zoneSelect.selectedIndex = 0;
     parishSelect.selectedIndex = 0;
-    created_date.value = null;
+    created_date.valueAsDate = new Date();
     inputBeneficiariesHousehold.value = null;
     inputBeneficiariesMale.value = null;
     inputBeneficiariesFemale.value = null;
@@ -446,6 +479,7 @@ async function editing() {
 
         let requestData = {
             id: data_id,
+            createdDate: created_date.valueAsDate,
             activityName: activitySelect.value === 'Other' ? activity.value : activitySelect.value,
             parishName: parishSelect.value,
             beneficiaryHousehold: inputBeneficiariesHousehold.value,
@@ -485,7 +519,7 @@ async function adding() {
         let requestData = {
             activityName: activitySelect.value === 'Other' ? activity.value : activitySelect.value,
             parishName: parishSelect.value,
-            createdDate: created_date.value,
+            createdDate: created_date.valueAsDate,
             beneficiaryHousehold: inputBeneficiariesHousehold.value,
             beneficiaryMale: inputBeneficiariesMale.value,
             beneficiaryFemale: inputBeneficiariesFemale.value,

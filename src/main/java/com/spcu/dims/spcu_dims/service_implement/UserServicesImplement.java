@@ -38,6 +38,8 @@ public class UserServicesImplement implements UserServices {
         } else if (existUser.isPresent()) {
             return String.format(userExistsMessage, username);
         }
+
+
         User user = User.builder().username(username).role(existRole.get()).password(passwordEncoder.encode(password)).build();
         return userRepository.save(user);
     }

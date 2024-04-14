@@ -1,6 +1,7 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.config.MyUserDetails;
+import com.spcu.dims.spcu_dims.controllers.CreatedDateSpecification;
 import com.spcu.dims.spcu_dims.dto.BeneficiaryListDto;
 import com.spcu.dims.spcu_dims.entities.BeneficiaryList;
 import com.spcu.dims.spcu_dims.entities.BeneficiaryListView;
@@ -23,6 +24,7 @@ import java.util.Map;
 public class BeneficiaryListAPI {
 
     private final BeneficiaryListServices beneficiaryListServices;
+
     private static final String NOT_FOUND = "ID Not Found.";
 
 
@@ -42,8 +44,10 @@ public class BeneficiaryListAPI {
 
     @PostMapping("/show/table")
     public DataTablesOutput<BeneficiaryListView> beneficiaryList(@Valid DataTablesInput input, @RequestParam Map<String, String> queryParameters){
+        CreatedDateSpecification createdDateSpecification = new CreatedDateSpecification(input);
         input.parseSearchPanesFromQueryParams(queryParameters, Arrays.asList("activityName", "parishName"));
-        return beneficiaryListServices.tableBeneficiaryList(input);
+
+        return beneficiaryListServices.tableBeneficiaryList(input, createdDateSpecification);
     }
 
 
@@ -73,4 +77,8 @@ public class BeneficiaryListAPI {
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
+
+
+
+
 }

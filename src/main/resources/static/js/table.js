@@ -42,6 +42,8 @@ async function performOperation(url, method, successMessage, jsonBody) {
             Notiflix.Notify.success(successMessage);
             table.ajax.reload();
 
+        } else if (response.status === 405) {
+            Notiflix.Notify.failure("Error has occurred during process. Please Try again later.");
         } else {
             Notiflix.Notify.failure(await response.text());
         }

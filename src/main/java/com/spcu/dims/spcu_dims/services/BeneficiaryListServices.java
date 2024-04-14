@@ -1,5 +1,6 @@
 package com.spcu.dims.spcu_dims.services;
 
+import com.spcu.dims.spcu_dims.controllers.CreatedDateSpecification;
 import com.spcu.dims.spcu_dims.dto.BeneficiaryListDto;
 import com.spcu.dims.spcu_dims.entities.BeneficiaryList;
 import com.spcu.dims.spcu_dims.entities.BeneficiaryListView;
@@ -20,6 +21,6 @@ public interface BeneficiaryListServices {
 
     Object update(BeneficiaryListDto reqData);
 
-    DataTablesOutput<BeneficiaryListView> tableBeneficiaryList(DataTablesInput input);
+    DataTablesOutput<BeneficiaryListView> tableBeneficiaryList(DataTablesInput input, CreatedDateSpecification createdDateSpecification);
 
 }
