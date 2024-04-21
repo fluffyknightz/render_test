@@ -39,9 +39,6 @@ public class SecurityConfig {
                                 CookieCsrfTokenRepository.withHttpOnlyFalse())
                 )
 
-//                .csrf(
-//                        AbstractHttpConfigurer::disable
-//                )
                 .rememberMe(
                         rememberMeKey -> rememberMeKey
                                 .rememberMeServices(customRememberMeServices())
