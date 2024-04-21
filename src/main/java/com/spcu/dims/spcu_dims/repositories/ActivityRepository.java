@@ -20,4 +20,6 @@ public interface ActivityRepository extends DataTablesRepository<Activity, Integ
 
     Optional<Activity> findByNameAndIdNot(String name, int id);
 
+    @Query("select count(a) from Activity a where a.isDelete = false")
+    int activityCount();
 }

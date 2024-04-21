@@ -1,7 +1,9 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
+import com.spcu.dims.spcu_dims.dto.IndexDto;
 import com.spcu.dims.spcu_dims.entities.Activity;
 import com.spcu.dims.spcu_dims.services.ActivityServices;
+import com.spcu.dims.spcu_dims.services.ParishServices;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -17,6 +19,7 @@ import java.util.List;
 public class ActivityAPI {
 
     private final ActivityServices activityServices;
+    private final ParishServices parishServices;
 
     private static final String NOT_FOUND = "ID Not Found.";
 
@@ -84,5 +87,13 @@ public class ActivityAPI {
     public DataTablesOutput<Activity> dioceses(@Valid @RequestBody DataTablesInput input) {
         return activityServices.tableActivity(input);
 
+    }
+
+    @GetMapping("/activity&parish")
+    public ResponseEntity<IndexDto> activityAndParish(){
+        int activityCount = activityServices.activityCount();
+        int parishCount = parishServices.parishCount();
+        IndexDto indexDto = IndexDto.builder().parish(parishCount).activity(activityCount).build();
+        return new ResponseEntity<>(indexDto, HttpStatus.OK);
     }
 }

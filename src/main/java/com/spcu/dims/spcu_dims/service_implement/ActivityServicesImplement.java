@@ -84,6 +84,11 @@ public class ActivityServicesImplement implements ActivityServices {
     public DataTablesOutput<Activity> tableActivity(DataTablesInput input) {
         return activityRepository.findAll(input);
     }
+
+    @Override
+    public int activityCount() {
+        return activityRepository.activityCount();
+    }
 }
     
 

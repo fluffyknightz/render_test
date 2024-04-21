@@ -108,4 +108,9 @@ public class ParishServicesImplement implements ParishServices {
     public List<String> findByZoneName(String zone) {
         return parishRepository.findByZoneName(zone);
     }
+
+    @Override
+    public int parishCount() {
+        return parishRepository.parishCount();
+    }
 }

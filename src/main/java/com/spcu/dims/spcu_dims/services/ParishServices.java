@@ -21,4 +21,6 @@ public interface ParishServices {
     DataTablesOutput<Parish> tableParish(DataTablesInput input);
 
     List<String> findByZoneName(String zone);
+
+    int parishCount();
 }

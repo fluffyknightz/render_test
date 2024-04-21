@@ -172,8 +172,6 @@ $(document).ready(async function () {
                 searchPanes: {
                     threshold: 1,
                     layout: 'columns-1',
-                    // cascadePanes: true,
-                    // viewTotal: true,
                     columns: [0, 3],
                     dtOpts: {
                         select: {

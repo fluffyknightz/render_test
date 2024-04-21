@@ -90,11 +90,6 @@ public class PageControllers {
         return "beneficiary-list";
     }
 
-    @GetMapping("/profile")
-    public String profile() {
-        return "profile";
-    }
-
     @GetMapping("/user")
     @PreAuthorize("hasAnyAuthority('Admin','DefaultAdmin')")
     public String user() {

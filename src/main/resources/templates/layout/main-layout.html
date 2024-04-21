@@ -11,34 +11,25 @@
     <!-- Favicon icon-->
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/theme/assets/images/favicon/favicon.ico}">
 
-    <!-- Libs CSS -->
+    <!-- CSS Bootstrap -->
     <link th:href="@{/libs/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/libs/bootstrap-icons/font/bootstrap-icons.css}" rel="stylesheet">
-<!--    <link th:href="@{/libs/dropzone/dist/dropzone.css}" rel="stylesheet">-->
-    <link th:href="@{/libs/prismjs/themes/prism-okaidia.css}" rel="stylesheet">
 
+    <!-- CSS Datatables -->
     <link th:href="@{/libs/datatables/css/datatables.bootstrap5.css}" rel="stylesheet">
-    <link th:href="@{/libs/datatables/css/buttons.bootstrap5.css}" rel="stylesheet" />
+    <link th:href="@{/libs/datatables/css/buttons.bootstrap5.css}" rel="stylesheet"/>
     <link th:href="@{/libs/datatables/css/searchPanes.bootstrap5.css}" rel="stylesheet"/>
     <link th:href="@{/libs/datatables/css/select.bootstrap5.css}" rel="stylesheet"/>
 
+    <!-- CSS Other -->
     <link th:href="@{/libs/notiflix/dist/notiflix-3.2.7.min.css}" rel="stylesheet">
     <link th:href="@{/libs/date-range-picker/daterangepicker.css}" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
 
-
-
     <!-- Theme CSS -->
     <link rel="stylesheet" th:href="@{/css/theme.css}">
-    <style>
 
-
-
-
-
-    </style>
-
-    <title>SPCU-DIMS</title>
+    <title layout:fragment="title"></title>
 
 </head>
 
@@ -60,16 +51,13 @@
     </div>
 </div>
 
-<!-- Scripts -->
-<!-- Libs JS -->
-
-
-
+<!-- CSRF Token -->
 <script th:src="@{/js/token.js}"></script>
 
 <script th:src="@{/libs/jquery/jquery.min.js}"></script>
 <script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
+<!-- Datatables JS -->
 <script th:src="@{/libs/datatables/js/datatables.js}"></script>
 <script th:src="@{/libs/datatables/js/datatables.bootstrap5.js}"></script>
 <script th:src="@{/libs/datatables/js/datatables.buttons.js}"></script>
@@ -78,43 +66,35 @@
 <script th:src="@{/libs/datatables/js/searchPanes.bootstrap5.js}"></script>
 <script th:src="@{/libs/datatables/js/datatables.select.js}"></script>
 <script th:src="@{/libs/datatables/js/select.bootstrap5.js}"></script>
-<script th:src="@{/libs/moment/moment.min.js}"></script>
-
 <script th:src="@{/libs/datatables/js/jszip.min.js}"></script>
 <script th:src="@{/libs/datatables/js/pdfmaker.min.js}"></script>
 <script th:src="@{/libs/datatables/js/vfs_font.js}"></script>
 <script th:src="@{/libs/datatables/js/buttons.html5.min.js}"></script>
 <script th:src="@{/libs/datatables/js/buttons.print.min.js}"></script>
 <script th:src="@{/libs/datatables/js/buttons.colvis.min.js}"></script>
+<script th:src="@{/libs/datatables/js/jquery.spring-friendly.js}"></script>
+
 <script th:src="@{/libs/jquery-slimscroll/jquery.slimscroll.min.js}"></script>
 <script th:src="@{/libs/feather-icons/dist/feather.min.js}"></script>
 
-<script th:src="@{/libs/datatables/js/jquery.spring-friendly.js}"></script>
+
 
 <script th:src="@{/js/feather.js}"></script>
 
 <script th:src="@{/libs/notiflix/dist/notiflix-3.2.7.min.js}"></script>
-<script th:src="@{/js/main.js}"></script>
 
 
+<script th:src="@{/libs/moment/moment.min.js}"></script>
 <script th:src="@{/libs/date-range-picker/daterangepicker.min.js}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
 
-<!--unuse -->
-<script th:src="@{/libs/prismjs/prism.js}"></script>
-<!--<script th:src="@{/libs/dropzone/dist/min/dropzone.min.js}"></script>-->
-<script th:src="@{/libs/prismjs/plugins/toolbar/prism-toolbar.min.js}"></script>
-<script th:src="@{/libs/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js}"></script>
-
-
 
 <!-- Theme JS -->
-
+<script th:src="@{/js/main.js}"></script>
 <script th:src="@{/js/navBar.js}"></script>
 <script th:src="@{/js/sidebarMenu.js}"></script>
 <script layout:fragment="scripts2"></script>
 <script layout:fragment="scripts"></script>
-
 
 
 </body>

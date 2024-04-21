@@ -19,5 +19,6 @@ public interface ActivityServices {
     Object update(int id, String name);
 
     DataTablesOutput<Activity> tableActivity(DataTablesInput input);
-    
+
+    int activityCount();
 }

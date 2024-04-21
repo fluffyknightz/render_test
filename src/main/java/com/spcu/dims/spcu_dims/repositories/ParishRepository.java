@@ -21,4 +21,7 @@ public interface ParishRepository extends DataTablesRepository<Parish, Integer> 
     @Query(value = "SELECT p.name FROM Parish p WHERE p.isDelete = false and p.township.zone.name = :zone ORDER BY p.name ASC")
     List<String> findByZoneName(@Param("zone") String zone);
 
+    @Query("select count(p) from Parish p where p.isDelete = false")
+    int parishCount();
+
 }
