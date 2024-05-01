@@ -1,6 +1,9 @@
 package com.spcu.dims.spcu_dims.service_implement;
 
-import com.spcu.dims.spcu_dims.entities.*;
+import com.spcu.dims.spcu_dims.entities.Congregation;
+import com.spcu.dims.spcu_dims.entities.Parish;
+import com.spcu.dims.spcu_dims.entities.Township;
+import com.spcu.dims.spcu_dims.repositories.CongregationRepository;
 import com.spcu.dims.spcu_dims.repositories.ParishRepository;
 import com.spcu.dims.spcu_dims.repositories.TownshipRepository;
 import com.spcu.dims.spcu_dims.services.ParishServices;
@@ -18,37 +21,41 @@ public class ParishServicesImplement implements ParishServices {
 
     private final ParishRepository parishRepository;
     private final TownshipRepository townshipRepository;
+    private final CongregationRepository congregationRepository;
 
     String existsMessage = "Parish with the name '%s' already exists.";
     String doesNotExistMessage = "Parish with the name '%s' does not exist.";
     String townshipDoesNotExistMessage = "Township with the name '%s' does not exist.";
-
+    String congregationNotExistMessage = "Congregation with the name '%s' does not exist.";
+    String bothNotExistMessage = "Both Township with the name '%s' and Congregation with the name '%s' do not exist.";
 
     @Override
-    public Object createParish(String name, String township, String note) {
+    public Object createParish(String name, String township, String congregation, String note) {
 
-        Optional<Township> optionalTownship = townshipRepository.findByName(township);
+        Optional<Township> townshipExist = townshipRepository.findByName(township);
+        Optional<Congregation> congregationExist = congregationRepository.findByName(congregation);
 
-        if (optionalTownship.isEmpty()) {
+        if (townshipExist.isEmpty() && congregationExist.isEmpty()) {
+            return String.format(bothNotExistMessage, township, congregation);
+        } else if (townshipExist.isEmpty()) {
             return String.format(townshipDoesNotExistMessage, township);
+        } else if (congregationExist.isEmpty()) {
+            return String.format(congregationNotExistMessage, congregation);
         }
 
         Optional<Parish> existingParishOptional = parishRepository.findByName(name);
         if (existingParishOptional.isPresent()) {
             if (existingParishOptional.get().isDelete()) {
                 existingParishOptional.get().setDelete(false);
-                existingParishOptional.get().setTownship(optionalTownship.get());
+                existingParishOptional.get().setTownship(townshipExist.get());
+                existingParishOptional.get().setCongregation(congregationExist.get());
                 existingParishOptional.get().setNote(note);
                 return parishRepository.save(existingParishOptional.get());
             } else {
                 return String.format(existsMessage, name);
             }
         }
-        Parish newParish = Parish.builder()
-                .name(name)
-                .township(optionalTownship.get())
-                .note(note)
-                .build();
+        Parish newParish = Parish.builder().name(name).township(townshipExist.get()).congregation(congregationExist.get()).note(note).build();
         return parishRepository.save(newParish);
     }
 
@@ -73,16 +80,22 @@ public class ParishServicesImplement implements ParishServices {
     }
 
     @Override
-    public Object update(int id, String name, String township, String note) {
+    public Object update(int id, String name, String township, String congregation, String note) {
         Optional<Parish> parishOptional = parishRepository.findById(id);
         Optional<Township> townshipExist = townshipRepository.findByName(township);
+        Optional<Congregation> congregationExist = congregationRepository.findByName(congregation);
 
-        if (townshipExist.isEmpty()) {
+        if (townshipExist.isEmpty() && congregationExist.isEmpty()) {
+            return String.format(bothNotExistMessage, township, congregation);
+        } else if (townshipExist.isEmpty()) {
             return String.format(townshipDoesNotExistMessage, township);
+        } else if (congregationExist.isEmpty()) {
+            return String.format(congregationNotExistMessage, congregation);
         }
+
         if (parishOptional.isPresent()) {
 
-            if (parishOptional.get().getName().equals(name) &&  parishOptional.get().getTownship().getName().equals(township) && parishOptional.get().getNote().equals(note)) {
+            if (parishOptional.get().getName().equals(name) && parishOptional.get().getTownship().getName().equals(township) && congregationExist.get().getName().equals(congregation) && parishOptional.get().getNote().equals(note)) {
                 return parishOptional;
             }
             // Check if the new name is already exists
@@ -92,6 +105,7 @@ public class ParishServicesImplement implements ParishServices {
 
             parishOptional.get().setName(name);
             parishOptional.get().setTownship(townshipExist.get());
+            parishOptional.get().setCongregation(congregationExist.get());
             parishOptional.get().setNote(note);
             return parishRepository.save(parishOptional.get());
         }

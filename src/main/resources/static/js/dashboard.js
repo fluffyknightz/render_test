@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         .then(async response => {
             if (response.status === 201 || response.status === 200) {
                 counts = await response.json();
-                console.log(counts)
                 region.textContent = counts.region
                 district.textContent = counts.district
                 township.textContent = counts.township

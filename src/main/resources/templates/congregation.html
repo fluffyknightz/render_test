@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{/layout/main-layout}"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<title layout:fragment="title">Congregation</title>
+<div layout:fragment="content">
+
+    <div class="container-fluid p-6">
+
+        <!--Start Congregation -->
+        <div class="row mt-3">
+            <div class="col-md-12 col-12">
+                <!-- card  -->
+                <div class="card">
+                    <!-- card header  -->
+                    <div class="card-header bg-white py-4">
+                        <h4 class="mb-0 text-primary">Congregation
+                            <span data-bs-target="#model" data-bs-toggle="modal" onclick="changeAdd()" type="button">
+                                <i class="bi bi-plus-square ml-5" style="font-size: 1.4rem"></i>
+                            </span>
+                        </h4>
+                    </div>
+
+                    <div class="p-5">
+                        <table class="hover table table-striped" id="myTable" style="width: 100%">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Action</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--End Congregation-->
+
+        <!--Start Congregation Add Modal -->
+        <div aria-hidden="true" class="modal fade" data-bs-backdrop="static" id="model" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modelTitle">Add Congregation</h1>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                    </div>
+                    <form id="myForm">
+                        <div class="modal-body">
+                            <div class="form-floating my-3">
+                                <input class="form-control" id="congregation" name="congregation" placeholder="Congregation"
+                                       type="text">
+                                <label for="congregation">Congregation</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+
+                            <button class="btn btn-primary" id="myButton" onclick="adding()" type="button">Save</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <!--End Congregation Add Modal -->
+
+    </div>
+
+</div>
+<script layout:fragment="scripts2" th:src="@{/js/table.js}"></script>
+<script layout:fragment="scripts" th:src="@{/js/congregation.js}"></script>
+
+
+</html>

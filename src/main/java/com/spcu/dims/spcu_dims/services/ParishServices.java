@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ParishServices {
 
-    Object createParish(String name, String township, String note);
+    Object createParish(String name, String township, String congregation, String note);
 
     List<String> showAll();
 
@@ -16,7 +16,7 @@ public interface ParishServices {
 
     Parish delete(int id);
 
-    Object update(int id, String name, String township, String note);
+    Object update(int id, String name, String township, String congregation, String note);
 
     DataTablesOutput<Parish> tableParish(DataTablesInput input);
 

@@ -10,7 +10,6 @@ import java.util.List;
 public interface UserServices {
 
 
-
     Object createUser(String username, String role, String password);
 
     DataTablesOutput<User> tableUser(DataTablesInput input);

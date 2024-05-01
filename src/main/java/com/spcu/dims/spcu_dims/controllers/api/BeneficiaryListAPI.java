@@ -23,13 +23,11 @@ import java.util.Map;
 @AllArgsConstructor
 public class BeneficiaryListAPI {
 
+    private static final String NOT_FOUND = "ID Not Found.";
     private final BeneficiaryListServices beneficiaryListServices;
 
-    private static final String NOT_FOUND = "ID Not Found.";
-
-
     @PostMapping("/create")
-    public ResponseEntity<Object> beneficiaryListCreate(@RequestBody BeneficiaryListDto reqData){
+    public ResponseEntity<Object> beneficiaryListCreate(@RequestBody BeneficiaryListDto reqData) {
         MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Object beneficiaryList = beneficiaryListServices.createBeneficiaryList(reqData, myUserDetails.getUserId());
         if (beneficiaryList instanceof String) {
@@ -43,7 +41,7 @@ public class BeneficiaryListAPI {
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<BeneficiaryListView> beneficiaryList(@Valid DataTablesInput input, @RequestParam Map<String, String> queryParameters){
+    public DataTablesOutput<BeneficiaryListView> beneficiaryList(@Valid DataTablesInput input, @RequestParam Map<String, String> queryParameters) {
         CreatedDateSpecification createdDateSpecification = new CreatedDateSpecification(input);
         input.parseSearchPanesFromQueryParams(queryParameters, Arrays.asList("activityName", "parishName"));
 
@@ -54,7 +52,7 @@ public class BeneficiaryListAPI {
     @GetMapping("/show/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") int id) {
         BeneficiaryList beneficiaryList = beneficiaryListServices.findById(id);
-        if(beneficiaryList != null){
+        if (beneficiaryList != null) {
             return new ResponseEntity<>(beneficiaryList, HttpStatus.OK);
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
@@ -72,13 +70,11 @@ public class BeneficiaryListAPI {
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestBody BeneficiaryListDto reqData) {
         Object beneficiaryList = beneficiaryListServices.update(reqData);
-        if(beneficiaryList!= null){
+        if (beneficiaryList != null) {
             return new ResponseEntity<>(beneficiaryList, HttpStatus.OK);
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
-
-
 
 
 }

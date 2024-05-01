@@ -52,7 +52,7 @@ public class RegionServicesImplement implements RegionServices {
     @Override
     public Region delete(int id) {
         Optional<Region> region = regionRepository.findById(id);
-        if(region.isPresent()) {
+        if (region.isPresent()) {
             region.get().setDelete(true);
             return regionRepository.save(region.get());
         }

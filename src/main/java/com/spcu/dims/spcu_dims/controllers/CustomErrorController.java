@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class CustomErrorController implements ErrorController{
+public class CustomErrorController implements ErrorController {
 
     @GetMapping("/error")
     public Object showErrorPage(HttpServletRequest request) {

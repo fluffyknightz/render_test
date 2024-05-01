@@ -16,7 +16,7 @@ let zoneFilter = document.getElementById('filterZone');
 
 async function adding() {
     validationInput()
-    console.log("add reach")
+
     if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || districtSelect.value.trim() === "" || zoneSelect.value.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
@@ -45,7 +45,7 @@ $(document).ready(async function () {
         language: {
             infoFiltered: "",
         },
-
+        scrollX: true,
         ajax: {
 
             url: 'spcu-dims/api/v1/township/show/table', method: 'POST', contentType: 'application/json',
@@ -59,23 +59,23 @@ $(document).ready(async function () {
                 return JSON.stringify(d);
             },
 
-        }, processing: true, serverSide: true,  columns: [
+        }, processing: true, serverSide: true, columns: [
             {
-            data: 'name'
-        }, {
-            data: 'zone.name'
-        }, {
-            data: 'district.region.name'
-        }, {
-            data: 'district.name'
-        }, {
-            data: 'isDelete',
+                data: 'name'
+            }, {
+                data: 'zone.name'
+            }, {
+                data: 'district.region.name'
+            }, {
+                data: 'district.name'
+            }, {
+                data: 'isDelete',
                 ordering: false,
                 render: function (data, type, row) {
-                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" onclick="changeEdit(\'' + row.name.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.district.name.replace(/'/g, "\\'") + '\', \'' + row.district.region.name.replace(/'/g, "\\'") + '\',\'' + row.zone.name.replace(/'/g, "\\'") +'\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
-            }
+                    return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" onclick="changeEdit(\'' + row.name.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.district.name.replace(/'/g, "\\'") + '\', \'' + row.district.region.name.replace(/'/g, "\\'") + '\',\'' + row.zone.name.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+                }
 
-        },]
+            },]
     });
 
 });

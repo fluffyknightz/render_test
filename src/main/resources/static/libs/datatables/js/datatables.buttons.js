@@ -2,51 +2,47 @@
  * © SpryMedia Ltd - datatables.net/license
  */
 
-(function( factory ){
-    if ( typeof define === 'function' && define.amd ) {
+(function (factory) {
+    if (typeof define === 'function' && define.amd) {
         // AMD
-        define( ['jquery', 'datatables.net'], function ( $ ) {
-            return factory( $, window, document );
-        } );
-    }
-    else if ( typeof exports === 'object' ) {
+        define(['jquery', 'datatables.net'], function ($) {
+            return factory($, window, document);
+        });
+    } else if (typeof exports === 'object') {
         // CommonJS
         var jq = require('jquery');
         var cjsRequires = function (root, $) {
-            if ( ! $.fn.dataTable ) {
+            if (!$.fn.dataTable) {
                 require('datatables.net')(root, $);
             }
         };
 
         if (typeof window === 'undefined') {
             module.exports = function (root, $) {
-                if ( ! root ) {
+                if (!root) {
                     // CommonJS environments without a window global must pass a
                     // root. This will give an error otherwise
                     root = window;
                 }
 
-                if ( ! $ ) {
-                    $ = jq( root );
+                if (!$) {
+                    $ = jq(root);
                 }
 
-                cjsRequires( root, $ );
-                return factory( $, root, root.document );
+                cjsRequires(root, $);
+                return factory($, root, root.document);
             };
+        } else {
+            cjsRequires(window, jq);
+            module.exports = factory(jq, window, window.document);
         }
-        else {
-            cjsRequires( window, jq );
-            module.exports = factory( jq, window, window.document );
-        }
-    }
-    else {
+    } else {
         // Browser
-        factory( jQuery, window, document );
+        factory(jQuery, window, document);
     }
-}(function( $, window, document ) {
+}(function ($, window, document) {
     'use strict';
     var DataTable = $.fn.dataTable;
-
 
 
 // Used for namespacing events added to the document by each instance, so they
@@ -65,8 +61,7 @@
     function _fadeIn(el, duration, fn) {
         if ($.fn.animate) {
             el.stop().fadeIn(duration, fn);
-        }
-        else {
+        } else {
             el.css('display', 'block');
 
             if (fn) {
@@ -78,8 +73,7 @@
     function _fadeOut(el, duration, fn) {
         if ($.fn.animate) {
             el.stop().fadeOut(duration, fn);
-        }
-        else {
+        } else {
             el.css('display', 'none');
 
             if (fn) {
@@ -119,7 +113,7 @@
 
         // For easy configuration of buttons an array can be given
         if (Array.isArray(config)) {
-            config = { buttons: config };
+            config = {buttons: config};
         }
 
         this.c = $.extend(true, {}, Buttons.defaults, config);
@@ -665,8 +659,7 @@
                 if (attachPoint !== undefined && attachPoint !== null) {
                     attachTo.splice(attachPoint, 0, built);
                     attachPoint++;
-                }
-                else {
+                } else {
                     attachTo.push(built);
                 }
 
@@ -759,11 +752,9 @@
 
             if (inCollection && isSplit && configDom.collection.split) {
                 $.extend(true, dom, configDom.collection.split.action);
-            }
-            else if (inSplit || inCollection) {
+            } else if (inSplit || inCollection) {
                 $.extend(true, dom, configDom.collection.button);
-            }
-            else if (isSplit) {
+            } else if (isSplit) {
                 $.extend(true, dom, configDom.split.button);
             }
 
@@ -814,7 +805,7 @@
                     ]);
                 };
 
-                var action = function(e, dt, button, config) {
+                var action = function (e, dt, button, config) {
                     if (config.async) {
                         that.processing(button[0], true);
 
@@ -823,9 +814,9 @@
                                 that.processing(button[0], false);
                             });
                         }, config.async);
-                    }
-                    else {
-                        run(e, dt, button, config, function () {});
+                    } else {
+                        run(e, dt, button, config, function () {
+                        });
                     }
                 }
 
@@ -879,8 +870,7 @@
 
                     button.append(liner);
                     textNode = liner;
-                }
-                else {
+                } else {
                     button.html(text(config.text));
                     textNode = button;
                 }
@@ -908,8 +898,7 @@
                 if (config.config !== undefined && config.config.split) {
                     config.split = config.config.split;
                 }
-            }
-            else {
+            } else {
                 button = $(config.html);
             }
 
@@ -919,8 +908,7 @@
                 inserter = $('<' + buttonContainer.tag + '/>')
                     .addClass(buttonContainer.className)
                     .append(button);
-            }
-            else {
+            } else {
                 inserter = button;
             }
 
@@ -1099,8 +1087,7 @@
                 if (conf.key === character) {
                     e._buttonsHandled = true;
                     $(node).click();
-                }
-                else if ($.isPlainObject(conf.key)) {
+                } else if ($.isPlainObject(conf.key)) {
                     if (conf.key.key !== character) {
                         return;
                     }
@@ -1186,10 +1173,9 @@
                         if (!base) {
                             return false;
                         }
-                    }
-                    else if (typeof base === 'string') {
+                    } else if (typeof base === 'string') {
                         if (!_dtButtons[base]) {
-                            return { html: base };
+                            return {html: base};
                         }
 
                         base = _dtButtons[base];
@@ -1217,8 +1203,7 @@
                 var objArray = toConfObject(_dtButtons[conf.extend]);
                 if (Array.isArray(objArray)) {
                     return objArray;
-                }
-                else if (!objArray) {
+                } else if (!objArray) {
                     // This is a little brutal as it might be possible to have a
                     // valid button without the extend, but if there is no extend
                     // then the host button would be acting in an undefined state
@@ -1358,11 +1343,9 @@
 
             if (cnt === 3) {
                 mod = 'dtb-b3';
-            }
-            else if (cnt === 2) {
+            } else if (cnt === 2) {
                 mod = 'dtb-b2';
-            }
-            else if (cnt === 1) {
+            } else if (cnt === 1) {
                 mod = 'dtb-b1';
             }
 
@@ -1394,8 +1377,7 @@
                     options.popoverTitle +
                     '</div>'
                 );
-            }
-            else if (options.collectionTitle) {
+            } else if (options.collectionTitle) {
                 display.prepend(
                     '<div class="dt-button-collection-title">' +
                     options.collectionTitle +
@@ -1524,8 +1506,7 @@
                     top: top,
                     left: left
                 });
-            }
-            else {
+            } else {
                 // Fix position - centre on screen
                 var place = function () {
                     var half = $(window).height() / 2;
@@ -1560,7 +1541,8 @@
             // required to make it work...
             $('div.dt-button-background').on(
                 'click.dtb-collection',
-                function () {}
+                function () {
+                }
             );
 
             if (options.autoClose) {
@@ -1618,15 +1600,13 @@
                             // If current focus is not inside the popover
                             elements.first().focus();
                             e.preventDefault();
-                        }
-                        else if (e.shiftKey) {
+                        } else if (e.shiftKey) {
                             // Reverse tabbing order when shift key is pressed
                             if (active === elements[0]) {
                                 elements.last().focus();
                                 e.preventDefault();
                             }
-                        }
-                        else {
+                        } else {
                             if (active === elements.last()[0]) {
                                 elements.first().focus();
                                 e.preventDefault();
@@ -1664,8 +1644,7 @@
                     .insertAfter(insertPoint),
                 fade
             );
-        }
-        else {
+        } else {
             _fadeOut($('div.' + className), fade, function () {
                 $(this).removeClass(className).remove();
             });
@@ -1708,8 +1687,7 @@
                 if (input.indexOf(',') !== -1) {
                     // String selector, list of names
                     process(input.split(','));
-                }
-                else {
+                } else {
                     // String selector individual name
                     var idx = $.inArray(input.trim(), names);
 
@@ -1717,12 +1695,10 @@
                         ret.push(buttons[idx].inst);
                     }
                 }
-            }
-            else if (typeof input === 'number') {
+            } else if (typeof input === 'number') {
                 // Index selector
                 ret.push(buttons[input].inst);
-            }
-            else if (typeof input === 'object') {
+            } else if (typeof input === 'object') {
                 // Actual instance selector
                 ret.push(input);
             }
@@ -1792,8 +1768,7 @@
                         node: buttons[i].node
                     });
                 }
-            }
-            else if (typeof selector === 'number') {
+            } else if (typeof selector === 'number') {
                 // Main button index selector
                 if (inst.s.buttons[selector]) {
                     ret.push({
@@ -1801,8 +1776,7 @@
                         node: inst.s.buttons[selector].node
                     });
                 }
-            }
-            else if (typeof selector === 'string') {
+            } else if (typeof selector === 'string') {
                 if (selector.indexOf(',') !== -1) {
                     // Split
                     var a = selector.split(',');
@@ -1810,8 +1784,7 @@
                     for (i = 0, ien = a.length; i < ien; i++) {
                         run(a[i].trim(), inst);
                     }
-                }
-                else if (selector.match(/^\d+(\-\d+)*$/)) {
+                } else if (selector.match(/^\d+(\-\d+)*$/)) {
                     // Sub-button index selector
                     var indexes = $.map(buttons, function (v) {
                         return v.idx;
@@ -1821,8 +1794,7 @@
                         inst: inst,
                         node: buttons[$.inArray(selector, indexes)].node
                     });
-                }
-                else if (selector.indexOf(':name') !== -1) {
+                } else if (selector.indexOf(':name') !== -1) {
                     // Button name selector
                     var name = selector.replace(':name', '');
 
@@ -1834,8 +1806,7 @@
                             });
                         }
                     }
-                }
-                else {
+                } else {
                     // jQuery selector on the nodes
                     $(nodes)
                         .filter(selector)
@@ -1846,8 +1817,7 @@
                             });
                         });
                 }
-            }
-            else if (typeof selector === 'object' && selector.nodeName) {
+            } else if (typeof selector === 'object' && selector.nodeName) {
                 // Node selector
                 var idx = $.inArray(selector, nodes);
 
@@ -1902,8 +1872,7 @@
         if (!config || config.decodeEntities) {
             if (_entityDecoder) {
                 str = _entityDecoder(str);
-            }
-            else {
+            } else {
                 _exportTextarea.innerHTML = str;
                 str = _exportTextarea.value;
             }
@@ -2011,8 +1980,7 @@
             action: function (e, dt, button, config) {
                 if (config._collection.parents('body').length) {
                     this.popover(false, config);
-                }
-                else {
+                } else {
                     this.popover(config._collection, config);
                 }
 
@@ -2086,8 +2054,7 @@
             if (Array.isArray(lengthMenu[0])) {
                 vals = lengthMenu[0];
                 lang = lengthMenu[1];
-            }
-            else {
+            } else {
                 for (var i = 0; i < lengthMenu.length; i++) {
                     var option = lengthMenu[i];
 
@@ -2095,8 +2062,7 @@
                     if ($.isPlainObject(option)) {
                         vals.push(option.value);
                         lang.push(option.label);
-                    }
-                    else {
+                    } else {
                         vals.push(option);
                         lang.push(option);
                     }
@@ -2542,8 +2508,7 @@
     var _stringOrFunction = function (option, config, dt) {
         if (option === null || option === undefined) {
             return null;
-        }
-        else if (typeof option === 'function') {
+        } else if (typeof option === 'function') {
             return option(config, dt);
         }
         return option;
@@ -2552,7 +2517,7 @@
     /**
      * Get the title for an exported file.
      *
-     * @param {object} config	Button configuration
+     * @param {object} config    Button configuration
      */
     var _title = function (config, dt) {
         var title = _stringOrFunction(config.title, config, dt);
@@ -2656,9 +2621,9 @@
             modifier.selected === undefined
         ) {
             if (
-                dt.rows(config.rows, $.extend({ selected: true }, modifier)).any()
+                dt.rows(config.rows, $.extend({selected: true}, modifier)).any()
             ) {
-                $.extend(modifier, { selected: true });
+                $.extend(modifier, {selected: true});
             }
         }
 
@@ -2713,8 +2678,8 @@
     };
 
     function _headerFormatter(formatter, struct) {
-        for (var i=0 ; i<struct.length ; i++) {
-            for (var j=0 ; j<struct[i].length ; j++) {
+        for (var i = 0; i < struct.length; i++) {
+            for (var j = 0; j < struct[i].length; j++) {
                 var item = struct[i][j];
 
                 if (item) {

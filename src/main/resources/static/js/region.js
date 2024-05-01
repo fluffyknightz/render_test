@@ -5,7 +5,6 @@ let title = document.getElementById('modelTitle');
 let input = document.getElementById('region');
 
 
-
 async function adding() {
     validationInput()
     console.log("add reach")
@@ -36,7 +35,7 @@ $(document).ready(function () {
         language: {
             infoFiltered: "",
         },
-
+        scrollX: true,
         ajax: {
 
             url: 'spcu-dims/api/v1/region/show/table', method: 'POST', contentType: 'application/json',
@@ -50,16 +49,16 @@ $(document).ready(function () {
                 return JSON.stringify(d);
             },
 
-        }, processing: true, serverSide: true,  columns: [
+        }, processing: true, serverSide: true, columns: [
             {
-            data: 'name'
-        }, {
-            data: 'isDelete',
+                data: 'name'
+            }, {
+                data: 'isDelete',
                 ordering: false,
                 render: function (data, type, row) {
-                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.name.replace(/'/g, "\\'") + '\', ' + row.id + ')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
-            }
-        },]
+                    return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.name.replace(/'/g, "\\'") + '\', ' + row.id + ')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+                }
+            },]
     });
 
 });
@@ -68,9 +67,6 @@ $(document).ready(function () {
 function showConfirm(id) {
     deleteConfirm('/spcu-dims/api/v1/region/delete/' + encodeURIComponent(id))
 }
-
-
-
 
 
 function changeAdd() {

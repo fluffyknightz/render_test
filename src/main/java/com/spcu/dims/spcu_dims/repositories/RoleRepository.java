@@ -11,10 +11,10 @@ import java.util.Optional;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Integer> {
 
-  boolean existsByName(String roleName);
+    boolean existsByName(String roleName);
 
-  Optional<Role> findByName(String role);
+    Optional<Role> findByName(String role);
 
-  @Query("SELECT e.name FROM Role e WHERE e.isDelete = false")
-  List<String> findAllNotDeleted();
+    @Query("SELECT e.name FROM Role e WHERE e.isDelete = false")
+    List<String> findAllNotDeleted();
 }

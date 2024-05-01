@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{/layout/main-layout}"
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-      layout:decorate="~{/layout/main-layout}">
+      xmlns:th="http://www.thymeleaf.org">
 
 <title layout:fragment="title">Township</title>
 <div layout:fragment="content">
@@ -20,23 +20,27 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="col-6">
                                     <h4 class="mb-0 text-primary">Township
-                                        <span type="button" data-bs-toggle="modal" data-bs-target="#model" onclick="changeAdd()">
+                                        <span data-bs-target="#model" data-bs-toggle="modal" onclick="changeAdd()"
+                                              type="button">
                                     <i class="bi bi-plus-square ml-5" style="font-size: 1.4rem"></i>
                                 </span>
                                     </h4>
                                 </div>
                                 <div class="col-2">
-                                    <select class="form-select my-3 col-auto" aria-label="district select" id="filterZone">
+                                    <select aria-label="district select" class="form-select my-3 col-auto"
+                                            id="filterZone">
 
                                     </select>
                                 </div>
                                 <div class="col-2">
-                                    <select class="form-select my-3 col-auto" aria-label="district select" id="filterRegion">
+                                    <select aria-label="district select" class="form-select my-3 col-auto"
+                                            id="filterRegion">
 
                                     </select>
                                 </div>
                                 <div class="col-2">
-                                    <select class="form-select my-3 col-auto" aria-label="district select" id="filterDistrict">
+                                    <select aria-label="district select" class="form-select my-3 col-auto"
+                                            id="filterDistrict">
 
                                     </select>
                                 </div>
@@ -46,11 +50,8 @@
                     </div>
 
 
-
-
-
                     <div class="p-5">
-                        <table id="myTable" class="hover table table-striped" style="width: 100%">
+                        <table class="hover table table-striped" id="myTable" style="width: 100%">
                             <thead>
                             <tr>
                                 <th>Name</th>
@@ -78,37 +79,37 @@
         <!--End Township-->
 
         <!--Start Township Add Modal -->
-        <div class="modal fade" id="model" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+        <div aria-hidden="true" class="modal fade" data-bs-backdrop="static" id="model" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 id="modelTitle" class="modal-title fs-5">Add Township</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h1 class="modal-title fs-5" id="modelTitle">Add Township</h1>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                     </div>
                     <form id="myForm">
                         <div class="modal-body">
                             <div class="form-floating my-3">
-                                <input type="text" class="form-control" name="township" id="township"
-                                       placeholder="Township">
+                                <input class="form-control" id="township" name="township" placeholder="Township"
+                                       type="text">
                                 <label for="township">Township</label>
                             </div>
                             <hr>
-                            <select class="form-select my-3" aria-label="region select" id="zoneSelect">
+                            <select aria-label="region select" class="form-select my-3" id="zoneSelect">
 
                             </select>
                             <hr>
-                            <select class="form-select my-3" aria-label="region select" id="regionSelect">
+                            <select aria-label="region select" class="form-select my-3" id="regionSelect">
 
                             </select>
-                            <select class="form-select my-3" aria-label="district select" id="districtSelect">
-                                <option selected value="" disabled>Select Related District</option>
+                            <select aria-label="district select" class="form-select my-3" id="districtSelect">
+                                <option disabled selected value="">Select Related District</option>
                             </select>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
 
-                            <button type="button" class="btn btn-primary" id="myButton" onclick="adding()">Save</button>
+                            <button class="btn btn-primary" id="myButton" onclick="adding()" type="button">Save</button>
                         </div>
                     </form>
 

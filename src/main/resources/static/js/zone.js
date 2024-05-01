@@ -12,6 +12,7 @@ $(document).ready(async function () {
         language: {
             infoFiltered: "",
         },
+        scrollX: true,
         ajax: {
             url: 'spcu-dims/api/v1/zone/show/table',
             method: 'POST',
@@ -26,28 +27,28 @@ $(document).ready(async function () {
         },
         processing: true,
         serverSide: true,
-        columns: [ {
+        columns: [{
             data: 'name'
-        },{
+        }, {
             data: 'diocese.archdiocese.name'
-        },{
+        }, {
             data: 'diocese.name'
         }, {
             data: 'isDelete',
             ordering: false,
             render: function (data, type, row) {
                 return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.name.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.diocese.name.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' +
-                       '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+                    '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
             }
         },]
     });
 });
 
-dioceseFilter.addEventListener('change',function (){
+dioceseFilter.addEventListener('change', function () {
     table.column(2).search(dioceseFilter.value).draw();
 })
 
-async function dioceseFetch(){
+async function dioceseFetch() {
     try {
         const data = await fetchData('spcu-dims/api/v1/diocese/show/all');
         await populateSelect(dioceseSelect, data, "Select Related Diocese", false);
@@ -109,7 +110,6 @@ function showConfirm(id) {
         width: '320px', borderRadius: '8px',
     },);
 }
-
 
 
 async function adding() {

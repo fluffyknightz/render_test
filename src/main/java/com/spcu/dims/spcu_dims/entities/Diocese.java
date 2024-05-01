@@ -3,6 +3,7 @@ package com.spcu.dims.spcu_dims.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.io.Serializable;
 
 @Entity
@@ -12,7 +13,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @Table(name = "dioceses")
-public class Diocese implements Serializable{
+public class Diocese implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

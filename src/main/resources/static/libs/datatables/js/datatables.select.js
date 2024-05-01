@@ -2,51 +2,47 @@
  * © SpryMedia Ltd - datatables.net/license/mit
  */
 
-(function( factory ){
-    if ( typeof define === 'function' && define.amd ) {
+(function (factory) {
+    if (typeof define === 'function' && define.amd) {
         // AMD
-        define( ['jquery', 'datatables.net'], function ( $ ) {
-            return factory( $, window, document );
-        } );
-    }
-    else if ( typeof exports === 'object' ) {
+        define(['jquery', 'datatables.net'], function ($) {
+            return factory($, window, document);
+        });
+    } else if (typeof exports === 'object') {
         // CommonJS
         var jq = require('jquery');
         var cjsRequires = function (root, $) {
-            if ( ! $.fn.dataTable ) {
+            if (!$.fn.dataTable) {
                 require('datatables.net')(root, $);
             }
         };
 
         if (typeof window === 'undefined') {
             module.exports = function (root, $) {
-                if ( ! root ) {
+                if (!root) {
                     // CommonJS environments without a window global must pass a
                     // root. This will give an error otherwise
                     root = window;
                 }
 
-                if ( ! $ ) {
-                    $ = jq( root );
+                if (!$) {
+                    $ = jq(root);
                 }
 
-                cjsRequires( root, $ );
-                return factory( $, root, root.document );
+                cjsRequires(root, $);
+                return factory($, root, root.document);
             };
+        } else {
+            cjsRequires(window, jq);
+            module.exports = factory(jq, window, window.document);
         }
-        else {
-            cjsRequires( window, jq );
-            module.exports = factory( jq, window, window.document );
-        }
-    }
-    else {
+    } else {
         // Browser
-        factory( jQuery, window, document );
+        factory(jQuery, window, document);
     }
-}(function( $, window, document ) {
+}(function ($, window, document) {
     'use strict';
     var DataTable = $.fn.dataTable;
-
 
 
 // Version information for debugger
@@ -74,21 +70,21 @@
 
             // Clear any currently selected rows, before restoring state
             // None will be selected on first initialisation
-            if (dt.rows({ selected: true }).any()) {
+            if (dt.rows({selected: true}).any()) {
                 dt.rows().deselect();
             }
             if (data.select.rows !== undefined) {
                 dt.rows(data.select.rows).select();
             }
 
-            if (dt.columns({ selected: true }).any()) {
+            if (dt.columns({selected: true}).any()) {
                 dt.columns().deselect();
             }
             if (data.select.columns !== undefined) {
                 dt.columns(data.select.columns).select();
             }
 
-            if (dt.cells({ selected: true }).any()) {
+            if (dt.cells({selected: true}).any()) {
                 dt.cells().deselect();
             }
             if (data.select.cells !== undefined) {
@@ -102,10 +98,10 @@
 
         dt.on('stateSaveParams', function (e, settings, data) {
             data.select = {};
-            data.select.rows = dt.rows({ selected: true }).ids(true).toArray();
-            data.select.columns = dt.columns({ selected: true })[0];
-            data.select.cells = dt.cells({ selected: true })[0].map(function (coords) {
-                return { row: dt.row(coords.row).id(true), column: coords.column };
+            data.select.rows = dt.rows({selected: true}).ids(true).toArray();
+            data.select.columns = dt.columns({selected: true})[0];
+            data.select.cells = dt.cells({selected: true})[0].map(function (coords) {
+                return {row: dt.row(coords.row).id(true), column: coords.column};
             });
         })
             .on('stateLoadParams', selectAndSave)
@@ -136,12 +132,10 @@
         if (opts === true) {
             style = 'os';
             setStyle = true;
-        }
-        else if (typeof opts === 'string') {
+        } else if (typeof opts === 'string') {
             style = opts;
             setStyle = true;
-        }
-        else if ($.isPlainObject(opts)) {
+        } else if ($.isPlainObject(opts)) {
             if (opts.blurable !== undefined) {
                 blurable = opts.blurable;
             }
@@ -161,8 +155,7 @@
             if (opts.style !== undefined) {
                 style = opts.style;
                 setStyle = true;
-            }
-            else {
+            } else {
                 style = 'os';
                 setStyle = true;
             }
@@ -319,7 +312,7 @@
         };
 
         var selectRows = function (start, end) {
-            var indexes = dt.rows({ search: 'applied' }).indexes();
+            var indexes = dt.rows({search: 'applied'}).indexes();
 
             // Which comes first - might need to swap
             if (indexes.indexOf(start) > indexes.indexOf(end)) {
@@ -343,12 +336,11 @@
             });
         };
 
-        if (!dt.cells({ selected: true }).any() && !last) {
+        if (!dt.cells({selected: true}).any() && !last) {
             // select from the top left cell to this one
             columnIndexes = selectColumns(0, idx.column);
             rowIndexes = selectRows(0, idx.row);
-        }
-        else {
+        } else {
             // Get column indexes between old and new
             columnIndexes = selectColumns(last.column, idx.column);
             rowIndexes = selectRows(last.row, idx.row);
@@ -356,11 +348,10 @@
 
         indexes = dt.cells(rowIndexes, columnIndexes).flatten();
 
-        if (!dt.cells(idx, { selected: true }).any()) {
+        if (!dt.cells(idx, {selected: true}).any()) {
             // Select range
             dt.cells(indexes).select();
-        }
-        else {
+        } else {
             // Deselect range
             dt.cells(indexes).deselect();
         }
@@ -465,12 +456,10 @@
                 if (items === 'row') {
                     idx = cellIndex.row;
                     typeSelect(e, dt, ctx, 'row', idx);
-                }
-                else if (items === 'column') {
+                } else if (items === 'column') {
                     idx = cell.index().column;
                     typeSelect(e, dt, ctx, 'column', idx);
-                }
-                else if (items === 'cell') {
+                } else if (items === 'cell') {
                     idx = cell.index();
                     typeSelect(e, dt, ctx, 'cell', idx);
                 }
@@ -545,16 +534,16 @@
             return;
         }
 
-        var rows = api.rows({ selected: true }).flatten().length;
-        var columns = api.columns({ selected: true }).flatten().length;
-        var cells = api.cells({ selected: true }).flatten().length;
+        var rows = api.rows({selected: true}).flatten().length;
+        var columns = api.columns({selected: true}).flatten().length;
+        var cells = api.cells({selected: true}).flatten().length;
 
         var add = function (el, name, num) {
             el.append(
                 $('<span class="select-item"/>').append(
                     api.i18n(
                         'select.' + name + 's',
-                        { _: '%d ' + name + 's selected', 0: '', 1: '1 ' + name + ' selected' },
+                        {_: '%d ' + name + 's selected', 0: '', 1: '1 ' + name + ' selected'},
                         num
                     )
                 )
@@ -585,12 +574,12 @@
      *
      * @param {*} dt API
      */
-    function initCheckboxHeader( dt ) {
+    function initCheckboxHeader(dt) {
         // Find any checkbox column(s)
         dt.columns('.dt-select').every(function () {
             var header = this.header();
 
-            if (! $('input', header).length) {
+            if (!$('input', header).length) {
                 // If no checkbox yet, insert one
                 var input = $('<input>')
                     .attr({
@@ -602,8 +591,7 @@
                     .on('change', function () {
                         if (this.checked) {
                             dt.rows({search: 'applied'}).select();
-                        }
-                        else {
+                        } else {
                             dt.rows({selected: true}).deselect();
                         }
                     })
@@ -614,7 +602,7 @@
                 // Update the header checkbox's state when the selection in the
                 // table changes
                 dt.on('draw select deselect', function (e, pass, type) {
-                    if (type === 'row' || ! type) {
+                    if (type === 'row' || !type) {
                         var count = dt.rows({selected: true}).count();
                         var search = dt.rows({search: 'applied', selected: true}).count();
                         var available = dt.rows({search: 'applied'}).count();
@@ -623,13 +611,11 @@
                             input
                                 .prop('checked', true)
                                 .prop('indeterminate', false);
-                        }
-                        else if (search === 0 && count === 0) {
+                        } else if (search === 0 && count === 0) {
                             input
                                 .prop('checked', false)
                                 .prop('indeterminate', false);
-                        }
-                        else {
+                        } else {
                             input
                                 .prop('checked', false)
                                 .prop('indeterminate', true);
@@ -694,18 +680,18 @@
             // note that column selection doesn't need to be cached and then
             // reselected, as they are already selected
             var rows = api
-                .rows({ selected: true })
+                .rows({selected: true})
                 .ids(true)
                 .filter(function (d) {
                     return d !== undefined;
                 });
 
             var cells = api
-                .cells({ selected: true })
+                .cells({selected: true})
                 .eq(0)
                 .map(function (cellIdx) {
                     var id = api.row(cellIdx.row).id(true);
-                    return id ? { row: id, column: cellIdx.column } : undefined;
+                    return id ? {row: id, column: cellIdx.column} : undefined;
                 })
                 .filter(function (d) {
                     return d !== undefined;
@@ -745,7 +731,7 @@
         // Clean up and release
         api.on('destroy.dtSelect', function () {
             // Remove class directly rather than calling deselect - which would trigger events
-            $(api.rows({ selected: true }).nodes()).removeClass(api.settings()[0]._select.className);
+            $(api.rows({selected: true}).nodes()).removeClass(api.settings()[0]._select.className);
 
             disableMouseSelection(api);
             api.off('.dtSelect');
@@ -765,16 +751,15 @@
      */
     function rowColumnRange(dt, type, idx, last) {
         // Add a range of rows from the last selected row to this one
-        var indexes = dt[type + 's']({ search: 'applied' }).indexes();
+        var indexes = dt[type + 's']({search: 'applied'}).indexes();
         var idx1 = indexes.indexOf(last);
         var idx2 = indexes.indexOf(idx);
 
-        if (!dt[type + 's']({ selected: true }).any() && idx1 === -1) {
+        if (!dt[type + 's']({selected: true}).any() && idx1 === -1) {
             // select from top to here - slightly odd, but both Windows and Mac OS
             // do this
             indexes.splice(indexes.indexOf(idx) + 1, indexes.length);
-        }
-        else {
+        } else {
             // reverse so we can shift click 'up' as well as down
             if (idx1 > idx2) {
                 var tmp = idx2;
@@ -786,11 +771,10 @@
             indexes.splice(0, idx1);
         }
 
-        if (!dt[type](idx, { selected: true }).any()) {
+        if (!dt[type](idx, {selected: true}).any()) {
             // Select range
             dt[type + 's'](indexes).select();
-        }
-        else {
+        } else {
             // Deselect range - need to keep the clicked on row selected
             indexes.splice(indexes.indexOf(idx), 1);
             dt[type + 's'](indexes).deselect();
@@ -809,9 +793,9 @@
         if (force || ctx._select.style === 'single') {
             var api = new DataTable.Api(ctx);
 
-            api.rows({ selected: true }).deselect();
-            api.columns({ selected: true }).deselect();
-            api.cells({ selected: true }).deselect();
+            api.rows({selected: true}).deselect();
+            api.columns({selected: true}).deselect();
+            api.cells({selected: true}).deselect();
         }
     }
 
@@ -828,7 +812,7 @@
     function typeSelect(e, dt, ctx, type, idx) {
         var style = dt.select.style();
         var toggleable = dt.select.toggleable();
-        var isSelected = dt[type](idx, { selected: true }).any();
+        var isSelected = dt[type](idx, {selected: true}).any();
 
         if (isSelected && !toggleable) {
             return;
@@ -838,12 +822,10 @@
             if (e.ctrlKey || e.metaKey) {
                 // Add or remove from the selection
                 dt[type](idx).select(!isSelected);
-            }
-            else if (e.shiftKey) {
+            } else if (e.shiftKey) {
                 if (type === 'cell') {
                     cellRange(dt, idx, ctx._select_lastCell || null);
-                }
-                else {
+                } else {
                     rowColumnRange(
                         dt,
                         type,
@@ -851,27 +833,23 @@
                         ctx._select_lastCell ? ctx._select_lastCell[type] : null
                     );
                 }
-            }
-            else {
+            } else {
                 // No cmd or shift click - deselect if selected, or select
                 // this row only
-                var selected = dt[type + 's']({ selected: true });
+                var selected = dt[type + 's']({selected: true});
 
                 if (isSelected && selected.flatten().length === 1) {
                     dt[type](idx).deselect();
-                }
-                else {
+                } else {
                     selected.deselect();
                     dt[type](idx).select();
                 }
             }
-        }
-        else if (style == 'multi+shift') {
+        } else if (style == 'multi+shift') {
             if (e.shiftKey) {
                 if (type === 'cell') {
                     cellRange(dt, idx, ctx._select_lastCell || null);
-                }
-                else {
+                } else {
                     rowColumnRange(
                         dt,
                         type,
@@ -879,12 +857,10 @@
                         ctx._select_lastCell ? ctx._select_lastCell[type] : null
                     );
                 }
-            }
-            else {
+            } else {
                 dt[type](idx).select(!isSelected);
             }
-        }
-        else {
+        } else {
             dt[type](idx).select(!isSelected);
         }
     }
@@ -902,8 +878,8 @@
 // reduce the code size
     $.each(
         [
-            { type: 'row', prop: 'aoData' },
-            { type: 'column', prop: 'aoColumns' }
+            {type: 'row', prop: 'aoData'},
+            {type: 'column', prop: 'aoColumns'}
         ],
         function (i, o) {
             DataTable.ext.selector[o.type].push(function (settings, opts, indexes) {
@@ -1097,7 +1073,7 @@
             $(dtData.nTr).addClass(ctx._select.className);
             dtData._select_selected = true;
 
-            for (var i=0 ; i<dtColumns.length ; i++) {
+            for (var i = 0; i < dtColumns.length; i++) {
                 var col = dtColumns[i];
 
                 if (col.sType === 'select-checkbox') {
@@ -1220,7 +1196,7 @@
             dtData._select_selected = false;
             ctx._select_lastCell = null;
 
-            for (var i=0 ; i<dtColumns.length ; i++) {
+            for (var i = 0; i < dtColumns.length; i++) {
                 var col = dtColumns[i];
 
                 if (col.sType === 'select-checkbox') {
@@ -1316,15 +1292,15 @@
     }
 
     function enabled(dt, config) {
-        if (config.limitTo.indexOf('rows') !== -1 && dt.rows({ selected: true }).any()) {
+        if (config.limitTo.indexOf('rows') !== -1 && dt.rows({selected: true}).any()) {
             return true;
         }
 
-        if (config.limitTo.indexOf('columns') !== -1 && dt.columns({ selected: true }).any()) {
+        if (config.limitTo.indexOf('columns') !== -1 && dt.columns({selected: true}).any()) {
             return true;
         }
 
-        if (config.limitTo.indexOf('cells') !== -1 && dt.cells({ selected: true }).any()) {
+        if (config.limitTo.indexOf('cells') !== -1 && dt.cells({selected: true}).any()) {
             return true;
         }
 
@@ -1363,9 +1339,9 @@
 
                 dt.on(namespacedEvents(config), function () {
                     var count =
-                        dt.rows({ selected: true }).flatten().length +
-                        dt.columns({ selected: true }).flatten().length +
-                        dt.cells({ selected: true }).flatten().length;
+                        dt.rows({selected: true}).flatten().length +
+                        dt.columns({selected: true}).flatten().length +
+                        dt.cells({selected: true}).flatten().length;
 
                     that.enable(count === 1);
                 });
@@ -1389,8 +1365,7 @@
                     }
 
                     this[items + 's'](mod).select();
-                }
-                else {
+                } else {
                     this[items + 's']().select();
                 }
             }
@@ -1408,9 +1383,9 @@
 
                 dt.on(namespacedEvents(config), function () {
                     var count =
-                        dt.rows({ selected: true }).flatten().length +
-                        dt.columns({ selected: true }).flatten().length +
-                        dt.cells({ selected: true }).flatten().length;
+                        dt.rows({selected: true}).flatten().length +
+                        dt.columns({selected: true}).flatten().length +
+                        dt.cells({selected: true}).flatten().length;
 
                     that.enable(count > 0);
                 });
@@ -1430,8 +1405,7 @@
                     dt.search.fixed('dt-select', null);
 
                     this.active(false);
-                }
-                else {
+                } else {
                     // Use a fixed filtering function to match on selected rows
                     // This needs to reference the internal aoData since that is
                     // where Select stores its reference for the selected state
@@ -1509,11 +1483,9 @@
                         value: valueFn ? valueFn(row) : null,
                         checked: selected
                     })[0];
-            }
-            else if (type === 'type') {
+            } else if (type === 'type') {
                 return 'select-checkbox';
-            }
-            else if (type === 'filter') {
+            } else if (type === 'filter') {
                 return '';
             }
 
@@ -1524,13 +1496,12 @@
 // Legacy checkbox ordering
     DataTable.ext.order['select-checkbox'] = function (settings, col) {
         return this.api()
-            .column(col, { order: 'index' })
+            .column(col, {order: 'index'})
             .nodes()
             .map(function (td) {
                 if (settings._select.items === 'row') {
                     return $(td).parent().hasClass(settings._select.className);
-                }
-                else if (settings._select.items === 'cell') {
+                } else if (settings._select.items === 'cell') {
                     return $(td).hasClass(settings._select.className);
                 }
                 return false;

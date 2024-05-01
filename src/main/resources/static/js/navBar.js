@@ -2,8 +2,6 @@ let navPassword = document.getElementById('navPassword');
 let navConfirmPassword = document.getElementById('navConfirmPassword');
 
 
-
-
 function navPasswordChange() {
     if (password.value === undefined || password.value === null || password.value.trim() === "" ||
         confirmPassword.value === undefined || confirmPassword.value === null || confirmPassword.value.trim() === "") {

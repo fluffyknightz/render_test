@@ -18,11 +18,11 @@ import java.util.List;
 @AllArgsConstructor
 public class ZoneAPI {
 
-    private final ZoneServices zoneServices;
     private static final String NOT_FOUND = "ID Not Found.";
+    private final ZoneServices zoneServices;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> zoneCreate(@RequestParam("name") String name, @RequestParam ("diocese")String diocese) {
+    public ResponseEntity<Object> zoneCreate(@RequestParam("name") String name, @RequestParam("diocese") String diocese) {
         Object zone = zoneServices.createZone(name, diocese);
         if (zone instanceof String) {
 
@@ -38,7 +38,7 @@ public class ZoneAPI {
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<Zone> zones(@Valid @RequestBody DataTablesInput input){
+    public DataTablesOutput<Zone> zones(@Valid @RequestBody DataTablesInput input) {
         return zoneServices.tableZone(input);
     }
 
@@ -52,7 +52,7 @@ public class ZoneAPI {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam ("name") String name, @RequestParam("diocese") String diocese) {
+    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("diocese") String diocese) {
         Object zone = zoneServices.update(id, name, diocese);
         if (zone instanceof String) {
 
@@ -75,16 +75,16 @@ public class ZoneAPI {
     @GetMapping("/show/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") int id) {
         Zone zone = zoneServices.findById(id);
-        if(zone != null){
+        if (zone != null) {
             return new ResponseEntity<>(zone, HttpStatus.OK);
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/show")
-    public ResponseEntity<Object> create(@RequestParam ("diocese") String diocese) {
+    public ResponseEntity<Object> create(@RequestParam("diocese") String diocese) {
         List<String> zoneName = zoneServices.findByDioceseName(diocese);
-        if(zoneName!= null){
+        if (zoneName != null) {
             return new ResponseEntity<>(zoneName, HttpStatus.OK);
         }
         String errorMessage = "Zone that related to Diocese name " + diocese + " does not exist.";

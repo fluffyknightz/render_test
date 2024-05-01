@@ -93,17 +93,17 @@ $(document).ready(async function () {
                 data: 'role.name'
             }, {
                 data: 'isDelete', ordering: false, render: function (data, type, row) {
-                    if(user_role.innerText === 'DefaultAdmin'){
+                    if (user_role.innerText === 'DefaultAdmin') {
                         if (row.role.name === 'DefaultAdmin') {
                             return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.username.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.role.name.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
                         } else {
                             return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.username.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.role.name.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
                         }
                     } else if (user_role.innerText === 'Admin') {
-                        if (row.id === parseInt(user_id.innerText)){
+                        if (row.id === parseInt(user_id.innerText)) {
                             return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.username.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.role.name.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
                         } else {
-                            return  null;
+                            return null;
                         }
                     }
 

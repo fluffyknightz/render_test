@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{/layout/main-layout}"
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-      layout:decorate="~{/layout/main-layout}">
+      xmlns:th="http://www.thymeleaf.org">
 
 <title layout:fragment="title">User</title>
 <div layout:fragment="content">
@@ -17,14 +17,14 @@
                     <!-- card header  -->
                     <div class="card-header bg-white py-4">
                         <h4 class="mb-0 text-primary">User
-                            <span type="button" data-bs-toggle="modal" data-bs-target="#model" onclick="changeAdd()">
+                            <span data-bs-target="#model" data-bs-toggle="modal" onclick="changeAdd()" type="button">
                                 <i class="bi bi-plus-square ml-5" style="font-size: 1.4rem"></i>
                             </span>
                         </h4>
                     </div>
 
                     <div class="p-5">
-                        <table id="myTable" class="hover table table-striped" style="width: 100%">
+                        <table class="hover table table-striped" id="myTable" style="width: 100%">
                             <thead>
                             <tr>
                                 <th>Name</th>
@@ -50,41 +50,41 @@
         <!--End User-->
 
         <!--Start User Add Modal -->
-        <div class="modal fade" id="model" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+        <div aria-hidden="true" class="modal fade" data-bs-backdrop="static" id="model" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 id="modelTitle" class="modal-title fs-5">Add User</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h1 class="modal-title fs-5" id="modelTitle">Add User</h1>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                     </div>
                     <form id="myForm">
                         <div class="modal-body">
                             <div class="form-floating my-3">
-                                <input type="text" class="form-control" name="user" id="user" placeholder="User">
+                                <input class="form-control" id="user" name="user" placeholder="User" type="text">
                                 <label for="user">User</label>
                             </div>
                             <hr>
-                            <select class="form-select my-3" aria-label="role select" id="roleSelect">
-                                <option selected value="" disabled>Select Role</option>
+                            <select aria-label="role select" class="form-select my-3" id="roleSelect">
+                                <option disabled selected value="">Select Role</option>
                             </select>
                             <hr>
 
                             <div class="form-floating my-3 password-form">
-                                <input type="password" class="form-control" name="password" id="password"
-                                       placeholder="Password(Optional)" min="8" max="12">
+                                <input class="form-control" id="password" max="12" min="8"
+                                       name="password" placeholder="Password(Optional)" type="password">
                                 <label for="password" id="passwordLabel">Password</label>
                             </div>
                             <div class="form-floating my-3 password-form">
-                                <input type="password" class="form-control" name="confirmPassword"
-                                       id="confirmPassword" placeholder="Confirm Password" min="8" max="12">
+                                <input class="form-control" id="confirmPassword" max="12"
+                                       min="8" name="confirmPassword" placeholder="Confirm Password" type="password">
                                 <label for="confirmPassword">Confirm Password</label>
                             </div>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
 
-                            <button type="button" class="btn btn-primary" id="myButton" onclick="adding()">Save</button>
+                            <button class="btn btn-primary" id="myButton" onclick="adding()" type="button">Save</button>
                         </div>
                     </form>
 

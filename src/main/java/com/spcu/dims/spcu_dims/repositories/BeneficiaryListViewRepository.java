@@ -12,6 +12,4 @@ import org.springframework.stereotype.Repository;
 public interface BeneficiaryListViewRepository extends DataTablesRepository<BeneficiaryListView, Integer> {
 
 
-
-
 }

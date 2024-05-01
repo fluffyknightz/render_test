@@ -17,11 +17,11 @@ import java.util.List;
 @AllArgsConstructor
 public class DistrictAPI {
 
-    private final DistrictServices districtServices;
     private static final String NOT_FOUND = "ID Not Found.";
+    private final DistrictServices districtServices;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> districtCreate(@RequestParam("name") String name, @RequestParam ("region")String region) {
+    public ResponseEntity<Object> districtCreate(@RequestParam("name") String name, @RequestParam("region") String region) {
         Object district = districtServices.createDistrict(name, region);
         if (district instanceof String) {
 
@@ -37,7 +37,7 @@ public class DistrictAPI {
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<District> districts(@Valid @RequestBody DataTablesInput input){
+    public DataTablesOutput<District> districts(@Valid @RequestBody DataTablesInput input) {
         return districtServices.tableDistrict(input);
     }
 
@@ -51,7 +51,7 @@ public class DistrictAPI {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam ("name") String name, @RequestParam("region") String region) {
+    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("region") String region) {
         Object district = districtServices.update(id, name, region);
         if (district instanceof String) {
 
@@ -74,16 +74,16 @@ public class DistrictAPI {
     @GetMapping("/show/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") int id) {
         District district = districtServices.findById(id);
-        if(district != null){
+        if (district != null) {
             return new ResponseEntity<>(district, HttpStatus.OK);
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/show")
-    public ResponseEntity<Object> create(@RequestParam ("region") String region) {
+    public ResponseEntity<Object> create(@RequestParam("region") String region) {
         List<String> districts = districtServices.findByRegionName(region);
-        if(districts!= null){
+        if (districts != null) {
             return new ResponseEntity<>(districts, HttpStatus.OK);
         }
         String errorMessage = "District that related to Region name " + region + " does not exist.";

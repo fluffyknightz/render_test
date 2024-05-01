@@ -36,9 +36,8 @@ public class SqlFileRunner implements CommandLineRunner {
         executeSqlFile("init.sql");
 
 
-
         Optional<Role> role = roleServices.findByName("DefaultAdmin");
-        if(role.isPresent()) {
+        if (role.isPresent()) {
             List<User> users = userServices.findByRole(role.get());
             if (users.isEmpty()) {
 
@@ -47,10 +46,8 @@ public class SqlFileRunner implements CommandLineRunner {
         }
 
 
-
-
-
     }
+
     private void executeSqlFile(String fileName) throws IOException {
         Resource resource = new ClassPathResource(fileName);
         InputStreamReader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);

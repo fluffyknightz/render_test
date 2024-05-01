@@ -7,12 +7,14 @@ let noteInput = document.getElementById('note')
 let zoneFilter = document.getElementById('filterZone');
 let townshipFilter = document.getElementById('filterTownship');
 let townshipSelect = document.getElementById('townshipSelect');
-
+let congregationFilter = document.getElementById('filterCongregation');
+let congregationSelect = document.getElementById('congregationSelect');
 
 $(document).ready(async function () {
 
     await zoneFetch();
     await townshipFetch();
+    await congregationFetch();
 
     function format(d) {
         let note
@@ -37,12 +39,13 @@ $(document).ready(async function () {
             url: 'spcu-dims/api/v1/parish/show/table', method: 'POST', contentType: 'application/json', headers: {
                 [csrfHeader]: csrfToken
             }, data: function (d) {
-                d.columns[8].search.value = false;
+                d.columns[9].search.value = false;
                 return JSON.stringify(d);
             },
         },
         processing: true,
         serverSide: true,
+        scrollX: true,
         columns: [
             {
                 className: 'dt-control',
@@ -61,6 +64,8 @@ $(document).ready(async function () {
             }, {
                 data: 'township.zone.name'
             }, {
+                data: 'congregation.name'
+            }, {
                 data: 'township.district.region.name'
             }, {
                 data: 'township.district.name'
@@ -71,9 +76,9 @@ $(document).ready(async function () {
                 ordering: false,
                 render: function (data, type, row) {
                     if (row.note === null) {
-                        return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal"' + ' data-bs-target="#model" onclick="changeEdit(' + row.id + ', \'' + row.township.name.replace(/'/g, "\\'") + '\', \'' + row.name.replace(/'/g, "\\'") + '\', \'\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+                        return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal"' + ' data-bs-target="#model" onclick="changeEdit(' + row.id + ', \'' + row.township.name.replace(/'/g, "\\'") + '\', \'' + row.congregation.name.replace(/'/g, "\\'") + '\', \'' + row.name.replace(/'/g, "\\'") + '\', \'\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
                     }
-                    return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal"' + ' data-bs-target="#model" onclick="changeEdit(' + row.id + ', \'' + row.township.name.replace(/'/g, "\\'") + '\', \'' + row.name.replace(/'/g, "\\'") + '\', \'' + row.note.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+                    return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal"' + ' data-bs-target="#model" onclick="changeEdit(' + row.id + ', \'' + row.township.name.replace(/'/g, "\\'") + '\', \'' + row.congregation.name.replace(/'/g, "\\'") + '\', \'' + row.name.replace(/'/g, "\\'") + '\', \'' + row.note.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
                 }
             },]
     });
@@ -98,7 +103,11 @@ zoneFilter.addEventListener('change', function () {
 })
 
 townshipFilter.addEventListener('change', function () {
-    table.column(7).search(townshipFilter.value).draw();
+    table.column(8).search(townshipFilter.value).draw();
+})
+
+congregationFilter.addEventListener('change', function () {
+    table.column(5).search(congregationFilter.value).draw();
 })
 
 async function zoneFetch() {
@@ -120,8 +129,19 @@ async function townshipFetch() {
     }
 }
 
+async function congregationFetch() {
+    try {
+        const data = await fetchData('spcu-dims/api/v1/congregation/show/all');
+        await populateSelect(congregationSelect, data, "Select Related Congregation", false);
+        await populateSelect(congregationFilter, data, "Filter Congregation", true);
+    } catch (error) {
+        Notiflix.Notify.failure('Data Fetching Error!');
+    }
+}
+
 function changeAdd() {
     townshipSelect.selectedIndex = 0;
+    congregationSelect.selectedIndex = 0;
     input.value = null;
     noteInput.value = null;
     noteInput.placeholder = 'Note(Optional)'
@@ -131,8 +151,9 @@ function changeAdd() {
     return false;
 }
 
-function changeEdit(id, township, name, note) {
+function changeEdit(id, township, congregation, name, note) {
     townshipSelect.value = township;
+    congregationSelect.value = congregation;
     data_id = id;
     input.value = name;
     noteInput.value = note;
@@ -149,11 +170,12 @@ function showConfirm(id) {
 
 async function editing() {
     validationInput()
-    if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || townshipSelect.value.trim() === "") {
+    if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || townshipSelect.value.trim() === "" || congregationSelect.value.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
-        const url = noteInput.value !== null && noteInput.value !== '' ? '/spcu-dims/api/v1/parish/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id) + '&&township=' + encodeURIComponent(townshipSelect.value) + '&&note=' + encodeURIComponent(noteInput.value) :
-            '/spcu-dims/api/v1/parish/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id) + '&&township=' + encodeURIComponent(townshipSelect.value);
+        const url = noteInput.value !== null && noteInput.value !== '' ?
+            '/spcu-dims/api/v1/parish/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id) + '&&township=' + encodeURIComponent(townshipSelect.value) + '&&congregation=' + encodeURIComponent(congregationSelect.value) + '&&note=' + encodeURIComponent(noteInput.value) :
+            '/spcu-dims/api/v1/parish/update?name=' + encodeURIComponent(inputValue) + '&&id=' + encodeURIComponent(data_id) + '&&township=' + encodeURIComponent(townshipSelect.value) + '&&congregation=' + encodeURIComponent(congregationSelect.value);
         await performOperation(url, 'PATCH', 'Edit successful.');
     }
 }
@@ -163,8 +185,9 @@ async function adding() {
     if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || townshipSelect.value.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
-        const url = noteInput.value !== null && noteInput.value !== '' ? '/spcu-dims/api/v1/parish/create?name=' + encodeURIComponent(inputValue) + '&&township=' + encodeURIComponent(townshipSelect.value) + '&&note=' + encodeURIComponent(noteInput.value) :
-            '/spcu-dims/api/v1/parish/create?name=' + encodeURIComponent(inputValue) + '&&township=' + encodeURIComponent(townshipSelect.value);
+        const url = noteInput.value !== null && noteInput.value !== '' ?
+            '/spcu-dims/api/v1/parish/create?name=' + encodeURIComponent(inputValue) + '&&township=' + encodeURIComponent(townshipSelect.value) + '&&congregation=' + encodeURIComponent(congregationSelect.value) + '&&note=' + encodeURIComponent(noteInput.value) :
+            '/spcu-dims/api/v1/parish/create?name=' + encodeURIComponent(inputValue) + '&&township=' + encodeURIComponent(townshipSelect.value) + '&&congregation=' + encodeURIComponent(congregationSelect.value);
         await performOperation(url, 'POST', 'Create successful.');
     }
 }

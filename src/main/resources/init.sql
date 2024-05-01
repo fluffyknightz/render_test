@@ -1,184 +1,358 @@
-INSERT IGNORE INTO `spcu-dims`.`roles` (`name`) VALUES ('DefaultAdmin');
-INSERT IGNORE INTO `spcu-dims`.`roles` (`name`) VALUES ('Admin');
-INSERT IGNORE INTO `spcu-dims`.`roles` (`name`) VALUES ('User');
+INSERT IGNORE INTO `spcu-dims`.`roles` (`name`)
+VALUES ('DefaultAdmin');
+INSERT IGNORE INTO `spcu-dims`.`roles` (`name`)
+VALUES ('Admin');
+INSERT IGNORE INTO `spcu-dims`.`roles` (`name`)
+VALUES ('User');
 
-INSERT IGNORE INTO `spcu-dims`.`archdioceses` (`name`) VALUES ('Yangon');
-INSERT IGNORE INTO `spcu-dims`.`archdioceses` (`name`) VALUES ('Mandalay');
-INSERT IGNORE INTO `spcu-dims`.`archdioceses` (`name`) VALUES ('Taunggyi');
+INSERT IGNORE INTO `spcu-dims`.`archdioceses` (`name`)
+VALUES ('Yangon');
+INSERT IGNORE INTO `spcu-dims`.`archdioceses` (`name`)
+VALUES ('Mandalay');
+INSERT IGNORE INTO `spcu-dims`.`archdioceses` (`name`)
+VALUES ('Taunggyi');
 
-INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`) VALUES ('Yangon', '1');
-INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`) VALUES ('Hpa-An', '1');
-INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`) VALUES ('Pathein', '1');
-INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`) VALUES ('Pyay', '1');
-INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`) VALUES ('Mawlamyine', '1');
-INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`) VALUES ('Mandalay', '2');
-INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`) VALUES ('Hakha', '2');
-INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`) VALUES ('Kalay', '2');
-INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`) VALUES ('Myitkyina', '2');
-INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`) VALUES ('Banmaw', '2');
-INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`) VALUES ('Lashio', '2');
-INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`) VALUES ('Taunggyi', '3');
-INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`) VALUES ('Pakhon', '3');
-INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`) VALUES ('Loikaw', '3');
-INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`) VALUES ('Taungngu', '3');
-INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`) VALUES ('Kengtung', '3');
+INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`)
+VALUES ('Yangon', '1');
+INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`)
+VALUES ('Hpa-An', '1');
+INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`)
+VALUES ('Pathein', '1');
+INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`)
+VALUES ('Pyay', '1');
+INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`)
+VALUES ('Mawlamyine', '1');
+INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`)
+VALUES ('Mandalay', '2');
+INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`)
+VALUES ('Hakha', '2');
+INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`)
+VALUES ('Kalay', '2');
+INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`)
+VALUES ('Myitkyina', '2');
+INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`)
+VALUES ('Banmaw', '2');
+INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`)
+VALUES ('Lashio', '2');
+INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`)
+VALUES ('Taunggyi', '3');
+INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`)
+VALUES ('Pakhon', '3');
+INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`)
+VALUES ('Loikaw', '3');
+INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`)
+VALUES ('Taungngu', '3');
+INSERT IGNORE INTO `spcu-dims`.`dioceses` (`name`, `archdiocese_id`)
+VALUES ('Kengtung', '3');
 
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Yangon', '1');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Maubin', '1');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Bago', '1');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Hpa-An', '2');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Pathein', '3');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Myaungmya', '3');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Hintada', '3');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Pyay', '4');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Mawlamyine', '5');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Dawei', '5');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Myeik', '5');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Mandalay', '6');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Meiktila', '6');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Monywa', '6');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Shwebo', '6');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Hakha', '7');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('ChaungKhuah', '7');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Falam', '7');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('KungLawng', '7');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Lukes', '7');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Matupi', '7');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Mindat', '7');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Rezua', '7');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Kalay', '8');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Khampat', '8');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Saizang', '8');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Tedim', '8');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Tongzang', '8');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Myitkyina', '9');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Mohnyin', '9');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Putao', '9');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Tanai', '9');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Waingmaw', '9');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Bamaw', '10');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Lashio', '11');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Kyaukme', '11');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Kutai', '11');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Taunggyi', '12');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Pekhon', '13');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Santamaria', '13');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Loikaw', '14');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Dimoso', '14');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Hoya', '14');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Phasaung', '14');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Phruso', '14');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Taungngu', '15');
-INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`) VALUES ('Kengtung', '16');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Yangon', '1');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Maubin', '1');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Bago', '1');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Hpa-An', '2');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Pathein', '3');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Myaungmya', '3');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Hintada', '3');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Pyay', '4');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Mawlamyine', '5');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Dawei', '5');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Myeik', '5');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Mandalay', '6');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Meiktila', '6');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Monywa', '6');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Shwebo', '6');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Hakha', '7');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('ChaungKhuah', '7');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Falam', '7');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('KungLawng', '7');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Lukes', '7');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Matupi', '7');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Mindat', '7');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Rezua', '7');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Kalay', '8');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Khampat', '8');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Saizang', '8');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Tedim', '8');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Tongzang', '8');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Myitkyina', '9');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Mohnyin', '9');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Putao', '9');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Tanai', '9');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Waingmaw', '9');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Bamaw', '10');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Lashio', '11');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Kyaukme', '11');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Kutai', '11');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Taunggyi', '12');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Pekhon', '13');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Santamaria', '13');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Loikaw', '14');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Dimoso', '14');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Hoya', '14');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Phasaung', '14');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Phruso', '14');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Taungngu', '15');
+INSERT IGNORE INTO `spcu-dims`.`zones` (`name`, `diocese_id`)
+VALUES ('Kengtung', '16');
 
-INSERT IGNORE INTO `spcu-dims`.`regions` (`name`) VALUES ('Yangon');
-INSERT IGNORE INTO `spcu-dims`.`regions` (`name`) VALUES ('Kayin State');
-INSERT IGNORE INTO `spcu-dims`.`regions` (`name`) VALUES ('Mon State');
-INSERT IGNORE INTO `spcu-dims`.`regions` (`name`) VALUES ('Ayeyarwady');
-INSERT IGNORE INTO `spcu-dims`.`regions` (`name`) VALUES ('Bago');
-INSERT IGNORE INTO `spcu-dims`.`regions` (`name`) VALUES ('Magway');
-INSERT IGNORE INTO `spcu-dims`.`regions` (`name`) VALUES ('Rakhine State');
-INSERT IGNORE INTO `spcu-dims`.`regions` (`name`) VALUES ('Chin State');
-INSERT IGNORE INTO `spcu-dims`.`regions` (`name`) VALUES ('Mandalay');
-INSERT IGNORE INTO `spcu-dims`.`regions` (`name`) VALUES ('Sagaing');
-INSERT IGNORE INTO `spcu-dims`.`regions` (`name`) VALUES ('Taninthayi');
-INSERT IGNORE INTO `spcu-dims`.`regions` (`name`) VALUES ('Kachin State');
-INSERT IGNORE INTO `spcu-dims`.`regions` (`name`) VALUES ('Shan State');
-INSERT IGNORE INTO `spcu-dims`.`regions` (`name`) VALUES ('Kayah State');
-INSERT IGNORE INTO `spcu-dims`.`regions` (`name`) VALUES ('Naypyitaw');
+INSERT IGNORE INTO `spcu-dims`.`regions` (`name`)
+VALUES ('Yangon');
+INSERT IGNORE INTO `spcu-dims`.`regions` (`name`)
+VALUES ('Kayin State');
+INSERT IGNORE INTO `spcu-dims`.`regions` (`name`)
+VALUES ('Mon State');
+INSERT IGNORE INTO `spcu-dims`.`regions` (`name`)
+VALUES ('Ayeyarwady');
+INSERT IGNORE INTO `spcu-dims`.`regions` (`name`)
+VALUES ('Bago');
+INSERT IGNORE INTO `spcu-dims`.`regions` (`name`)
+VALUES ('Magway');
+INSERT IGNORE INTO `spcu-dims`.`regions` (`name`)
+VALUES ('Rakhine State');
+INSERT IGNORE INTO `spcu-dims`.`regions` (`name`)
+VALUES ('Chin State');
+INSERT IGNORE INTO `spcu-dims`.`regions` (`name`)
+VALUES ('Mandalay');
+INSERT IGNORE INTO `spcu-dims`.`regions` (`name`)
+VALUES ('Sagaing');
+INSERT IGNORE INTO `spcu-dims`.`regions` (`name`)
+VALUES ('Taninthayi');
+INSERT IGNORE INTO `spcu-dims`.`regions` (`name`)
+VALUES ('Kachin State');
+INSERT IGNORE INTO `spcu-dims`.`regions` (`name`)
+VALUES ('Shan State');
+INSERT IGNORE INTO `spcu-dims`.`regions` (`name`)
+VALUES ('Kayah State');
+INSERT IGNORE INTO `spcu-dims`.`regions` (`name`)
+VALUES ('Naypyitaw');
 
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('East Yangon', '1');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('West Yangon', '1');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('North Yangon', '1');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('South Yangon', '1');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Hpa-an', '2');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Kawkareik ', '2');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Myawaddy', '2');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Kyar-Inn-Seikgyi', '2');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Pharpon', '2');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Mon', '3');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Thuton', '3');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Tha-Ton', '3');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Pathein', '4');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Myaugmya', '4');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Hintada', '4');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Laputta', '4');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Pyay', '5');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Mindat', '8');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Matupi', '8');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Thayet', '6');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Sittwe', '7');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Mrauk-U', '7');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Kyaukpyu', '7');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Thandwe', '7');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Mandalay', '9');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Pyin Oo Lwin ', '9');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Myingyan', '9');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Meikhtila', '9');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Yemelthin', '9');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Magway', '6');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Katha', '10');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Monywa', '10');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Sagaing', '10');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Shwe Bo', '10');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Mawlamyine', '3');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Dawei', '11');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Kawthaung', '11');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Myeik', '11');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Falam', '8');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Hakha', '8');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Kanpetlet', '8');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Rezua', '8');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Thantlang', '8');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Kankaw', '6');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Kalay', '10');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Myitkyina', '12');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Mohnyin', '12');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Putao', '12');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Banmaw', '12');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Lashio', '13');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Kunlung', '13');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Kyaukme', '13');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Muse', '13');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Taunggyi', '13');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Loilem', '13');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Loikaw', '14');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Taungngu', '5');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Naypyitaw', '15');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Kengtung', '13');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Mong Pauk', '13');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Tachileik', '13');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Mong Phyak', '13');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Mong Yang', '13');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Tamue', '10');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Tonzang', '8');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Hkamti', '10');
-INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`) VALUES ('Maubin', '4');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('East Yangon', '1');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('West Yangon', '1');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('North Yangon', '1');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('South Yangon', '1');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Hpa-an', '2');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Kawkareik ', '2');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Myawaddy', '2');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Kyar-Inn-Seikgyi', '2');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Pharpon', '2');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Mon', '3');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Thuton', '3');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Tha-Ton', '3');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Pathein', '4');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Myaugmya', '4');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Hintada', '4');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Laputta', '4');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Pyay', '5');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Mindat', '8');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Matupi', '8');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Thayet', '6');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Sittwe', '7');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Mrauk-U', '7');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Kyaukpyu', '7');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Thandwe', '7');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Mandalay', '9');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Pyin Oo Lwin ', '9');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Myingyan', '9');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Meikhtila', '9');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Yemelthin', '9');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Magway', '6');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Katha', '10');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Monywa', '10');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Sagaing', '10');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Shwe Bo', '10');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Mawlamyine', '3');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Dawei', '11');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Kawthaung', '11');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Myeik', '11');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Falam', '8');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Hakha', '8');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Kanpetlet', '8');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Rezua', '8');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Thantlang', '8');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Kankaw', '6');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Kalay', '10');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Myitkyina', '12');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Mohnyin', '12');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Putao', '12');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Banmaw', '12');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Lashio', '13');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Kunlung', '13');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Kyaukme', '13');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Muse', '13');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Taunggyi', '13');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Loilem', '13');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Loikaw', '14');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Taungngu', '5');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Naypyitaw', '15');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Kengtung', '13');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Mong Pauk', '13');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Tachileik', '13');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Mong Phyak', '13');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Mong Yang', '13');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Tamue', '10');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Tonzang', '8');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Hkamti', '10');
+INSERT IGNORE INTO `spcu-dims`.`districts` (`name`, `region_id`)
+VALUES ('Maubin', '4');
 
 
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Botahtaung', '1', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Mingala Taung Nyut', '1', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Tamwe', '1', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('North Okkalapa', '1', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Dawbon', '1', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Thingangyun', '1', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Kanbe,Yankin', '1', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('South Dagon', '1', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Mingaladon', '3', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Insein', '3', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Shwe Pyi Thar', '3', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Hlaing Thar Yar', '3', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Thonekwa', '4', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Thanlyin', '4', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Kamakasit,Dalla', '4', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Kyauktan', '4', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Kamayut', '2', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Mayangone', '2', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Dagon', '2', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Pabedan', '2', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Kyi Myin Tine', '2', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Sanchaung', '2', '1');
-INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`) VALUES ('Ahlone', '2', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Botahtaung', '1', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Mingala Taung Nyut', '1', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Tamwe', '1', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('North Okkalapa', '1', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Dawbon', '1', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Thingangyun', '1', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Kanbe,Yankin', '1', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('South Dagon', '1', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Mingaladon', '3', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Insein', '3', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Shwe Pyi Thar', '3', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Hlaing Thar Yar', '3', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Thonekwa', '4', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Thanlyin', '4', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Kamakasit,Dalla', '4', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Kyauktan', '4', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Kamayut', '2', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Mayangone', '2', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Dagon', '2', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Pabedan', '2', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Kyi Myin Tine', '2', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Sanchaung', '2', '1');
+INSERT IGNORE INTO `spcu-dims`.`townships` (`name`, `district_id`, `zone_id`)
+VALUES ('Ahlone', '2', '1');
 
 
 

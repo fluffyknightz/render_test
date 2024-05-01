@@ -19,14 +19,12 @@ import java.util.Optional;
 public class UserServicesImplement implements UserServices {
 
 
-    String doesNotExistMessage = "Role with the name '%s' does not exist.";
-    String userExistsMessage = "Username with the name '%s' already exists.";
-    String userDoesNotExistMessage = "Username with the name '%s' does not exist.";
-
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-
+    String doesNotExistMessage = "Role with the name '%s' does not exist.";
+    String userExistsMessage = "Username with the name '%s' already exists.";
+    String userDoesNotExistMessage = "Username with the name '%s' does not exist.";
 
     @Override
     public Object createUser(String username, String role, String password) {

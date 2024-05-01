@@ -2,48 +2,45 @@
  * © SpryMedia Ltd - datatables.net/license
  */
 
-(function( factory ){
-    if ( typeof define === 'function' && define.amd ) {
+(function (factory) {
+    if (typeof define === 'function' && define.amd) {
         // AMD
-        define( ['jquery', 'datatables.net'], function ( $ ) {
-            return factory( $, window, document );
-        } );
-    }
-    else if ( typeof exports === 'object' ) {
+        define(['jquery', 'datatables.net'], function ($) {
+            return factory($, window, document);
+        });
+    } else if (typeof exports === 'object') {
         // CommonJS
         var jq = require('jquery');
         var cjsRequires = function (root, $) {
-            if ( ! $.fn.dataTable ) {
+            if (!$.fn.dataTable) {
                 require('datatables.net')(root, $);
             }
         };
 
         if (typeof window === 'undefined') {
             module.exports = function (root, $) {
-                if ( ! root ) {
+                if (!root) {
                     // CommonJS environments without a window global must pass a
                     // root. This will give an error otherwise
                     root = window;
                 }
 
-                if ( ! $ ) {
-                    $ = jq( root );
+                if (!$) {
+                    $ = jq(root);
                 }
 
-                cjsRequires( root, $ );
-                return factory( $, root, root.document );
+                cjsRequires(root, $);
+                return factory($, root, root.document);
             };
+        } else {
+            cjsRequires(window, jq);
+            module.exports = factory(jq, window, window.document);
         }
-        else {
-            cjsRequires( window, jq );
-            module.exports = factory( jq, window, window.document );
-        }
-    }
-    else {
+    } else {
         // Browser
-        factory( jQuery, window, document );
+        factory(jQuery, window, document);
     }
-}(function( $, window, document ) {
+}(function ($, window, document) {
     'use strict';
     var DataTable = $.fn.dataTable;
 
@@ -53,10 +50,12 @@
 
         var $$5;
         var dataTable$2;
+
         function setJQuery$4(jq) {
             $$5 = jq;
             dataTable$2 = jq.fn.dataTable;
         }
+
         var SearchPane = /** @class */ (function () {
             /**
              * Creates the panes, sets up the search function
@@ -70,7 +69,9 @@
              */
             function SearchPane(paneSettings, opts, index, panesContainer, panes) {
                 var _this = this;
-                if (panes === void 0) { panes = null; }
+                if (panes === void 0) {
+                    panes = null;
+                }
                 // Check that the required version of DataTables is included
                 if (!dataTable$2 || !dataTable$2.versionCheck || !dataTable$2.versionCheck('1.10.0')) {
                     throw new Error('SearchPane requires DataTables 1.10 or newer');
@@ -162,11 +163,9 @@
                 // Set the value of name incase ordering is desired
                 if (this.s.colOpts.name) {
                     this.s.name = this.s.colOpts.name;
-                }
-                else if (this.s.customPaneSettings && this.s.customPaneSettings.name) {
+                } else if (this.s.customPaneSettings && this.s.customPaneSettings.name) {
                     this.s.name = this.s.customPaneSettings.name;
-                }
-                else {
+                } else {
                     this.s.name = this.s.colExists ?
                         $$5(this.s.dt.column(this.s.index).header()).text() :
                         this.s.customPaneSettings.header || 'Custom Pane';
@@ -210,8 +209,12 @@
                 // Sometimes the top row of the panes containing the search box and ordering buttons appears
                 //  weird if the width of the panes is lower than expected, this fixes the design.
                 // Equally this may occur when the table is resized.
-                this.s.dt.on('draw.dtsp', function () { return _this.adjustTopRow(); });
-                this.s.dt.on('buttons-action.dtsp', function () { return _this.adjustTopRow(); });
+                this.s.dt.on('draw.dtsp', function () {
+                    return _this.adjustTopRow();
+                });
+                this.s.dt.on('buttons-action.dtsp', function () {
+                    return _this.adjustTopRow();
+                });
                 // When column-reorder is present and the columns are moved, it is necessary to
                 //  reassign all of the panes indexes to the new index of the column.
                 this.s.dt.on('column-reorder.dtsp', function (e, settings, details) {
@@ -219,6 +222,7 @@
                 });
                 return this;
             }
+
             /**
              * Adds a row to the panes table
              *
@@ -247,7 +251,7 @@
                 }
                 if (index === undefined) {
                     index = this.s.indexes.length;
-                    this.s.indexes.push({ filter: filter, index: index });
+                    this.s.indexes.push({filter: filter, index: index});
                 }
                 return this.s.dtPane.row.add({
                     className: className,
@@ -276,8 +280,7 @@
                     $$5(subContainers[0]).addClass(this.classes.narrow);
                     $$5(subRow1[0]).addClass(this.classes.narrowSub).removeClass(this.classes.narrowSearch);
                     $$5(subRow2[0]).addClass(this.classes.narrowSub).removeClass(this.classes.narrowButton);
-                }
-                else {
+                } else {
                     $$5(subContainers[0]).removeClass(this.classes.narrow);
                     $$5(subRow1[0]).removeClass(this.classes.narrowSub).addClass(this.classes.narrowSearch);
                     $$5(subRow2[0]).removeClass(this.classes.narrowSub).addClass(this.classes.narrowButton);
@@ -302,7 +305,7 @@
              */
             SearchPane.prototype.clearPane = function () {
                 // Deselect all rows which are selected and update the table and filter count.
-                this.s.dtPane.rows({ selected: true }).deselect();
+                this.s.dtPane.rows({selected: true}).deselect();
                 this.updateTable();
                 return this;
             };
@@ -328,7 +331,9 @@
                 this.dom.countButton.addClass(this.classes.disabledButton);
                 this.dom.searchButton.addClass(this.classes.disabledButton);
                 this.dom.collapseButton.addClass(this.classes.rotated);
-                this.dom.topRow.one('click.dtsp', function () { return _this.show(); });
+                this.dom.topRow.one('click.dtsp', function () {
+                    return _this.show();
+                });
                 this.dom.topRow.trigger('collapse.dtsps');
             };
             /**
@@ -377,7 +382,7 @@
              */
             SearchPane.prototype.getPaneCount = function () {
                 return this.s.dtPane ?
-                    this.s.dtPane.rows({ selected: true }).data().toArray().length :
+                    this.s.dtPane.rows({selected: true}).data().toArray().length :
                     0;
             };
             /**
@@ -387,8 +392,12 @@
              * @param? maintainSelection Whether the current selections are to be maintained over rebuild
              */
             SearchPane.prototype.rebuildPane = function (dataIn, maintainSelection) {
-                if (dataIn === void 0) { dataIn = null; }
-                if (maintainSelection === void 0) { maintainSelection = false; }
+                if (dataIn === void 0) {
+                    dataIn = null;
+                }
+                if (maintainSelection === void 0) {
+                    maintainSelection = false;
+                }
                 this.clearData();
                 var selectedRows = [];
                 this.s.serverSelect = [];
@@ -397,10 +406,9 @@
                 if (this.s.dtPane) {
                     if (maintainSelection) {
                         if (!this.s.dt.page.info().serverSide) {
-                            selectedRows = this.s.dtPane.rows({ selected: true }).data().toArray();
-                        }
-                        else {
-                            this.s.serverSelect = this.s.dtPane.rows({ selected: true }).data().toArray();
+                            selectedRows = this.s.dtPane.rows({selected: true}).data().toArray();
+                        } else {
+                            this.s.serverSelect = this.s.dtPane.rows({selected: true}).data().toArray();
                         }
                     }
                     this.s.dtPane.clear().destroy();
@@ -459,7 +467,7 @@
                 this.s.dtPane.off('deselect.dtsp').on('deselect.dtsp', function () {
                     _this.s.deselectTimeout = setTimeout(function () {
                         _this._updateSelection(true);
-                        if (_this.s.dtPane.rows({ selected: true }).data().toArray().length === 0) {
+                        if (_this.s.dtPane.rows({selected: true}).data().toArray().length === 0) {
                             _this.dom.clear.addClass(_this.classes.disabledButton).attr('disabled', 'true');
                         }
                     }, 50);
@@ -485,9 +493,11 @@
                         // Get all of the data needed for the state save from the pane
                         if (_this.s.dtPane) {
                             selected = _this.s.dtPane
-                                .rows({ selected: true })
+                                .rows({selected: true})
                                 .data()
-                                .map(function (item) { return item.filter !== null ? item.filter.toString() : null; })
+                                .map(function (item) {
+                                    return item.filter !== null ? item.filter.toString() : null;
+                                })
                                 .toArray();
                             searchTerm = _this.dom.searchBox.val();
                             order = _this.s.dtPane.order();
@@ -522,7 +532,9 @@
                 this.s.dtPane.off('user-select.dtsp').on('user-select.dtsp', function (e, _dt, type, cell, originalEvent) {
                     originalEvent.stopPropagation();
                 });
-                this.s.dtPane.off('draw.dtsp').on('draw.dtsp', function () { return _this.adjustTopRow(); });
+                this.s.dtPane.off('draw.dtsp').on('draw.dtsp', function () {
+                    return _this.adjustTopRow();
+                });
                 // When the button to order by the name of the options is clicked then
                 //  change the ordering to whatever it isn't currently
                 this.dom.nameButton.off('click.dtsp').on('click.dtsp', function () {
@@ -552,9 +564,10 @@
                     _this.dom.searchButton.toggleClass(_this.classes.disabledButton);
                     _this.dom.collapseButton.toggleClass(_this.classes.rotated);
                     if (container.hasClass(_this.classes.hidden)) {
-                        _this.dom.topRow.on('click.dtsp', function () { return _this.dom.collapseButton.click(); });
-                    }
-                    else {
+                        _this.dom.topRow.on('click.dtsp', function () {
+                            return _this.dom.collapseButton.click();
+                        });
+                    } else {
                         _this.dom.topRow.off('click.dtsp');
                     }
                     _this.s.dt.state.save();
@@ -570,7 +583,9 @@
                     _this.clearPane();
                 });
                 // When the search button is clicked then draw focus to the search box
-                this.dom.searchButton.off('click.dtsp').on('click.dtsp', function () { return _this.dom.searchBox.focus(); });
+                this.dom.searchButton.off('click.dtsp').on('click.dtsp', function () {
+                    return _this.dom.searchBox.focus();
+                });
                 // When a character is inputted into the searchbox search the pane for matching values.
                 // Doing it this way means that no button has to be clicked to trigger a search, it is done asynchronously
                 this.dom.searchBox.off('click.dtsp').on('input.dtsp', function () {
@@ -578,10 +593,9 @@
                     _this.s.dtPane.search(searchval).draw();
                     if (typeof searchval === 'string' &&
                         (searchval.length > 0 ||
-                            searchval.length === 0 && _this.s.dtPane.rows({ selected: true }).data().toArray().length > 0)) {
+                            searchval.length === 0 && _this.s.dtPane.rows({selected: true}).data().toArray().length > 0)) {
                         _this.dom.clear.removeClass(_this.classes.disabledButton).removeAttr('disabled');
-                    }
-                    else {
+                    } else {
                         _this.dom.clear.addClass(_this.classes.disabledButton).attr('disabled', 'true');
                     }
                     // This state save is required so that the searching on the panes is maintained
@@ -604,8 +618,7 @@
                 if (dataIn.tableLength) {
                     this.s.tableLength = dataIn.tableLength;
                     this.s.rowData.totalOptions = this.s.tableLength;
-                }
-                else if (this.s.tableLength === null || this.s.dt.rows()[0].length > this.s.tableLength) {
+                } else if (this.s.tableLength === null || this.s.dt.rows()[0].length > this.s.tableLength) {
                     this.s.tableLength = this.s.dt.rows()[0].length;
                     this.s.rowData.totalOptions = this.s.tableLength;
                 }
@@ -676,7 +689,9 @@
              * rather than the filtered message when using viewTotal.
              */
             SearchPane.prototype.updateTable = function () {
-                var selectedRows = this.s.dtPane.rows({ selected: true }).data().toArray().map(function (el) { return el.filter; });
+                var selectedRows = this.s.dtPane.rows({selected: true}).data().toArray().map(function (el) {
+                    return el.filter;
+                });
                 this.s.selections = selectedRows;
                 this._searchExtras();
             };
@@ -768,8 +783,7 @@
                             render: function (data, type, row) {
                                 if (type === 'sort') {
                                     return row.sort;
-                                }
-                                else if (type === 'type') {
+                                } else if (type === 'type') {
                                     return row.type;
                                 }
                                 var message = _this._getMessage(row);
@@ -838,7 +852,9 @@
              * @param bins The bins object that is to be populated with the row counts
              */
             SearchPane.prototype._populatePaneArray = function (rowIdx, arrayFilter, settings, bins) {
-                if (bins === void 0) { bins = this.s.rowData.bins; }
+                if (bins === void 0) {
+                    bins = this.s.rowData.bins;
+                }
                 // Retrieve the rendered data from the cell using the fastData function
                 // rather than the cell().render API method for optimisation
                 var fastData = settings.fastData;
@@ -847,8 +863,7 @@
                     this.s.rowData.filterMap.set(rowIdx, rendered);
                     this._addOption(rendered, rendered, rendered, rendered, arrayFilter, bins);
                     this.s.rowData.totalOptions++;
-                }
-                else {
+                } else {
                     var filter = fastData(rowIdx, this.s.index, this.s.colOpts.orthogonal.search);
                     // Null and empty string are to be considered the same value
                     if (filter === null) {
@@ -862,8 +877,7 @@
                         bins[filter] = 1;
                         this._addOption(filter, fastData(rowIdx, this.s.index, this.s.colOpts.orthogonal.display), fastData(rowIdx, this.s.index, this.s.colOpts.orthogonal.sort), fastData(rowIdx, this.s.index, this.s.colOpts.orthogonal.type), arrayFilter, bins);
                         this.s.rowData.totalOptions++;
-                    }
-                    else {
+                    } else {
                         bins[filter]++;
                         this.s.rowData.totalOptions++;
                     }
@@ -890,9 +904,11 @@
                 }
                 if (idx) {
                     var table = this.s.dtPane;
-                    var rows = table.rows({ order: 'index' }).data().map(function (item) { return item.filter !== null ?
-                        item.filter.toString() :
-                        null; }).toArray();
+                    var rows = table.rows({order: 'index'}).data().map(function (item) {
+                        return item.filter !== null ?
+                            item.filter.toString() :
+                            null;
+                    }).toArray();
                     for (var _i = 0, _a = loadedFilter.searchPanes.panes[idx].selected; _i < _a.length; _i++) {
                         var filter = _a[_i];
                         var id = -1;
@@ -917,8 +933,7 @@
                 var processing = function (state) {
                     if (DataTable.versionCheck('2')) {
                         _this.s.dt.processing(state);
-                    }
-                    else {
+                    } else {
                         // Legacy v1
                         var settings = _this.s.dt.settings()[0];
                         var oApi = settings.oApi;
@@ -929,11 +944,10 @@
                     _this.s.scrollTop = $$5(_this.s.dtPane.table().node()).parent()[0].scrollTop;
                     if (_this.s.dt.page.info().serverSide && !_this.s.updating) {
                         if (!_this.s.serverSelecting) {
-                            _this.s.serverSelect = _this.s.dtPane.rows({ selected: true }).data().toArray();
+                            _this.s.serverSelect = _this.s.dtPane.rows({selected: true}).data().toArray();
                             _this.s.dt.draw(false);
                         }
-                    }
-                    else if (notUpdating) {
+                    } else if (notUpdating) {
                         _this._makeSelection();
                     }
                     processing(false);
@@ -992,8 +1006,7 @@
                             type: type
                         });
                         this.s.rowData.totalOptions++;
-                    }
-                    else {
+                    } else {
                         bins[filter]++;
                         this.s.rowData.totalOptions++;
                     }
@@ -1018,9 +1031,15 @@
              */
             SearchPane.prototype._buildPane = function (selectedRows, dataIn, prevEl) {
                 var _this = this;
-                if (selectedRows === void 0) { selectedRows = []; }
-                if (dataIn === void 0) { dataIn = null; }
-                if (prevEl === void 0) { prevEl = null; }
+                if (selectedRows === void 0) {
+                    selectedRows = [];
+                }
+                if (dataIn === void 0) {
+                    dataIn = null;
+                }
+                if (prevEl === void 0) {
+                    prevEl = null;
+                }
                 // Aliases
                 this.s.selections = [];
                 // Other Variables
@@ -1048,8 +1067,7 @@
                         this.dom.container.addClass(this.classes.hidden);
                         this.s.displayed = false;
                         return false;
-                    }
-                    else if (this.s.colOpts.show === true || idx !== -1) {
+                    } else if (this.s.colOpts.show === true || idx !== -1) {
                         this.s.displayed = true;
                     }
                     if (!this.s.dt.page.info().serverSide &&
@@ -1078,12 +1096,10 @@
                         }
                         this.dom.container.addClass(this.classes.show);
                         this.s.displayed = true;
-                    }
-                    else if (dataIn && dataIn.searchPanes && dataIn.searchPanes.options) {
+                    } else if (dataIn && dataIn.searchPanes && dataIn.searchPanes.options) {
                         this._serverPopulate(dataIn);
                     }
-                }
-                else {
+                } else {
                     this.s.displayed = true;
                 }
                 // If the variance is accceptable then display the search pane
@@ -1102,8 +1118,7 @@
                 // Add the container to the document in its original location
                 if (prevEl !== null && this.dom.panesContainer.has(prevEl).length > 0) {
                     this.dom.container.insertAfter(prevEl);
-                }
-                else {
+                } else {
                     this.dom.panesContainer.prepend(this.dom.container);
                 }
                 // Declare the datatable for the pane
@@ -1135,17 +1150,15 @@
                             topEnd: null
                         }
                     }
-                    : { dom: 't' }));
+                    : {dom: 't'}));
                 this.dom.dtP.addClass(this.classes.table);
                 // Getting column titles is a little messy
                 var headerText = 'Custom Pane';
                 if (this.s.customPaneSettings && this.s.customPaneSettings.header) {
                     headerText = this.s.customPaneSettings.header;
-                }
-                else if (this.s.colOpts.header) {
+                } else if (this.s.colOpts.header) {
                     headerText = this.s.colOpts.header;
-                }
-                else if (this.s.colExists) {
+                } else if (this.s.colExists) {
                     headerText = $$5.fn.dataTable.versionCheck('2')
                         ? this.s.dt.column(this.s.index).title()
                         : this.s.dt.settings()[0].aoColumns[this.s.index].sTitle;
@@ -1167,11 +1180,9 @@
                                     this.s.serverSelecting = false;
                                 }
                             }
-                        }
-                        else if (!this.s.dt.page.info().serverSide && this.s.rowData.arrayFilter[j]) {
+                        } else if (!this.s.dt.page.info().serverSide && this.s.rowData.arrayFilter[j]) {
                             this.addRow(this.s.rowData.arrayFilter[j].display, this.s.rowData.arrayFilter[j].filter, this.s.rowData.arrayFilter[j].sort, this.s.rowData.arrayFilter[j].type);
-                        }
-                        else if (!this.s.dt.page.info().serverSide) {
+                        } else if (!this.s.dt.page.info().serverSide) {
                             // Just pass an empty string as the message will be calculated based on that in addRow()
                             this.addRow('', '', '', '');
                         }
@@ -1201,8 +1212,7 @@
                                     this.s.serverSelecting = true;
                                     this.s.dtPane.row(row).select();
                                     this.s.serverSelecting = false;
-                                }
-                                else {
+                                } else {
                                     this.s.dtPane.row(row).select();
                                 }
                             }
@@ -1221,9 +1231,10 @@
                     // Otherwise the container that the class is added to does not exist
                     if (this.s.dtPane.settings()[0]._bInitComplete) {
                         this.collapse();
-                    }
-                    else {
-                        this.s.dtPane.one('init', function () { return _this.collapse(); });
+                    } else {
+                        this.s.dtPane.one('init', function () {
+                            return _this.collapse();
+                        });
                     }
                 }
                 // Reload the selection, searchbox entry and ordering from the previous state
@@ -1247,8 +1258,7 @@
                             // Is the pane to be hidden or shown?
                             if (pane.collapsed) {
                                 this.collapse();
-                            }
-                            else {
+                            } else {
                                 this.show();
                             }
                         }
@@ -1394,8 +1404,7 @@
                             if (!filter.includes(colSelect)) {
                                 return false;
                             }
-                        }
-                        else if (filter.includes(colSelect)) {
+                        } else if (filter.includes(colSelect)) {
                             return true;
                         }
                     }
@@ -1453,7 +1462,7 @@
             SearchPane.prototype._searchExtras = function () {
                 var updating = this.s.updating;
                 this.s.updating = true;
-                var filters = this.s.dtPane.rows({ selected: true }).data().pluck('filter').toArray();
+                var filters = this.s.dtPane.rows({selected: true}).data().pluck('filter').toArray();
                 var nullIndex = filters.indexOf(this.emptyMessage());
                 var container = $$5(this.s.dtPane.table().container());
                 // If null index is found then search for empty cells as a filter.
@@ -1463,8 +1472,7 @@
                 // If a filter has been applied then outline the respective pane, remove it when it no longer is.
                 if (filters.length > 0) {
                     container.addClass(this.classes.selected);
-                }
-                else if (filters.length === 0) {
+                } else if (filters.length === 0) {
                     container.removeClass(this.classes.selected);
                 }
                 this.s.updating = updating;
@@ -1548,21 +1556,31 @@
         var __extends$4 = (window && window.__extends) || (function () {
             var extendStatics = function (d, b) {
                 extendStatics = Object.setPrototypeOf ||
-                    ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-                    function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+                    ({__proto__: []} instanceof Array && function (d, b) {
+                        d.__proto__ = b;
+                    }) ||
+                    function (d, b) {
+                        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+                    };
                 return extendStatics(d, b);
             };
             return function (d, b) {
                 extendStatics(d, b);
-                function __() { this.constructor = d; }
+
+                function __() {
+                    this.constructor = d;
+                }
+
                 d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
             };
         })();
         var SearchPaneST = /** @class */ (function (_super) {
             __extends$4(SearchPaneST, _super);
+
             function SearchPaneST(paneSettings, opts, index, panesContainer, panes) {
                 return _super.call(this, paneSettings, opts, index, panesContainer, panes) || this;
             }
+
             /**
              * When server-side processing is enabled, SP will remove rows and then readd them,
              * resulting in Select's reference to the last selected cell being lost.
@@ -1581,13 +1599,16 @@
                     dt.rows().remove();
                     return function () {
                         if (selectedIndex_1 !== undefined) {
-                            var idx = dt.row(function (i, data) { return data.index === selectedIndex_1; }).index();
-                            dt.select.last({ row: idx, column: 0 });
+                            var idx = dt.row(function (i, data) {
+                                return data.index === selectedIndex_1;
+                            }).index();
+                            dt.select.last({row: idx, column: 0});
                         }
                     };
                 }
                 dt.rows().remove();
-                return function () { };
+                return function () {
+                };
             };
             /**
              * Populates the SearchPane based off of the data that has been recieved from the server
@@ -1603,8 +1624,7 @@
                 if (dataIn.tableLength !== undefined) {
                     this.s.tableLength = dataIn.tableLength;
                     this.s.rowData.totalOptions = this.s.tableLength;
-                }
-                else if (this.s.tableLength === null || this.s.dt.rows()[0].length > this.s.tableLength) {
+                } else if (this.s.tableLength === null || this.s.dt.rows()[0].length > this.s.tableLength) {
                     this.s.tableLength = this.s.dt.rows()[0].length;
                     this.s.rowData.totalOptions = this.s.tableLength;
                 }
@@ -1684,7 +1704,7 @@
                         }
                     }
                     // Store the selected rows
-                    this.s.serverSelect = this.s.dtPane.rows({ selected: true }).data().toArray();
+                    this.s.serverSelect = this.s.dtPane.rows({selected: true}).data().toArray();
                     // Update the pane
                     this.s.dtPane.draw();
                     reselect();
@@ -1699,7 +1719,7 @@
                 if (!this.s.dt.page.info().serverSide) {
                     // Get the latest count values from the table
                     this.s.rowData.binsShown = {};
-                    for (var _i = 0, _a = this.s.dt.rows({ search: 'applied' }).indexes().toArray(); _i < _a.length; _i++) {
+                    for (var _i = 0, _a = this.s.dt.rows({search: 'applied'}).indexes().toArray(); _i < _a.length; _i++) {
                         var index = _a[_i];
                         this._updateShown(index, this.s.dt.settings()[0], this.s.rowData.binsShown);
                     }
@@ -1752,7 +1772,7 @@
              */
             SearchPaneST.prototype._updateSelection = function () {
                 if (this.s.dt.page.info().serverSide && !this.s.updating && !this.s.serverSelecting) {
-                    this.s.serverSelect = this.s.dtPane.rows({ selected: true }).data().toArray();
+                    this.s.serverSelect = this.s.dtPane.rows({selected: true}).data().toArray();
                 }
             };
             /**
@@ -1763,7 +1783,9 @@
              * @param bins The bins object that is to be incremented
              */
             SearchPaneST.prototype._updateShown = function (rowIdx, settings, bins) {
-                if (bins === void 0) { bins = this.s.rowData.binsShown; }
+                if (bins === void 0) {
+                    bins = this.s.rowData.binsShown;
+                }
                 var orth = typeof this.s.colOpts.orthogonal === 'string'
                     ? this.s.colOpts.orthogonal
                     : this.s.colOpts.orthogonal.search;
@@ -1772,8 +1794,7 @@
                 var add = function (f) {
                     if (!bins[f]) {
                         bins[f] = 1;
-                    }
-                    else {
+                    } else {
                         bins[f]++;
                     }
                 };
@@ -1782,8 +1803,7 @@
                         var f = filter_1[_i];
                         add(f);
                     }
-                }
-                else {
+                } else {
                     add(filter);
                 }
             };
@@ -1793,22 +1813,33 @@
         var __extends$3 = (window && window.__extends) || (function () {
             var extendStatics = function (d, b) {
                 extendStatics = Object.setPrototypeOf ||
-                    ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-                    function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+                    ({__proto__: []} instanceof Array && function (d, b) {
+                        d.__proto__ = b;
+                    }) ||
+                    function (d, b) {
+                        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+                    };
                 return extendStatics(d, b);
             };
             return function (d, b) {
                 extendStatics(d, b);
-                function __() { this.constructor = d; }
+
+                function __() {
+                    this.constructor = d;
+                }
+
                 d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
             };
         })();
         var $$4;
+
         function setJQuery$3(jq) {
             $$4 = jq;
         }
+
         var SearchPaneViewTotal = /** @class */ (function (_super) {
             __extends$3(SearchPaneViewTotal, _super);
+
             function SearchPaneViewTotal(paneSettings, opts, index, panesContainer, panes) {
                 var _this = this;
                 var override = {
@@ -1819,6 +1850,7 @@
                 _this = _super.call(this, paneSettings, $$4.extend(override, opts), index, panesContainer, panes) || this;
                 return _this;
             }
+
             /**
              * Gets the message that is to be used to indicate the count for each SearchPane row
              *
@@ -1851,22 +1883,33 @@
         var __extends$2 = (window && window.__extends) || (function () {
             var extendStatics = function (d, b) {
                 extendStatics = Object.setPrototypeOf ||
-                    ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-                    function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+                    ({__proto__: []} instanceof Array && function (d, b) {
+                        d.__proto__ = b;
+                    }) ||
+                    function (d, b) {
+                        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+                    };
                 return extendStatics(d, b);
             };
             return function (d, b) {
                 extendStatics(d, b);
-                function __() { this.constructor = d; }
+
+                function __() {
+                    this.constructor = d;
+                }
+
                 d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
             };
         })();
         var $$3;
+
         function setJQuery$2(jq) {
             $$3 = jq;
         }
+
         var SearchPaneCascade = /** @class */ (function (_super) {
             __extends$2(SearchPaneCascade, _super);
+
             function SearchPaneCascade(paneSettings, opts, index, panesContainer, panes) {
                 var _this = this;
                 var override = {
@@ -1877,6 +1920,7 @@
                 _this = _super.call(this, paneSettings, $$3.extend(override, opts), index, panesContainer, panes) || this;
                 return _this;
             }
+
             /**
              * This method updates the rows and their data within the SearchPanes
              *
@@ -1884,7 +1928,7 @@
              */
             SearchPaneCascade.prototype.updateRows = function () {
                 // Note the currently selected values in the pane and remove all of the rows
-                var selected = this.s.dtPane.rows({ selected: true }).data().toArray();
+                var selected = this.s.dtPane.rows({selected: true}).data().toArray();
                 var selection;
                 if (this.s.colOpts.options ||
                     this.s.customPaneSettings && this.s.customPaneSettings.options) {
@@ -1913,13 +1957,12 @@
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     if (!this.s.dt.page.info().serverSide) {
                         // Get the latest count values from the table
                         this._activePopulatePane();
                         this.s.rowData.binsShown = {};
-                        for (var _a = 0, _b = this.s.dt.rows({ search: 'applied' }).indexes().toArray(); _a < _b.length; _a++) {
+                        for (var _a = 0, _b = this.s.dt.rows({search: 'applied'}).indexes().toArray(); _a < _b.length; _a++) {
                             var index = _b[_a];
                             this._updateShown(index, this.s.dt.settings()[0], this.s.rowData.binsShown);
                         }
@@ -1975,7 +2018,7 @@
                 this.s.rowData.bins = {};
                 var settings = this.s.dt.settings()[0];
                 if (!this.s.dt.page.info().serverSide) {
-                    for (var _i = 0, _a = this.s.dt.rows({ search: 'applied' }).indexes().toArray(); _i < _a.length; _i++) {
+                    for (var _i = 0, _a = this.s.dt.rows({search: 'applied'}).indexes().toArray(); _i < _a.length; _i++) {
                         var index = _a[_i];
                         this._populatePaneArray(index, this.s.rowData.arrayFilter, settings);
                     }
@@ -1992,7 +2035,7 @@
                     return;
                 }
                 var allRows = this.s.dt.rows();
-                var shownRows = this.s.dt.rows({ search: 'applied' });
+                var shownRows = this.s.dt.rows({search: 'applied'});
                 var tableValsTotal = allRows.data().toArray();
                 var tableValsShown = shownRows.data().toArray();
                 var rows = [];
@@ -2077,22 +2120,33 @@
         var __extends$1 = (window && window.__extends) || (function () {
             var extendStatics = function (d, b) {
                 extendStatics = Object.setPrototypeOf ||
-                    ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-                    function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+                    ({__proto__: []} instanceof Array && function (d, b) {
+                        d.__proto__ = b;
+                    }) ||
+                    function (d, b) {
+                        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+                    };
                 return extendStatics(d, b);
             };
             return function (d, b) {
                 extendStatics(d, b);
-                function __() { this.constructor = d; }
+
+                function __() {
+                    this.constructor = d;
+                }
+
                 d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
             };
         })();
         var $$2;
+
         function setJQuery$1(jq) {
             $$2 = jq;
         }
+
         var SearchPaneCascadeViewTotal = /** @class */ (function (_super) {
             __extends$1(SearchPaneCascadeViewTotal, _super);
+
             function SearchPaneCascadeViewTotal(paneSettings, opts, index, panesContainer, panes) {
                 var _this = this;
                 var override = {
@@ -2104,6 +2158,7 @@
                 _this = _super.call(this, paneSettings, $$2.extend(override, opts), index, panesContainer, panes) || this;
                 return _this;
             }
+
             /**
              * Fill the array with the values that are currently being displayed in the table
              *
@@ -2114,7 +2169,7 @@
                 this.s.rowData.binsShown = {};
                 var settings = this.s.dt.settings()[0];
                 if (!this.s.dt.page.info().serverSide) {
-                    for (var _i = 0, _a = this.s.dt.rows({ search: 'applied' }).indexes().toArray(); _i < _a.length; _i++) {
+                    for (var _i = 0, _a = this.s.dt.rows({search: 'applied'}).indexes().toArray(); _i < _a.length; _i++) {
                         var index = _a[_i];
                         this._populatePaneArray(index, this.s.rowData.arrayFilter, settings, this.s.rowData.binsShown);
                     }
@@ -2140,15 +2195,21 @@
 
         var $$1;
         var dataTable$1;
+
         function setJQuery(jq) {
             $$1 = jq;
             dataTable$1 = jq.fn.dataTable;
         }
+
         var SearchPanes = /** @class */ (function () {
             function SearchPanes(paneSettings, opts, fromPreInit, paneClass) {
                 var _this = this;
-                if (fromPreInit === void 0) { fromPreInit = false; }
-                if (paneClass === void 0) { paneClass = SearchPane; }
+                if (fromPreInit === void 0) {
+                    fromPreInit = false;
+                }
+                if (paneClass === void 0) {
+                    paneClass = SearchPane;
+                }
                 // Check that the required version of DataTables is included
                 if (!dataTable$1 || !dataTable$1.versionCheck || !dataTable$1.versionCheck('1.10.0')) {
                     throw new Error('SearchPane requires DataTables 1.10 or newer');
@@ -2234,8 +2295,7 @@
                                 data.searchPanes[src][i] = selection.rows[i];
                                 if (data.searchPanes[src][i] === null) {
                                     data.searchPanes_null[src][i] = true;
-                                }
-                                else {
+                                } else {
                                     data.searchPanes_null[src][i] = false;
                                 }
                             }
@@ -2255,14 +2315,14 @@
                 table.settings()[0]._searchPanes = this;
                 if (this.s.dt.settings()[0]._bInitComplete || fromPreInit) {
                     this._paneDeclare(table, paneSettings, opts);
-                }
-                else {
+                } else {
                     table.one('preInit.dtsps', function () {
                         _this._paneDeclare(table, paneSettings, opts);
                     });
                 }
                 return this;
             }
+
             /**
              * Clear the selections of all of the panes
              */
@@ -2302,8 +2362,12 @@
              * rebuilds all of the panes
              */
             SearchPanes.prototype.rebuild = function (targetIdx, maintainSelection) {
-                if (targetIdx === void 0) { targetIdx = false; }
-                if (maintainSelection === void 0) { maintainSelection = false; }
+                if (targetIdx === void 0) {
+                    targetIdx = false;
+                }
+                if (maintainSelection === void 0) {
+                    maintainSelection = false;
+                }
                 this.dom.emptyMessage.detach();
                 // As a rebuild from scratch is required, empty the searchpanes container.
                 if (targetIdx === false) {
@@ -2357,8 +2421,7 @@
                     // If the neatest number is the number we have then use this.
                     if (target === displayCount) {
                         highest_1 = target;
-                    }
-                    else {
+                    } else {
                         // Go from the target down and find the value with the most panes left over, this will be the best fit
                         for (var ppr = target; ppr > 1; ppr--) {
                             var rem = displayCount % ppr;
@@ -2383,8 +2446,7 @@
                             pane.resize('columns-' + (!widerIndexes_1.includes(pane.s.index) ? highest_1 : highestmod_1));
                         }
                     });
-                }
-                else {
+                } else {
                     for (var _b = 0, _c = this.s.panes; _b < _c.length; _b++) {
                         pane = _c[_b];
                         pane.adjustTopRow();
@@ -2476,7 +2538,9 @@
                 for (var _i = 0, _a = this.s.panes; _i < _a.length; _i++) {
                     var pane = _a[_i];
                     if (pane.s.dtPane) {
-                        var rows = pane.s.dtPane.rows({ selected: true }).data().toArray().map(function (el) { return el.filter; });
+                        var rows = pane.s.dtPane.rows({selected: true}).data().toArray().map(function (el) {
+                            return el.filter;
+                        });
                         if (rows.length) {
                             this.s.selectionList.push({
                                 column: pane.s.index,
@@ -2500,7 +2564,9 @@
                     this.dom.clearAll
                         .appendTo(this.dom.titleRow)
                         .off('click.dtsps')
-                        .on('click.dtsps', function () { return _this.clearSelections(); });
+                        .on('click.dtsps', function () {
+                            return _this.clearSelections();
+                        });
                 }
                 if (this.c.collapse) {
                     this.dom.showAll.appendTo(this.dom.titleRow);
@@ -2519,7 +2585,9 @@
                     .append(this.dom.titleRow)
                     .append(this.dom.panes);
                 // WORKAROUND
-                this.s.panes.forEach(function (pane) { return pane.setListeners(); });
+                this.s.panes.forEach(function (pane) {
+                    return pane.setListeners();
+                });
                 if ($$1('div.' + this.classes.container).length === 0) {
                     this.dom.container.prependTo(this.s.dt);
                 }
@@ -2533,8 +2601,7 @@
                 var message;
                 try {
                     message = this.s.dt.i18n('searchPanes.emptyPanes', this.c.i18n.emptyPanes);
-                }
-                catch (error) {
+                } catch (error) {
                     message = null;
                 }
                 // If the message is an empty string then searchPanes.emptyPanes is undefined,
@@ -2578,8 +2645,7 @@
                             // Enable the collapse all button
                             this.dom.collapseAll.removeClass(this.classes.disabledButton).removeAttr('disabled');
                             disableClose = false;
-                        }
-                        else {
+                        } else {
                             // Otherwise enable the show all button
                             this.dom.showAll.removeClass(this.classes.disabledButton).removeAttr('disabled');
                             disableShow = false;
@@ -2694,17 +2760,20 @@
                 // If a custom ordering is being used
                 if (this.c.order.length > 0) {
                     // Make a new Array of panes based upon the order
-                    this.s.panes = this.c.order.map(function (name) { return _this._findPane(name); });
+                    this.s.panes = this.c.order.map(function (name) {
+                        return _this._findPane(name);
+                    });
                 }
                 // If this internal property is true then the DataTable has been initialised already
                 if (this.s.dt.settings()[0]._bInitComplete) {
                     this._startup(table);
-                }
-                else {
+                } else {
                     // Otherwise add the paneStartup function to the list of functions
                     // that are to be run when the table is initialised. This will garauntee that the
                     // panes are initialised before the init event and init Complete callback is fired
-                    this.s.dt.settings()[0].aoInitComplete.push(function () { return _this._startup(table); });
+                    this.s.dt.settings()[0].aoInitComplete.push(function () {
+                        return _this._startup(table);
+                    });
                 }
             };
             /**
@@ -2732,7 +2801,9 @@
                 for (var _i = 0, _a = this.s.panes; _i < _a.length; _i++) {
                     var pane = _a[_i];
                     // We want to make the same check whenever there is a collapse/expand
-                    pane.dom.topRow.off('collapse.dtsps').on('collapse.dtsps', function () { return _this._checkCollapse(); });
+                    pane.dom.topRow.off('collapse.dtsps').on('collapse.dtsps', function () {
+                        return _this._checkCollapse();
+                    });
                 }
                 this._checkCollapse();
             };
@@ -2785,7 +2856,9 @@
                     // Paging flag reset - we only need to dodge the draw once
                     _this.s.paging = false;
                 });
-                $$1(window).on('resize.dtsps', dataTable$1.util.throttle(function () { return _this.resizePanes(); }));
+                $$1(window).on('resize.dtsps', dataTable$1.util.throttle(function () {
+                    return _this.resizePanes();
+                }));
                 // Whenever a state save occurs store the selection list in the state object
                 this.s.dt.on('stateSaveParams.dtsps', function (e, settings, data) {
                     if (settings !== hostSettings) {
@@ -2830,13 +2903,12 @@
                                 data.searchPanes_null[src] = {};
                             }
                             if (pane.s.dtPane) {
-                                var rowData = pane.s.dtPane.rows({ selected: true }).data().toArray();
+                                var rowData = pane.s.dtPane.rows({selected: true}).data().toArray();
                                 for (var i = 0; i < rowData.length; i++) {
                                     data.searchPanes[src][i] = rowData[i].filter;
                                     if (!data.searchPanes[src][i]) {
                                         data.searchPanes_null[src][i] = true;
-                                    }
-                                    else {
+                                    } else {
                                         data.searchPanes_null[src][i] = false;
                                     }
                                     filterCount++;
@@ -2871,9 +2943,12 @@
                             viewTotal: _this.c.viewTotal
                         };
                     });
-                }
-                else {
-                    table.on('preXhr.dtsps', function () { return _this.s.panes.forEach(function (pane) { return pane.clearData(); }); });
+                } else {
+                    table.on('preXhr.dtsps', function () {
+                        return _this.s.panes.forEach(function (pane) {
+                            return pane.clearData();
+                        });
+                    });
                 }
                 // If the data is reloaded from the server then it is possible that it has changed completely,
                 // so we need to rebuild the panes
@@ -2945,7 +3020,9 @@
                 if (this.c.clear) {
                     this.dom.clearAll
                         .off('click.dtsps')
-                        .on('click.dtsps', function () { return _this.clearSelections(); });
+                        .on('click.dtsps', function () {
+                            return _this.clearSelections();
+                        });
                 }
                 hostSettings._searchPanes = this;
                 // This state save is required so that state is maintained over multiple refreshes if no actions are made
@@ -2974,8 +3051,7 @@
                 }
                 if (filterCount === 0 && tableSearch === 0) {
                     this.dom.clearAll.addClass(this.classes.disabledButton).attr('disabled', 'true');
-                }
-                else {
+                } else {
                     this.dom.clearAll.removeClass(this.classes.disabledButton).removeAttr('disabled');
                 }
             };
@@ -3032,53 +3108,68 @@
         var __extends = (window && window.__extends) || (function () {
             var extendStatics = function (d, b) {
                 extendStatics = Object.setPrototypeOf ||
-                    ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-                    function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+                    ({__proto__: []} instanceof Array && function (d, b) {
+                        d.__proto__ = b;
+                    }) ||
+                    function (d, b) {
+                        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+                    };
                 return extendStatics(d, b);
             };
             return function (d, b) {
                 extendStatics(d, b);
-                function __() { this.constructor = d; }
+
+                function __() {
+                    this.constructor = d;
+                }
+
                 d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
             };
         })();
         var SearchPanesST = /** @class */ (function (_super) {
             __extends(SearchPanesST, _super);
+
             function SearchPanesST(paneSettings, opts, fromPreInit) {
-                if (fromPreInit === void 0) { fromPreInit = false; }
+                if (fromPreInit === void 0) {
+                    fromPreInit = false;
+                }
                 var _this = this;
                 var paneClass;
                 if (opts.cascadePanes && opts.viewTotal) {
                     paneClass = SearchPaneCascadeViewTotal;
-                }
-                else if (opts.cascadePanes) {
+                } else if (opts.cascadePanes) {
                     paneClass = SearchPaneCascade;
-                }
-                else if (opts.viewTotal) {
+                } else if (opts.viewTotal) {
                     paneClass = SearchPaneViewTotal;
                 }
                 _this = _super.call(this, paneSettings, opts, fromPreInit, paneClass) || this;
                 var dt = _this.s.dt;
                 var loadedFilter = dt.state.loaded();
-                var loadFn = function () { return _this._initSelectionListeners(true, loadedFilter && loadedFilter.searchPanes && loadedFilter.searchPanes.selectionList ?
-                    loadedFilter.searchPanes.selectionList :
-                    _this.c.preSelect); };
+                var loadFn = function () {
+                    return _this._initSelectionListeners(true, loadedFilter && loadedFilter.searchPanes && loadedFilter.searchPanes.selectionList ?
+                        loadedFilter.searchPanes.selectionList :
+                        _this.c.preSelect);
+                };
                 if (dt.settings()[0]._bInitComplete) {
                     loadFn();
-                }
-                else {
+                } else {
                     dt.off('init.dtsps').on('init.dtsps', loadFn);
                 }
                 return _this;
             }
+
             /**
              * Ensures that the correct selection listeners are set for selection tracking
              *
              * @param preSelect Any values that are to be preselected
              */
             SearchPanesST.prototype._initSelectionListeners = function (isPreselect, preSelect) {
-                if (isPreselect === void 0) { isPreselect = true; }
-                if (preSelect === void 0) { preSelect = []; }
+                if (isPreselect === void 0) {
+                    isPreselect = true;
+                }
+                if (preSelect === void 0) {
+                    preSelect = [];
+                }
                 if (isPreselect) {
                     this.s.selectionList = preSelect;
                 }
@@ -3175,7 +3266,9 @@
              */
             SearchPanesST.prototype._update = function (pane) {
                 var _this = this;
-                if (pane === void 0) { pane = undefined; }
+                if (pane === void 0) {
+                    pane = undefined;
+                }
                 return function () {
                     if (pane) {
                         clearTimeout(pane.s.deselectTimeout);
@@ -3191,10 +3284,16 @@
              */
             SearchPanesST.prototype._updateTimeout = function (pane) {
                 var _this = this;
-                if (pane === void 0) { pane = undefined; }
-                return function () { return pane ?
-                    pane.s.deselectTimeout = setTimeout(function () { return _this._updateSelectionList(pane); }, 50) :
-                    _this._updateSelectionList(); };
+                if (pane === void 0) {
+                    pane = undefined;
+                }
+                return function () {
+                    return pane ?
+                        pane.s.deselectTimeout = setTimeout(function () {
+                            return _this._updateSelectionList(pane);
+                        }, 50) :
+                        _this._updateSelectionList();
+                };
             };
             /**
              * Updates the selection list to include the latest selections for a given pane
@@ -3203,14 +3302,15 @@
              * @param selected Which rows are selected within the pane
              */
             SearchPanesST.prototype._updateSelectionList = function (paneIn) {
-                if (paneIn === void 0) { paneIn = undefined; }
+                if (paneIn === void 0) {
+                    paneIn = undefined;
+                }
                 // Bail if any of these flags are set
                 if (this.s.pagingST) {
                     // Reset pagingST flag
                     this.s.pagingST = false;
                     return;
-                }
-                else if (this.s.updating || paneIn && paneIn.s.serverSelecting) {
+                } else if (this.s.updating || paneIn && paneIn.s.serverSelecting) {
                     return;
                 }
                 if (paneIn !== undefined) {
@@ -3218,16 +3318,19 @@
                         paneIn._updateSelection();
                     }
                     // Get filter values for all of the rows and the selections
-                    var rows = paneIn.s.dtPane.rows({ selected: true }).data().toArray().map(function (el) { return el.filter; });
-                    this.s.selectionList = this.s.selectionList.filter(function (selection) { return selection.column !== paneIn.s.index; });
+                    var rows = paneIn.s.dtPane.rows({selected: true}).data().toArray().map(function (el) {
+                        return el.filter;
+                    });
+                    this.s.selectionList = this.s.selectionList.filter(function (selection) {
+                        return selection.column !== paneIn.s.index;
+                    });
                     if (rows.length > 0) {
                         this.s.selectionList.push({
                             column: paneIn.s.index,
                             rows: rows
                         });
                         paneIn.dom.clear.removeClass(this.classes.disabledButton).removeAttr('disabled');
-                    }
-                    else {
+                    } else {
                         paneIn.dom.clear.addClass(this.classes.disabledButton).attr('disabled', 'true');
                     }
                     if (this.s.dt.page.info().serverSide) {
@@ -3251,7 +3354,7 @@
                     this.s.dt.draw(false);
                     // When there are no selections present if the length of the data does not match the searched data
                     // then another filter is present
-                    if (this.s.dt.rows().toArray()[0].length > this.s.dt.rows({ search: 'applied' }).toArray()[0].length) {
+                    if (this.s.dt.rows().toArray()[0].length > this.s.dt.rows({search: 'applied'}).toArray()[0].length) {
                         anotherFilter = true;
                     }
                     this.s.selectionList = tmpSL;
@@ -3324,8 +3427,7 @@
                                 // Set the filtering active flag
                                 if (anotherFilter || pane.s.index !== currPane.s.index || !filteringActive) {
                                     currPane.s.filteringActive = filteringActive || anotherFilter;
-                                }
-                                else if (selectedPanes === 1) {
+                                } else if (selectedPanes === 1) {
                                     currPane.s.filteringActive = false;
                                 }
                                 // Update the rows to show correct counts
@@ -3337,8 +3439,7 @@
                     }
                     // Update table to show final search results
                     this.s.dt.draw(false);
-                }
-                else {
+                } else {
                     // Identify the last pane to have a change in selection
                     if (this.s.selectionList.length > 0) {
                         pane = this.s.panes[this.s.selectionList[this.s.selectionList.length - 1].column];
@@ -3444,8 +3545,7 @@
                         $('table.dataTable', config._panes.getNode()).DataTable().columns.adjust();
                         that.processing(false);
                     }, 10);
-                }
-                else {
+                } else {
                     // Already got SP - show it
                     this.popover(config._panes.getNode(), {
                         align: 'container',
@@ -3465,6 +3565,7 @@
             text: '',
             delayInit: true
         };
+
         function _buttonSourced(dt, node, config) {
             var buttonOpts = $.extend({
                 filterChanged: function (count) {
@@ -3479,9 +3580,14 @@
             dt.button(node).text(config.text || dt.i18n('searchPanes.collapse', panes.c.i18n.collapse, 0));
             config._panes = panes;
         }
+
         function _init(settings, options, fromPre) {
-            if (options === void 0) { options = null; }
-            if (fromPre === void 0) { fromPre = false; }
+            if (options === void 0) {
+                options = null;
+            }
+            if (fromPre === void 0) {
+                fromPre = false;
+            }
             var api = new dataTable.Api(settings);
             var opts = options
                 ? options
@@ -3492,6 +3598,7 @@
             var node = searchPanes.getNode();
             return node;
         }
+
         // Attach a listener to the document which listens for DataTables initialisation
         // events so we can automatically initialise
         $(document).on('preInit.dt.dtsp', function (e, settings) {

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import java.util.List;
 
 
-public interface RegionServices{
+public interface RegionServices {
 
     Object createRegion(String name);
 

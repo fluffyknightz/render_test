@@ -28,6 +28,7 @@ public class CreatedDateSpecification implements Specification<BeneficiaryListVi
         startDate = getValue(texts, 0);
         endDate = getValue(texts, 1);
     }
+
     private LocalDate getValue(String[] bounds, int index) {
         if (bounds.length > index && hasText(bounds[index])) {
             try {

@@ -11,20 +11,20 @@
 
             <li class="nav-item">
                 <a class="nav-link has-arrow" href="/dashboard">
-                    <i data-feather="home" class="nav-icon icon-xs me-2"></i> Home
+                    <i class="nav-icon icon-xs me-2" data-feather="home"></i> Home
                 </a>
             </li>
 
 
             <li class="nav-item">
 
-                <a class="nav-link has-arrow" href="#" data-bs-toggle="collapse" data-bs-target="#navPages"
-                   aria-expanded="false" aria-controls="navPages">
-                    <i data-feather="map" class="nav-icon icon-xs me-2">
+                <a aria-controls="navPages" aria-expanded="false" class="nav-link has-arrow" data-bs-target="#navPages"
+                   data-bs-toggle="collapse" href="#">
+                    <i class="nav-icon icon-xs me-2" data-feather="map">
                     </i> Location
                 </a>
 
-                <div id="navPages" class="collapse" data-bs-parent="#sideNavbar">
+                <div class="collapse" data-bs-parent="#sideNavbar" id="navPages">
                     <ul class="nav flex-column">
 
 
@@ -51,13 +51,13 @@
 
             <li class="nav-item">
 
-                <a class="nav-link has-arrow" href="#" data-bs-toggle="collapse" data-bs-target="#navPages2"
-                   aria-expanded="false" aria-controls="navPages2">
-                    <i data-feather="map" class="nav-icon icon-xs me-2">
+                <a aria-controls="navPages2" aria-expanded="false" class="nav-link has-arrow" data-bs-target="#navPages2"
+                   data-bs-toggle="collapse" href="#">
+                    <i class="nav-icon icon-xs me-2" data-feather="map">
                     </i> Parish Location
                 </a>
 
-                <div id="navPages2" class="collapse" data-bs-parent="#sideNavbar">
+                <div class="collapse" data-bs-parent="#sideNavbar" id="navPages2">
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link has-arrow" href="/archdiocese">
@@ -88,14 +88,14 @@
 
             <li class="nav-item">
 
-                <a class="nav-link has-arrow" href="#" data-bs-toggle="collapse" data-bs-target="#navPages1"
-                   aria-expanded="false" aria-controls="navPages1">
-                    <i data-feather="layers" class="nav-icon icon-xs me-2">
+                <a aria-controls="navPages1" aria-expanded="false" class="nav-link has-arrow" data-bs-target="#navPages1"
+                   data-bs-toggle="collapse" href="#">
+                    <i class="nav-icon icon-xs me-2" data-feather="layers">
                     </i>Strategic Direction
 
                 </a>
 
-                <div id="navPages1" class="collapse" data-bs-parent="#sideNavbar">
+                <div class="collapse" data-bs-parent="#sideNavbar" id="navPages1">
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link has-arrow" href="/activity">
@@ -115,7 +115,7 @@
 
             <li class="nav-item" sec:authorize="hasAnyAuthority('Admin', 'DefaultAdmin')">
                 <a class="nav-link has-arrow" href="/user">
-                    <i data-feather="user" class="nav-icon icon-xs me-2"></i> User
+                    <i class="nav-icon icon-xs me-2" data-feather="user"></i> User
                 </a>
             </li>
 

@@ -1,7 +1,6 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.entities.Diocese;
-
 import com.spcu.dims.spcu_dims.services.DioceseServices;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -18,12 +17,12 @@ import java.util.List;
 @AllArgsConstructor
 public class DioceseAPI {
 
-    private final DioceseServices dioceseServices;
     private static final String NOT_FOUND = "ID Not Found.";
+    private final DioceseServices dioceseServices;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> archdioceseCreate(@RequestParam("name") String name, @RequestParam ("archdiocese")String archdiocese) {
-        Object diocese = dioceseServices.dioceseCreate(name,archdiocese);
+    public ResponseEntity<Object> archdioceseCreate(@RequestParam("name") String name, @RequestParam("archdiocese") String archdiocese) {
+        Object diocese = dioceseServices.dioceseCreate(name, archdiocese);
         if (diocese instanceof String) {
 
             return new ResponseEntity<>(diocese, HttpStatus.CONFLICT);
@@ -46,7 +45,7 @@ public class DioceseAPI {
     @GetMapping("/show/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") int id) {
         Diocese diocese = dioceseServices.findById(id);
-        if(diocese != null){
+        if (diocese != null) {
             return new ResponseEntity<>(diocese, HttpStatus.OK);
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
@@ -55,14 +54,14 @@ public class DioceseAPI {
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") int id) {
         Diocese diocese = dioceseServices.delete(id);
-        if(diocese!= null){
+        if (diocese != null) {
             return new ResponseEntity<>(diocese, HttpStatus.OK);
         }
         return new ResponseEntity<>("Delete Failed!", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam ("name") String name, @RequestParam("archdiocese") String archdiocese) {
+    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("archdiocese") String archdiocese) {
         Object diocese = dioceseServices.update(id, name, archdiocese);
         if (diocese instanceof String) {
             return new ResponseEntity<>(diocese, HttpStatus.CONFLICT);
@@ -77,15 +76,15 @@ public class DioceseAPI {
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<Diocese> diocese(@Valid @RequestBody DataTablesInput input){
+    public DataTablesOutput<Diocese> diocese(@Valid @RequestBody DataTablesInput input) {
         return dioceseServices.tableDiocese(input);
 
     }
 
     @PostMapping("/show")
-    public ResponseEntity<Object> create(@RequestParam ("archdiocese") String archdiocese) {
+    public ResponseEntity<Object> create(@RequestParam("archdiocese") String archdiocese) {
         List<String> dioceseName = dioceseServices.findByArchdioceseName(archdiocese);
-        if(dioceseName!= null){
+        if (dioceseName != null) {
             return new ResponseEntity<>(dioceseName, HttpStatus.OK);
         }
         String errorMessage = "Diocese that related to Archdiocese name " + archdiocese + " does not exist.";

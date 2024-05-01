@@ -2,13 +2,16 @@ table.dataTable > tbody > tr > .selected {
     background-color: rgb(13, 110, 253);
     color: white;
 }
+
 table.dataTable > tbody > tr > .dt-select {
     text-align: center;
     vertical-align: middle;
 }
+
 table.dataTable > thead > tr > .dt-select {
     text-align: center;
 }
+
 table.dataTable input.dt-select-checkbox {
     appearance: none;
     position: relative;
@@ -23,11 +26,13 @@ table.dataTable input.dt-select-checkbox {
     font-size: 20px;
     line-height: 1em;
 }
+
 table.dataTable input.dt-select-checkbox:checked:after {
     display: block;
     content: "✓";
     margin-top: -8px;
 }
+
 table.dataTable input.dt-select-checkbox:indeterminate:after {
     display: block;
     position: absolute;
@@ -39,13 +44,16 @@ table.dataTable input.dt-select-checkbox:indeterminate:after {
     background-color: black;
     border-radius: 2px;
 }
+
 table.dataTable > tbody > tr.selected input.dt-select-checkbox:checked {
     border: 1px solid;
 }
+
 table.dataTable > tbody > tr > td.select-checkbox,
 table.dataTable > tbody > tr > th.select-checkbox {
     position: relative;
 }
+
 table.dataTable > tbody > tr > td.select-checkbox:before,
 table.dataTable > tbody > tr > th.select-checkbox:before {
     display: block;
@@ -61,6 +69,7 @@ table.dataTable > tbody > tr > th.select-checkbox:before {
     border: 1px solid;
     border-radius: 3px;
 }
+
 table.dataTable > tbody > tr.selected > td.select-checkbox:before,
 table.dataTable > tbody > tr.selected > th.select-checkbox:before {
     border: 1px solid;
@@ -69,10 +78,12 @@ table.dataTable > tbody > tr.selected > th.select-checkbox:before {
     line-height: 4px;
     text-align: center;
 }
+
 table.dataTable.compact > tbody > tr > td.select-checkbox:before,
 table.dataTable.compact > tbody > tr > th.select-checkbox:before {
     margin-top: -12px;
 }
+
 table.dataTable.compact > tbody > tr.selected > td.select-checkbox:after,
 table.dataTable.compact > tbody > tr.selected > th.select-checkbox:after {
     margin-top: -16px;
@@ -95,6 +106,7 @@ html[data-bs-theme=dark] table.dataTable input.dt-select-checkbox:indeterminate:
         display: block;
     }
 }
+
 table.dataTable.table-sm tbody td.select-checkbox::before {
     margin-top: -9px;
 }

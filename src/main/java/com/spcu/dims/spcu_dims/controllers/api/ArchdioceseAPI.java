@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.List;
 
 
@@ -20,9 +19,8 @@ import java.util.List;
 
 public class ArchdioceseAPI {
 
-    private final ArchdioceseServices archdioceseServices;
-
     private static final String NOT_FOUND = "ID Not Found.";
+    private final ArchdioceseServices archdioceseServices;
 
     @PostMapping("/create")
     public ResponseEntity<Object> dioceseCreate(@RequestParam("name") String name) {

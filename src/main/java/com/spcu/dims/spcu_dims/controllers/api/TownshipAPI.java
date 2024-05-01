@@ -1,8 +1,6 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.entities.Township;
-
-
 import com.spcu.dims.spcu_dims.services.TownshipServices;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -19,11 +17,11 @@ import java.util.List;
 @AllArgsConstructor
 public class TownshipAPI {
 
-    private final TownshipServices townshipServices;
     private static final String NOT_FOUND = "ID Not Found.";
+    private final TownshipServices townshipServices;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> townshipCreate(@RequestParam("name") String name, @RequestParam ("district") String district, @RequestParam ("zone") String zone) {
+    public ResponseEntity<Object> townshipCreate(@RequestParam("name") String name, @RequestParam("district") String district, @RequestParam("zone") String zone) {
         Object township = townshipServices.createTownship(name, district, zone);
         if (township instanceof String) {
 
@@ -46,7 +44,7 @@ public class TownshipAPI {
     @GetMapping("/show/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") int id) {
         Township township = townshipServices.findById(id);
-        if(township != null){
+        if (township != null) {
             return new ResponseEntity<>(township, HttpStatus.OK);
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
@@ -56,15 +54,15 @@ public class TownshipAPI {
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") int id) {
         Township township = townshipServices.delete(id);
-        if(township!= null){
+        if (township != null) {
             return new ResponseEntity<>(township, HttpStatus.OK);
         }
         return new ResponseEntity<>("Delete Failed!", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam ("name") String name, @RequestParam("district") String district, @RequestParam ("zone") String zone) {
-        Object township = townshipServices.update(id, name, district,zone);
+    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("district") String district, @RequestParam("zone") String zone) {
+        Object township = townshipServices.update(id, name, district, zone);
         if (township instanceof String) {
 
             return new ResponseEntity<>(township, HttpStatus.CONFLICT);
@@ -79,7 +77,7 @@ public class TownshipAPI {
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<Township> townships(@Valid @RequestBody DataTablesInput input){
+    public DataTablesOutput<Township> townships(@Valid @RequestBody DataTablesInput input) {
         return townshipServices.tableTownship(input);
 
     }

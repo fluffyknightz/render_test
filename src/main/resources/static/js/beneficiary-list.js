@@ -164,6 +164,10 @@ $(document).ready(async function () {
                 return d;
             },
         },
+        lengthMenu: [25, 50, 75, 100, 250],
+        language: {
+            infoFiltered: "",
+        },
         serverSide: true,
         processing: true,
         scrollX: true,
@@ -225,9 +229,8 @@ $(document).ready(async function () {
                     }
                 }]
             }
-        }, lengthMenu: [25, 50, 75, 100, 250, {label: 'All', value: -1}], language: {
-            infoFiltered: "",
         },
+
 
         columns: [
             {

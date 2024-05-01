@@ -11,6 +11,7 @@ import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -18,10 +19,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ActivityAPI {
 
+    private static final String NOT_FOUND = "ID Not Found.";
     private final ActivityServices activityServices;
     private final ParishServices parishServices;
-
-    private static final String NOT_FOUND = "ID Not Found.";
 
     @PostMapping("/create")
     public ResponseEntity<Object> dioceseCreate(@RequestParam("name") String name) {
@@ -85,12 +85,12 @@ public class ActivityAPI {
 
     @PostMapping("/show/table")
     public DataTablesOutput<Activity> dioceses(@Valid @RequestBody DataTablesInput input) {
-        return activityServices.tableActivity(input);
+        return activityServices.activityTable(input);
 
     }
 
     @GetMapping("/activity&parish")
-    public ResponseEntity<IndexDto> activityAndParish(){
+    public ResponseEntity<IndexDto> activityAndParish() {
         int activityCount = activityServices.activityCount();
         int parishCount = parishServices.parishCount();
         IndexDto indexDto = IndexDto.builder().parish(parishCount).activity(activityCount).build();

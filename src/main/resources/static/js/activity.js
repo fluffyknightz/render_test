@@ -54,7 +54,7 @@ $(document).ready(function () {
         },
         processing: true,
         serverSide: true,
-
+        scrollX: true,
         columns: [
             {
                 data: 'name'

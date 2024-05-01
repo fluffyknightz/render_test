@@ -4,11 +4,11 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <!-- Favicon icon-->
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/theme/assets/images/favicon/favicon.ico}">
+    <link rel="shortcut icon" th:href="@{/theme/assets/images/favicon/favicon.ico}" type="image/x-icon">
     <!-- Libs CSS -->
-    <link th:href="@{/libs/bootstrap-icons/font/bootstrap-icons.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/libs/bootstrap-icons/font/bootstrap-icons.css}">
 
 
     <link rel="stylesheet" th:href="@{/css/theme.css}">
@@ -65,11 +65,11 @@
                     </div>
                     <div id="validated_alert" role="alert"></div>
                     <!-- Form -->
-                    <form id="login-form" th:action="@{/login}" method="post" class="needs-validation" novalidate>
+                    <form class="needs-validation" id="login-form" method="post" novalidate th:action="@{/login}">
                         <!-- Username -->
                         <div class="form-floating form-group position-relative has-icon-left mb-3">
-                            <input type="text" class="form-control" placeholder="Username" id="username" name="username"
-                                   required>
+                            <input class="form-control" id="username" name="username" placeholder="Username" required
+                                   type="text">
                             <label for="username">
                                 <i class="bi bi-person"></i>
                                 Username
@@ -77,9 +77,9 @@
                         </div>
 
                         <div class="form-floating form-group position-relative has-icon-left mb-3">
-                            <input type="password" id="password" name="password" autocomplete="current-password"
-                                   class="form-control" spellcheck="false" autocorrect="off" autocapitalize="off"
-                                   placeholder="password" required>
+                            <input autocapitalize="off" autocomplete="current-password" autocorrect="off" class="form-control"
+                                   id="password" name="password" placeholder="password" required
+                                   spellcheck="false" type="password">
 
                             <label for="password">
                                 <i class="bi bi-shield-lock"></i>
@@ -94,7 +94,7 @@
                         <div class="d-lg-flex justify-content-between align-items-center
                   mb-4">
                             <div class="form-check custom-checkbox">
-                                <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
+                                <input class="form-check-input" id="remember-me" name="remember-me" type="checkbox">
                                 <label class="form-check-label" for="remember-me">Remember
                                     me</label>
                             </div>
@@ -103,7 +103,7 @@
                         <div>
                             <!-- Button -->
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Sign
+                                <button class="btn btn-primary" type="submit">Sign
                                     in
                                 </button>
                             </div>

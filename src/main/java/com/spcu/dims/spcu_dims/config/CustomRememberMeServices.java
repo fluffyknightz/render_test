@@ -8,7 +8,7 @@ import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 
 
-public class CustomRememberMeServices extends TokenBasedRememberMeServices  implements RememberMeServices {
+public class CustomRememberMeServices extends TokenBasedRememberMeServices implements RememberMeServices {
 
 
     public CustomRememberMeServices(String key, MyUserDetailsServices myUserDetailsService) {

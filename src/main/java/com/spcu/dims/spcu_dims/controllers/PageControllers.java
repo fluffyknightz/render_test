@@ -100,4 +100,9 @@ public class PageControllers {
     public String passwordChange() {
         return "password";
     }
+
+    @GetMapping("/congregation")
+    public String congregation() {
+        return "congregation";
+    }
 }

@@ -17,12 +17,12 @@ import java.util.List;
 @AllArgsConstructor
 public class ParishAPI {
 
-    private final ParishServices parishServices;
     private static final String NOT_FOUND = "ID Not Found.";
+    private final ParishServices parishServices;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> parishCreate(@RequestParam("name") String name, @RequestParam ("township")String township, @RequestParam(value = "note", required = false)String note) {
-        Object parish = parishServices.createParish(name, township, note);
+    public ResponseEntity<Object> parishCreate(@RequestParam("name") String name, @RequestParam("township") String township, @RequestParam("congregation") String congregation, @RequestParam(value = "note", required = false) String note) {
+        Object parish = parishServices.createParish(name, township, congregation, note);
         if (parish instanceof String) {
 
             return new ResponseEntity<>(parish, HttpStatus.CONFLICT);
@@ -37,7 +37,7 @@ public class ParishAPI {
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<Parish> parish(@Valid @RequestBody DataTablesInput input){
+    public DataTablesOutput<Parish> parish(@Valid @RequestBody DataTablesInput input) {
         return parishServices.tableParish(input);
     }
 
@@ -51,9 +51,9 @@ public class ParishAPI {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam ("name") String name, @RequestParam("township") String township, @RequestParam(value = "note", required = false)String note) {
-        Object parish = parishServices.update(id, name, township, note);
-        if(parish!= null){
+    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("township") String township, @RequestParam("congregation") String congregation, @RequestParam(value = "note", required = false) String note) {
+        Object parish = parishServices.update(id, name, township, congregation, note);
+        if (parish != null) {
             return new ResponseEntity<>(parish, HttpStatus.OK);
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
@@ -67,16 +67,16 @@ public class ParishAPI {
     @GetMapping("/show/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") int id) {
         Parish parish = parishServices.findById(id);
-        if(parish != null){
+        if (parish != null) {
             return new ResponseEntity<>(parish, HttpStatus.OK);
         }
         return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/show")
-    public ResponseEntity<Object> create(@RequestParam ("zone") String zone) {
+    public ResponseEntity<Object> create(@RequestParam("zone") String zone) {
         List<String> parishName = parishServices.findByZoneName(zone);
-        if(parishName!= null){
+        if (parishName != null) {
             return new ResponseEntity<>(parishName, HttpStatus.OK);
         }
         String errorMessage = "Parish that related to Zone name " + zone + " does not exist.";

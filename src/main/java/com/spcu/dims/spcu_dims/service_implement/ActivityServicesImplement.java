@@ -81,7 +81,7 @@ public class ActivityServicesImplement implements ActivityServices {
     }
 
     @Override
-    public DataTablesOutput<Activity> tableActivity(DataTablesInput input) {
+    public DataTablesOutput<Activity> activityTable(DataTablesInput input) {
         return activityRepository.findAll(input);
     }
 

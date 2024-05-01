@@ -10,7 +10,6 @@ let archdioceseFilter = document.getElementById('filterArchdiocese');
 async function adding() {
     // Assuming validationInput sets inputValue
     validationInput();
-    console.log(archdioceseSelect.value)
     if (inputValue === undefined || inputValue === null || inputValue.trim() === "" || archdioceseSelect.value.trim() === "") {
         Notiflix.Notify.failure("Please enter All Data!");
     } else {
@@ -18,7 +17,6 @@ async function adding() {
         await performOperation(url, 'POST', 'Create successful.');
     }
 }
-
 
 
 async function editing() {
@@ -54,10 +52,10 @@ $(document).ready(async function () {
         },
         processing: true,
         serverSide: true,
+        scrollX: true,
         language: {
             infoFiltered: "",
         },
-
 
 
         columns: [
@@ -72,11 +70,10 @@ $(document).ready(async function () {
                     return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.name.replace(/'/g, "\\'") + '\', ' + row.id + ', \'' + row.archdiocese.name.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
                 }
             }
-            ]
+        ]
     });
 
 });
-
 
 
 function showConfirm(id) {
@@ -84,8 +81,7 @@ function showConfirm(id) {
 }
 
 
-
-archdioceseFilter.addEventListener('change',function (){
+archdioceseFilter.addEventListener('change', function () {
     table.column(1).search(archdioceseFilter.value).draw();
 })
 
@@ -109,12 +105,12 @@ function changeEdit(name, id, archdiocese) {
     return false;
 }
 
-async function archdioceseFetch(){
-        try {
-            const data = await fetchData('spcu-dims/api/v1/archdiocese/show/all');
-            await populateSelect(archdioceseSelect, data, "Select Related Archdiocese", false);
-            await populateSelect(archdioceseFilter, data, "Filter Archdiocese", true);
-        } catch (error) {
-            Notiflix.Notify.failure('Data Fetching Error!');
-        }
+async function archdioceseFetch() {
+    try {
+        const data = await fetchData('spcu-dims/api/v1/archdiocese/show/all');
+        await populateSelect(archdioceseSelect, data, "Select Related Archdiocese", false);
+        await populateSelect(archdioceseFilter, data, "Filter Archdiocese", true);
+    } catch (error) {
+        Notiflix.Notify.failure('Data Fetching Error!');
+    }
 }

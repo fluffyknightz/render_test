@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SecurityController {
 
     @PostMapping("/register")
-    public HttpStatus register(){
+    public HttpStatus register() {
 
         return HttpStatus.valueOf(HttpStatus.CREATED.value());
     }

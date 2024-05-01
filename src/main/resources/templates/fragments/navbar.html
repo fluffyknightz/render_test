@@ -1,22 +1,22 @@
 <div class="header" th:fragment="navbar" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <nav class="navbar-classic navbar navbar-expand-lg">
-        <a id="nav-toggle" href="#"><i data-feather="menu" class="nav-icon me-2 icon-xs"></i></a>
+        <a href="#" id="nav-toggle"><i class="nav-icon me-2 icon-xs" data-feather="menu"></i></a>
 
         <!--Navbar nav -->
         <ul class="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
 
             <li class="dropdown ms-2">
-                <a class="rounded-circle" href="#" role="button" id="dropdownUser" data-bs-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
+                <a aria-expanded="false" aria-haspopup="true" class="rounded-circle" data-bs-toggle="dropdown" href="#"
+                   id="dropdownUser" role="button">
                     <div class="avatar avatar-md avatar-indicators avatar-online">
-                        <img alt="avatar" th:src="@{/assets/images/profile.jpeg}" class="rounded-circle"/>
+                        <img alt="avatar" class="rounded-circle" th:src="@{/assets/images/profile.jpeg}"/>
                     </div>
                 </a>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
+                <div aria-labelledby="dropdownUser" class="dropdown-menu dropdown-menu-end">
                     <div class="px-4 pb-0 pt-2">
                         <div class="lh-1 ">
-                            <h5 class="mb-1" id="login-role" sec:authentication="principal.role" hidden></h5>
-                            <h5 class="mb-1" id="login-id" sec:authentication="principal.userId" hidden></h5>
+                            <h5 class="mb-1" hidden id="login-role" sec:authentication="principal.role"></h5>
+                            <h5 class="mb-1" hidden id="login-id" sec:authentication="principal.userId"></h5>
                             <h5 class="mb-1" sec:authentication="principal.username"></h5>
                         </div>
                         <div class=" dropdown-divider mt-3 mb-2"></div>
@@ -28,8 +28,8 @@
                             </a>
                         </li>
                         <li>
-                            <form th:action="@{/logout}" method="post">
-                                <button type="submit" class="dropdown-item">
+                            <form method="post" th:action="@{/logout}">
+                                <button class="dropdown-item" type="submit">
                                     <i class="me-2 icon-xxs dropdown-item-icon" data-feather="power"></i>Sign Out
                                 </button>
                             </form>

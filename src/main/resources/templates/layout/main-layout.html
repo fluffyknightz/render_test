@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <!-- Favicon icon-->
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/theme/assets/images/favicon/favicon.ico}">
+    <link rel="shortcut icon" th:href="@{/theme/assets/images/favicon/favicon.ico}" type="image/x-icon">
 
     <!-- CSS Bootstrap -->
-    <link th:href="@{/libs/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/libs/bootstrap-icons/font/bootstrap-icons.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/libs/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/libs/bootstrap-icons/font/bootstrap-icons.css}">
 
     <!-- CSS Datatables -->
-    <link th:href="@{/libs/datatables/css/datatables.bootstrap5.css}" rel="stylesheet">
-    <link th:href="@{/libs/datatables/css/buttons.bootstrap5.css}" rel="stylesheet"/>
-    <link th:href="@{/libs/datatables/css/searchPanes.bootstrap5.css}" rel="stylesheet"/>
-    <link th:href="@{/libs/datatables/css/select.bootstrap5.css}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/libs/datatables/css/datatables.bootstrap5.css}">
+    <link rel="stylesheet" th:href="@{/libs/datatables/css/buttons.bootstrap5.css}"/>
+    <link rel="stylesheet" th:href="@{/libs/datatables/css/searchPanes.bootstrap5.css}"/>
+    <link rel="stylesheet" th:href="@{/libs/datatables/css/select.bootstrap5.css}"/>
 
     <!-- CSS Other -->
-    <link th:href="@{/libs/notiflix/dist/notiflix-3.2.7.min.css}" rel="stylesheet">
-    <link th:href="@{/libs/date-range-picker/daterangepicker.css}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/libs/notiflix/dist/notiflix-3.2.7.min.css}">
+    <link rel="stylesheet" th:href="@{/libs/date-range-picker/daterangepicker.css}"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
 
     <!-- Theme CSS -->
@@ -34,7 +34,7 @@
 </head>
 
 <body class="bg-light">
-<div id="db-wrapper" class="toggled">
+<div class="toggled" id="db-wrapper">
 
     <!-- Side Bar -->
     <div th:replace="~{/fragments/sidebar :: sidebar}">...</div>
@@ -76,7 +76,6 @@
 
 <script th:src="@{/libs/jquery-slimscroll/jquery.slimscroll.min.js}"></script>
 <script th:src="@{/libs/feather-icons/dist/feather.min.js}"></script>
-
 
 
 <script th:src="@{/js/feather.js}"></script>

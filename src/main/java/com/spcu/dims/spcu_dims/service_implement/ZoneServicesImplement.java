@@ -63,7 +63,7 @@ public class ZoneServicesImplement implements ZoneServices {
     @Override
     public Zone delete(int id) {
         Optional<Zone> zone = zoneRepository.findById(id);
-        if(zone.isPresent()) {
+        if (zone.isPresent()) {
             zone.get().setDelete(true);
             return zoneRepository.save(zone.get());
         }

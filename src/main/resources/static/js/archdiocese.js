@@ -39,28 +39,21 @@ $(document).ready(function () {
 
         ajax: {
 
-            url: 'spcu-dims/api/v1/archdiocese/show/table', method: 'POST',
-            contentType: 'application/json',
-
+            url: 'spcu-dims/api/v1/archdiocese/show/table', method: 'POST', contentType: 'application/json',
             headers: {
                 [csrfHeader]: csrfToken
             },
-
             data: function (d) {
                 d.columns[1].search.value = false;
                 return JSON.stringify(d);
             },
 
-        }, processing: true, serverSide: true,
-        columns: [
-        {
+        },
+        processing: true, serverSide: true, scrollX: true, columns: [{
             data: 'name'
         }, {
-            data: 'isDelete',
-            ordering: false,
-            render: function (data, type, row) {
-                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.name.replace(/'/g, "\\'") + '\', ' + row.id + ')" style="border: none">\n' +
-                    '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+            data: 'isDelete', ordering: false, render: function (data, type, row) {
+                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" ' + 'data-bs-target="#model" onclick="changeEdit(\'' + row.name.replace(/'/g, "\\'") + '\', ' + row.id + ')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
             }
         },]
     });
