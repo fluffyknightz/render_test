@@ -150,7 +150,7 @@ h6 {
 
 #header.header-scrolled {
     border-color: #fff;
-    box-shadow: 0px 2px 15px rgba(18, 66, 101, 0.08);
+    box-shadow: 0 2px 15px rgba(18, 66, 101, 0.08);
 }
 
 #header .logo {
@@ -251,7 +251,7 @@ h6 {
     opacity: 0;
     visibility: hidden;
     background: #fff;
-    box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+    box-shadow: 0 0 30px rgba(127, 137, 161, 0.25);
     transition: 0.3s;
     border-radius: 4px;
 }
@@ -388,7 +388,7 @@ h6 {
     opacity: 1;
     visibility: visible;
     background: #fff;
-    box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+    box-shadow: 0 0 30px rgba(127, 137, 161, 0.25);
 }
 
 .navbar-mobile .dropdown ul li {
@@ -922,7 +922,7 @@ section {
     padding: 70px 20px 80px 20px;
     transition: all ease-in-out 0.3s;
     background: #fff;
-    box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.05);
+    box-shadow: 0 5px 90px 0 rgba(110, 123, 131, 0.05);
 }
 
 .services .icon-box .icon {
@@ -972,7 +972,7 @@ section {
 
 .services .icon-box:hover {
     border-color: #fff;
-    box-shadow: 0px 0 35px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 35px 0 rgba(0, 0, 0, 0.08);
 }
 
 .services .iconbox-blue i {
@@ -1270,7 +1270,7 @@ section {
 
 .portfolio-details .portfolio-info {
     padding: 30px;
-    box-shadow: 0px 0 30px rgba(18, 66, 101, 0.08);
+    box-shadow: 0 0 30px rgba(18, 66, 101, 0.08);
 }
 
 .portfolio-details .portfolio-info h3 {
@@ -1314,7 +1314,7 @@ section {
     text-align: center;
     border-radius: 4px;
     background: #fff;
-    box-shadow: 0px 2px 15px rgba(18, 66, 101, 0.08);
+    box-shadow: 0 2px 15px rgba(18, 66, 101, 0.08);
 }
 
 .team .member .member-img {
@@ -1393,7 +1393,7 @@ section {
     position: relative;
     overflow: hidden;
     background: #fefefe;
-    box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.1);
+    box-shadow: 0 5px 90px 0 rgba(110, 123, 131, 0.1);
 }
 
 .pricing .box h3 {
@@ -1782,7 +1782,7 @@ section {
     color: #444444;
     font-size: 14px;
     background: #f8fbfe;
-    box-shadow: 0px 2px 15px rgba(18, 66, 101, 0.08);
+    box-shadow: 0 2px 15px rgba(18, 66, 101, 0.08);
 }
 
 #footer .footer-top {
@@ -1898,7 +1898,7 @@ section {
     color: #fff;
     transition: 0.3s;
     border-radius: 0 5px 5px 0;
-    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
 }
 
 #footer .footer-newsletter form input[type=submit]:hover {
