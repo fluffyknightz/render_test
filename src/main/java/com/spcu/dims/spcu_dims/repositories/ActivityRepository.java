@@ -11,8 +11,6 @@ import java.util.Optional;
 @Repository
 public interface ActivityRepository extends DataTablesRepository<Activity, Integer> {
 
-    boolean existsByName(String name);
-
     Optional<Activity> findByName(String name);
 
     @Query("SELECT e.name FROM Activity e WHERE e.isDelete = false ORDER BY e.name ASC")

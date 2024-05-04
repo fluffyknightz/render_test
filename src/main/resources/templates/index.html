@@ -10,8 +10,7 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link rel="icon" th:href="@{/landing-page/assets/img/favicon.png}">
-    <link rel="apple-touch-icon" th:href="@{/landing-page/assets/img/apple-touch-icon.png}">
+    <link rel="shortcut icon" th:href="@{/image/church-christian.svg}" type="image/x-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
@@ -19,11 +18,10 @@
 
     <!-- Vendor CSS Files -->
     <link rel="stylesheet" th:href="@{/landing-page/assets/vendor/aos/aos.css}">
-    <link rel="stylesheet" th:href="@{/landing-page/assets/vendor/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/landing-page/assets/vendor/bootstrap-icons/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/libs/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/libs/bootstrap-icons/font/bootstrap-icons.css}">
     <link rel="stylesheet" th:href="@{/landing-page/assets/vendor/boxicons/css/boxicons.min.css}">
     <link rel="stylesheet" th:href="@{/landing-page/assets/vendor/glightbox/css/glightbox.min.css}">
-    <link rel="stylesheet" th:href="@{/landing-page/assets/vendor/remixicon/remixicon.css}">
     <link rel="stylesheet" th:href="@{/landing-page/assets/vendor/swiper/swiper-bundle.min.css}">
 
     <!-- Template Main CSS File -->
@@ -38,9 +36,7 @@
 <header class="fixed-top" id="header">
     <div class="container d-flex align-items-center justify-content-between">
 
-        <h1 class="logo"><a href="#">SPCU-DIMS</a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        <h1 class="logo"><a href="/">SPCU-DIMS</a></h1>
 
         <nav class="navbar" id="navbar">
             <ul>
@@ -63,7 +59,6 @@
         <div class="row justify-content-center">
             <div class="col-xl-7 col-lg-9 text-center">
                 <h1>WELCOME! SPCU-DIMS</h1>
-                <h2>We are team of talented designers</h2>
             </div>
         </div>
 
@@ -299,141 +294,143 @@
             <h3 class="text-center mt-5">External</h3>
             <div class="row icon-boxes">
 
-                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-5" data-aos="zoom-in"
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-3 mb-lg-3" data-aos="zoom-in"
                      data-aos-delay="200">
-                    <a onclick="openModal('Education')">
-                        <div class="icon-box">
-                            <h4 class="title">Education</h4>
-                            <p class="description">To ensure that safe and high-quality education remains accessible
-                                during the ongoing crisis in Myanmar and to support children not currently attending
-                                school to enter or return to quality learning opportunities.</p>
-                        </div>
-                    </a>
+
+                    <div class="icon-box" onclick="openModal('Education')">
+                        <h4 class="title">Education</h4>
+                        <p class="description">To ensure that safe and high-quality education remains accessible
+                            during the ongoing crisis in Myanmar and to support children not currently attending
+                            school to enter or return to quality learning opportunities.</p>
+                    </div>
+
                 </div>
 
-                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-5" data-aos="zoom-in"
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-3 mb-lg-3" data-aos="zoom-in"
                      data-aos-delay="300">
-                    <a onclick="openModal('Health')">
-                        <div class="icon-box">
-                            <h4 class="title">Health</h4>
-                            <p class="description">Enhance primary healthcare access by delivering essential routine
-                                basic healthcare services, identifying and managing emergency cases, and playing a
-                                crucial role in disease surveillance. Through our comprehensive health services, we aim
-                                to witness the loving care and healing ministry of Jesus Christ.
-                            </p>
-                        </div>
-                    </a>
+
+                    <div class="icon-box" onclick="openModal('Health')">
+                        <h4 class="title">Health</h4>
+                        <p class="description">Enhance primary healthcare access by delivering essential routine
+                            basic healthcare services, identifying and managing emergency cases, and playing a
+                            crucial role in disease surveillance. Through our comprehensive health services, we aim
+                            to witness the loving care and healing ministry of Jesus Christ.
+                        </p>
+                    </div>
+
                 </div>
 
-                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-5" data-aos="zoom-in"
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-3 mb-lg-3" data-aos="zoom-in"
                      data-aos-delay="400">
-                    <a onclick="openModal('Migration')">
-                        <div class="icon-box">
-                            <h4 class="title">Migration</h4>
-                            <p class="description">Ensure that migrants and their families receive protection,
-                                assistance, and empowerment to address their vulnerabilities and achieve sustainable
-                                reintegration.</p>
-                        </div>
-                    </a>
+
+                    <div class="icon-box" onclick="openModal('Migration')">
+                        <h4 class="title">Migration</h4>
+                        <p class="description">Ensure that migrants and their families receive protection,
+                            assistance, and empowerment to address their vulnerabilities and achieve sustainable
+                            reintegration.</p>
+                    </div>
+
                 </div>
 
-                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-5" data-aos="zoom-in"
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-3 mb-lg-3" data-aos="zoom-in"
                      data-aos-delay="500">
-                    <a onclick="openModal('Humanitarian')">
-                        <div class="icon-box">
-                            <h4 class="title">Humanitarian</h4>
-                            <p class="description">To ensure the well-being of those affected by the conflict in Myanmar
-                                while also maintaining their human dignity. We aim to achieve durable solutions that
-                                meet international standards whenever possible and to enhance respect for the rights of
-                                those who have been affected.</p>
-                        </div>
-                    </a>
+
+                    <div class="icon-box" onclick="openModal('Humanitarian')">
+                        <h4 class="title">Humanitarian</h4>
+                        <p class="description">To ensure the well-being of those affected by the conflict in Myanmar
+                            while also maintaining their human dignity. We aim to achieve durable solutions that
+                            meet international standards whenever possible and to enhance respect for the rights of
+                            those who have been affected.</p>
+                    </div>
+
                 </div>
 
-                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-5" data-aos="zoom-in"
-                     data-aos-delay="300">
-                    <a onclick="openModal('Safeguarding')">
-                        <div class="icon-box">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-3 mb-lg-3" data-aos="zoom-in"
+                         data-aos-delay="300">
+
+                        <div class="icon-box" onclick="openModal('Safeguarding')">
                             <h4 class="title">Safeguarding</h4>
                             <p class="description">The Bishops Conference of Myanmar develops and implements
-                                safeguarding standards to ensure that every Church entity, commission, and congregation
+                                safeguarding standards to ensure that every Church entity, commission, and
+                                congregation
                                 across Myanmar places the safety of children and adults at the forefront of their
                                 planning, thinking, and actions.</p>
                         </div>
-                    </a>
-                </div>
 
-                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-5" data-aos="zoom-in"
-                     data-aos-delay="300">
-                    <a onclick="openModal('Faith Formation')">
-                        <div class="icon-box">
+                    </div>
+
+                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-3 mb-lg-3" data-aos="zoom-in"
+                         data-aos-delay="300">
+
+                        <div class="icon-box" onclick="openModal('Faith Formation')">
                             <h4 class="title">Faith Formation</h4>
                             <p class="description">The Church will assist individual of all ages in developing and
                                 achieving their Christian maturity as human beings.</p>
                         </div>
-                    </a>
-                </div>
 
+                    </div>
+                </div>
             </div>
 
             <h3 class="text-center mt-5">Internal</h3>
 
             <div class="row icon-boxes">
-                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-5" data-aos="zoom-in"
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-3 mb-lg-3" data-aos="zoom-in"
                      data-aos-delay="200">
-                    <a onclick="openModal('Enhancing Capacities & Competencies')">
-                        <div class="icon-box">
-                            <h4 class="title">Enhancing Capacities & Competencies</h4>
-                            <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias
-                                excepturi</p>
-                        </div>
-                    </a>
+
+                    <div class="icon-box" onclick="openModal('Enhancing Capacities & Competencies')">
+                        <h4 class="title">Enhancing Capacities & Competencies</h4>
+                        <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias
+                            excepturi</p>
+                    </div>
+
                 </div>
 
-                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-5" data-aos="zoom-in"
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-3 mb-lg-3" data-aos="zoom-in"
                      data-aos-delay="300">
-                    <a onclick="openModal('Social-Pastoral Coordination')">
-                        <div class="icon-box">
-                            <h4 class="title">Social-Pastoral Coordination</h4>
-                            <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                                dolore</p>
-                        </div>
-                    </a>
+
+                    <div class="icon-box" onclick="openModal('Social-Pastoral Coordination')">
+                        <h4 class="title">Social-Pastoral Coordination</h4>
+                        <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                            dolore</p>
+                    </div>
+
                 </div>
 
-                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-5" data-aos="zoom-in"
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-3 mb-lg-3" data-aos="zoom-in"
                      data-aos-delay="400">
-                    <a onclick="openModal('Inter-Religious Engagement and Ecumenical Engagement')">
-                        <div class="icon-box">
-                            <h4 class="title">Inter-Religious Engagement and Ecumenical Engagement</h4>
-                            <p class="description">Interreligious and ecumenical dialogue is a simple concept: persons
-                                of different faiths meet to have a conversation. It is a conversation among people of
-                                different faiths on a common subject, the primary purpose of which is for each
-                                participant to learn from the other to change and grow. It is not a debate. Through
-                                interreligious and ecumenical engagement, the ‘Elite Leadership’ of high-level religious
-                                leaders for collective advocacy and joint action for peace is strengthened. Interfaith
-                                dialogue can strengthen the ‘Elite Interfaith body’ for mediation between conflicting
-                                parties. Interfaith dialogue can bring people from different religions to nurture agents
-                                of reconciliation.</p>
-                        </div>
-                    </a>
+
+                    <div class="icon-box" onclick="openModal('Inter-Religious Engagement and Ecumenical Engagement')">
+                        <h4 class="title">Inter-Religious Engagement and Ecumenical Engagement</h4>
+                        <p class="description">Interreligious and ecumenical dialogue is a simple concept: persons
+                            of different faiths meet to have a conversation. It is a conversation among people of
+                            different faiths on a common subject, the primary purpose of which is for each
+                            participant to learn from the other to change and grow. It is not a debate. Through
+                            interreligious and ecumenical engagement, the ‘Elite Leadership’ of high-level religious
+                            leaders for collective advocacy and joint action for peace is strengthened. Interfaith
+                            dialogue can strengthen the ‘Elite Interfaith body’ for mediation between conflicting
+                            parties. Interfaith dialogue can bring people from different religions to nurture agents
+                            of reconciliation.</p>
+                    </div>
+
                 </div>
 
-                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-5" data-aos="zoom-in"
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-3 mb-lg-3" data-aos="zoom-in"
                      data-aos-delay="500">
-                    <a onclick="openModal('Environmental Justice')">
-                        <div class="icon-box">
-                            <h4 class="title">Environmental Justice</h4>
-                            <p class="description">Laudate Deum: While the previous Nation Building strategic plan
-                                referred to Laudato Si encyclical, This Synodal Journey strategic plan followed the
-                                apostolic exhortation Laudate Deum in which the Holy Father pointed out the imminent
-                                global climate crisis, unchecked technocratic growth undermining the human
-                                responsibilities, weaken international politics, the importance of climate conference
-                                COP and end up His document with spiritual motivation. He urges for more durable actions
-                                so that our common home is saved. Following this, the Synodal journey strategic plan
-                                emphasized Environmental justice as one of the 4 internal strategic directions.</p>
-                        </div>
-                    </a>
+
+                    <div class="icon-box" onclick="openModal('Environmental Justice')">
+                        <h4 class="title">Environmental Justice</h4>
+                        <p class="description">Laudate Deum: While the previous Nation Building strategic plan
+                            referred to Laudato Si encyclical, This Synodal Journey strategic plan followed the
+                            apostolic exhortation Laudate Deum in which the Holy Father pointed out the imminent
+                            global climate crisis, unchecked technocratic growth undermining the human
+                            responsibilities, weaken international politics, the importance of climate conference
+                            COP and end up His document with spiritual motivation. He urges for more durable actions
+                            so that our common home is saved. Following this, the Synodal journey strategic plan
+                            emphasized Environmental justice as one of the 4 internal strategic directions.</p>
+                    </div>
+
                 </div>
 
 
@@ -454,10 +451,9 @@
             </div>
 
             <div>
-                <iframe allowfullscreen
-                        frameborder="0"
-                        loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d238.71251985297442!2d96.1371622588583!3d16.806485240863296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30c1eb467f57eb81%3A0x9a7bcedf5f2b24db!2s(CBCM)%20Catholic%20Bishops&#39;%20Conference%20of%20Myanmar!5e0!3m2!1sen!2smm!4v1711975948036!5m2!1sen!2smm"
-                        style="border:0; width: 100%; height: 270px;"></iframe>
+                <iframe allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d238.71251985297442!2d96.1371622588583!3d16.806485240863296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30c1eb467f57eb81%3A0x9a7bcedf5f2b24db!2s(CBCM)%20Catholic%20Bishops&#39;%20Conference%20of%20Myanmar!5e0!3m2!1sen!2smm!4v1711975948036!5m2!1sen!2smm"
+                        title="map" style="border:0; width: 100%; height: 270px;"></iframe>
 
             </div>
 
@@ -540,11 +536,9 @@
 <!-- Vendor JS Files -->
 <script th:src="@{/landing-page/assets/vendor/purecounter/purecounter_vanilla.js}"></script>
 <script th:src="@{/landing-page/assets/vendor/aos/aos.js}"></script>
-<script th:src="@{/landing-page/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/landing-page/assets/vendor/glightbox/js/glightbox.min.js}"></script>
-<script th:src="@{/landing-page/assets/vendor/isotope-layout/isotope.pkgd.min.js}"></script>
 <script th:src="@{/landing-page/assets/vendor/swiper/swiper-bundle.min.js}"></script>
-<script th:src="@{/landing-page/assets/vendor/php-email-form/validate.js}"></script>
 
 <!-- Template Main JS File -->
 <script th:src="@{/landing-page/assets/js/main.js}"></script>
