@@ -1,7 +1,7 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.entities.Diocese;
-import com.spcu.dims.spcu_dims.services.DioceseServices;
+import com.spcu.dims.spcu_dims.services.DioceseService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -18,11 +18,11 @@ import java.util.List;
 public class DioceseAPI {
 
     private static final String NOT_FOUND = "ID Not Found.";
-    private final DioceseServices dioceseServices;
+    private final DioceseService dioceseService;
 
     @PostMapping("/create")
     public ResponseEntity<Object> archdioceseCreate(@RequestParam("name") String name, @RequestParam("archdiocese") String archdiocese) {
-        Object diocese = dioceseServices.dioceseCreate(name, archdiocese);
+        Object diocese = dioceseService.dioceseCreate(name, archdiocese);
         if (diocese instanceof String) {
 
             return new ResponseEntity<>(diocese, HttpStatus.CONFLICT);
@@ -39,12 +39,12 @@ public class DioceseAPI {
     @PostMapping("/show/all")
     public ResponseEntity<List<String>> archdioceseShowAll() {
 
-        return new ResponseEntity<>(dioceseServices.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(dioceseService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/show/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") int id) {
-        Diocese diocese = dioceseServices.findById(id);
+        Diocese diocese = dioceseService.findById(id);
         if (diocese != null) {
             return new ResponseEntity<>(diocese, HttpStatus.OK);
         }
@@ -53,7 +53,7 @@ public class DioceseAPI {
 
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") int id) {
-        Diocese diocese = dioceseServices.delete(id);
+        Diocese diocese = dioceseService.delete(id);
         if (diocese != null) {
             return new ResponseEntity<>(diocese, HttpStatus.OK);
         }
@@ -62,7 +62,7 @@ public class DioceseAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("archdiocese") String archdiocese) {
-        Object diocese = dioceseServices.update(id, name, archdiocese);
+        Object diocese = dioceseService.update(id, name, archdiocese);
         if (diocese instanceof String) {
             return new ResponseEntity<>(diocese, HttpStatus.CONFLICT);
         } else if (diocese != null) {
@@ -77,13 +77,13 @@ public class DioceseAPI {
 
     @PostMapping("/show/table")
     public DataTablesOutput<Diocese> diocese(@Valid @RequestBody DataTablesInput input) {
-        return dioceseServices.tableDiocese(input);
+        return dioceseService.tableDiocese(input);
 
     }
 
     @PostMapping("/show")
     public ResponseEntity<Object> create(@RequestParam("archdiocese") String archdiocese) {
-        List<String> dioceseName = dioceseServices.findByArchdioceseName(archdiocese);
+        List<String> dioceseName = dioceseService.findByArchdioceseName(archdiocese);
         if (dioceseName != null) {
             return new ResponseEntity<>(dioceseName, HttpStatus.OK);
         }

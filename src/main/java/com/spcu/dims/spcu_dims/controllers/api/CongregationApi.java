@@ -2,7 +2,7 @@ package com.spcu.dims.spcu_dims.controllers.api;
 
 
 import com.spcu.dims.spcu_dims.entities.Congregation;
-import com.spcu.dims.spcu_dims.services.CongregationServices;
+import com.spcu.dims.spcu_dims.services.CongregationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -19,12 +19,12 @@ import java.util.List;
 public class CongregationApi {
 
     private static final String NOT_FOUND = "ID Not Found.";
-    private final CongregationServices congregationServices;
+    private final CongregationService congregationService;
 
     @PostMapping("/create")
     public ResponseEntity<Object> dioceseCreate(@RequestParam("name") String name) {
 
-        Object congregation = congregationServices.createCongregation(name);
+        Object congregation = congregationService.createCongregation(name);
 
         if (congregation instanceof String) {
             // Handle the case where congregation is a String
@@ -42,12 +42,12 @@ public class CongregationApi {
     @PostMapping("/show/all")
     public ResponseEntity<List<String>> showAll() {
 
-        return new ResponseEntity<>(congregationServices.showAll(), HttpStatus.OK);
+        return new ResponseEntity<>(congregationService.showAll(), HttpStatus.OK);
     }
 
     @GetMapping("/show/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") int id) {
-        Congregation congregation = congregationServices.findById(id);
+        Congregation congregation = congregationService.findById(id);
         if (congregation != null) {
             return new ResponseEntity<>(congregation, HttpStatus.OK);
         }
@@ -57,7 +57,7 @@ public class CongregationApi {
 
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") int id) {
-        Congregation congregation = congregationServices.delete(id);
+        Congregation congregation = congregationService.delete(id);
         if (congregation != null) {
             return new ResponseEntity<>(congregation, HttpStatus.OK);
         }
@@ -66,7 +66,7 @@ public class CongregationApi {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name) {
-        Object congregation = congregationServices.update(id, name);
+        Object congregation = congregationService.update(id, name);
 
         if (congregation instanceof String) {
             // Handle the case where congregation is a String
@@ -83,7 +83,7 @@ public class CongregationApi {
 
     @PostMapping("/show/table")
     public DataTablesOutput<Congregation> dioceses(@Valid @RequestBody DataTablesInput input) {
-        return congregationServices.congregationTable(input);
+        return congregationService.congregationTable(input);
 
     }
 

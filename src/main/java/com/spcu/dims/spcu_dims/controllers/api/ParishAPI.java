@@ -1,7 +1,7 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.entities.Parish;
-import com.spcu.dims.spcu_dims.services.ParishServices;
+import com.spcu.dims.spcu_dims.services.ParishService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -18,11 +18,11 @@ import java.util.List;
 public class ParishAPI {
 
     private static final String NOT_FOUND = "ID Not Found.";
-    private final ParishServices parishServices;
+    private final ParishService parishService;
 
     @PostMapping("/create")
     public ResponseEntity<Object> parishCreate(@RequestParam("name") String name, @RequestParam("township") String township, @RequestParam("congregation") String congregation, @RequestParam(value = "note", required = false) String note) {
-        Object parish = parishServices.createParish(name, township, congregation, note);
+        Object parish = parishService.createParish(name, township, congregation, note);
         if (parish instanceof String) {
 
             return new ResponseEntity<>(parish, HttpStatus.CONFLICT);
@@ -38,12 +38,12 @@ public class ParishAPI {
 
     @PostMapping("/show/table")
     public DataTablesOutput<Parish> parish(@Valid @RequestBody DataTablesInput input) {
-        return parishServices.tableParish(input);
+        return parishService.tableParish(input);
     }
 
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") int id) {
-        Parish parish = parishServices.delete(id);
+        Parish parish = parishService.delete(id);
         if (parish != null) {
             return new ResponseEntity<>(parish, HttpStatus.OK);
         }
@@ -52,7 +52,7 @@ public class ParishAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("township") String township, @RequestParam("congregation") String congregation, @RequestParam(value = "note", required = false) String note) {
-        Object parish = parishServices.update(id, name, township, congregation, note);
+        Object parish = parishService.update(id, name, township, congregation, note);
         if (parish != null) {
             return new ResponseEntity<>(parish, HttpStatus.OK);
         }
@@ -61,12 +61,12 @@ public class ParishAPI {
 
     @PostMapping("/show/all")
     public ResponseEntity<List<String>> parishShowAll() {
-        return new ResponseEntity<>(parishServices.showAll(), HttpStatus.OK);
+        return new ResponseEntity<>(parishService.showAll(), HttpStatus.OK);
     }
 
     @GetMapping("/show/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") int id) {
-        Parish parish = parishServices.findById(id);
+        Parish parish = parishService.findById(id);
         if (parish != null) {
             return new ResponseEntity<>(parish, HttpStatus.OK);
         }
@@ -75,7 +75,7 @@ public class ParishAPI {
 
     @PostMapping("/show")
     public ResponseEntity<Object> create(@RequestParam("zone") String zone) {
-        List<String> parishName = parishServices.findByZoneName(zone);
+        List<String> parishName = parishService.findByZoneName(zone);
         if (parishName != null) {
             return new ResponseEntity<>(parishName, HttpStatus.OK);
         }

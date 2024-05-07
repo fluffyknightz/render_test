@@ -25,7 +25,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private final MyUserDetailsServices myUserDetailsServices;
+    private final MyUserDetailsService myUserDetailsService;
 
     @Value("${app.remember.me.key}")
     private String myRememberMeKey;
@@ -82,7 +82,7 @@ public class SecurityConfig {
 
     @Bean
     public RememberMeServices customRememberMeServices() {
-        return new CustomRememberMeServices(myRememberMeKey, myUserDetailsServices);
+        return new CustomRememberMeService(myRememberMeKey, myUserDetailsService);
     }
 
     @Bean

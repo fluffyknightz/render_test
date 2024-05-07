@@ -1,7 +1,7 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.entities.District;
-import com.spcu.dims.spcu_dims.services.DistrictServices;
+import com.spcu.dims.spcu_dims.services.DistrictService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -18,11 +18,11 @@ import java.util.List;
 public class DistrictAPI {
 
     private static final String NOT_FOUND = "ID Not Found.";
-    private final DistrictServices districtServices;
+    private final DistrictService districtService;
 
     @PostMapping("/create")
     public ResponseEntity<Object> districtCreate(@RequestParam("name") String name, @RequestParam("region") String region) {
-        Object district = districtServices.createDistrict(name, region);
+        Object district = districtService.createDistrict(name, region);
         if (district instanceof String) {
 
             return new ResponseEntity<>(district, HttpStatus.CONFLICT);
@@ -38,12 +38,12 @@ public class DistrictAPI {
 
     @PostMapping("/show/table")
     public DataTablesOutput<District> districts(@Valid @RequestBody DataTablesInput input) {
-        return districtServices.tableDistrict(input);
+        return districtService.tableDistrict(input);
     }
 
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") int id) {
-        District district = districtServices.delete(id);
+        District district = districtService.delete(id);
         if (district != null) {
             return new ResponseEntity<>(district, HttpStatus.OK);
         }
@@ -52,7 +52,7 @@ public class DistrictAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("region") String region) {
-        Object district = districtServices.update(id, name, region);
+        Object district = districtService.update(id, name, region);
         if (district instanceof String) {
 
             return new ResponseEntity<>(district, HttpStatus.CONFLICT);
@@ -68,12 +68,12 @@ public class DistrictAPI {
 
     @PostMapping("/show/all")
     public ResponseEntity<List<String>> zoneShowAll() {
-        return new ResponseEntity<>(districtServices.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(districtService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/show/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") int id) {
-        District district = districtServices.findById(id);
+        District district = districtService.findById(id);
         if (district != null) {
             return new ResponseEntity<>(district, HttpStatus.OK);
         }
@@ -82,7 +82,7 @@ public class DistrictAPI {
 
     @PostMapping("/show")
     public ResponseEntity<Object> create(@RequestParam("region") String region) {
-        List<String> districts = districtServices.findByRegionName(region);
+        List<String> districts = districtService.findByRegionName(region);
         if (districts != null) {
             return new ResponseEntity<>(districts, HttpStatus.OK);
         }

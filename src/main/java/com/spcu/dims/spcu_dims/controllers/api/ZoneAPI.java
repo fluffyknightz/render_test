@@ -1,7 +1,7 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.entities.Zone;
-import com.spcu.dims.spcu_dims.services.ZoneServices;
+import com.spcu.dims.spcu_dims.services.ZoneService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -19,11 +19,11 @@ import java.util.List;
 public class ZoneAPI {
 
     private static final String NOT_FOUND = "ID Not Found.";
-    private final ZoneServices zoneServices;
+    private final ZoneService zoneService;
 
     @PostMapping("/create")
     public ResponseEntity<Object> zoneCreate(@RequestParam("name") String name, @RequestParam("diocese") String diocese) {
-        Object zone = zoneServices.createZone(name, diocese);
+        Object zone = zoneService.createZone(name, diocese);
         if (zone instanceof String) {
 
             return new ResponseEntity<>(zone, HttpStatus.CONFLICT);
@@ -39,12 +39,12 @@ public class ZoneAPI {
 
     @PostMapping("/show/table")
     public DataTablesOutput<Zone> zones(@Valid @RequestBody DataTablesInput input) {
-        return zoneServices.tableZone(input);
+        return zoneService.tableZone(input);
     }
 
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") int id) {
-        Zone zone = zoneServices.delete(id);
+        Zone zone = zoneService.delete(id);
         if (zone != null) {
             return new ResponseEntity<>(zone, HttpStatus.OK);
         }
@@ -53,7 +53,7 @@ public class ZoneAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("diocese") String diocese) {
-        Object zone = zoneServices.update(id, name, diocese);
+        Object zone = zoneService.update(id, name, diocese);
         if (zone instanceof String) {
 
             return new ResponseEntity<>(zone, HttpStatus.CONFLICT);
@@ -69,12 +69,12 @@ public class ZoneAPI {
 
     @PostMapping("/show/all")
     public ResponseEntity<List<String>> zoneShowAll() {
-        return new ResponseEntity<>(zoneServices.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(zoneService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/show/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") int id) {
-        Zone zone = zoneServices.findById(id);
+        Zone zone = zoneService.findById(id);
         if (zone != null) {
             return new ResponseEntity<>(zone, HttpStatus.OK);
         }
@@ -83,7 +83,7 @@ public class ZoneAPI {
 
     @PostMapping("/show")
     public ResponseEntity<Object> create(@RequestParam("diocese") String diocese) {
-        List<String> zoneName = zoneServices.findByDioceseName(diocese);
+        List<String> zoneName = zoneService.findByDioceseName(diocese);
         if (zoneName != null) {
             return new ResponseEntity<>(zoneName, HttpStatus.OK);
         }

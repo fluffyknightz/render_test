@@ -1,7 +1,7 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
-import com.spcu.dims.spcu_dims.entities.CountView;
-import com.spcu.dims.spcu_dims.services.DashboardServices;
+import com.spcu.dims.spcu_dims.views.CountView;
+import com.spcu.dims.spcu_dims.services.DashboardService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class DashboardAPI {
 
-    private final DashboardServices dashboardServices;
+    private final DashboardService dashboardService;
 
 
     @PostMapping("/count")
     public ResponseEntity<CountView> count() {
 
-        return new ResponseEntity<>(dashboardServices.count(), HttpStatus.OK);
+        return new ResponseEntity<>(dashboardService.count(), HttpStatus.OK);
     }
 }

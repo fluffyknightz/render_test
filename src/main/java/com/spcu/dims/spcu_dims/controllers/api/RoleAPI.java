@@ -1,6 +1,6 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
-import com.spcu.dims.spcu_dims.services.RoleServices;
+import com.spcu.dims.spcu_dims.services.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoleAPI {
 
-    private final RoleServices roleServices;
+    private final RoleService roleService;
 
     @PostMapping("/show/all")
     public ResponseEntity<List<String>> showAll() {
-        return new ResponseEntity<>(roleServices.findAllName(), HttpStatus.OK);
+        return new ResponseEntity<>(roleService.findAllName(), HttpStatus.OK);
     }
 
 }

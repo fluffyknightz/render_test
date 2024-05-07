@@ -1,7 +1,7 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.entities.Region;
-import com.spcu.dims.spcu_dims.services.RegionServices;
+import com.spcu.dims.spcu_dims.services.RegionService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -18,12 +18,12 @@ import java.util.List;
 public class RegionAPI {
 
     private static final String NOT_FOUND = "ID Not Found.";
-    private final RegionServices regionServices;
+    private final RegionService regionService;
 
     @PostMapping("/create")
     public ResponseEntity<Object> createRegion(@RequestParam("name") String name) {
 
-        Object region = regionServices.createRegion(name);
+        Object region = regionService.createRegion(name);
         if (region instanceof String) {
 
             return new ResponseEntity<>(region, HttpStatus.CONFLICT);
@@ -40,12 +40,12 @@ public class RegionAPI {
     @PostMapping("/show/all")
     public ResponseEntity<List<String>> showAll() {
 
-        return new ResponseEntity<>(regionServices.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(regionService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/show/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") int id) {
-        Region region = regionServices.findById(id);
+        Region region = regionService.findById(id);
         if (region != null) {
             return new ResponseEntity<>(region, HttpStatus.OK);
         }
@@ -55,7 +55,7 @@ public class RegionAPI {
 
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") int id) {
-        Region region = regionServices.delete(id);
+        Region region = regionService.delete(id);
         if (region != null) {
             return new ResponseEntity<>(region, HttpStatus.OK);
         }
@@ -64,7 +64,7 @@ public class RegionAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name) {
-        Object region = regionServices.update(id, name);
+        Object region = regionService.update(id, name);
 
         if (region instanceof String) {
             return new ResponseEntity<>(region, HttpStatus.CONFLICT);
@@ -80,7 +80,7 @@ public class RegionAPI {
 
     @PostMapping("/show/table")
     public DataTablesOutput<Region> regions(@Valid @RequestBody DataTablesInput input) {
-        return regionServices.tableRegion(input);
+        return regionService.tableRegion(input);
 
     }
 }

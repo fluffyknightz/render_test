@@ -213,6 +213,7 @@ $(document).ready(async function () {
                         extend: 'print',
                         filename: 'beneficiary-list',
                         title: 'Beneficiary Lists',
+
                         exportOptions: {
                             columns: ':not(.noExport):visible'
                         }

@@ -1,11 +1,11 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
-import com.spcu.dims.spcu_dims.config.MyUserDetails;
+import com.spcu.dims.spcu_dims.config.MyUserDetail;
 import com.spcu.dims.spcu_dims.controllers.CreatedDateSpecification;
 import com.spcu.dims.spcu_dims.dto.BeneficiaryListDto;
-import com.spcu.dims.spcu_dims.entities.BeneficiaryList;
-import com.spcu.dims.spcu_dims.entities.BeneficiaryListView;
-import com.spcu.dims.spcu_dims.services.BeneficiaryListServices;
+import com.spcu.dims.spcu_dims.entities.beneficiary_list.BeneficiaryList;
+import com.spcu.dims.spcu_dims.views.BeneficiaryListView;
+import com.spcu.dims.spcu_dims.services.BeneficiaryListService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -24,12 +24,12 @@ import java.util.Map;
 public class BeneficiaryListAPI {
 
     private static final String NOT_FOUND = "ID Not Found.";
-    private final BeneficiaryListServices beneficiaryListServices;
+    private final BeneficiaryListService beneficiaryListService;
 
     @PostMapping("/create")
     public ResponseEntity<Object> beneficiaryListCreate(@RequestBody BeneficiaryListDto reqData) {
-        MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Object beneficiaryList = beneficiaryListServices.createBeneficiaryList(reqData, myUserDetails.getUserId());
+        MyUserDetail myUserDetail = (MyUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object beneficiaryList = beneficiaryListService.createBeneficiaryList(reqData, myUserDetail.getUserId());
         if (beneficiaryList instanceof String) {
             return new ResponseEntity<>(beneficiaryList, HttpStatus.CONFLICT);
         } else if (beneficiaryList != null) {
@@ -45,13 +45,13 @@ public class BeneficiaryListAPI {
         CreatedDateSpecification createdDateSpecification = new CreatedDateSpecification(input);
         input.parseSearchPanesFromQueryParams(queryParameters, Arrays.asList("activityName", "parishName"));
 
-        return beneficiaryListServices.tableBeneficiaryList(input, createdDateSpecification);
+        return beneficiaryListService.tableBeneficiaryList(input, createdDateSpecification);
     }
 
 
     @GetMapping("/show/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") int id) {
-        BeneficiaryList beneficiaryList = beneficiaryListServices.findById(id);
+        BeneficiaryList beneficiaryList = beneficiaryListService.findById(id);
         if (beneficiaryList != null) {
             return new ResponseEntity<>(beneficiaryList, HttpStatus.OK);
         }
@@ -60,7 +60,7 @@ public class BeneficiaryListAPI {
 
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") int id) {
-        BeneficiaryList beneficiaryList = beneficiaryListServices.delete(id);
+        BeneficiaryList beneficiaryList = beneficiaryListService.delete(id);
         if (beneficiaryList != null) {
             return new ResponseEntity<>(HttpStatus.OK);
         }
@@ -69,7 +69,7 @@ public class BeneficiaryListAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestBody BeneficiaryListDto reqData) {
-        Object beneficiaryList = beneficiaryListServices.update(reqData);
+        Object beneficiaryList = beneficiaryListService.update(reqData);
         if (beneficiaryList != null) {
             return new ResponseEntity<>(beneficiaryList, HttpStatus.OK);
         }

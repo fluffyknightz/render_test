@@ -1,6 +1,6 @@
 package com.spcu.dims.spcu_dims.controllers;
 
-import com.spcu.dims.spcu_dims.entities.BeneficiaryListView;
+import com.spcu.dims.spcu_dims.views.BeneficiaryListView;
 import jakarta.persistence.criteria.*;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.Search;

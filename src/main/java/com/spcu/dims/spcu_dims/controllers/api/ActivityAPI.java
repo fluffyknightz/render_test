@@ -2,8 +2,8 @@ package com.spcu.dims.spcu_dims.controllers.api;
 
 import com.spcu.dims.spcu_dims.dto.IndexDto;
 import com.spcu.dims.spcu_dims.entities.Activity;
-import com.spcu.dims.spcu_dims.services.ActivityServices;
-import com.spcu.dims.spcu_dims.services.ParishServices;
+import com.spcu.dims.spcu_dims.services.ActivityService;
+import com.spcu.dims.spcu_dims.services.ParishService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
@@ -20,13 +20,13 @@ import java.util.List;
 public class ActivityAPI {
 
     private static final String NOT_FOUND = "ID Not Found.";
-    private final ActivityServices activityServices;
-    private final ParishServices parishServices;
+    private final ActivityService activityService;
+    private final ParishService parishService;
 
     @PostMapping("/create")
     public ResponseEntity<Object> dioceseCreate(@RequestParam("name") String name) {
 
-        Object activity = activityServices.createActivity(name);
+        Object activity = activityService.createActivity(name);
 
         if (activity instanceof String) {
             // Handle the case where activity is a String
@@ -44,12 +44,12 @@ public class ActivityAPI {
     @PostMapping("/show/all")
     public ResponseEntity<List<String>> showAll() {
 
-        return new ResponseEntity<>(activityServices.showAll(), HttpStatus.OK);
+        return new ResponseEntity<>(activityService.showAll(), HttpStatus.OK);
     }
 
     @GetMapping("/show/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") int id) {
-        Activity activity = activityServices.findById(id);
+        Activity activity = activityService.findById(id);
         if (activity != null) {
             return new ResponseEntity<>(activity, HttpStatus.OK);
         }
@@ -59,7 +59,7 @@ public class ActivityAPI {
 
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") int id) {
-        Activity activity = activityServices.delete(id);
+        Activity activity = activityService.delete(id);
         if (activity != null) {
             return new ResponseEntity<>(activity, HttpStatus.OK);
         }
@@ -68,7 +68,7 @@ public class ActivityAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name) {
-        Object activity = activityServices.update(id, name);
+        Object activity = activityService.update(id, name);
 
         if (activity instanceof String) {
             // Handle the case where activity is a String
@@ -85,14 +85,14 @@ public class ActivityAPI {
 
     @PostMapping("/show/table")
     public DataTablesOutput<Activity> dioceses(@Valid @RequestBody DataTablesInput input) {
-        return activityServices.activityTable(input);
+        return activityService.activityTable(input);
 
     }
 
     @GetMapping("/activity&parish")
     public ResponseEntity<IndexDto> activityAndParish() {
-        int activityCount = activityServices.activityCount();
-        int parishCount = parishServices.parishCount();
+        int activityCount = activityService.activityCount();
+        int parishCount = parishService.parishCount();
         IndexDto indexDto = IndexDto.builder().parish(parishCount).activity(activityCount).build();
         return new ResponseEntity<>(indexDto, HttpStatus.OK);
     }
