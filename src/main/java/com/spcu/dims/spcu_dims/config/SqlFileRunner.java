@@ -39,6 +39,7 @@ public class SqlFileRunner implements CommandLineRunner {
         Optional<Role> role = roleService.findByName("DefaultAdmin");
         if (role.isPresent()) {
             List<User> users = userService.findByRole(role.get());
+
             if (users.isEmpty()) {
 
                 userService.createUser("Admin", "DefaultAdmin", "spcudims");
