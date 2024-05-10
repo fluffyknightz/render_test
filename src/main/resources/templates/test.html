@@ -24,12 +24,14 @@
     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
 
     function api() {
-        fetch('/spcu-dims/api/v1/activity/update?id=&&name=', {
-            method: 'PATCH',
+        fetch('/spcu-dims/api/v1/annual-return/create', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 [csrfHeader]: csrfToken
             },
+            body: JSON.stringify({
+            })
 
         })
             .then(async response => {
