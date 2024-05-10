@@ -77,7 +77,7 @@ public class ActivityServiceImplement implements ActivityService {
             return activityRepository.save(activity.get());
 
         }
-        return String.format(doesNotExistMessage, name);
+        return "Activity that you want to change does not exist.";
     }
 
     @Override

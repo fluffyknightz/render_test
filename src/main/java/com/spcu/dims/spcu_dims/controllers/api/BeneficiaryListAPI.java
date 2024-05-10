@@ -27,7 +27,7 @@ public class BeneficiaryListAPI {
     private final BeneficiaryListService beneficiaryListService;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> beneficiaryListCreate(@RequestBody BeneficiaryListDto reqData) {
+    public ResponseEntity<Object> create(@RequestBody BeneficiaryListDto reqData) {
         MyUserDetail myUserDetail = (MyUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Object beneficiaryList = beneficiaryListService.createBeneficiaryList(reqData, myUserDetail.getUserId());
         if (beneficiaryList instanceof String) {
@@ -41,7 +41,7 @@ public class BeneficiaryListAPI {
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<BeneficiaryListView> beneficiaryList(@Valid DataTablesInput input, @RequestParam Map<String, String> queryParameters) {
+    public DataTablesOutput<BeneficiaryListView> beneficiaryLists(@Valid DataTablesInput input, @RequestParam Map<String, String> queryParameters) {
         CreatedDateSpecification createdDateSpecification = new CreatedDateSpecification(input);
         input.parseSearchPanesFromQueryParams(queryParameters, Arrays.asList("activityName", "parishName"));
 
@@ -68,7 +68,7 @@ public class BeneficiaryListAPI {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<Object> update(@RequestBody BeneficiaryListDto reqData) {
+    public ResponseEntity<Object> update(@Valid @RequestBody BeneficiaryListDto reqData) {
         Object beneficiaryList = beneficiaryListService.update(reqData);
         if (beneficiaryList != null) {
             return new ResponseEntity<>(beneficiaryList, HttpStatus.OK);

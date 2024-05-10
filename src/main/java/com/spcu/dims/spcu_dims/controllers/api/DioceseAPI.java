@@ -21,7 +21,12 @@ public class DioceseAPI {
     private final DioceseService dioceseService;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> archdioceseCreate(@RequestParam("name") String name, @RequestParam("archdiocese") String archdiocese) {
+    public ResponseEntity<Object> create(@RequestParam("name") String name, @RequestParam("archdiocese") String archdiocese) {
+
+        if (name.isEmpty() || archdiocese.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
+        
         Object diocese = dioceseService.dioceseCreate(name, archdiocese);
         if (diocese instanceof String) {
 
@@ -37,7 +42,7 @@ public class DioceseAPI {
     }
 
     @PostMapping("/show/all")
-    public ResponseEntity<List<String>> archdioceseShowAll() {
+    public ResponseEntity<List<String>> showAll() {
 
         return new ResponseEntity<>(dioceseService.findAll(), HttpStatus.OK);
     }
@@ -62,6 +67,9 @@ public class DioceseAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("archdiocese") String archdiocese) {
+        if (name.isEmpty() || archdiocese.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
         Object diocese = dioceseService.update(id, name, archdiocese);
         if (diocese instanceof String) {
             return new ResponseEntity<>(diocese, HttpStatus.CONFLICT);
@@ -76,13 +84,16 @@ public class DioceseAPI {
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<Diocese> diocese(@Valid @RequestBody DataTablesInput input) {
+    public DataTablesOutput<Diocese> dioceses(@Valid @RequestBody DataTablesInput input) {
         return dioceseService.tableDiocese(input);
 
     }
 
     @PostMapping("/show")
-    public ResponseEntity<Object> create(@RequestParam("archdiocese") String archdiocese) {
+    public ResponseEntity<Object> findByArchdiocese(@RequestParam("archdiocese") String archdiocese) {
+        if (archdiocese.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
         List<String> dioceseName = dioceseService.findByArchdioceseName(archdiocese);
         if (dioceseName != null) {
             return new ResponseEntity<>(dioceseName, HttpStatus.OK);

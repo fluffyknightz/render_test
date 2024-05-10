@@ -22,6 +22,11 @@ public class DistrictAPI {
 
     @PostMapping("/create")
     public ResponseEntity<Object> districtCreate(@RequestParam("name") String name, @RequestParam("region") String region) {
+
+        if (name.isEmpty() || region.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
+        
         Object district = districtService.createDistrict(name, region);
         if (district instanceof String) {
 
@@ -52,6 +57,10 @@ public class DistrictAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("region") String region) {
+        if (name.isEmpty() || region.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
+        
         Object district = districtService.update(id, name, region);
         if (district instanceof String) {
 
@@ -67,7 +76,7 @@ public class DistrictAPI {
     }
 
     @PostMapping("/show/all")
-    public ResponseEntity<List<String>> zoneShowAll() {
+    public ResponseEntity<List<String>> showAll() {
         return new ResponseEntity<>(districtService.findAll(), HttpStatus.OK);
     }
 
@@ -81,7 +90,11 @@ public class DistrictAPI {
     }
 
     @PostMapping("/show")
-    public ResponseEntity<Object> create(@RequestParam("region") String region) {
+    public ResponseEntity<Object> findByRegion(@RequestParam("region") String region) {
+
+        if (region.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
         List<String> districts = districtService.findByRegionName(region);
         if (districts != null) {
             return new ResponseEntity<>(districts, HttpStatus.OK);
