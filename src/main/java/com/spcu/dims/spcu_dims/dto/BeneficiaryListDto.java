@@ -1,5 +1,7 @@
 package com.spcu.dims.spcu_dims.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -11,16 +13,40 @@ import java.time.LocalDate;
 @Setter
 public class BeneficiaryListDto {
     private int id;
+
+    @NotBlank
     private String activityName;
+
+    @NotBlank
     private String parishName;
+
+    @NotBlank
     private LocalDate createdDate;
+
+    @NotNull
     private int beneficiaryHousehold;
+
+    @NotNull
     private int beneficiaryMale;
+
+    @NotNull
     private int beneficiaryFemale;
+
+    @NotNull
     private int disabilityMale;
+
+    @NotNull
     private int disabilityFemale;
+
+    @NotNull
     private int vulnerabilityUnder18Male;
+
+    @NotNull
     private int vulnerabilityUnder18Female;
+
+    @NotNull
     private int vulnerabilityOver60Male;
+
+    @NotNull
     private int vulnerabilityOver60Female;
 }

@@ -23,8 +23,10 @@ public class ArchdioceseAPI {
     private final ArchdioceseService archdioceseService;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> dioceseCreate(@RequestParam("name") String name) {
-
+    public ResponseEntity<Object> create(@RequestParam("name") String name) {
+        if (name.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
         Object archdiocese = archdioceseService.createArchdiocese(name);
 
         if (archdiocese instanceof String) {
@@ -67,6 +69,9 @@ public class ArchdioceseAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name) {
+        if (name.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
         Object archdiocese = archdioceseService.update(id, name);
 
         if (archdiocese instanceof String) {
@@ -83,7 +88,7 @@ public class ArchdioceseAPI {
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<Archdiocese> archdioceseDataTablesOutput(@Valid @RequestBody DataTablesInput input) {
+    public DataTablesOutput<Archdiocese> archdioceses(@Valid @RequestBody DataTablesInput input) {
 
         return archdioceseService.tableArchdiocese(input);
 

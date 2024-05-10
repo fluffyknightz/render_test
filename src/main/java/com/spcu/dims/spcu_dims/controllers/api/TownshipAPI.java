@@ -21,7 +21,12 @@ public class TownshipAPI {
     private final TownshipService townshipService;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> townshipCreate(@RequestParam("name") String name, @RequestParam("district") String district, @RequestParam("zone") String zone) {
+    public ResponseEntity<Object> create(@RequestParam("name") String name, @RequestParam("district") String district, @RequestParam("zone") String zone) {
+
+        if (name.isEmpty() || district.isEmpty() || zone.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
+
         Object township = townshipService.createTownship(name, district, zone);
         if (township instanceof String) {
 
@@ -37,7 +42,7 @@ public class TownshipAPI {
     }
 
     @PostMapping("/show/all")
-    public ResponseEntity<List<String>> townshipShowAll() {
+    public ResponseEntity<List<String>> showAll() {
         return new ResponseEntity<>(townshipService.showAll(), HttpStatus.OK);
     }
 
@@ -62,6 +67,11 @@ public class TownshipAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("district") String district, @RequestParam("zone") String zone) {
+
+        if (name.isEmpty() || district.isEmpty() || zone.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
+
         Object township = townshipService.update(id, name, district, zone);
         if (township instanceof String) {
 
