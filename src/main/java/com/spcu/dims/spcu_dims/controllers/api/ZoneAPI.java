@@ -22,7 +22,12 @@ public class ZoneAPI {
     private final ZoneService zoneService;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> zoneCreate(@RequestParam("name") String name, @RequestParam("diocese") String diocese) {
+    public ResponseEntity<Object> create(@RequestParam("name") String name, @RequestParam("diocese") String diocese) {
+
+        if (name.isEmpty() || diocese.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
+
         Object zone = zoneService.createZone(name, diocese);
         if (zone instanceof String) {
 
@@ -53,6 +58,11 @@ public class ZoneAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("diocese") String diocese) {
+
+        if (name.isEmpty() || diocese.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
+
         Object zone = zoneService.update(id, name, diocese);
         if (zone instanceof String) {
 
@@ -68,7 +78,7 @@ public class ZoneAPI {
     }
 
     @PostMapping("/show/all")
-    public ResponseEntity<List<String>> zoneShowAll() {
+    public ResponseEntity<List<String>> showAll() {
         return new ResponseEntity<>(zoneService.findAll(), HttpStatus.OK);
     }
 
@@ -82,7 +92,10 @@ public class ZoneAPI {
     }
 
     @PostMapping("/show")
-    public ResponseEntity<Object> create(@RequestParam("diocese") String diocese) {
+    public ResponseEntity<Object> findByDiocese(@RequestParam("diocese") String diocese) {
+        if (diocese.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
         List<String> zoneName = zoneService.findByDioceseName(diocese);
         if (zoneName != null) {
             return new ResponseEntity<>(zoneName, HttpStatus.OK);

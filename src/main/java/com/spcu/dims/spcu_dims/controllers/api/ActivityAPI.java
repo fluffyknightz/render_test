@@ -24,8 +24,13 @@ public class ActivityAPI {
     private final ParishService parishService;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> dioceseCreate(@RequestParam("name") String name) {
+    public ResponseEntity<Object> create(@RequestParam("name") String name) {
+        if(name.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
 
+
+        // Proceed with your logic to create the activity
         Object activity = activityService.createActivity(name);
 
         if (activity instanceof String) {
@@ -40,6 +45,7 @@ public class ActivityAPI {
             return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @PostMapping("/show/all")
     public ResponseEntity<List<String>> showAll() {
@@ -68,6 +74,10 @@ public class ActivityAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name) {
+        if (name.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
+
         Object activity = activityService.update(id, name);
 
         if (activity instanceof String) {
@@ -84,7 +94,7 @@ public class ActivityAPI {
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<Activity> dioceses(@Valid @RequestBody DataTablesInput input) {
+    public DataTablesOutput<Activity> activities(@Valid @RequestBody DataTablesInput input) {
         return activityService.activityTable(input);
 
     }

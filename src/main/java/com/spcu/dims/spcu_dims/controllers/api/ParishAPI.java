@@ -21,7 +21,12 @@ public class ParishAPI {
     private final ParishService parishService;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> parishCreate(@RequestParam("name") String name, @RequestParam("township") String township, @RequestParam("congregation") String congregation, @RequestParam(value = "note", required = false) String note) {
+    public ResponseEntity<Object> create(@RequestParam("name") String name, @RequestParam("township") String township, @RequestParam("congregation") String congregation, @RequestParam(value = "note", required = false) String note) {
+
+        if (name.isEmpty() || township.isEmpty() || congregation.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
+        
         Object parish = parishService.createParish(name, township, congregation, note);
         if (parish instanceof String) {
 
@@ -37,7 +42,7 @@ public class ParishAPI {
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<Parish> parish(@Valid @RequestBody DataTablesInput input) {
+    public DataTablesOutput<Parish> parishes(@Valid @RequestBody DataTablesInput input) {
         return parishService.tableParish(input);
     }
 
@@ -52,6 +57,11 @@ public class ParishAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("township") String township, @RequestParam("congregation") String congregation, @RequestParam(value = "note", required = false) String note) {
+
+        if (name.isEmpty() || township.isEmpty() || congregation.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
+        
         Object parish = parishService.update(id, name, township, congregation, note);
         if (parish != null) {
             return new ResponseEntity<>(parish, HttpStatus.OK);
@@ -60,7 +70,7 @@ public class ParishAPI {
     }
 
     @PostMapping("/show/all")
-    public ResponseEntity<List<String>> parishShowAll() {
+    public ResponseEntity<List<String>> showAll() {
         return new ResponseEntity<>(parishService.showAll(), HttpStatus.OK);
     }
 
@@ -74,7 +84,11 @@ public class ParishAPI {
     }
 
     @PostMapping("/show")
-    public ResponseEntity<Object> create(@RequestParam("zone") String zone) {
+    public ResponseEntity<Object> findByZone(@RequestParam("zone") String zone) {
+
+        if (zone.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
         List<String> parishName = parishService.findByZoneName(zone);
         if (parishName != null) {
             return new ResponseEntity<>(parishName, HttpStatus.OK);

@@ -22,8 +22,10 @@ public class CongregationApi {
     private final CongregationService congregationService;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> dioceseCreate(@RequestParam("name") String name) {
-
+    public ResponseEntity<Object> create(@RequestParam("name") String name) {
+        if (name.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
         Object congregation = congregationService.createCongregation(name);
 
         if (congregation instanceof String) {
@@ -66,6 +68,9 @@ public class CongregationApi {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name) {
+        if (name.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
         Object congregation = congregationService.update(id, name);
 
         if (congregation instanceof String) {
@@ -82,7 +87,7 @@ public class CongregationApi {
     }
 
     @PostMapping("/show/table")
-    public DataTablesOutput<Congregation> dioceses(@Valid @RequestBody DataTablesInput input) {
+    public DataTablesOutput<Congregation> congregations(@Valid @RequestBody DataTablesInput input) {
         return congregationService.congregationTable(input);
 
     }
