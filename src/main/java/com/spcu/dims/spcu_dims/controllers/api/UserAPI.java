@@ -29,8 +29,10 @@ public class UserAPI {
 
     @PostMapping("/create")
     @PreAuthorize("hasAnyAuthority('Admin', 'DefaultAdmin')")
-    public ResponseEntity<Object> userCreate(@RequestParam("username") String username, @RequestParam("role") String role, @RequestParam("password") String password) {
-
+    public ResponseEntity<Object> create(@RequestParam("username") String username, @RequestParam("role") String role, @RequestParam("password") String password) {
+        if (username.isEmpty() || role.isEmpty() || password.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
         Object user = userService.createUser(username, role, password);
 
         if (user instanceof String) {
@@ -66,6 +68,11 @@ public class UserAPI {
                                          @RequestParam("username") String username,
                                          @RequestParam("role") String role,
                                          @RequestParam(value = "password", required = false) String password) {
+
+        if (username.isEmpty() || role.isEmpty() || password.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         MyUserDetail myUserDetail = (MyUserDetail) authentication.getPrincipal();
 
@@ -107,7 +114,9 @@ public class UserAPI {
 
     @PatchMapping("/password")
     public ResponseEntity<String> password(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) {
-
+        if (oldPassword.isEmpty() || newPassword.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         MyUserDetail myUserDetail = (MyUserDetail) authentication.getPrincipal();

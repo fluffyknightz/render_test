@@ -21,8 +21,10 @@ public class RegionAPI {
     private final RegionService regionService;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> createRegion(@RequestParam("name") String name) {
-
+    public ResponseEntity<Object> create(@RequestParam("name") String name) {
+        if (name.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
         Object region = regionService.createRegion(name);
         if (region instanceof String) {
 
@@ -64,6 +66,9 @@ public class RegionAPI {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name) {
+        if (name.isEmpty()) {
+            return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
+        }
         Object region = regionService.update(id, name);
 
         if (region instanceof String) {

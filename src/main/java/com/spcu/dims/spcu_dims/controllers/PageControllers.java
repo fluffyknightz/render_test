@@ -105,4 +105,9 @@ public class PageControllers {
     public String congregation() {
         return "congregation";
     }
+
+    @GetMapping("/test")
+    public String test() {
+        return "test";
+    }
 }
