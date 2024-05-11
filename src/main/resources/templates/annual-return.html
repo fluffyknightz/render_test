@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{/layout/main-layout}"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<title layout:fragment="title">Annual Return</title>
+<div layout:fragment="content">
+
+    <div class="container-fluid p-6">
+
+        <!--Start Annual-Return -->
+        <div class="row mt-3">
+            <div class="col-md-12 col-12">
+                <!-- card  -->
+                <div class="card">
+                    <!-- card header  -->
+                    <div class="card-header bg-white py-4">
+                        <h4 class="mb-0 text-primary">Annual Return
+                            <span data-bs-target="#model" data-bs-toggle="modal" onclick="changeAdd()" type="button">
+                                <i class="bi bi-plus-square ml-5" style="font-size: 1.4rem"></i>
+                            </span>
+                        </h4>
+                    </div>
+
+                    <div class="p-5">
+                        <table class="hover table table-striped" id="myTable" style="width: 100%">
+                            <thead>
+                            <tr>
+                                <th rowspan="2">Parish</th>
+                                <th rowspan="2">Year</th>
+                                <th rowspan="2">Total of Actual Residents(Total : <span class="bHousehold"></span>)</th>
+                                <th class="text-center" colspan="3">Baptized Catholic</th>
+                                <th class="text-center" colspan="3">Non-Catholic</th>
+                                <th rowspan="2">Catechumens(Above 7years being prepared for Baptism)(Total : <span
+                                        class="bHousehold"></span>)
+                                </th>
+                                <th rowspan="2">Number of Chapel In the Parish(Total : <span class="bHousehold"></span>)
+                                </th>
+                                <th rowspan="2">Number of Village, places visited in then parish(Total : <span
+                                        class="bHousehold"></span>)
+                                </th>
+                                <th class="text-center" colspan="2">Number of Priests</th>
+                                <th class="text-center" colspan="3">Catechists</th>
+                                <th class="text-center" colspan="2">Seminarians</th>
+                                <th class="text-center" colspan="2">Candidates for the Religious life</th>
+                                <th class="text-center" colspan="2">Number of Baptism</th>
+                                <th class="text-center" colspan="3">Marriages</th>
+                                <th class="text-center" colspan="3">Number of Death</th>
+                                <th class="text-center" colspan="7">Parish of Institutes</th>
+                                <th class="text-center" colspan="2">Number of Priestly Ordinations</th>
+                                <th class="text-center" colspan="4">Education</th>
+                                <th class="text-center" colspan="4">Religious Activities</th>
+                                <th class="text-center" colspan="6">Catholic Actions</th>
+                                <th rowspan="2">Self-help and Development Project(Total : <span
+                                        class="bHousehold"></span>)
+                                </th>
+                                <th rowspan="2">Matrimonial cases(Total : <span class="bHousehold"></span>)</th>
+                            </tr>
+                            <tr>
+                                <th>Indigenous(Exclusis Catechumenis)(Total : <span class="bHousehold"></span>)</th>
+                                <th>Not-Indigenous(Exclusis Catechumenis)(Total : <span class="bMale"></span>)</th>
+                                <th>Total(Total : <span class="bFemale"></span>)</th>
+                                <th>Professing non-Christian religious(Total : <span class="dMale"></span>)</th>
+                                <th>Non-Catholic Christians(Total : <span class="dFemale"></span>)</th>
+                                <th>Total(Total : <span class="vU18Male"></span>)</th>
+                                <th>Male(Total : <span class="vU18Female"></span>)</th>
+                                <th>Female(Total : <span class="vO60Male"></span>)</th>
+                                <th>Paid(Total : <span class="vO60Female"></span>)</th>
+                                <th>Voluntary(Total : <span class="vO60Female"></span>)</th>
+                                <th>Home Missioners(Total : <span class="vO60Female"></span>)</th>
+                                <th>Major(Total : <span class="vO60Female"></span>)</th>
+                                <th>Minor(Total : <span class="vO60Female"></span>)</th>
+                                <th>Male(Total : <span class="vO60Female"></span>)</th>
+                                <th>Female(Total : <span class="vO60Female"></span>)</th>
+                                <th>Adult 8 year old and above(Total : <span class="vO60Female"></span>)</th>
+                                <th>Infants up to 7 years of age(Total : <span class="vO60Female"></span>)</th>
+                                <th>Between Catholic(Total : <span class="vO60Female"></span>)</th>
+                                <th>Catholic and Non-Catholic Christian(Total : <span class="vO60Female"></span>)</th>
+                                <th>Catholic and Non-Christian(Total : <span class="vO60Female"></span>)</th>
+                                <th>Priests(Total : <span class="vO60Female"></span>)</th>
+                                <th>Religious(Total : <span class="vO60Female"></span>)</th>
+                                <th>Catholics(Total : <span class="vO60Female"></span>)</th>
+                                <th>Seminary(Total : <span class="vO60Female"></span>)</th>
+                                <th>Novitiate(Total : <span class="vO60Female"></span>)</th>
+                                <th>Catechist(Total : <span class="vO60Female"></span>)</th>
+                                <th>Home Missioners' Training(Total : <span class="vO60Female"></span>)</th>
+                                <th>Boarding for poor children(Total : <span class="vO60Female"></span>)</th>
+                                <th>Number of poor children(Total : <span class="vO60Female"></span>)</th>
+                                <th>No.of orphans(Total : <span class="vO60Female"></span>)</th>
+                                <th>Religious Professions(Total : <span class="vO60Female"></span>)</th>
+                                <th>Catechists/Home missioner graduated(Total : <span class="vO60Female"></span>)</th>
+                                <th>Number of Catholic Children in Primary School(Total : <span
+                                        class="vO60Female"></span>)
+                                </th>
+                                <th>Number of Catholic Children in Middle School(Total : <span
+                                        class="vO60Female"></span>)
+                                </th>
+                                <th>Number of Catholic Children in High School(Total : <span class="vO60Female"></span>)
+                                </th>
+                                <th>Number of Catholic Children in College/University(Total : <span
+                                        class="vO60Female"></span>)
+                                </th>
+                                <th>Retreats(Total : <span class="vO60Female"></span>)</th>
+                                <th>Recollections(Total : <span class="vO60Female"></span>)</th>
+                                <th>Seminars(Total : <span class="vO60Female"></span>)</th>
+                                <th>Others(Total : <span class="vO60Female"></span>)</th>
+                                <th>Legion of Mary(Total : <span class="vO60Female"></span>)</th>
+                                <th>St. Vicent De Paul(Total : <span class="vO60Female"></span>)</th>
+                                <th>Parish Elders(Total : <span class="vO60Female"></span>)</th>
+                                <th>Youth Group(Total : <span class="vO60Female"></span>)</th>
+                                <th>Mother's Guide(Total : <span class="vO60Female"></span>)</th>
+                                <th>Others(Total : <span class="vO60Female"></span>)</th>
+                                <!--                                        <th></th>-->
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Parish</th>
+                                <th>Year</th>
+                                <th>Total of Actual Residents(Total : <span class="bHousehold"></span>)</th>
+                                <th>Indigenous(Exclusis Catechumenis)(Total : <span class="bHousehold"></span>)</th>
+                                <th>Not-Indigenous(Exclusis Catechumenis)(Total : <span class="bMale"></span>)</th>
+                                <th>Total(Total : <span class="bFemale"></span>)</th>
+                                <th>Professing non-Christian religious (Total : <span class="dMale"></span>)</th>
+                                <th>Non-Catholic Christans(Total : <span class="dFemale"></span>)</th>
+                                <th>Total(Total : <span class="vU18Male"></span>)</th>
+                                <th>Catechumens (Above 7years being prepared for Baptism)</th>
+                                <th>Number of Chapel In the Parish(Total : <span class="bHousehold"></span>)</th>
+                                <th>Number of Village, places visited in then parish(Total : <span
+                                        class="bHousehold"></span>)
+                                </th>
+                                <th>Religious Male(Total : <span class="vU18Female"></span>)</th>
+                                <th>Religious Female(Total : <span class="vO60Male"></span>)</th>
+                                <th>Paid(Total : <span class="vO60Female"></span>)</th>
+                                <th>Voluntary(Total : <span class="vO60Female"></span>)</th>
+                                <th>Home Missioners(Total : <span class="vO60Female"></span>)</th>
+                                <th>Major(Total : <span class="vO60Female"></span>)</th>
+                                <th>Minor(Total : <span class="vO60Female"></span>)</th>
+                                <th>Male(Total : <span class="vO60Female"></span>)</th>
+                                <th>Female(Total : <span class="vO60Female"></span>)</th>
+                                <th>Adult 8 year old and above(Total : <span class="vO60Female"></span>)</th>
+                                <th>Infants up to 7 years of age(Total : <span class="vO60Female"></span>)</th>
+                                <th>Between Catholic(Total : <span class="vO60Female"></span>)</th>
+                                <th>Catholic and Non-Catholic Christian(Total : <span class="vO60Female"></span>)</th>
+                                <th>Catholic and Non-Christian(Total : <span class="vO60Female"></span>)</th>
+                                <th>Priests(Total : <span class="vO60Female"></span>)</th>
+                                <th>Religious(Total : <span class="vO60Female"></span>)</th>
+                                <th>Catholics(Total : <span class="vO60Female"></span>)</th>
+                                <th>Seminary(Total : <span class="vO60Female"></span>)</th>
+                                <th>Novitiate(Total : <span class="vO60Female"></span>)</th>
+                                <th>Catechist(Total : <span class="vO60Female"></span>)</th>
+                                <th>Home Missioners' Training(Total : <span class="vO60Female"></span>)</th>
+                                <th>Boarding for poor children(Total : <span class="vO60Female"></span>)</th>
+                                <th>Number of poor children(Total : <span class="vO60Female"></span>)</th>
+                                <th>No.of orphans(Total : <span class="vO60Female"></span>)</th>
+                                <th>Religious Professions(Total : <span class="vO60Female"></span>)</th>
+                                <th>Catechists/Home missioner graduated(Total : <span class="vO60Female"></span>)</th>
+                                <th>Number of Catholic Children in Primary School(Total : <span
+                                        class="vO60Female"></span>)
+                                </th>
+                                <th>Number of Catholic Children in Middle School(Total : <span
+                                        class="vO60Female"></span>)
+                                </th>
+                                <th>Number of Catholic Children in High School(Total : <span class="vO60Female"></span>)
+                                </th>
+                                <th>Number of Catholic Children in College/University(Total : <span
+                                        class="vO60Female"></span>)
+                                </th>
+                                <th>Retreats(Total : <span class="vO60Female"></span>)</th>
+                                <th>Recollections(Total : <span class="vO60Female"></span>)</th>
+                                <th>Seminars(Total : <span class="vO60Female"></span>)</th>
+                                <th>Others(Total : <span class="vO60Female"></span>)</th>
+                                <th>Legion of Mary(Total : <span class="vO60Female"></span>)</th>
+                                <th>St. Vicent De Paul(Total : <span class="vO60Female"></span>)</th>
+                                <th>Parish Elders(Total : <span class="vO60Female"></span>)</th>
+                                <th>Youth Group(Total : <span class="vO60Female"></span>)</th>
+                                <th>Mother's Guide(Total : <span class="vO60Female"></span>)</th>
+                                <th>Others(Total : <span class="vO60Female"></span>)</th>
+                                <th>Self-help and Development Project(Total : <span class="bHousehold"></span>)</th>
+                                <th>Matrimonial cases(Total : <span class="bHousehold"></span>)</th>
+                            </tr>
+
+                            </tfoot>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--End Annual-Return-->
+
+        <!--Start Zone Add Modal -->
+        <div aria-hidden="true" class="modal fade" data-bs-backdrop="static" id="model" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modelTitle">Add Annual Return</h1>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                    </div>
+                    <form id="myForm">
+                        <div class="modal-body">
+
+                            <select aria-label="parish select" class="form-select my-3" id="parishSelect">
+                                <option disabled selected value="">Select Related Parish</option>
+                            </select>
+
+                            <hr>
+                            <div class="form-floating my-3">
+                                <input class="form-control" id="createdDate" name="createdDate" type="date">
+                                <label for="createdDate">Created Date</label>
+                            </div>
+
+
+                            <!--Total Residents-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Total of Actual Residents</label>
+
+                            <div class="row">
+                                <div class="col">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="residents"
+                                               placeholder="Total of Actual Residents"
+                                               type="text">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!--Baptized Catholic-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Baptized Catholic</label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="indigenous"
+                                               placeholder="Indigenous (exclusis catechumenis)"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="not-indigenous"
+                                               placeholder="Not-Indigenous (exclusis catechumenis)"
+                                               type="text">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!--Non-Catholic-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Non-Catholic</label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="non-christian"
+                                               placeholder="Professing non-Christian religious "
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="non-catholic"
+                                               placeholder="Non-Catholic Christians"
+                                               type="text">
+                                    </label>
+                                </div>
+                            </div>
+                            <!--Catechumens-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Catechumens (Above 7years being prepared for
+                                Baptism)</label>
+
+                            <div class="row">
+                                <div class="col">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="catechumens"
+                                               placeholder="Catechumens (Above 7years being prepared for Baptism)"
+                                               type="text">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!--Chapel-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Number of Chapel In the Parish</label>
+
+                            <div class="row">
+                                <div class="col">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="chapel"
+                                               placeholder="Catechumens (Above 7years being prepared for Baptism)"
+                                               type="text">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!--Chapel-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Number of Village, places visited in then parish</label>
+
+                            <div class="row">
+                                <div class="col">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="visited"
+                                               placeholder="Number of Village, places visited in then parish"
+                                               type="text">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!--Priest-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Number of Priests</label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="malePriest"
+                                               placeholder="Male"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="femalePriest"
+                                               placeholder="Female"
+                                               type="text">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!--Catechist-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Catechists</label>
+                            <div class="row">
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="paid"
+                                               placeholder="Paid"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="voluntary"
+                                               placeholder="Voluntary"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="homeMissioner"
+                                               placeholder="Home Missioner"
+                                               type="text">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!--Seminarians-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Seminarians</label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="major"
+                                               placeholder="Major"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="minor"
+                                               placeholder="Minor"
+                                               type="text">
+                                    </label>
+                                </div>
+
+                            </div>
+
+                            <!--Candidates for the Religious life-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Candidates for the Religious Life</label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="male"
+                                               placeholder="Male"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="female"
+                                               placeholder="Female"
+                                               type="text">
+                                    </label>
+                                </div>
+
+                            </div>
+
+                            <!--Number of Baptism-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Number of Baptism</label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="adult"
+                                               placeholder="Paid"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="notAdult"
+                                               placeholder="Voluntary"
+                                               type="text">
+                                    </label>
+                                </div>
+
+                            </div>
+
+                            <!--Marriages-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Marriages</label>
+                            <div class="row">
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="between"
+                                               placeholder="Paid"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="c+ncc"
+                                               placeholder="Voluntary"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="c+nc"
+                                               placeholder="Voluntary"
+                                               type="text">
+                                    </label>
+                                </div>
+
+                            </div>
+
+                            <!--Marriages-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Number of Death</label>
+                            <div class="row">
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="Priests"
+                                               placeholder="Paid"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="Religious"
+                                               placeholder="Voluntary"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="Catholics"
+                                               placeholder="Voluntary"
+                                               type="text">
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+
+                            <button class="btn btn-primary" id="myButton" onclick="adding()" type="button">Save</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <!--End Zone Add Modal -->
+
+    </div>
+
+</div>
+<script layout:fragment="scripts2" th:src="@{/js/table.js}"></script>
+<script layout:fragment="scripts" th:src="@{/js/annual-return.js}"></script>
+
+
+</html>

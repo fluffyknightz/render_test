@@ -106,6 +106,11 @@ public class PageControllers {
         return "congregation";
     }
 
+    @GetMapping("/annual-return")
+    public String annualReturn() {
+        return "annual-return";
+    }
+
     @GetMapping("/test")
     public String test() {
         return "test";
