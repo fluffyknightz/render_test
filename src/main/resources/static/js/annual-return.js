@@ -7,6 +7,9 @@ let input = document.getElementById('annual-return');
 
 $(document).ready(function () {
 
+
+    $(".yearpicker").yearpicker();
+
     table = new DataTable('#myTable', {
         lengthMenu: [25, 50, 75, 100, 250],
         language: {

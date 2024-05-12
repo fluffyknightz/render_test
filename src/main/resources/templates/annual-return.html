@@ -16,11 +16,31 @@
                 <div class="card">
                     <!-- card header  -->
                     <div class="card-header bg-white py-4">
-                        <h4 class="mb-0 text-primary">Annual Return
-                            <span data-bs-target="#model" data-bs-toggle="modal" onclick="changeAdd()" type="button">
-                                <i class="bi bi-plus-square ml-5" style="font-size: 1.4rem"></i>
-                            </span>
-                        </h4>
+                        <div class="row">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="col-6">
+                                    <h4 class="mb-0 text-primary">Annual Return
+                                        <span data-bs-target="#model" data-bs-toggle="modal" onclick="changeAdd()"
+                                              type="button">
+                                            <i class="bi bi-plus-square ml-5" style="font-size: 1.4rem"></i>
+                                        </span>
+                                    </h4>
+                                </div>
+                                <div class="col-6 d-flex justify-content-end">
+                                    <div>
+                                        <input type="text" class="yearpicker form-control" value="">
+                                    </div>
+
+                                    <div class="ms-3 mt-5">
+                                        <a onclick="reload()">
+                                            <i class="nav-icon icon-s me-2" data-feather="refresh-ccw"
+                                               style="color: #624bff"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
 
                     <div class="p-5">
@@ -214,8 +234,6 @@
 
                             <!--Total Residents-->
                             <hr>
-                            <label class="my-2 mx-2 fw-bold fst-italic">Total of Actual Residents</label>
-
                             <div class="row">
                                 <div class="col">
                                     <label class="col-12">
@@ -267,9 +285,6 @@
                             </div>
                             <!--Catechumens-->
                             <hr>
-                            <label class="my-2 mx-2 fw-bold fst-italic">Catechumens (Above 7years being prepared for
-                                Baptism)</label>
-
                             <div class="row">
                                 <div class="col">
                                     <label class="col-12">
@@ -282,13 +297,12 @@
 
                             <!--Chapel-->
                             <hr>
-                            <label class="my-2 mx-2 fw-bold fst-italic">Number of Chapel In the Parish</label>
 
                             <div class="row">
                                 <div class="col">
                                     <label class="col-12">
                                         <input class="form-control number-type" id="chapel"
-                                               placeholder="Catechumens (Above 7years being prepared for Baptism)"
+                                               placeholder="Number of Chapel In the Parish"
                                                type="text">
                                     </label>
                                 </div>
@@ -296,7 +310,6 @@
 
                             <!--Chapel-->
                             <hr>
-                            <label class="my-2 mx-2 fw-bold fst-italic">Number of Village, places visited in then parish</label>
 
                             <div class="row">
                                 <div class="col">
@@ -452,26 +465,257 @@
                             <div class="row">
                                 <div class="col-4">
                                     <label class="col-12">
-                                        <input class="form-control number-type" id="Priests"
+                                        <input class="form-control number-type" id="priests"
                                                placeholder="Paid"
                                                type="text">
                                     </label>
                                 </div>
                                 <div class="col-4">
                                     <label class="col-12">
-                                        <input class="form-control number-type" id="Religious"
+                                        <input class="form-control number-type" id="religious"
                                                placeholder="Voluntary"
                                                type="text">
                                     </label>
                                 </div>
                                 <div class="col-4">
                                     <label class="col-12">
-                                        <input class="form-control number-type" id="Catholics"
+                                        <input class="form-control number-type" id="catholics"
                                                placeholder="Voluntary"
                                                type="text">
                                     </label>
                                 </div>
 
+                            </div>
+
+                            <!--Parish of Institutes-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Parish of Institutes</label>
+                            <div class="row">
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="seminary"
+                                               placeholder="Seminary"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="novitiate"
+                                               placeholder="Novitiate"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="catechist"
+                                               placeholder="Catechist"
+                                               type="text">
+                                    </label>
+                                </div>
+
+
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="training"
+                                               placeholder="Home Missioners' Training"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="boarding"
+                                               placeholder="Boarding for poor Children"
+                                               type="text">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="poor"
+                                               placeholder="Number of Poor Children"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="orphan"
+                                               placeholder="Number of Orphans"
+                                               type="text">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!--Number of priestly ordinations-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Number of Priestly Ordinations</label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="profession"
+                                               placeholder="Religious Professions"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="graduated"
+                                               placeholder="Catechists/Home missioner Graduated"
+                                               type="text">
+                                    </label>
+                                </div>
+
+
+                            </div>
+
+                            <!--Education-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Education</label>
+                            <div class="row">
+                                <div class="col-3">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="basic"
+                                               placeholder="Primary School"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-3">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="middle"
+                                               placeholder="Middle School"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-3">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="high"
+                                               placeholder="High School"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-3">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="university"
+                                               placeholder="University/Collage"
+                                               type="text">
+                                    </label>
+                                </div>
+
+                            </div>
+
+                            <!--Religious Activity-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Religious Activity</label>
+                            <div class="row">
+                                <div class="col-3">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="retreat"
+                                               placeholder="Retreats"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-3">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="recollection"
+                                               placeholder="Recollections"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-3">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="seminar"
+                                               placeholder="Seminars"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-3">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="other"
+                                               placeholder="Others"
+                                               type="text">
+                                    </label>
+                                </div>
+
+                            </div>
+
+                            <!--Catholic Actions-->
+                            <hr>
+                            <label class="my-2 mx-2 fw-bold fst-italic">Catholic Actions</label>
+                            <div class="row">
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="mary"
+                                               placeholder="Legion of Mary"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="vincent"
+                                               placeholder="St. Vincent De Paul"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="elder"
+                                               placeholder="Parish Elders"
+                                               type="text">
+                                    </label>
+                                </div>
+
+
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="youth"
+                                               placeholder="Youth Group"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="guide"
+                                               placeholder="Mother's Guide"
+                                               type="text">
+                                    </label>
+                                </div>
+                                <div class="col-4">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="otherAction"
+                                               placeholder="Others"
+                                               type="text">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!--Self-help and Development Project-->
+                            <hr>
+
+                            <div class="row">
+                                <div class="col">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="project"
+                                               placeholder="Self-help and Development Project"
+                                               type="text">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!--Matrimonial cases-->
+                            <hr>
+
+                            <div class="row">
+                                <div class="col">
+                                    <label class="col-12">
+                                        <input class="form-control number-type" id="matrimonial"
+                                               placeholder="Matrimonial Cases"
+                                               type="text">
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
