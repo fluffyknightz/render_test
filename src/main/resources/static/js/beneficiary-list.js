@@ -86,9 +86,7 @@ function cb(start, end) {
 function dateFilter() {
     // Initialize date range picker
     $('#reportrange').daterangepicker({
-        startDate: start,
-        endDate: end,
-        ranges: {
+        startDate: start, endDate: end, ranges: {
             'None': [null, null],
             'Today': [moment(), moment()],
             'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -163,37 +161,22 @@ $(document).ready(async function () {
                 d.columns[15].search.value = false;
                 return d;
             },
-        },
-        lengthMenu: [25, 50, 75, 100, 250],
-        language: {
+        }, lengthMenu: [25, 50, 75, 100, 250], language: {
             infoFiltered: "",
-        },
-        serverSide: true,
-        processing: true,
-        scrollX: true,
-        layout: {
+        }, serverSide: true, processing: true, scrollX: true, layout: {
             top3: {
                 searchPanes: {
-                    threshold: 1,
-                    layout: 'columns-1',
-                    columns: [0, 3],
-                    dtOpts: {
+                    threshold: 1, layout: 'columns-1', columns: [0, 3], dtOpts: {
                         select: {
                             style: 'multi'
                         }, scrollY: '100px'
                     }
                 },
-            },
-            top2Start: 'pageLength',
-            top2End: 'search',
-            topStart: {
+            }, top2Start: 'pageLength', top2End: 'search', topStart: {
                 buttons: [
 
                     {
-                        extend: 'excel',
-                        filename: 'beneficiary-list',
-                        title: 'Beneficiary Lists',
-                        exportOptions: {
+                        extend: 'excel', filename: 'beneficiary-list', title: 'Beneficiary Lists', exportOptions: {
                             columns: ':not(.noExport):visible'
                         }
                     }, {
@@ -210,9 +193,7 @@ $(document).ready(async function () {
                             doc.defaultStyle.alignment = 'center';
                         }
                     }, {
-                        extend: 'print',
-                        filename: 'beneficiary-list',
-                        title: 'Beneficiary Lists',
+                        extend: 'print', filename: 'beneficiary-list', title: 'Beneficiary Lists',
 
                         exportOptions: {
                             columns: ':not(.noExport):visible'
@@ -233,44 +214,42 @@ $(document).ready(async function () {
         },
 
 
-        columns: [
-            {
-                data: 'activityName',
-            }, {
-                data: 'zoneName'
-            }, {
-                data: 'dioceseName'
-            }, {
-                data: 'parishName'
-            }, {
-                data: 'beneficiaryHousehold'
-            }, {
-                data: 'beneficiaryMale'
-            }, {
-                data: 'beneficiaryFemale'
-            }, {
-                data: 'disabilityMale'
-            }, {
-                data: 'disabilityFemale'
-            }, {
-                data: 'under18Male'
-            }, {
-                data: 'under18Female'
-            }, {
-                data: 'over60Male'
-            }, {
-                data: 'over60Female'
-            }, {
-                data: 'createdDate'
-            }, {
-                data: 'createdUser'
-            }, {
-                data: 'isDelete', className: 'noExport', ordering: false, render: function (data, type, row) {
-                    return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" ' + 'onclick="changeEdit(' + row.id + ', \'' + row.activityName.replace(/'/g, "\\'") + '\', \'' + row.parishName.replace(/'/g, "\\'") + '\', ' + row.beneficiaryHousehold + ', ' + row.beneficiaryMale + ', ' + row.beneficiaryFemale + ', ' + row.disabilityMale + ', ' + row.disabilityFemale + ', ' + row.under18Male + ', ' + row.under18Female + ', ' + row.over60Male + ', ' + row.over60Female + ', \'' + row.archdioceseName.replace(/'/g, "\\'") + '\', \'' + row.dioceseName.replace(/'/g, "\\'") + '\', \'' + row.zoneName.replace(/'/g, "\\'") + '\', \'' + row.createdDate + '\' )" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
-                }
-
+        columns: [{
+            data: 'activityName',
+        }, {
+            data: 'zoneName'
+        }, {
+            data: 'dioceseName'
+        }, {
+            data: 'parishName'
+        }, {
+            data: 'beneficiaryHousehold'
+        }, {
+            data: 'beneficiaryMale'
+        }, {
+            data: 'beneficiaryFemale'
+        }, {
+            data: 'disabilityMale'
+        }, {
+            data: 'disabilityFemale'
+        }, {
+            data: 'under18Male'
+        }, {
+            data: 'under18Female'
+        }, {
+            data: 'over60Male'
+        }, {
+            data: 'over60Female'
+        }, {
+            data: 'createdDate'
+        }, {
+            data: 'createdUser'
+        }, {
+            data: 'isDelete', className: 'noExport', ordering: false, render: function (data, type, row) {
+                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" ' + 'onclick="changeEdit(' + row.id + ', \'' + row.activityName.replace(/'/g, "\\'") + '\', \'' + row.parishName.replace(/'/g, "\\'") + '\', ' + row.beneficiaryHousehold + ', ' + row.beneficiaryMale + ', ' + row.beneficiaryFemale + ', ' + row.disabilityMale + ', ' + row.disabilityFemale + ', ' + row.under18Male + ', ' + row.under18Female + ', ' + row.over60Male + ', ' + row.over60Female + ', \'' + row.archdioceseName.replace(/'/g, "\\'") + '\', \'' + row.dioceseName.replace(/'/g, "\\'") + '\', \'' + row.zoneName.replace(/'/g, "\\'") + '\', \'' + row.createdDate + '\' )" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
             }
-        ],
+
+        }],
 
         drawCallback: function (settings) {
             // Recalculate total combined household count
@@ -544,22 +523,5 @@ async function adding() {
 }
 
 function checkRequired() {
-    return activitySelect.value === undefined || activitySelect.value === null ||
-        activitySelect.value.trim() === "" || parishSelect.value === undefined ||
-        parishSelect.value === null || parishSelect.value.trim() === "" ||
-        created_date.value === null || created_date.value.trim() === "" ||
-        inputBeneficiariesHousehold.value === undefined || inputBeneficiariesHousehold.value === null ||
-        inputBeneficiariesHousehold.value.trim() === "" || inputBeneficiariesMale.value === undefined ||
-        inputBeneficiariesMale.value === null || inputBeneficiariesMale.value.trim() === "" ||
-        inputBeneficiariesFemale.value === undefined || inputBeneficiariesFemale.value === null ||
-        inputBeneficiariesFemale.value.trim() === "" || inputDisabilitiesMale.value === undefined ||
-        inputDisabilitiesMale.value === null || inputDisabilitiesMale.value.trim() === "" ||
-        inputDisabilitiesFemale.value === undefined || inputDisabilitiesFemale.value === null ||
-        inputDisabilitiesFemale.value.trim() === "" || inputVulnerabilitiesUnder18Male.value === undefined ||
-        inputVulnerabilitiesUnder18Male.value === null || inputVulnerabilitiesUnder18Male.value.trim() === "" ||
-        inputVulnerabilitiesUnder18Female.value === undefined || inputVulnerabilitiesUnder18Female.value === null ||
-        inputVulnerabilitiesUnder18Female.value.trim() === "" || inputVulnerabilitiesOver60Male.value === undefined ||
-        inputVulnerabilitiesOver60Male.value === null || inputVulnerabilitiesOver60Male.value.trim() === "" ||
-        inputVulnerabilitiesOver60Female.value === undefined || inputVulnerabilitiesOver60Female.value === null ||
-        inputVulnerabilitiesOver60Female.value.trim() === "";
+    return activitySelect.value === undefined || activitySelect.value === null || activitySelect.value.trim() === "" || parishSelect.value === undefined || parishSelect.value === null || parishSelect.value.trim() === "" || created_date.value === null || created_date.value.trim() === "" || inputBeneficiariesHousehold.value === undefined || inputBeneficiariesHousehold.value === null || inputBeneficiariesHousehold.value.trim() === "" || inputBeneficiariesMale.value === undefined || inputBeneficiariesMale.value === null || inputBeneficiariesMale.value.trim() === "" || inputBeneficiariesFemale.value === undefined || inputBeneficiariesFemale.value === null || inputBeneficiariesFemale.value.trim() === "" || inputDisabilitiesMale.value === undefined || inputDisabilitiesMale.value === null || inputDisabilitiesMale.value.trim() === "" || inputDisabilitiesFemale.value === undefined || inputDisabilitiesFemale.value === null || inputDisabilitiesFemale.value.trim() === "" || inputVulnerabilitiesUnder18Male.value === undefined || inputVulnerabilitiesUnder18Male.value === null || inputVulnerabilitiesUnder18Male.value.trim() === "" || inputVulnerabilitiesUnder18Female.value === undefined || inputVulnerabilitiesUnder18Female.value === null || inputVulnerabilitiesUnder18Female.value.trim() === "" || inputVulnerabilitiesOver60Male.value === undefined || inputVulnerabilitiesOver60Male.value === null || inputVulnerabilitiesOver60Male.value.trim() === "" || inputVulnerabilitiesOver60Female.value === undefined || inputVulnerabilitiesOver60Female.value === null || inputVulnerabilitiesOver60Female.value.trim() === "";
 }
