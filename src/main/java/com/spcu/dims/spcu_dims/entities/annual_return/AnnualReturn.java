@@ -1,10 +1,12 @@
 package com.spcu.dims.spcu_dims.entities.annual_return;
 
 import com.spcu.dims.spcu_dims.entities.Parish;
+import com.spcu.dims.spcu_dims.entities.User;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -42,6 +44,13 @@ public class AnnualReturn implements Serializable {
 
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int matrimonialCases;
+
+    @Column(nullable = false)
+    private LocalDate createdDate;
+
+    @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_user_2"), nullable = false)
+    private User user;
 
     @ManyToOne(targetEntity = Parish.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "parish_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_parish_2"), nullable = false)
@@ -102,4 +111,10 @@ public class AnnualReturn implements Serializable {
     @OneToOne(targetEntity = CatholicAction.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "catholic_action_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_catholic_action"), unique = true, nullable = false)
     private CatholicAction catholicAction;
+
+
+    @PrePersist
+    private void prePersist(){
+        this.createdDate = LocalDate.now();
+    }
 }
