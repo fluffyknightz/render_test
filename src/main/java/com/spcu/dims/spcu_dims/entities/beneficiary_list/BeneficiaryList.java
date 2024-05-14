@@ -1,6 +1,8 @@
 package com.spcu.dims.spcu_dims.entities.beneficiary_list;
 
-import com.spcu.dims.spcu_dims.entities.*;
+import com.spcu.dims.spcu_dims.entities.Activity;
+import com.spcu.dims.spcu_dims.entities.Parish;
+import com.spcu.dims.spcu_dims.entities.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -50,5 +52,8 @@ public class BeneficiaryList implements Serializable {
     @JoinColumn(name = "vulnerability_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_vulnerability"), unique = true, nullable = false)
     private Vulnerability vulnerability;
 
-
+    @PrePersist
+    private void prePersist() {
+        this.createdDate = LocalDate.now();
+    }
 }

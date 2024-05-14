@@ -223,7 +223,7 @@ $(document).ready(async function () {
                     extend: 'colvis',
                     collectionLayout: 'fixed columns',
                     popoverTitle: 'Column Show/Hide Control',
-                    columns: ':not(.noVis)',
+                    text: 'Show/Hide',
                     postfixButtons: ['colvisRestore'],
                     columnText: function (dt, idx, title) {
                         return idx + 1 + ': ' + title.replace(/\(Total : \)/g, '');
