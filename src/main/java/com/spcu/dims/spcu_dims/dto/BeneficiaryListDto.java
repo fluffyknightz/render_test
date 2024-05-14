@@ -20,7 +20,7 @@ public class BeneficiaryListDto {
     @NotBlank
     private String parishName;
 
-    @NotBlank
+    @NotNull
     private LocalDate createdDate;
 
     @NotNull
