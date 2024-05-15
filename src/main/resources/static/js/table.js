@@ -49,7 +49,6 @@ async function performOperation(url, method, successMessage, jsonBody) {
         }
     }).catch(error => {
         Notiflix.Notify.failure("Error has occurred during process. Please Try again later.");
-        console.error(error); // Optionally log the error to the console for debugging
     });
 }
 
@@ -67,8 +66,7 @@ async function fetchData(apiEndpoint, filterParam = null, jsonBody = null) {
 
         return await response.json();
     } catch (error) {
-        console.error('Error fetching data:', error);
-        throw error; // You may want to handle or log the error appropriately
+        Notiflix.Notify.failure('Error has occurred during fetching data.');
     }
 }
 
