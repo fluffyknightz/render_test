@@ -2,8 +2,10 @@ let table
 let data_id
 let button = document.getElementById('myButton');
 let title = document.getElementById('modelTitle');
-let input = document.getElementById('annual-return');
+
+
 let year = document.getElementById("year");
+let form = document.getElementById('myForm');
 
 // Pagination logic
 let currentPage = 1;
@@ -56,8 +58,40 @@ function numberLock() {
     });
 }
 
+function cb(start, end) {
+
+    if (!start || !end || start.format('YYYY-MM-DD') === 'Invalid date' || end.format('YYYY-MM-DD') === 'Invalid date') {
+        dateRange.querySelector('span').innerHTML = 'None';
+        table.column(13).search(null + ';' + null).draw();
+    } else {
+        dateRange.querySelector('span').innerHTML = start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY');
+        table.column(13).search(start.format('YYYY-MM-DD') + ';' + end.format('YYYY-MM-DD')).draw();
+    }
+}
+
+
+function dateFilter() {
+    // Initialize date range picker
+    $('#reportrange').daterangepicker({
+        startDate: start, endDate: end, ranges: {
+            'None': [null, null],
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(30, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+            'Last 3 Month': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    }, cb);
+
+    cb(start, end);
+
+}
+
 $(document).ready(function () {
 
+    dateFilter();
     numberLock()
     // Initial content update
     updateModalContent(currentPage);
@@ -299,3 +333,13 @@ $(document).ready(function () {
         .querySelector('div.dtsp-verticalPanes')
         .appendChild(table.searchPanes.container().get(0));
 });
+
+async function parishFetching() {
+    try {
+        const data = await fetchData('spcu-dims/api/v1/parish/show/all');
+        await populateSelect(parishSelect, data, "Select Related Archdiocese", false);
+    } catch (error) {
+        Notiflix.Notify.failure('Data Fetching Error!');
+
+    }
+}
