@@ -1,6 +1,5 @@
 package com.spcu.dims.spcu_dims.controllers;
 
-import com.spcu.dims.spcu_dims.views.BeneficiaryListView;
 import jakarta.persistence.criteria.*;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.Search;
@@ -11,13 +10,15 @@ import java.time.format.DateTimeParseException;
 
 import static org.springframework.util.StringUtils.hasText;
 
-public class CreatedDateSpecification implements Specification<BeneficiaryListView> {
+public class CreatedDateSpecification<T> implements Specification<T> {
 
     private final LocalDate startDate;
     private final LocalDate endDate;
+    private final String dateFieldName;
 
-    public CreatedDateSpecification(DataTablesInput input) {
-        Search columnSearch = input.getColumn("createdDate").getSearch();
+    public CreatedDateSpecification(DataTablesInput input, String dateFieldName) {
+        this.dateFieldName = dateFieldName;
+        Search columnSearch = input.getColumn(dateFieldName).getSearch();
         String dateFilter = columnSearch.getValue();
         columnSearch.setValue("");
         if (!hasText(dateFilter)) {
@@ -40,10 +41,9 @@ public class CreatedDateSpecification implements Specification<BeneficiaryListVi
         return null;
     }
 
-
     @Override
-    public Predicate toPredicate(Root<BeneficiaryListView> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        Expression<LocalDate> createdDate = root.get("createdDate").as(LocalDate.class);
+    public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+        Expression<LocalDate> createdDate = root.get(dateFieldName).as(LocalDate.class);
         if (startDate != null && endDate != null) {
             return criteriaBuilder.between(createdDate, startDate, endDate);
         } else if (startDate != null) {

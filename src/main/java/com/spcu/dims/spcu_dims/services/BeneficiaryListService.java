@@ -21,6 +21,6 @@ public interface BeneficiaryListService {
 
     Object update(BeneficiaryListDto reqData);
 
-    DataTablesOutput<BeneficiaryListView> tableBeneficiaryList(DataTablesInput input, CreatedDateSpecification createdDateSpecification);
+    DataTablesOutput<BeneficiaryListView> tableBeneficiaryList(DataTablesInput input, CreatedDateSpecification<BeneficiaryListView> createdDateSpecification);
 
 }
