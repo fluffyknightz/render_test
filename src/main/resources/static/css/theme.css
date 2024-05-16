@@ -9,10 +9,6 @@
 ========================================================= */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
-.hover.table.table-striped th {
-    white-space: nowrap;
-}
-
 .dashboard:hover {
     transform: scale(1.05);
     box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);

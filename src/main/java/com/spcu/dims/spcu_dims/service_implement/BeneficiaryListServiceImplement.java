@@ -139,7 +139,7 @@ public class BeneficiaryListServiceImplement implements BeneficiaryListService {
     }
 
     @Override
-    public DataTablesOutput<BeneficiaryListView> tableBeneficiaryList(DataTablesInput input, CreatedDateSpecification createdDateSpecification) {
+    public DataTablesOutput<BeneficiaryListView> tableBeneficiaryList(DataTablesInput input, CreatedDateSpecification<BeneficiaryListView> createdDateSpecification) {
         return beneficiaryListViewRepository.findAll(input, createdDateSpecification);
     }
 
