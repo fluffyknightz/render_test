@@ -2,8 +2,10 @@ let table
 let data_id
 let button = document.getElementById('myButton');
 let title = document.getElementById('modelTitle');
+let start = null;
+let end = null;
 
-
+let dateRange = document.getElementById('reportrange2');
 let year = document.getElementById("year");
 let form = document.getElementById('myForm');
 
@@ -62,17 +64,17 @@ function cb(start, end) {
 
     if (!start || !end || start.format('YYYY-MM-DD') === 'Invalid date' || end.format('YYYY-MM-DD') === 'Invalid date') {
         dateRange.querySelector('span').innerHTML = 'None';
-        table.column(13).search(null + ';' + null).draw();
+        table.column(54).search(null + ';' + null).draw();
     } else {
         dateRange.querySelector('span').innerHTML = start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY');
-        table.column(13).search(start.format('YYYY-MM-DD') + ';' + end.format('YYYY-MM-DD')).draw();
+        table.column(54).search(start.format('YYYY-MM-DD') + ';' + end.format('YYYY-MM-DD')).draw();
     }
 }
 
 
 function dateFilter() {
     // Initialize date range picker
-    $('#reportrange').daterangepicker({
+    $('#reportrange2').daterangepicker({
         startDate: start, endDate: end, ranges: {
             'None': [null, null],
             'Today': [moment(), moment()],
@@ -89,12 +91,13 @@ function dateFilter() {
 
 }
 
-$(document).ready(function () {
-
-    dateFilter();
-    numberLock()
-    // Initial content update
+$(document).ready(async function () {
+// Initial content update
     updateModalContent(currentPage);
+    
+    numberLock()
+    await parishFetching()
+
 
     // Next button click event
     document.getElementById('next').addEventListener('click', function () {
@@ -149,14 +152,15 @@ $(document).ready(function () {
                 [csrfHeader]: csrfToken
             },
             data: function (d) {
-                d.columns[53].search.value = false;
+                d.columns[56].search.value = false;
                 return d;
             },
         },
 
         lengthMenu: [25, 50, 75, 100, 250], language: {
             infoFiltered: "",
-        }, serverSide: true, processing: true, scrollX: true, layout: {
+        }, serverSide: true, processing: true, scrollX: true,
+        layout: {
             top3: {
                 searchPanes: {
                     threshold: 1, layout: 'columns-1', columns: [0, 3], dtOpts: {
@@ -169,13 +173,13 @@ $(document).ready(function () {
                 buttons: [
 
                     {
-                        extend: 'excel', filename: 'beneficiary-list', title: 'Beneficiary Lists', exportOptions: {
+                        extend: 'excel', filename: 'annual-return', title: 'Annual Returns', exportOptions: {
                             columns: ':not(.noExport):visible'
                         }
                     }, {
                         extend: 'pdf',
-                        filename: 'beneficiary-list',
-                        title: 'Beneficiary Lists',
+                        filename: 'annual-return',
+                        title: 'Annual Returns',
                         orientation: 'landscape',
                         pageSize: 'LEGAL',
                         exportOptions: {
@@ -186,7 +190,7 @@ $(document).ready(function () {
                             doc.defaultStyle.alignment = 'center';
                         }
                     }, {
-                        extend: 'print', filename: 'beneficiary-list', title: 'Beneficiary Lists',
+                        extend: 'print', filename: 'annual-return', title: 'Annual Returns',
 
                         exportOptions: {
                             columns: ':not(.noExport):visible'
@@ -206,129 +210,130 @@ $(document).ready(function () {
             }
         },
 
-        columns: [{
-            data: 'parish.name',
-        }, {
-            data: 'year'
-        }, {
-            data: 'totalActualResident'
-        }, {
-            data: 'baptizedCatholic.indigenous'
-        }, {
-            data: 'baptizedCatholic.notIndigenous'
-        }, {
-            data: null, render: function (data, type, row) {
-                return row.baptizedCatholic.notIndigenous + row.baptizedCatholic.notIndigenous
-            }
-        }, {
-            data: 'nonCatholic.nonChristian'
-        }, {
-            data: 'nonCatholic.nonCatholicChristian'
-        }, {
-            data: null, render: function (data, type, row) {
-                return row.nonCatholic.nonChristian + row.nonCatholic.nonCatholicChristian
-            }
-        }, {
-            data: 'catechumen'
-        }, {
-            data: 'chapel'
-        }, {
-            data: 'visitedPlace'
-        }, {
-            data: 'priest.male'
-        }, {
-            data: 'priest.female'
-        }, {
-            data: 'catechist.paid'
-        }, {
-            data: 'catechist.voluntary'
-        }, {
-            data: 'catechist.homeMissioner'
-        }, {
-            data: 'seminarian.major'
-        }, {
-            data: 'seminarian.minor'
-        }, {
-            data: 'religiousLife.male'
-        }, {
-            data: 'religiousLife.female'
-        }, {
-            data: 'baptism.above8Year'
-        }, {
-            data: 'baptism.upTo7Year'
-        }, {
-            data: 'marriage.betweenCatholic'
-        }, {
-            data: 'marriage.withNonCatholicChristian'
-        }, {
-            data: 'marriage.withNonChristian'
-        }, {
-            data: 'death.priest'
-        }, {
-            data: 'death.religious'
-        }, {
-            data: 'death.catholic'
-        }, {
-            data: 'institute.seminary'
-        }, {
-            data: 'institute.novitiate'
-        }, {
-            data: 'institute.catechist'
-        }, {
-            data: 'institute.trainingForHomeMissioner'
-        }, {
-            data: 'institute.boardingForPoor'
-        }, {
-            data: 'institute.orphan'
-        }, {
-            data: 'institute.poor'
-        }, {
-            data: 'priestlyOrdination.religiousProfession'
-        }, {
-            data: 'priestlyOrdination.graduated'
-        }, {
-            data: 'education.basic'
-        }, {
-            data: 'education.middle'
-        }, {
-            data: 'education.high'
-        }, {
-            data: 'education.university'
-        }, {
-            data: 'religiousActivity.retreats'
-        }, {
-            data: 'religiousActivity.recollections'
-        }, {
-            data: 'religiousActivity.seminar'
-        }, {
-            data: 'religiousActivity.other'
-        }, {
-            data: 'catholicAction.legionOfMary'
-        }, {
-            data: 'catholicAction.stVincentDePaul'
-        }, {
-            data: 'catholicAction.parishElder'
-        }, {
-            data: 'catholicAction.youthGroup'
-        }, {
-            data: 'catholicAction.motherGuide'
-        }, {
-            data: 'catholicAction.other'
-        }, {
-            data: 'project'
-        }, {
-            data: 'matrimonialCases'
-        }, {
-            data: 'createdDate'
-        }, {
-            data: 'createdUser'
-        }, {
-            data: 'isDelete', className: 'noExport', ordering: false, render: function (data, type, row) {
-                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" ' + 'onclick="changeEdit()" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
-            }
+        columns: [
+            {
+                data: 'parishName',
+            }, {
+                data: 'year'
+            }, {
+                data: 'totalActualResident'
+            }, {
+                data: 'indigenous'
+            }, {
+                data: 'notIndigenous'
+            }, {
+                data: 'bcTotal'
+            }, {
+                data: 'nonChristian'
+            }, {
+                data: 'nonCatholicChristian'
+            }, {
+                data: 'ncTotal'
+            }, {
+                data: 'catechumen'
+            }, {
+                data: 'chapel'
+            }, {
+                data: 'visitedPlace'
+            }, {
+                data: 'male'
+            }, {
+                data: 'female'
+            }, {
+                data: 'paid'
+            }, {
+                data: 'voluntary'
+            }, {
+                data: 'homeMissioner'
+            }, {
+                data: 'major'
+            }, {
+                data: 'minor'
+            }, {
+                data: 'rlMale'
+            }, {
+                data: 'rlFemale'
+            }, {
+                data: 'above8Year'
+            }, {
+                data: 'upTo7Year'
+            }, {
+                data: 'betweenCatholic'
+            }, {
+                data: 'withNonCatholicChristian'
+            }, {
+                data: 'withNonChristian'
+            }, {
+                data: 'priest'
+            }, {
+                data: 'religious'
+            }, {
+                data: 'catholic'
+            }, {
+                data: 'seminary'
+            }, {
+                data: 'novitiate'
+            }, {
+                data: 'catechist'
+            }, {
+                data: 'trainingForHomeMissioner'
+            }, {
+                data: 'boardingForPoor'
+            }, {
+                data: 'orphan'
+            }, {
+                data: 'poor'
+            }, {
+                data: 'religiousProfession'
+            }, {
+                data: 'graduated'
+            }, {
+                data: 'basic'
+            }, {
+                data: 'middle'
+            }, {
+                data: 'high'
+            }, {
+                data: 'university'
+            }, {
+                data: 'retreats'
+            }, {
+                data: 'recollections'
+            }, {
+                data: 'seminar'
+            }, {
+                data: 'other'
+            }, {
+                data: 'legionOfMary'
+            }, {
+                data: 'stVincentDePaul'
+            }, {
+                data: 'parishElder'
+            }, {
+                data: 'youthGroup'
+            }, {
+                data: 'motherGuide'
+            }, {
+                data: 'caOther'
+            }, {
+                data: 'project'
+            }, {
+                data: 'matrimonialCases'
+            }, {
+                data: 'createdDate'
+            }, {
+                data: 'createdUser'
+            }, {
+                data: 'isDelete',
+                className: 'noExport',
+                ordering: false,
+                render: function (data, type, row) {
+                    return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" ' + 'onclick="changeEdit(' + row.id + ')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+                }
 
-        }],
+            }],
     });
+    dateFilter();
     document
         .querySelector('div.dtsp-verticalPanes')
         .appendChild(table.searchPanes.container().get(0));
@@ -342,4 +347,28 @@ async function parishFetching() {
         Notiflix.Notify.failure('Data Fetching Error!');
 
     }
+}
+
+function changeAdd() {
+
+    button.innerHTML = 'Add'
+    title.textContent = 'Add Annual Return'
+    button.setAttribute('onclick', 'adding()');
+    return false;
+}
+
+
+async function changeEdit(id, activity, parish, houseHold, male, female, disabilityMale, disabilityFemale, under18Male, under18Female, over60Male, over60Female, archdiocese, diocese, zone, createdDate) {
+
+    button.innerHTML = 'Edit';
+    title.textContent = 'Edit Annual Return';
+    button.setAttribute('onclick', 'editing()');
+    return false;
+
+}
+
+async function showConfirm(id) {
+    await deleteConfirm('/spcu-dims/api/v1/annual/delete/' + encodeURIComponent(id), reload)
+
+
 }

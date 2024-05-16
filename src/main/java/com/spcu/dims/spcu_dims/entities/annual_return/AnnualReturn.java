@@ -49,8 +49,8 @@ public class AnnualReturn implements Serializable {
     private LocalDate createdDate;
 
     @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_user_2"), nullable = false)
-    private User user;
+    @JoinColumn(name = "created_user_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_user_2"), nullable = false)
+    private User createdUser;
 
     @ManyToOne(targetEntity = Parish.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "parish_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_parish_2"), nullable = false)

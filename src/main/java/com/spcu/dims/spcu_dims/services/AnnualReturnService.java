@@ -1,7 +1,9 @@
 package com.spcu.dims.spcu_dims.services;
 
+import com.spcu.dims.spcu_dims.controllers.CreatedDateSpecification;
 import com.spcu.dims.spcu_dims.dto.AnnualReturnDTO;
 import com.spcu.dims.spcu_dims.entities.annual_return.AnnualReturn;
+import com.spcu.dims.spcu_dims.views.AnnualReturnView;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 
@@ -19,7 +21,7 @@ public interface AnnualReturnService {
 
     Object update(AnnualReturnDTO annualReturnDTO);
 
-    DataTablesOutput<AnnualReturn> annualReturnTable(DataTablesInput input);
+    DataTablesOutput<AnnualReturnView> annualReturnTable(DataTablesInput input, CreatedDateSpecification<AnnualReturnView> createdDateSpecification);
 
 
 }

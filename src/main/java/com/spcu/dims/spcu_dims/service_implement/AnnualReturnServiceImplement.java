@@ -1,9 +1,12 @@
 package com.spcu.dims.spcu_dims.service_implement;
 
+import com.spcu.dims.spcu_dims.controllers.CreatedDateSpecification;
 import com.spcu.dims.spcu_dims.dto.AnnualReturnDTO;
 import com.spcu.dims.spcu_dims.entities.annual_return.AnnualReturn;
 import com.spcu.dims.spcu_dims.repositories.AnnualReturnRepository;
+import com.spcu.dims.spcu_dims.repositories.AnnualReturnViewRepository;
 import com.spcu.dims.spcu_dims.services.AnnualReturnService;
+import com.spcu.dims.spcu_dims.views.AnnualReturnView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
@@ -16,6 +19,7 @@ import java.util.List;
 public class AnnualReturnServiceImplement implements AnnualReturnService {
 
     private final AnnualReturnRepository annualReturnRepository;
+    private final AnnualReturnViewRepository annualReturnViewRepository;
 
     @Override
     public Object createAnnualReturn(AnnualReturnDTO annualReturnDTO) {
@@ -43,7 +47,7 @@ public class AnnualReturnServiceImplement implements AnnualReturnService {
     }
 
     @Override
-    public DataTablesOutput<AnnualReturn> annualReturnTable(DataTablesInput input) {
-        return annualReturnRepository.findAll(input);
+    public DataTablesOutput<AnnualReturnView> annualReturnTable(DataTablesInput input, CreatedDateSpecification<AnnualReturnView> createdDateSpecification) {
+        return annualReturnViewRepository.findAll(input, createdDateSpecification);
     }
 }
