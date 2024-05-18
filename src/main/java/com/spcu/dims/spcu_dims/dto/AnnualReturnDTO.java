@@ -20,7 +20,7 @@ public class AnnualReturnDTO {
 
     @NotNull(message = "Please fill require Data!.")
     @Min(value = 0, message = "Please fill require Data!")
-    private int totalActualResident;
+    private int resident;
 
     @NotNull(message = "Please fill require Data!.")
     @Min(value = 0, message = "Please fill require Data!")
@@ -32,7 +32,7 @@ public class AnnualReturnDTO {
 
     @NotNull(message = "Please fill require Data!.")
     @Min(value = 0, message = "Please fill require Data!")
-    private int visitedPlace;
+    private int visited;
 
     @NotNull(message = "Please fill require Data!.")
     @Min(value = 0, message = "Please fill require Data!")
@@ -63,7 +63,7 @@ public class AnnualReturnDTO {
 
     @NotNull(message = "Please fill require Data!.")
     @Min(value = 0, message = "Please fill require Data!")
-    private int nonCatholicChristian;
+    private int nonCatholic;
 
     //    for Priest Entity
     @NotNull(message = "Please fill require Data!.")
@@ -121,7 +121,7 @@ public class AnnualReturnDTO {
 
     @NotNull(message = "Please fill require Data!.")
     @Min(value = 0, message = "Please fill require Data!")
-    private int withNonCatholicChristian;
+    private int withNonCatholic;
 
     @NotNull(message = "Please fill require Data!.")
     @Min(value = 0, message = "Please fill require Data!")
@@ -155,11 +155,11 @@ public class AnnualReturnDTO {
 
     @NotNull(message = "Please fill require Data!.")
     @Min(value = 0, message = "Please fill require Data!")
-    private int trainingForHomeMissioner;
+    private int training;
 
     @NotNull(message = "Please fill require Data!.")
     @Min(value = 0, message = "Please fill require Data!")
-    private int boardingForPoor;
+    private int boarding;
 
     @NotNull(message = "Please fill require Data!.")
     @Min(value = 0, message = "Please fill require Data!")
@@ -172,7 +172,7 @@ public class AnnualReturnDTO {
     //    for Priestly Ordination Entity
     @NotNull(message = "Please fill require Data!.")
     @Min(value = 0, message = "Please fill require Data!")
-    private int religiousProfession;
+    private int profession;
 
     @NotNull(message = "Please fill require Data!.")
     @Min(value = 0, message = "Please fill require Data!")
@@ -215,11 +215,11 @@ public class AnnualReturnDTO {
     //    for Catholic Action Entity
     @NotNull(message = "Please fill require Data!.")
     @Min(value = 0, message = "Please fill require Data!")
-    private int legionOfMary;
+    private int mary;
 
     @NotNull(message = "Please fill require Data!.")
     @Min(value = 0, message = "Please fill require Data!")
-    private int stVincentDePaul;
+    private int vicent;
 
     @NotNull(message = "Please fill require Data!.")
     @Min(value = 0, message = "Please fill require Data!")
