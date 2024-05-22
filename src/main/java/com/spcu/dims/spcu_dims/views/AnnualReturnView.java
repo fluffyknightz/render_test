@@ -23,7 +23,7 @@ public class AnnualReturnView implements Serializable {
 
     @Id
     private int id;
-    private String parishName;
+    private String parish;
     private int year;
     private int totalActualResident;
     private int indigenous;
@@ -35,8 +35,8 @@ public class AnnualReturnView implements Serializable {
     private int catechumen;
     private int chapel;
     private int visitedPlace;
-    private int male;
-    private int female;
+    private int malePriest;
+    private int femalePriest;
     private int paid;
     private int voluntary;
     private int homeMissioner;

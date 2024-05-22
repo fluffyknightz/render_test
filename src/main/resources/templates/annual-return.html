@@ -261,9 +261,8 @@
                                 <hr>
                                 <!--Year-->
                                 <div class="form-floating my-3">
-                                    <input type="number" class="form-control" id="year" name="year" min="1900"
-                                           max="2100" step="1">
-                                    <label for="year">Created Year</label>
+                                    <input type="text" class="form-control number-type" id="year" name="year">
+                                    <label for="year">Year</label>
                                 </div>
 
 
@@ -272,7 +271,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="resident" name="resident"
+                                            <input class="form-control number-type" id="totalActualResident" name="totalActualResident"
                                                    placeholder="Total of Actual Residents"
                                                    type="text">
                                         </label>
@@ -312,7 +311,7 @@
                                     </div>
                                     <div class="col-6">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="nonCatholic" name="nonCatholic"
+                                            <input class="form-control number-type" id="nonCatholicChristian" name="nonCatholicChristian"
                                                    placeholder="Non-Catholic Christians"
                                                    type="text">
                                         </label>
@@ -349,7 +348,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="visited" name="visited"
+                                            <input class="form-control number-type" id="visitedPlace" name="visitedPlace"
                                                    placeholder="Number of Village, places visited in then parish"
                                                    type="text">
                                         </label>
@@ -434,14 +433,14 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="male" name="male"
+                                            <input class="form-control number-type" id="rlMale" name="rlMale"
                                                    placeholder="Male"
                                                    type="text">
                                         </label>
                                     </div>
                                     <div class="col-6">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="female" name="female"
+                                            <input class="form-control number-type" id="rlFemale" name="rlFemale"
                                                    placeholder="Female"
                                                    type="text">
                                         </label>
@@ -462,7 +461,7 @@
                                     </div>
                                     <div class="col-6">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="upTo7Year"
+                                            <input class="form-control number-type" id="upTo7Year" name="upTo7Year"
                                                    placeholder="Infants up to 7 years of age"
                                                    type="text">
                                         </label>
@@ -476,14 +475,14 @@
                                 <div class="row">
                                     <div class="col-4">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="betweenCatholic"
+                                            <input class="form-control number-type" id="betweenCatholic" name="betweenCatholic"
                                                    placeholder="Between Catholic"
                                                    type="text">
                                         </label>
                                     </div>
                                     <div class="col-4">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="withNonCatholic"
+                                            <input class="form-control number-type" id="withNonCatholicChristian" name="withNonCatholicChristian"
                                                    placeholder="Catholic and Non-Catholic Christian"
                                                    type="text">
                                         </label>
@@ -505,7 +504,7 @@
                                     <div class="col-4">
                                         <label class="col-12">
                                             <input class="form-control number-type" id="priest" name="priest"
-                                                   placeholder="priest"
+                                                   placeholder="Priest"
                                                    type="text">
                                         </label>
                                     </div>
@@ -560,14 +559,14 @@
                                 <div class="row mt-2">
                                     <div class="col-6">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="training" name="training"
+                                            <input class="form-control number-type" id="trainingForHomeMissioner" name="trainingForHomeMissioner"
                                                    placeholder="Home Missioners' Training"
                                                    type="text">
                                         </label>
                                     </div>
                                     <div class="col-6">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="boarding" name="boarding"
+                                            <input class="form-control number-type" id="boardingForPoor" name="boardingForPoor"
                                                    placeholder="Boarding for poor Children"
                                                    type="text">
                                         </label>
@@ -597,7 +596,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="profession" name="profession"
+                                            <input class="form-control number-type" id="religiousProfession" name="religiousProfession"
                                                    placeholder="Religious Professions"
                                                    type="text">
                                         </label>
@@ -654,14 +653,14 @@
                                 <div class="row">
                                     <div class="col-3">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="retreat" name="retreat"
+                                            <input class="form-control number-type" id="retreats" name="retreats"
                                                    placeholder="Retreats"
                                                    type="text">
                                         </label>
                                     </div>
                                     <div class="col-3">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="recollection" name="recollection"
+                                            <input class="form-control number-type" id="recollections" name="recollections"
                                                    placeholder="Recollections"
                                                    type="text">
                                         </label>
@@ -689,21 +688,21 @@
                                 <div class="row">
                                     <div class="col-4">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="mary" name="mary"
+                                            <input class="form-control number-type" id="legionOfMary" name="legionOfMary"
                                                    placeholder="Legion of Mary"
                                                    type="text">
                                         </label>
                                     </div>
                                     <div class="col-4">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="vincent" name="vicent"
+                                            <input class="form-control number-type" id="stVincentDePaul" name="stVincentDePaul"
                                                    placeholder="St. Vincent De Paul"
                                                    type="text">
                                         </label>
                                     </div>
                                     <div class="col-4">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="elder" name="elder"
+                                            <input class="form-control number-type" id="parishElder" name="parishElder"
                                                    placeholder="Parish Elders"
                                                    type="text">
                                         </label>
@@ -714,14 +713,14 @@
                                 <div class="row mt-2">
                                     <div class="col-4">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="youth" name="youth"
+                                            <input class="form-control number-type" id="youthGroup" name="youthGroup"
                                                    placeholder="Youth Group"
                                                    type="text">
                                         </label>
                                     </div>
                                     <div class="col-4">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="guide" name="guide"
+                                            <input class="form-control number-type" id="motherGuide" name="motherGuide"
                                                    placeholder="Mother's Guide"
                                                    type="text">
                                         </label>
@@ -754,7 +753,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <label class="col-12">
-                                            <input class="form-control number-type" id="matrimonial" name="matrimonial"
+                                            <input class="form-control number-type" id="matrimonialCases" name="matrimonialCases"
                                                    placeholder="Matrimonial Cases"
                                                    type="text">
                                         </label>

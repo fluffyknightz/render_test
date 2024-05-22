@@ -7,13 +7,9 @@ import com.spcu.dims.spcu_dims.views.AnnualReturnView;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 
-import java.util.List;
-
 public interface AnnualReturnService {
 
-    Object createAnnualReturn(AnnualReturnDTO annualReturnDTO);
-
-    List<String> showAll();
+    Object createAnnualReturn(AnnualReturnDTO annualReturnDTO, int id);
 
     AnnualReturn findById(int id);
 

@@ -15,6 +15,11 @@ let previousPage = 0;
 let totalPages = 3;
 let modalContent = document.querySelectorAll('.modal-body .page-content');
 
+
+let jsonObject;
+let formData;
+let hasEmptyValue;
+
 // Function to update modal content
 function updateModalContent(page) {
     // Hide all content sections
@@ -23,6 +28,7 @@ function updateModalContent(page) {
     });
     // Show the content section corresponding to the current page
     document.getElementById('content' + page).style.display = "block";
+
 
     switch (previousPage) {
         case 0:
@@ -210,7 +216,7 @@ $(document).ready(async function () {
         },
 
         columns: [{
-            data: 'parishName',
+            data: 'parish',
         }, {
             data: 'year'
         }, {
@@ -234,9 +240,9 @@ $(document).ready(async function () {
         }, {
             data: 'visitedPlace'
         }, {
-            data: 'male'
+            data: 'malePriest'
         }, {
-            data: 'female'
+            data: 'femalePriest'
         }, {
             data: 'paid'
         }, {
@@ -326,7 +332,7 @@ $(document).ready(async function () {
                 const rowDataJson = JSON.stringify(row).replace(/"/g, '&quot;');
                 return `
             <button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model"
-                onclick="changeEdit('${rowDataJson}')" style="border: none">
+                onclick="changeEdit(${rowDataJson})" style="border: none">
                 <i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>
             </button>
             <button type="button" onclick="showConfirm(${row.id})" class="btn btn-outline-danger p-0" style="border: none">
@@ -345,7 +351,7 @@ $(document).ready(async function () {
 async function parishFetching() {
     try {
         const data = await fetchData('spcu-dims/api/v1/parish/show/all');
-        await populateSelect(parishSelect, data, "Select Related Archdiocese", false);
+        await populateSelect(parishSelect, data, "Select Related Parish", false);
     } catch (error) {
         Notiflix.Notify.failure('Data Fetching Error!');
 
@@ -353,7 +359,12 @@ async function parishFetching() {
 }
 
 function changeAdd() {
+    previousPage = currentPage;
+    currentPage = 1;
+    updateModalContent(1);
 
+    form.reset();
+    year.value = new Date().getFullYear();
     button.innerHTML = 'Add'
     title.textContent = 'Add Annual Return'
     button.setAttribute('onclick', 'adding()');
@@ -363,11 +374,20 @@ function changeAdd() {
 
 async function changeEdit(rowDataJson) {
 
-    console.log(rowDataJson);
+    previousPage = currentPage;
+    currentPage = 1;
+    updateModalContent(1);
+
+    Object.keys(rowDataJson).forEach(key => {
+        const input = form.elements[key];
+        if (input) {
+            input.value = rowDataJson[key];
+        }
+    });
 
     button.innerHTML = 'Edit';
     title.textContent = 'Edit Annual Return';
-    button.setAttribute('onclick', 'editing()');
+    button.setAttribute('onclick', `editing(${rowDataJson.id})`);
     return false;
 
 }
@@ -378,26 +398,41 @@ async function showConfirm(id) {
 
 }
 
-function adding() {
+async function processData(form, id = null) {
     const jsonObject = {};
     const formData = new FormData(form);
-    let showMessage = false; // Flag to track if the message has been shown
+    let hasEmptyValue = false; // Flag to track if there is any empty value
+
+    if (id !== null) {
+        jsonObject['id'] = id;
+    }
 
     formData.forEach((value, key) => {
         if (!value) { // Check if the value is empty or null
-            value = 'default';
-            if (!showMessage) {
-                Notiflix.Notify.failure('Please Enter All Data'); // Show notification message
-                showMessage = true; // Set the flag to true to avoid showing the message again
-            }
+            hasEmptyValue = true;
         }
         jsonObject[key] = value;
     });
 
-    const jsonString = JSON.stringify(jsonObject);
-    console.log(jsonString);
+    if (hasEmptyValue) {
+        Notiflix.Notify.failure('Please Enter All Data'); // Show notification message
+        return null; // Exit the function if any value is missing
+    }
+
+    return jsonObject;
 }
 
-function editing(rowDataJson) {
-
+async function adding() {
+    const jsonObject = await processData(form);
+    if (jsonObject !== null) {
+        await performOperation('/spcu-dims/api/v1/annual-return/create', 'POST', 'Create successful.', jsonObject);
+    }
 }
+
+async function editing(id) {
+    const jsonObject = await processData(form, id);
+    if (jsonObject !== null) {
+        await performOperation('/spcu-dims/api/v1/annual-return/update', 'PATCH', 'Update successful.', jsonObject);
+    }
+}
+
