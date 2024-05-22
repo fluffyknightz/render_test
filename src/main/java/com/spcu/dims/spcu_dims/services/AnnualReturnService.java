@@ -11,8 +11,6 @@ public interface AnnualReturnService {
 
     Object createAnnualReturn(AnnualReturnDTO annualReturnDTO, int id);
 
-    AnnualReturn findById(int id);
-
     AnnualReturn delete(int id);
 
     Object update(AnnualReturnDTO annualReturnDTO);

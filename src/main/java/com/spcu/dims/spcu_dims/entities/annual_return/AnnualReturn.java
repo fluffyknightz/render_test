@@ -24,7 +24,7 @@ public class AnnualReturn implements Serializable {
     @Column(nullable = false, columnDefinition = "BIT(1) DEFAULT 0")
     private boolean isDelete;
 
-    @Column(nullable = false, unique = true, columnDefinition = "YEAR")
+    @Column(nullable = false, columnDefinition = "YEAR")
     private int year;
 
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")

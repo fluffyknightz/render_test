@@ -46,9 +46,9 @@ public class AnnualReturnServiceImplement implements AnnualReturnService {
     @Override
     public Object createAnnualReturn(AnnualReturnDTO annualReturnDTO, int id) {
 
-        Optional<AnnualReturnView> optionalAnnualReturn = annualReturnViewRepository.findByParishAndYear(annualReturnDTO.getParish(), annualReturnDTO.getYear());
-        if (optionalAnnualReturn.isPresent()) {
-            return String.format(existsMessage, annualReturnDTO.getParish(), annualReturnDTO.getYear());
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            return userDoesNotExistsMessage;
         }
 
         Optional<Parish> optionalParish = parishRepository.findByName(annualReturnDTO.getParish());
@@ -56,10 +56,19 @@ public class AnnualReturnServiceImplement implements AnnualReturnService {
             return String.format(parishDoesNotExistsMessage, annualReturnDTO.getParish());
         }
 
-        Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty()) {
-            return userDoesNotExistsMessage;
+        Optional<AnnualReturn> optionalAnnualReturn = annualReturnRepository.findByParishAndYear(optionalParish.get(), annualReturnDTO.getYear());
+        if (optionalAnnualReturn.isPresent()) {
+            if(optionalAnnualReturn.get().isDelete()){
+
+                setData(annualReturnDTO, optionalParish, optionalAnnualReturn);
+                optionalAnnualReturn.get().setCreatedUser(user.get());
+
+                return annualReturnRepository.save(optionalAnnualReturn.get());
+            }
+            return String.format(existsMessage, annualReturnDTO.getParish(), annualReturnDTO.getYear());
         }
+
+
 
         Baptism baptism = Baptism
                 .builder()
@@ -207,11 +216,6 @@ public class AnnualReturnServiceImplement implements AnnualReturnService {
 
 
     @Override
-    public AnnualReturn findById(int id) {
-        return null;
-    }
-
-    @Override
     public AnnualReturn delete(int id) {
         Optional<AnnualReturn> annualReturn = annualReturnRepository.findById(id);
         if (annualReturn.isPresent()) {
@@ -238,6 +242,14 @@ public class AnnualReturnServiceImplement implements AnnualReturnService {
         if (optionalAnnualReturn.isEmpty()){
             return String.format(doesNotExistsMessage);
         }
+
+        setData(annualReturnDTO, optionalParish, optionalAnnualReturn);
+
+
+        return annualReturnRepository.save(optionalAnnualReturn.get());
+    }
+
+    private void setData(AnnualReturnDTO annualReturnDTO, Optional<Parish> optionalParish, Optional<AnnualReturn> optionalAnnualReturn) {
 
         Optional<Baptism> baptism = baptismRepository.findById(optionalAnnualReturn.get().getBaptism().getId());
         baptism.ifPresent(b -> {
@@ -361,7 +373,6 @@ public class AnnualReturnServiceImplement implements AnnualReturnService {
         });
 
 
-
         optionalAnnualReturn.get().setYear(annualReturnDTO.getYear());
         optionalAnnualReturn.get().setTotalActualResident(annualReturnDTO.getTotalActualResident());
         optionalAnnualReturn.get().setCatechumen(annualReturnDTO.getCatechumen());
@@ -384,9 +395,6 @@ public class AnnualReturnServiceImplement implements AnnualReturnService {
         optionalAnnualReturn.get().setPriestlyOrdination(priestlyOrdination.orElse(null));
         optionalAnnualReturn.get().setReligiousActivity(religiousActivity.orElse(null));
         optionalAnnualReturn.get().setSeminarian(seminarian.orElse(null));
-
-
-        return annualReturnRepository.save(optionalAnnualReturn.get());
     }
 
     @Override

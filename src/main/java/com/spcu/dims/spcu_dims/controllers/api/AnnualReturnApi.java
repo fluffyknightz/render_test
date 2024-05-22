@@ -88,7 +88,7 @@ public class AnnualReturnApi {
 
         CreatedDateSpecification<AnnualReturnView> createdDateSpecification = new CreatedDateSpecification<>(input, "createdDate");
 
-        input.parseSearchPanesFromQueryParams(queryParameters, Arrays.asList("parish", "year"));
+        input.parseSearchPanesFromQueryParams(queryParameters, Arrays.asList("year", "parish"));
         return annualReturnService.annualReturnTable(input, createdDateSpecification);
 
     }

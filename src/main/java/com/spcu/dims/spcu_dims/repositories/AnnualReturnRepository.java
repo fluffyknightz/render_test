@@ -7,5 +7,8 @@ import org.springframework.data.jpa.datatables.repository.DataTablesRepository;
 import java.util.Optional;
 
 public interface AnnualReturnRepository extends DataTablesRepository<AnnualReturn, Integer> {
+
+    Optional<AnnualReturn> findByParishAndYear(Parish parish, int year);
+
     Optional<AnnualReturn> findByParishAndYearAndIdNot(Parish parish, int year, int id);
 }

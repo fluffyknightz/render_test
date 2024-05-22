@@ -109,7 +109,7 @@ $(document).ready(async function () {
     numberLock();
 
 
-    function calculateTotalCombinedHousehold() {
+    function calculateTotal() {
         bHousehold = table
             .data()
             .reduce((acc, curr) => acc + curr.beneficiaryHousehold, 0);
@@ -253,7 +253,7 @@ $(document).ready(async function () {
 
         drawCallback: function (settings) {
             // Recalculate total combined household count
-            calculateTotalCombinedHousehold();
+            calculateTotal();
             // Display total combined household count in HTML
             document.querySelectorAll('.bHousehold').forEach(element => {
                 element.innerText = bHousehold;
