@@ -56,4 +56,5 @@ public class BeneficiaryList implements Serializable {
     private void prePersist() {
         this.createdDate = LocalDate.now();
     }
+
 }

@@ -24,7 +24,6 @@ let inputVulnerabilitiesUnder18Male = document.getElementById('vulnerabilities-u
 let inputVulnerabilitiesUnder18Female = document.getElementById('vulnerabilities-under18-female');
 let inputVulnerabilitiesOver60Male = document.getElementById('vulnerabilities-over60-male');
 let inputVulnerabilitiesOver60Female = document.getElementById('vulnerabilities-over60-female');
-let created_date = document.getElementById('createdDate');
 
 let dateRange = document.getElementById('reportrange');
 let start = null;
@@ -52,10 +51,6 @@ function rebuild() {
     end = null;
     cb(start, end)
 }
-
-created_date.addEventListener('input', function (event) {
-    console.log(typeof event.target.value)
-})
 
 
 function numberLock() {
@@ -161,12 +156,29 @@ $(document).ready(async function () {
                 d.columns[15].search.value = false;
                 return d;
             },
-        }, lengthMenu: [25, 50, 75, 100, 250], language: {
+        },
+        columnDefs: [
+            {
+                searchPanes: {
+                    show: true
+                },
+                targets: [0, 3]
+            }
+        ],
+        lengthMenu: [25, 50, 75, 100, 250],
+        language: {
             infoFiltered: "",
-        }, serverSide: true, processing: true, scrollX: true, layout: {
+        },
+        serverSide: true,
+        processing: true,
+        scrollX: true,
+        layout: {
             top3: {
                 searchPanes: {
-                    threshold: 1, layout: 'columns-1', columns: [0, 3], dtOpts: {
+                    threshold: 1, layout: 'columns-1',
+                    viewTotal: true,
+                    cascadePanes: true,
+                    dtOpts: {
                         select: {
                             style: 'multi'
                         }, scrollY: '100px'
@@ -394,7 +406,6 @@ function changeAdd() {
     dioceseSelect.selectedIndex = 0;
     zoneSelect.selectedIndex = 0;
     parishSelect.selectedIndex = 0;
-    created_date.valueAsDate = new Date();
     inputBeneficiariesHousehold.value = null;
     inputBeneficiariesMale.value = null;
     inputBeneficiariesFemale.value = null;
@@ -427,8 +438,6 @@ async function changeEdit(id, activity, parish, houseHold, male, female, disabil
     dioceseSelect.value = diocese;
     zoneSelect.value = zone;
     parishSelect.value = parish;
-
-    created_date.value = createdDate;
     inputBeneficiariesHousehold.value = houseHold;
     inputBeneficiariesMale.value = male;
     inputBeneficiariesFemale.value = female;
@@ -446,7 +455,7 @@ async function changeEdit(id, activity, parish, houseHold, male, female, disabil
 }
 
 async function showConfirm(id) {
-    await deleteConfirm('/spcu-dims/api/v1/beneficiary-lists/delete/' + encodeURIComponent(id), reload)
+    await deleteConfirm('/spcu-dims/api/v1/beneficiary-lists/delete/' + encodeURIComponent(id))
 
 
 }
@@ -460,7 +469,6 @@ async function editing() {
 
         let requestData = {
             id: data_id,
-            createdDate: created_date.valueAsDate,
             activityName: activitySelect.value === 'Other' ? activity.value : activitySelect.value,
             parishName: parishSelect.value,
             beneficiaryHousehold: inputBeneficiariesHousehold.value,
@@ -482,7 +490,7 @@ async function editing() {
             await activityFetch();
         }
         await performOperation(url, 'PATCH', 'Edit successful.', requestData);
-        reload()
+
 
     }
 }
@@ -500,7 +508,6 @@ async function adding() {
         let requestData = {
             activityName: activitySelect.value === 'Other' ? activity.value : activitySelect.value,
             parishName: parishSelect.value,
-            createdDate: created_date.valueAsDate,
             beneficiaryHousehold: inputBeneficiariesHousehold.value,
             beneficiaryMale: inputBeneficiariesMale.value,
             beneficiaryFemale: inputBeneficiariesFemale.value,
@@ -518,10 +525,9 @@ async function adding() {
             await activityFetch();
         }
         await performOperation(url, 'POST', 'Create successful.', requestData);
-        reload()
     }
 }
 
 function checkRequired() {
-    return activitySelect.value === undefined || activitySelect.value === null || activitySelect.value.trim() === "" || parishSelect.value === undefined || parishSelect.value === null || parishSelect.value.trim() === "" || created_date.value === null || created_date.value.trim() === "" || inputBeneficiariesHousehold.value === undefined || inputBeneficiariesHousehold.value === null || inputBeneficiariesHousehold.value.trim() === "" || inputBeneficiariesMale.value === undefined || inputBeneficiariesMale.value === null || inputBeneficiariesMale.value.trim() === "" || inputBeneficiariesFemale.value === undefined || inputBeneficiariesFemale.value === null || inputBeneficiariesFemale.value.trim() === "" || inputDisabilitiesMale.value === undefined || inputDisabilitiesMale.value === null || inputDisabilitiesMale.value.trim() === "" || inputDisabilitiesFemale.value === undefined || inputDisabilitiesFemale.value === null || inputDisabilitiesFemale.value.trim() === "" || inputVulnerabilitiesUnder18Male.value === undefined || inputVulnerabilitiesUnder18Male.value === null || inputVulnerabilitiesUnder18Male.value.trim() === "" || inputVulnerabilitiesUnder18Female.value === undefined || inputVulnerabilitiesUnder18Female.value === null || inputVulnerabilitiesUnder18Female.value.trim() === "" || inputVulnerabilitiesOver60Male.value === undefined || inputVulnerabilitiesOver60Male.value === null || inputVulnerabilitiesOver60Male.value.trim() === "" || inputVulnerabilitiesOver60Female.value === undefined || inputVulnerabilitiesOver60Female.value === null || inputVulnerabilitiesOver60Female.value.trim() === "";
+    return activitySelect.value === undefined || activitySelect.value === null || activitySelect.value.trim() === "" || parishSelect.value === undefined || parishSelect.value === null || parishSelect.value.trim() === "" ||  inputBeneficiariesHousehold.value === undefined || inputBeneficiariesHousehold.value === null || inputBeneficiariesHousehold.value.trim() === "" || inputBeneficiariesMale.value === undefined || inputBeneficiariesMale.value === null || inputBeneficiariesMale.value.trim() === "" || inputBeneficiariesFemale.value === undefined || inputBeneficiariesFemale.value === null || inputBeneficiariesFemale.value.trim() === "" || inputDisabilitiesMale.value === undefined || inputDisabilitiesMale.value === null || inputDisabilitiesMale.value.trim() === "" || inputDisabilitiesFemale.value === undefined || inputDisabilitiesFemale.value === null || inputDisabilitiesFemale.value.trim() === "" || inputVulnerabilitiesUnder18Male.value === undefined || inputVulnerabilitiesUnder18Male.value === null || inputVulnerabilitiesUnder18Male.value.trim() === "" || inputVulnerabilitiesUnder18Female.value === undefined || inputVulnerabilitiesUnder18Female.value === null || inputVulnerabilitiesUnder18Female.value.trim() === "" || inputVulnerabilitiesOver60Male.value === undefined || inputVulnerabilitiesOver60Male.value === null || inputVulnerabilitiesOver60Male.value.trim() === "" || inputVulnerabilitiesOver60Female.value === undefined || inputVulnerabilitiesOver60Female.value === null || inputVulnerabilitiesOver60Female.value.trim() === "";
 }

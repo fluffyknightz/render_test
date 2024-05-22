@@ -1,10 +1,9 @@
 package com.spcu.dims.spcu_dims.dto;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import java.time.LocalDate;
 
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -14,39 +13,45 @@ import java.time.LocalDate;
 public class BeneficiaryListDto {
     private int id;
 
-    @NotBlank
+    @NotBlank(message = "Please Fill Require Data")
     private String activityName;
 
-    @NotBlank
+    @NotBlank(message = "Please Fill Require Data")
     private String parishName;
 
-    @NotNull
-    private LocalDate createdDate;
-
-    @NotNull
+    @NotNull(message = "Please Fill Require Data")
+    @Min(value = 0, message = "Please Add Require Minimum Value!")
     private int beneficiaryHousehold;
 
-    @NotNull
+    @NotNull(message = "Please Fill Require Data")
+    @Min(value = 0, message = "Please Add Require Minimum Value!")
     private int beneficiaryMale;
 
-    @NotNull
+    @NotNull(message = "Please Fill Require Data")
+    @Min(value = 0, message = "Please Add Require Minimum Value!")
     private int beneficiaryFemale;
 
-    @NotNull
+    @NotNull(message = "Please Fill Require Data")
+    @Min(value = 0, message = "Please Add Require Minimum Value!")
     private int disabilityMale;
 
-    @NotNull
+    @NotNull(message = "Please Fill Require Data")
+    @Min(value = 0, message = "Please Add Require Minimum Value!")
     private int disabilityFemale;
 
-    @NotNull
+    @NotNull(message = "Please Fill Require Data")
+    @Min(value = 0, message = "Please Add Require Minimum Value!")
     private int vulnerabilityUnder18Male;
 
-    @NotNull
+    @NotNull(message = "Please Fill Require Data")
+    @Min(value = 0, message = "Please Add Require Minimum Value!")
     private int vulnerabilityUnder18Female;
 
-    @NotNull
+    @NotNull(message = "Please Fill Require Data")
+    @Min(value = 0, message = "Please Add Require Minimum Value!")
     private int vulnerabilityOver60Male;
 
-    @NotNull
+    @NotNull(message = "Please Fill Require Data")
+    @Min(value = 0, message = "Please Add Require Minimum Value!")
     private int vulnerabilityOver60Female;
 }
