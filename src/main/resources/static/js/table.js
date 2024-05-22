@@ -16,12 +16,10 @@ function validationInput() {
 
 }
 
-function deleteConfirm(url, callback) {
+function deleteConfirm(url) {
     Notiflix.Confirm.show('Please Confirm', 'Are you sure you want to delete?', 'Yes', 'No', async function okCb() {
         await performOperation(url, 'PATCH', 'Delete Successful!');
-        if (callback) {
-            callback(); // Call the callback function
-        }
+        table.ajax.reload();
     }, {
         width: '320px', borderRadius: '8px',
     });

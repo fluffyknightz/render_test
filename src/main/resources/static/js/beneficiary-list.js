@@ -104,7 +104,7 @@ $(document).ready(async function () {
     numberLock();
 
 
-    function calculateTotalCombinedHousehold() {
+    function calculateTotal() {
         bHousehold = table
             .data()
             .reduce((acc, curr) => acc + curr.beneficiaryHousehold, 0);
@@ -156,12 +156,29 @@ $(document).ready(async function () {
                 d.columns[15].search.value = false;
                 return d;
             },
-        }, lengthMenu: [25, 50, 75, 100, 250], language: {
+        },
+        columnDefs: [
+            {
+                searchPanes: {
+                    show: true
+                },
+                targets: [0, 3]
+            }
+        ],
+        lengthMenu: [25, 50, 75, 100, 250],
+        language: {
             infoFiltered: "",
-        }, serverSide: true, processing: true, scrollX: true, layout: {
+        },
+        serverSide: true,
+        processing: true,
+        scrollX: true,
+        layout: {
             top3: {
                 searchPanes: {
-                    threshold: 1, layout: 'columns-1', columns: [0, 3], dtOpts: {
+                    threshold: 1, layout: 'columns-1',
+                    viewTotal: true,
+                    cascadePanes: true,
+                    dtOpts: {
                         select: {
                             style: 'multi'
                         }, scrollY: '100px'
@@ -248,7 +265,7 @@ $(document).ready(async function () {
 
         drawCallback: function (settings) {
             // Recalculate total combined household count
-            calculateTotalCombinedHousehold();
+            calculateTotal();
             // Display total combined household count in HTML
             document.querySelectorAll('.bHousehold').forEach(element => {
                 element.innerText = bHousehold;
@@ -438,7 +455,7 @@ async function changeEdit(id, activity, parish, houseHold, male, female, disabil
 }
 
 async function showConfirm(id) {
-    await deleteConfirm('/spcu-dims/api/v1/beneficiary-lists/delete/' + encodeURIComponent(id), reload)
+    await deleteConfirm('/spcu-dims/api/v1/beneficiary-lists/delete/' + encodeURIComponent(id))
 
 
 }
@@ -473,7 +490,7 @@ async function editing() {
             await activityFetch();
         }
         await performOperation(url, 'PATCH', 'Edit successful.', requestData);
-        reload()
+
 
     }
 }
@@ -508,7 +525,6 @@ async function adding() {
             await activityFetch();
         }
         await performOperation(url, 'POST', 'Create successful.', requestData);
-        reload()
     }
 }
 
