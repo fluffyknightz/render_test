@@ -13,10 +13,12 @@ import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/spcu-dims/api/v1/beneficiary-lists")
@@ -27,7 +29,11 @@ public class BeneficiaryListAPI {
     private final BeneficiaryListService beneficiaryListService;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> create(@RequestBody BeneficiaryListDto reqData) {
+    public ResponseEntity<Object> create(@Valid @RequestBody BeneficiaryListDto reqData, BindingResult result) {
+        if(result.hasErrors()){
+            return new ResponseEntity<>(Objects.requireNonNull(result.getFieldError()).getDefaultMessage(), HttpStatus.BAD_REQUEST);
+        }
+
         MyUserDetail myUserDetail = (MyUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Object beneficiaryList = beneficiaryListService.createBeneficiaryList(reqData, myUserDetail.getUserId());
         if (beneficiaryList instanceof String) {
@@ -68,7 +74,10 @@ public class BeneficiaryListAPI {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<Object> update(@Valid @RequestBody BeneficiaryListDto reqData) {
+    public ResponseEntity<Object> update(@Valid @RequestBody BeneficiaryListDto reqData, BindingResult result) {
+        if(result.hasErrors()){
+            return new ResponseEntity<>(Objects.requireNonNull(result.getFieldError()).getDefaultMessage(), HttpStatus.BAD_REQUEST);
+        }
         Object beneficiaryList = beneficiaryListService.update(reqData);
         if (beneficiaryList != null) {
             return new ResponseEntity<>(beneficiaryList, HttpStatus.OK);

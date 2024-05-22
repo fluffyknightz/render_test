@@ -66,7 +66,7 @@ public class BeneficiaryListServiceImplement implements BeneficiaryListService {
         Vulnerability vulnerability = Vulnerability.builder().under18Female(reqData.getVulnerabilityUnder18Female()).under18Male(reqData.getVulnerabilityUnder18Male()).over60Female(reqData.getVulnerabilityOver60Female()).over60Male(reqData.getVulnerabilityOver60Male()).build();
         vulnerabilityRepository.save(vulnerability);
 
-        BeneficiaryList beneficiaryList = BeneficiaryList.builder().user(user.get()).createdDate(reqData.getCreatedDate()).activity(activityExist.get()).parish(parishExist.get()).beneficiary(beneficiary).disability(disability).vulnerability(vulnerability).build();
+        BeneficiaryList beneficiaryList = BeneficiaryList.builder().user(user.get()).activity(activityExist.get()).parish(parishExist.get()).beneficiary(beneficiary).disability(disability).vulnerability(vulnerability).build();
         return beneficiaryListRepository.save(beneficiaryList);
     }
 
@@ -111,7 +111,6 @@ public class BeneficiaryListServiceImplement implements BeneficiaryListService {
             Optional<Beneficiary> beneficiaryExist = beneficiaryRepository.findById(beneficiaryListOptional.get().getBeneficiary().getId());
             Optional<Disability> disabilityExist = disabilityRepository.findById(beneficiaryListOptional.get().getDisability().getId());
             Optional<Vulnerability> vulnerabilityExist = vulnerabilityRepository.findById(beneficiaryListOptional.get().getVulnerability().getId());
-            beneficiaryListOptional.get().setCreatedDate(reqData.getCreatedDate());
             if (beneficiaryExist.isPresent() && disabilityExist.isPresent() && vulnerabilityExist.isPresent()) {
 
                 beneficiaryExist.get().setHousehold(reqData.getBeneficiaryHousehold());
