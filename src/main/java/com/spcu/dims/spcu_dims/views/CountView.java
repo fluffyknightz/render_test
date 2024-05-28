@@ -31,5 +31,6 @@ public class CountView implements Serializable {
     private long township;
     private long activity;
     private long beneficiaryList;
+    private long congregation;
 
 }

@@ -120,7 +120,8 @@ SELECT row_number() OVER ()                                                     
        (SELECT COUNT(*) FROM `spcu-dims`.districts where is_delete = b'0')         AS district,
        (SELECT COUNT(*) FROM `spcu-dims`.townships where is_delete = b'0')         AS township,
        (SELECT COUNT(*) FROM `spcu-dims`.activities where is_delete = b'0')        AS activity,
-       (SELECT COUNT(*) FROM `spcu-dims`.beneficiary_lists where is_delete = b'0') AS beneficiary_list;
+       (SELECT COUNT(*) FROM `spcu-dims`.beneficiary_lists where is_delete = b'0') AS beneficiary_list,
+       (SELECT COUNT(*) FROM `spcu-dims`.congregations where is_delete = b'0') AS congregation;
 
 
 
