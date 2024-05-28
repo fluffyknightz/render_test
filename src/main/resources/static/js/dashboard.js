@@ -8,6 +8,7 @@ let zone = document.getElementById("zone");
 let parish = document.getElementById("parish");
 let activity = document.getElementById("activity");
 let beneficiaryList = document.getElementById("beneficiaryList");
+let congregation = document.getElementById("congregation");
 document.addEventListener('DOMContentLoaded', async function () {
     await fetch("/spcu-dims/api/v1/dashboard/count", {
         method: 'POST',
@@ -29,6 +30,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 parish.textContent = counts.parish
                 activity.textContent = counts.activity
                 beneficiaryList.textContent = counts.beneficiaryList
+                congregation.textContent = counts.congregation
             } else {
                 Notiflix.Notify.failure("Error at Fetching data.");
             }
