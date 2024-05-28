@@ -395,6 +395,7 @@ public class AnnualReturnServiceImplement implements AnnualReturnService {
         optionalAnnualReturn.get().setPriestlyOrdination(priestlyOrdination.orElse(null));
         optionalAnnualReturn.get().setReligiousActivity(religiousActivity.orElse(null));
         optionalAnnualReturn.get().setSeminarian(seminarian.orElse(null));
+        optionalAnnualReturn.get().setDelete(false);
     }
 
     @Override
