@@ -160,7 +160,7 @@ $(document).ready(async function () {
         columnDefs: [
             {
                 searchPanes: {
-                    show: true
+                    show: true,
                 },
                 targets: [0, 3]
             }
@@ -175,7 +175,9 @@ $(document).ready(async function () {
         layout: {
             top3: {
                 searchPanes: {
-                    threshold: 1, layout: 'columns-1',
+                    threshold: 1,
+                    columns: [0, 3],
+                    layout: 'columns-1',
                     viewTotal: true,
                     cascadePanes: true,
                     dtOpts: {
@@ -529,5 +531,5 @@ async function adding() {
 }
 
 function checkRequired() {
-    return activitySelect.value === undefined || activitySelect.value === null || activitySelect.value.trim() === "" || parishSelect.value === undefined || parishSelect.value === null || parishSelect.value.trim() === "" ||  inputBeneficiariesHousehold.value === undefined || inputBeneficiariesHousehold.value === null || inputBeneficiariesHousehold.value.trim() === "" || inputBeneficiariesMale.value === undefined || inputBeneficiariesMale.value === null || inputBeneficiariesMale.value.trim() === "" || inputBeneficiariesFemale.value === undefined || inputBeneficiariesFemale.value === null || inputBeneficiariesFemale.value.trim() === "" || inputDisabilitiesMale.value === undefined || inputDisabilitiesMale.value === null || inputDisabilitiesMale.value.trim() === "" || inputDisabilitiesFemale.value === undefined || inputDisabilitiesFemale.value === null || inputDisabilitiesFemale.value.trim() === "" || inputVulnerabilitiesUnder18Male.value === undefined || inputVulnerabilitiesUnder18Male.value === null || inputVulnerabilitiesUnder18Male.value.trim() === "" || inputVulnerabilitiesUnder18Female.value === undefined || inputVulnerabilitiesUnder18Female.value === null || inputVulnerabilitiesUnder18Female.value.trim() === "" || inputVulnerabilitiesOver60Male.value === undefined || inputVulnerabilitiesOver60Male.value === null || inputVulnerabilitiesOver60Male.value.trim() === "" || inputVulnerabilitiesOver60Female.value === undefined || inputVulnerabilitiesOver60Female.value === null || inputVulnerabilitiesOver60Female.value.trim() === "";
+    return activitySelect.value === undefined || activitySelect.value === null || activitySelect.value.trim() === "" || parishSelect.value === undefined || parishSelect.value === null || parishSelect.value.trim() === "" || inputBeneficiariesHousehold.value === undefined || inputBeneficiariesHousehold.value === null || inputBeneficiariesHousehold.value.trim() === "" || inputBeneficiariesMale.value === undefined || inputBeneficiariesMale.value === null || inputBeneficiariesMale.value.trim() === "" || inputBeneficiariesFemale.value === undefined || inputBeneficiariesFemale.value === null || inputBeneficiariesFemale.value.trim() === "" || inputDisabilitiesMale.value === undefined || inputDisabilitiesMale.value === null || inputDisabilitiesMale.value.trim() === "" || inputDisabilitiesFemale.value === undefined || inputDisabilitiesFemale.value === null || inputDisabilitiesFemale.value.trim() === "" || inputVulnerabilitiesUnder18Male.value === undefined || inputVulnerabilitiesUnder18Male.value === null || inputVulnerabilitiesUnder18Male.value.trim() === "" || inputVulnerabilitiesUnder18Female.value === undefined || inputVulnerabilitiesUnder18Female.value === null || inputVulnerabilitiesUnder18Female.value.trim() === "" || inputVulnerabilitiesOver60Male.value === undefined || inputVulnerabilitiesOver60Male.value === null || inputVulnerabilitiesOver60Male.value.trim() === "" || inputVulnerabilitiesOver60Female.value === undefined || inputVulnerabilitiesOver60Female.value === null || inputVulnerabilitiesOver60Female.value.trim() === "";
 }

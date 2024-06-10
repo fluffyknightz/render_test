@@ -46,10 +46,10 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(
                         authorization -> authorization
-                                .requestMatchers("/assets/**",
+                                .requestMatchers(
                                         "/css/**",
-                                        "/assets/images/**",
-                                        "/js/**", "/theme/**", "/libs/**", "/landing-page/**", "/login", "/error", "/")
+                                        "/image/**",
+                                        "/js/**", "/theme/**", "/libs/**", "/landing-page/**", "/login", "/error", "/", "/spcu-dims/api/v1/activity/activity&parish")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()

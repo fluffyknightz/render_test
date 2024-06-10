@@ -21,13 +21,13 @@ public class ParishAPI {
     private final ParishService parishService;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> create(@RequestParam("name") String name, @RequestParam("township") String township, @RequestParam("congregation") String congregation, @RequestParam(value = "note", required = false) String note) {
+    public ResponseEntity<Object> create(@RequestParam("name") String name, @RequestParam("township") String township, @RequestParam(value = "note", required = false) String note) {
 
-        if (name.isEmpty() || township.isEmpty() || congregation.isEmpty()) {
+        if (name.isEmpty() || township.isEmpty()) {
             return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
         }
         
-        Object parish = parishService.createParish(name, township, congregation, note);
+        Object parish = parishService.createParish(name, township, note);
         if (parish instanceof String) {
 
             return new ResponseEntity<>(parish, HttpStatus.CONFLICT);
@@ -56,13 +56,13 @@ public class ParishAPI {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("township") String township, @RequestParam("congregation") String congregation, @RequestParam(value = "note", required = false) String note) {
+    public ResponseEntity<Object> update(@RequestParam("id") int id, @RequestParam("name") String name, @RequestParam("township") String township, @RequestParam(value = "note", required = false) String note) {
 
-        if (name.isEmpty() || township.isEmpty() || congregation.isEmpty()) {
+        if (name.isEmpty() || township.isEmpty()) {
             return new ResponseEntity<>("Please Fill All Required Data!", HttpStatus.BAD_REQUEST);
         }
         
-        Object parish = parishService.update(id, name, township, congregation, note);
+        Object parish = parishService.update(id, name, township, note);
         if (parish != null) {
             return new ResponseEntity<>(parish, HttpStatus.OK);
         }

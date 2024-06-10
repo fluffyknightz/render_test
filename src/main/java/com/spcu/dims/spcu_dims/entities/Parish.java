@@ -31,8 +31,6 @@ public class Parish implements Serializable {
     @JoinColumn(name = "township_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_township"))
     private Township township;
 
-    @ManyToOne(targetEntity = Congregation.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "congregation_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_congregation"))
-    private Congregation congregation;
+
 
 }

@@ -445,6 +445,7 @@ $(document).ready(async function () {
                 searchPanes: {
                     threshold: 1,
                     layout: 'columns-1',
+                    columns: [0, 1],
                     viewTotal: true,
                     cascadePanes: true,
                     dtOpts: {

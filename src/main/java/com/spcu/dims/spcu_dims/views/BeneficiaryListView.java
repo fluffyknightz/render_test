@@ -30,6 +30,7 @@ public class BeneficiaryListView implements Serializable {
     private String archdioceseName;
     private String zoneName;
     private String parishName;
+    private String congregation;
     private int beneficiaryHousehold;
     private int beneficiaryMale;
     private int beneficiaryFemale;

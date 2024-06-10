@@ -86,6 +86,7 @@ SELECT bl.id,
        dio.name    AS diocese_name,
        z.name      AS zone_name,
        p.name      AS parish_name,
+       c.name      AS congregation,
        b.household as beneficiary_household,
        b.male      AS beneficiary_male,
        b.female    AS beneficiary_female,
@@ -106,7 +107,8 @@ FROM beneficiary_lists bl
          inner join archdioceses ardio ON ardio.id = dio.archdiocese_id
          INNER JOIN beneficiaries b ON b.id = bl.beneficiary_id
          INNER JOIN disabilities d ON d.id = bl.disability_id
-         INNER JOIN vulnerabilities v ON v.id = bl.vulnerability_id;
+         INNER JOIN vulnerabilities v ON v.id = bl.vulnerability_id
+         INNER JOIN congregations c ON c.id = bl.congregation_id;
 
 
 
@@ -121,8 +123,8 @@ SELECT row_number() OVER ()                                                     
        (SELECT COUNT(*) FROM `spcu-dims`.townships where is_delete = b'0')         AS township,
        (SELECT COUNT(*) FROM `spcu-dims`.activities where is_delete = b'0')        AS activity,
        (SELECT COUNT(*) FROM `spcu-dims`.beneficiary_lists where is_delete = b'0') AS beneficiary_list,
-       (SELECT COUNT(*) FROM `spcu-dims`.congregations where is_delete = b'0') AS congregation,
-       (SELECT COUNT(*) FROM `spcu-dims`.annual_returns where is_delete = b'0') AS annual_return;
+       (SELECT COUNT(*) FROM `spcu-dims`.congregations where is_delete = b'0')     AS congregation,
+       (SELECT COUNT(*) FROM `spcu-dims`.annual_returns where is_delete = b'0')    AS annual_return;
 
 
 
