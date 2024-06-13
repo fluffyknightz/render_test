@@ -264,7 +264,7 @@ $(document).ready(async function () {
             data: 'createdUser'
         }, {
             data: 'isDelete', className: 'noExport', ordering: false, render: function (data, type, row) {
-                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" ' + 'onclick="changeEdit(' + row.id + ', \'' + row.activityName.replace(/'/g, "\\'") + '\', \'' + row.parishName.replace(/'/g, "\\'") + '\', \'' + row.congregation.replace(/'/g, "\\'") + '\', ' + row.beneficiaryHousehold + ', ' + row.beneficiaryMale + ', ' + row.beneficiaryFemale + ', ' + row.disabilityMale + ', ' + row.disabilityFemale + ', ' + row.under18Male + ', ' + row.under18Female + ', ' + row.over60Male + ', ' + row.over60Female + ', \'' + row.archdioceseName.replace(/'/g, "\\'") + '\', \'' + row.dioceseName.replace(/'/g, "\\'") + '\', \'' + row.zoneName.replace(/'/g, "\\'") + '\', \'' + row.createdDate + '\' )" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' +
+                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" ' + 'onclick="changeEdit(' + row.id + ', \'' + row.activityName.replace(/'/g, "\\'") + '\', \'' + row.parishName.replace(/'/g, "\\'") + '\', \'' + row.congregation.replace(/'/g, "\\'") + '\', ' + row.beneficiaryHousehold + ', ' + row.beneficiaryMale + ', ' + row.beneficiaryFemale + ', ' + row.disabilityMale + ', ' + row.disabilityFemale + ', ' + row.under18Male + ', ' + row.under18Female + ', ' + row.over60Male + ', ' + row.over60Female + ', \'' + row.archdioceseName.replace(/'/g, "\\'") + '\', \'' + row.dioceseName.replace(/'/g, "\\'") + '\', \'' + row.zoneName.replace(/'/g, "\\'") + '\')" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' +
                     '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
             }
 
@@ -439,7 +439,7 @@ function changeAdd() {
     return false;
 }
 
-async function changeEdit(id, activity, parish, congregation, houseHold, male, female, disabilityMale, disabilityFemale, under18Male, under18Female, over60Male, over60Female, archdiocese, diocese, zone, createdDate) {
+async function changeEdit(id, activity, parish, congregation, houseHold, male, female, disabilityMale, disabilityFemale, under18Male, under18Female, over60Male, over60Female, archdiocese, diocese, zone) {
     activityForm.style.display = 'none';
     await dioceseSpecificFetch(archdiocese)
     await zoneSpecificFetch(diocese)
