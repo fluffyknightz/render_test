@@ -56,6 +56,7 @@
                                         <th rowspan="2">Diocese</th>
                                         <th rowspan="2">Zone</th>
                                         <th rowspan="2">Parish</th>
+                                        <th rowspan="2">Congregation</th>
                                         <th class="text-center" colspan="3">Beneficiaries</th>
                                         <th class="text-center" colspan="2">Disabilities</th>
                                         <th class="text-center" colspan="4">Vulnerabilities</th>
@@ -83,6 +84,7 @@
                                         <th>Diocese</th>
                                         <th>Zone</th>
                                         <th>Parish</th>
+                                        <th>Congregation</th>
                                         <th>Household(Total : <span class="bHousehold"></span>)</th>
                                         <th>Male(Total : <span class="bMale"></span>)</th>
                                         <th>Female(Total : <span class="bFemale"></span>)</th>
@@ -143,6 +145,10 @@
                             <select aria-label="parish select" class="form-select my-3" id="parishSelect">
                                 <option disabled selected value="">Select Related Parish</option>
                             </select>
+                            <hr>
+                            <select aria-label="congregation select" class="form-select my-3" id="congregationSelect">
+                                <option disabled selected value="">Select Related Congregation</option>
+                            </select>
 
                             <!--Beneficiaries-->
                             <hr>
@@ -151,19 +157,22 @@
                             <div class="row">
                                 <div class="col">
                                     <label>
-                                        <input class="form-control number-type" id="beneficiaries-household" placeholder="Household"
+                                        <input class="form-control number-type" id="beneficiaries-household"
+                                               placeholder="Household"
                                                type="text">
                                     </label>
                                 </div>
                                 <div class="col">
                                     <label>
-                                        <input class="form-control number-type" id="beneficiaries-male" placeholder="Male"
+                                        <input class="form-control number-type" id="beneficiaries-male"
+                                               placeholder="Male"
                                                type="text">
                                     </label>
                                 </div>
                                 <div class="col">
                                     <label>
-                                        <input class="form-control number-type" id="beneficiaries-female" placeholder="Female"
+                                        <input class="form-control number-type" id="beneficiaries-female"
+                                               placeholder="Female"
                                                type="text">
                                     </label>
                                 </div>
@@ -175,13 +184,15 @@
                             <div class="row">
                                 <div class="col-4">
                                     <label>
-                                        <input class="form-control number-type" id="disabilities-male" placeholder="Male"
+                                        <input class="form-control number-type" id="disabilities-male"
+                                               placeholder="Male"
                                                type="text">
                                     </label>
                                 </div>
                                 <div class="col-4">
                                     <label>
-                                        <input class="form-control number-type" id="disabilities-female" placeholder="Female"
+                                        <input class="form-control number-type" id="disabilities-female"
+                                               placeholder="Female"
                                                type="text">
                                     </label>
                                 </div>
@@ -193,7 +204,8 @@
                             <div class="row">
                                 <div class="col-5">
                                     <label>
-                                        <input class="form-control number-type" id="vulnerabilities-under18-male" placeholder="Under 18 Male"
+                                        <input class="form-control number-type" id="vulnerabilities-under18-male"
+                                               placeholder="Under 18 Male"
                                                type="text">
                                     </label>
                                 </div>
@@ -208,13 +220,15 @@
                             <div class="row mt-2">
                                 <div class="col-5">
                                     <label>
-                                        <input class="form-control number-type" id="vulnerabilities-over60-male" placeholder="Over 60 Male"
+                                        <input class="form-control number-type" id="vulnerabilities-over60-male"
+                                               placeholder="Over 60 Male"
                                                type="text">
                                     </label>
                                 </div>
                                 <div class="col-5">
                                     <label>
-                                        <input class="form-control number-type" id="vulnerabilities-over60-female" placeholder="Over 60 Female"
+                                        <input class="form-control number-type" id="vulnerabilities-over60-female"
+                                               placeholder="Over 60 Female"
                                                type="text">
                                     </label>
                                 </div>

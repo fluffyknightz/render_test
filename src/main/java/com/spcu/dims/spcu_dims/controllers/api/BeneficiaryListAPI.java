@@ -49,7 +49,7 @@ public class BeneficiaryListAPI {
     @PostMapping("/show/table")
     public DataTablesOutput<BeneficiaryListView> beneficiaryLists(@Valid DataTablesInput input, @RequestParam Map<String, String> queryParameters) {
         CreatedDateSpecification<BeneficiaryListView> createdDateSpecification = new CreatedDateSpecification<>(input, "createdDate");
-        input.parseSearchPanesFromQueryParams(queryParameters, Arrays.asList("activityName", "parishName"));
+        input.parseSearchPanesFromQueryParams(queryParameters, Arrays.asList("activityName", "parishName", "congregation"));
 
         return beneficiaryListService.tableBeneficiaryList(input, createdDateSpecification);
     }

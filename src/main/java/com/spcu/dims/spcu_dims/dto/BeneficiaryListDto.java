@@ -19,6 +19,9 @@ public class BeneficiaryListDto {
     @NotBlank(message = "Please Fill Require Data")
     private String parishName;
 
+    @NotBlank(message = "Please Fill Require Data")
+    private String congregation;
+
     @NotNull(message = "Please Fill Require Data")
     @Min(value = 0, message = "Please Add Require Minimum Value!")
     private int beneficiaryHousehold;

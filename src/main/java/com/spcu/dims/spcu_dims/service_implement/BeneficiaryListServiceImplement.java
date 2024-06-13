@@ -2,7 +2,10 @@ package com.spcu.dims.spcu_dims.service_implement;
 
 import com.spcu.dims.spcu_dims.controllers.CreatedDateSpecification;
 import com.spcu.dims.spcu_dims.dto.BeneficiaryListDto;
-import com.spcu.dims.spcu_dims.entities.*;
+import com.spcu.dims.spcu_dims.entities.Activity;
+import com.spcu.dims.spcu_dims.entities.Congregation;
+import com.spcu.dims.spcu_dims.entities.Parish;
+import com.spcu.dims.spcu_dims.entities.User;
 import com.spcu.dims.spcu_dims.entities.beneficiary_list.Beneficiary;
 import com.spcu.dims.spcu_dims.entities.beneficiary_list.BeneficiaryList;
 import com.spcu.dims.spcu_dims.entities.beneficiary_list.Disability;
@@ -30,12 +33,13 @@ public class BeneficiaryListServiceImplement implements BeneficiaryListService {
     private final DisabilityRepository disabilityRepository;
     private final VulnerabilityRepository vulnerabilityRepository;
     private final UserRepository userRepository;
+    private final CongregationRepository congregationRepository;
 
     String doesNotExistMessage = "BeneficiaryList does not exist.";
     String activityDoesNotExistMessage = "Activity with the name '%s' does not exist.";
     String userDoesNotExistMessage = "User does not exist.";
     String parishDoesNotExistMessage = "Parish with the name '%s' does not exist.";
-    String bothDoesNotExistMessage = "Activity with the name '%s' and Parish with the name '%s' do not exist.";
+    String congregationDoesNotExistMessage = "Congregation with the name '%s' does not exist.";
 
 
     @Override
@@ -43,13 +47,14 @@ public class BeneficiaryListServiceImplement implements BeneficiaryListService {
 
         Optional<Activity> activityExist = activityRepository.findByName(reqData.getActivityName());
         Optional<Parish> parishExist = parishRepository.findByName(reqData.getParishName());
+        Optional<Congregation> congregationExist = congregationRepository.findByName(reqData.getCongregation());
 
-        if (activityExist.isEmpty() && parishExist.isEmpty()) {
-            return String.format(bothDoesNotExistMessage, reqData.getActivityName(), reqData.getParishName());
-        } else if (activityExist.isEmpty()) {
+        if (activityExist.isEmpty()) {
             return String.format(activityDoesNotExistMessage, reqData.getActivityName());
         } else if (parishExist.isEmpty()) {
             return String.format(parishDoesNotExistMessage, reqData.getParishName());
+        } else if (congregationExist.isEmpty()) {
+            return String.format(congregationDoesNotExistMessage, reqData.getCongregation());
         }
 
         Optional<User> user = userRepository.findById(userId);
@@ -66,7 +71,7 @@ public class BeneficiaryListServiceImplement implements BeneficiaryListService {
         Vulnerability vulnerability = Vulnerability.builder().under18Female(reqData.getVulnerabilityUnder18Female()).under18Male(reqData.getVulnerabilityUnder18Male()).over60Female(reqData.getVulnerabilityOver60Female()).over60Male(reqData.getVulnerabilityOver60Male()).build();
         vulnerabilityRepository.save(vulnerability);
 
-        BeneficiaryList beneficiaryList = BeneficiaryList.builder().user(user.get()).activity(activityExist.get()).parish(parishExist.get()).beneficiary(beneficiary).disability(disability).vulnerability(vulnerability).build();
+        BeneficiaryList beneficiaryList = BeneficiaryList.builder().user(user.get()).activity(activityExist.get()).parish(parishExist.get()).congregation(congregationExist.get()).beneficiary(beneficiary).disability(disability).vulnerability(vulnerability).build();
         return beneficiaryListRepository.save(beneficiaryList);
     }
 
@@ -97,13 +102,14 @@ public class BeneficiaryListServiceImplement implements BeneficiaryListService {
 
         Optional<Activity> activityExist = activityRepository.findByName(reqData.getActivityName());
         Optional<Parish> parishExist = parishRepository.findByName(reqData.getParishName());
+        Optional<Congregation> congregationExist = congregationRepository.findByName(reqData.getCongregation());
 
-        if (activityExist.isEmpty() && parishExist.isEmpty()) {
-            return String.format(bothDoesNotExistMessage, reqData.getActivityName(), reqData.getParishName());
-        } else if (activityExist.isEmpty()) {
+        if (activityExist.isEmpty()) {
             return String.format(activityDoesNotExistMessage, reqData.getActivityName());
         } else if (parishExist.isEmpty()) {
             return String.format(parishDoesNotExistMessage, reqData.getParishName());
+        } else if(congregationExist.isEmpty()){
+            return String.format(congregationDoesNotExistMessage, reqData.getCongregation());
         }
 
         if (beneficiaryListOptional.isPresent()) {
@@ -127,6 +133,7 @@ public class BeneficiaryListServiceImplement implements BeneficiaryListService {
 
                 beneficiaryListOptional.get().setActivity(activityExist.get());
                 beneficiaryListOptional.get().setParish(parishExist.get());
+                beneficiaryListOptional.get().setCongregation(congregationExist.get());
                 beneficiaryListOptional.get().setBeneficiary(beneficiaryExist.get());
                 beneficiaryListOptional.get().setDisability(disabilityExist.get());
                 beneficiaryListOptional.get().setVulnerability(vulnerabilityExist.get());

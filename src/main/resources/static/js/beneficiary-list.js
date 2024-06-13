@@ -14,6 +14,7 @@ let archdioceseSelect = document.getElementById('archdioceseSelect');
 let dioceseSelect = document.getElementById('dioceseSelect');
 let zoneSelect = document.getElementById('zoneSelect');
 let parishSelect = document.getElementById('parishSelect');
+let congregationSelect = document.getElementById('congregationSelect');
 
 let inputBeneficiariesHousehold = document.getElementById('beneficiaries-household');
 let inputBeneficiariesMale = document.getElementById('beneficiaries-male');
@@ -70,10 +71,10 @@ function cb(start, end) {
 
     if (!start || !end || start.format('YYYY-MM-DD') === 'Invalid date' || end.format('YYYY-MM-DD') === 'Invalid date') {
         dateRange.querySelector('span').innerHTML = 'None';
-        table.column(13).search(null + ';' + null).draw();
+        table.column(14).search(null + ';' + null).draw();
     } else {
         dateRange.querySelector('span').innerHTML = start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY');
-        table.column(13).search(start.format('YYYY-MM-DD') + ';' + end.format('YYYY-MM-DD')).draw();
+        table.column(14).search(start.format('YYYY-MM-DD') + ';' + end.format('YYYY-MM-DD')).draw();
     }
 }
 
@@ -101,6 +102,7 @@ $(document).ready(async function () {
 
     await activityFetch();
     await archdioceseFetch();
+    await congregationFetch();
     numberLock();
 
 
@@ -153,7 +155,7 @@ $(document).ready(async function () {
                 [csrfHeader]: csrfToken
             },
             data: function (d) {
-                d.columns[15].search.value = false;
+                d.columns[16].search.value = false;
                 return d;
             },
         },
@@ -162,7 +164,7 @@ $(document).ready(async function () {
                 searchPanes: {
                     show: true,
                 },
-                targets: [0, 3]
+                targets: [0, 3, 4]
             }
         ],
         lengthMenu: [25, 50, 75, 100, 250],
@@ -176,10 +178,10 @@ $(document).ready(async function () {
             top3: {
                 searchPanes: {
                     threshold: 1,
-                    columns: [0, 3],
                     layout: 'columns-1',
                     viewTotal: true,
                     cascadePanes: true,
+                    columns: [0, 3, 4],
                     dtOpts: {
                         select: {
                             style: 'multi'
@@ -237,6 +239,8 @@ $(document).ready(async function () {
         }, {
             data: 'parishName'
         }, {
+            data: 'congregation'
+        }, {
             data: 'beneficiaryHousehold'
         }, {
             data: 'beneficiaryMale'
@@ -260,7 +264,8 @@ $(document).ready(async function () {
             data: 'createdUser'
         }, {
             data: 'isDelete', className: 'noExport', ordering: false, render: function (data, type, row) {
-                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" ' + 'onclick="changeEdit(' + row.id + ', \'' + row.activityName.replace(/'/g, "\\'") + '\', \'' + row.parishName.replace(/'/g, "\\'") + '\', ' + row.beneficiaryHousehold + ', ' + row.beneficiaryMale + ', ' + row.beneficiaryFemale + ', ' + row.disabilityMale + ', ' + row.disabilityFemale + ', ' + row.under18Male + ', ' + row.under18Female + ', ' + row.over60Male + ', ' + row.over60Female + ', \'' + row.archdioceseName.replace(/'/g, "\\'") + '\', \'' + row.dioceseName.replace(/'/g, "\\'") + '\', \'' + row.zoneName.replace(/'/g, "\\'") + '\', \'' + row.createdDate + '\' )" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' + '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
+                return '<button type="button" class="btn btn-outline-warning p-0" data-bs-toggle="modal" data-bs-target="#model" ' + 'onclick="changeEdit(' + row.id + ', \'' + row.activityName.replace(/'/g, "\\'") + '\', \'' + row.parishName.replace(/'/g, "\\'") + '\', \'' + row.congregation.replace(/'/g, "\\'") + '\', ' + row.beneficiaryHousehold + ', ' + row.beneficiaryMale + ', ' + row.beneficiaryFemale + ', ' + row.disabilityMale + ', ' + row.disabilityFemale + ', ' + row.under18Male + ', ' + row.under18Female + ', ' + row.over60Male + ', ' + row.over60Female + ', \'' + row.archdioceseName.replace(/'/g, "\\'") + '\', \'' + row.dioceseName.replace(/'/g, "\\'") + '\', \'' + row.zoneName.replace(/'/g, "\\'") + '\', \'' + row.createdDate + '\' )" style="border: none">\n' + '<i class="bi bi-pencil-square mx-1" style="font-size: 1.1rem"></i>\n' + '</button>\n' +
+                    '<button type="button" onclick="showConfirm(' + row.id + ')" class="btn btn-outline-danger p-0" style="border: none">\n' + '<i class="bi bi-trash3 mx-1" style="font-size: 1.1rem"></i>\n' + '</button>';
             }
 
         }],
@@ -339,6 +344,7 @@ zoneSelect.addEventListener('change', async function () {
     await parishSpecificFetch(zoneSelect.value)
 })
 
+
 async function activityFetch() {
     try {
         const data = await fetchData('spcu-dims/api/v1/activity/show/all');
@@ -357,6 +363,15 @@ async function archdioceseFetch() {
     try {
         const data = await fetchData('spcu-dims/api/v1/archdiocese/show/all');
         await populateSelect(archdioceseSelect, data, "Select Related Archdiocese", false);
+    } catch (error) {
+        Notiflix.Notify.failure('Data Fetching Error!');
+    }
+}
+
+async function congregationFetch() {
+    try {
+        const data = await fetchData('spcu-dims/api/v1/congregation/show/all');
+        await populateSelect(congregationSelect, data, "Select Related Congregation", false);
     } catch (error) {
         Notiflix.Notify.failure('Data Fetching Error!');
     }
@@ -402,6 +417,7 @@ function changeAdd() {
     activityForm.style.display = 'none';
     activitySelect.selectedIndex = 0;
     parishSelect.selectedIndex = 0;
+    congregationSelect.selectedIndex = 0;
     activity.value = null
     activitySelect.selectedIndex = 0;
     archdioceseSelect.selectedIndex = 0;
@@ -423,7 +439,7 @@ function changeAdd() {
     return false;
 }
 
-async function changeEdit(id, activity, parish, houseHold, male, female, disabilityMale, disabilityFemale, under18Male, under18Female, over60Male, over60Female, archdiocese, diocese, zone, createdDate) {
+async function changeEdit(id, activity, parish, congregation, houseHold, male, female, disabilityMale, disabilityFemale, under18Male, under18Female, over60Male, over60Female, archdiocese, diocese, zone, createdDate) {
     activityForm.style.display = 'none';
     await dioceseSpecificFetch(archdiocese)
     await zoneSpecificFetch(diocese)
@@ -440,6 +456,7 @@ async function changeEdit(id, activity, parish, houseHold, male, female, disabil
     dioceseSelect.value = diocese;
     zoneSelect.value = zone;
     parishSelect.value = parish;
+    congregationSelect.value = congregation;
     inputBeneficiariesHousehold.value = houseHold;
     inputBeneficiariesMale.value = male;
     inputBeneficiariesFemale.value = female;
@@ -473,6 +490,7 @@ async function editing() {
             id: data_id,
             activityName: activitySelect.value === 'Other' ? activity.value : activitySelect.value,
             parishName: parishSelect.value,
+            congregation: congregationSelect.value,
             beneficiaryHousehold: inputBeneficiariesHousehold.value,
             beneficiaryMale: inputBeneficiariesMale.value,
             beneficiaryFemale: inputBeneficiariesFemale.value,
@@ -510,6 +528,7 @@ async function adding() {
         let requestData = {
             activityName: activitySelect.value === 'Other' ? activity.value : activitySelect.value,
             parishName: parishSelect.value,
+            congregation: congregationSelect.value,
             beneficiaryHousehold: inputBeneficiariesHousehold.value,
             beneficiaryMale: inputBeneficiariesMale.value,
             beneficiaryFemale: inputBeneficiariesFemale.value,
@@ -531,5 +550,5 @@ async function adding() {
 }
 
 function checkRequired() {
-    return activitySelect.value === undefined || activitySelect.value === null || activitySelect.value.trim() === "" || parishSelect.value === undefined || parishSelect.value === null || parishSelect.value.trim() === "" || inputBeneficiariesHousehold.value === undefined || inputBeneficiariesHousehold.value === null || inputBeneficiariesHousehold.value.trim() === "" || inputBeneficiariesMale.value === undefined || inputBeneficiariesMale.value === null || inputBeneficiariesMale.value.trim() === "" || inputBeneficiariesFemale.value === undefined || inputBeneficiariesFemale.value === null || inputBeneficiariesFemale.value.trim() === "" || inputDisabilitiesMale.value === undefined || inputDisabilitiesMale.value === null || inputDisabilitiesMale.value.trim() === "" || inputDisabilitiesFemale.value === undefined || inputDisabilitiesFemale.value === null || inputDisabilitiesFemale.value.trim() === "" || inputVulnerabilitiesUnder18Male.value === undefined || inputVulnerabilitiesUnder18Male.value === null || inputVulnerabilitiesUnder18Male.value.trim() === "" || inputVulnerabilitiesUnder18Female.value === undefined || inputVulnerabilitiesUnder18Female.value === null || inputVulnerabilitiesUnder18Female.value.trim() === "" || inputVulnerabilitiesOver60Male.value === undefined || inputVulnerabilitiesOver60Male.value === null || inputVulnerabilitiesOver60Male.value.trim() === "" || inputVulnerabilitiesOver60Female.value === undefined || inputVulnerabilitiesOver60Female.value === null || inputVulnerabilitiesOver60Female.value.trim() === "";
+    return activitySelect.value === null || activitySelect.value.trim() === "" || parishSelect.value === null || parishSelect.value.trim() === "" || congregationSelect.value === null || congregationSelect.value.trim() === "" || inputBeneficiariesHousehold.value === null || inputBeneficiariesHousehold.value.trim() === "" || inputBeneficiariesMale.value === null || inputBeneficiariesMale.value.trim() === "" || inputBeneficiariesFemale.value === null || inputBeneficiariesFemale.value.trim() === "" || inputDisabilitiesMale.value === null || inputDisabilitiesMale.value.trim() === "" || inputDisabilitiesFemale.value === null || inputDisabilitiesFemale.value.trim() === "" || inputVulnerabilitiesUnder18Male.value === null || inputVulnerabilitiesUnder18Male.value.trim() === "" || inputVulnerabilitiesUnder18Female.value === null || inputVulnerabilitiesUnder18Female.value.trim() === "" || inputVulnerabilitiesOver60Male.value === null || inputVulnerabilitiesOver60Male.value.trim() === "" || inputVulnerabilitiesOver60Female.value === null || inputVulnerabilitiesOver60Female.value.trim() === "";
 }
