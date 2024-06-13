@@ -10,6 +10,11 @@ let activity = document.getElementById("activity");
 let beneficiaryList = document.getElementById("beneficiaryList");
 let congregation = document.getElementById("congregation");
 let annualReturn = document.getElementById("annual-return");
+
+function clickLink(path){
+    window.location.href = path;
+}
+
 document.addEventListener('DOMContentLoaded', async function () {
     await fetch("/spcu-dims/api/v1/dashboard/count", {
         method: 'POST',
