@@ -111,8 +111,4 @@ public class PageControllers {
         return "annual-return";
     }
 
-    @GetMapping("/test")
-    public String test() {
-        return "test";
-    }
 }
