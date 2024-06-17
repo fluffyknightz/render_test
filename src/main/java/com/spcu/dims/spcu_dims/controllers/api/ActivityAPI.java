@@ -1,6 +1,5 @@
 package com.spcu.dims.spcu_dims.controllers.api;
 
-import com.spcu.dims.spcu_dims.dto.IndexDto;
 import com.spcu.dims.spcu_dims.entities.Activity;
 import com.spcu.dims.spcu_dims.services.ActivityService;
 import com.spcu.dims.spcu_dims.services.ParishService;
@@ -21,7 +20,6 @@ public class ActivityAPI {
 
     private static final String NOT_FOUND = "ID Not Found.";
     private final ActivityService activityService;
-    private final ParishService parishService;
 
     @PostMapping("/create")
     public ResponseEntity<Object> create(@RequestParam("name") String name) {

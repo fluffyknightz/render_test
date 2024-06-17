@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 // Function to add the HTML content to the modal body
 function addContentToModal(parameter) {
     console.log(parameter)
-    let htmlContent = ''
+    let htmlContent
 
     switch (parameter) {
         case 'Education' :
