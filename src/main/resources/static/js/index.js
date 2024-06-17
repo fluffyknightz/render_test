@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    await fetch('/spcu-dims/api/v1/activity/activity&parish')
+    await fetch('/spcu-dims/api/v1/index/activity&parish')
         .then(async response => {
             if (response.ok) {
                 return response.json(); // Return the parsed JSON data

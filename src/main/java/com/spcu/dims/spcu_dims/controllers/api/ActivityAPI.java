@@ -99,11 +99,4 @@ public class ActivityAPI {
 
     }
 
-    @GetMapping("/activity&parish")
-    public ResponseEntity<IndexDto> activityAndParish() {
-        int activityCount = activityService.activityCount();
-        int parishCount = parishService.parishCount();
-        IndexDto indexDto = IndexDto.builder().parish(parishCount).activity(activityCount).build();
-        return new ResponseEntity<>(indexDto, HttpStatus.OK);
-    }
 }

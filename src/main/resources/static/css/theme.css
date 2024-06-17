@@ -3107,7 +3107,7 @@ html.dark div.dtsp-panesContainer {
 }
 
 .font-monospace {
-    font-family: var(--bs-font-monospace) !important;
+    font-family: var(--bs-font-monospace), serif !important;
 }
 
 .fs-1 {
@@ -44323,7 +44323,7 @@ textarea.form-control-lg {
 
 @media (max-width: 576px) {
     #page-content {
-        margin-left: 0rem;
+        margin-left: 0;
     }
 
     #db-wrapper.toggled #page-content {
@@ -44333,11 +44333,11 @@ textarea.form-control-lg {
 
 @media (min-width: 768px) {
     .navbar-vertical {
-        margin-left: 0rem;
+        margin-left: 0;
     }
 
     #page-content {
-        min-width: 0rem;
+        min-width: 0;
         width: 100%;
     }
 

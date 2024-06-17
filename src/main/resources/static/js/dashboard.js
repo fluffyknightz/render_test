@@ -19,10 +19,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     await fetch("/spcu-dims/api/v1/dashboard/count", {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
             [csrfHeader]: csrfToken
         },
-        body: null
     })
         .then(async response => {
             if (response.status === 201 || response.status === 200) {
