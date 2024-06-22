@@ -49,7 +49,7 @@ public class SecurityConfig {
                                 .requestMatchers(
                                         "/css/**",
                                         "/image/**",
-                                        "/js/**", "/theme/**", "/libs/**", "/landing-page/**", "/login", "/error", "/", "/spcu-dims/api/v1/activity/activity&parish")
+                                        "/js/**", "/theme/**", "/libs/**", "/landing-page/**", "/login", "/error", "/", "/spcu-dims/api/v1/index/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
