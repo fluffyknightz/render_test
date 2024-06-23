@@ -12,6 +12,7 @@
     <artifactId>SPCU-DIMS</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>SPCU-DIMS</name>
+    <packaging>jar</packaging>
     <description>SPCU Data-Information Management System</description>
     <properties>
         <java.version>17</java.version>
